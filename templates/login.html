@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>voaAM - Login</title>
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="/css/login.css">
+     
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <!-- =====================================================
+             LADO ESQUERDO - IMAGEM DO BANNER
+             ===================================================== -->
+
+        <div class="banner-section">
+
+         
+            <img
+                src="/img/fundo.png"
+                alt="voaAM - Estudos para vestibulares"
+                class="banner-image"
+            >
+
+        </div>
+
+
+        <!-- =====================================================
+             LADO DIREITO - LOGIN
+             ===================================================== -->
+
+        <div class="form-section">
+
+            <div class="form-wrapper">
+
+                <!-- Cabeçalho -->
+                <div class="form-header">
+
+                    <h3>Bem-vindo(a)!</h3>
+
+                    <p>
+                        Faça seu login para continuar seus estudos.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     FORMULÁRIO DE LOGIN
+                     ================================================= -->
+
+                <form id="loginForm">
+
+                    <!-- E-mail / Número de inscrição -->
+                    <div class="input-group">
+
+                        <label for="emailOrInscricao">
+                            E-mail:
+                        </label>
+
+                        <div class="input-field-wrapper">
+
+                            <i class="fa-regular fa-user icon-left"></i>
+
+                            <input
+                                type="text"
+                                id="emailOrInscricao"
+                                name="emailOrInscricao"
+                                placeholder="Digite seu e-mail:"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Senha -->
+                    <div class="input-group">
+
+                        <label for="senha">
+                            Senha:
+                        </label>
+
+                        <div class="input-field-wrapper">
+
+                            <i class="fa-solid fa-lock icon-left"></i>
+
+                            <input
+                                type="password"
+                                id="senha"
+                                name="senha"
+                                placeholder="Digite sua senha:"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <!-- Mostrar / ocultar senha -->
+                            <i
+                                class="fa-regular fa-eye-slash icon-right"
+                                id="togglePassword"
+                                title="Mostrar senha"
+                                aria-label="Mostrar senha"
+                                role="button"
+                                tabindex="0"
+                            ></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         LEMBRAR / ESQUECI SENHA
+                         ================================================= -->
+
+                    <div class="form-actions">
+
+                        <label class="remember-me">
+
+                            <input
+                                type="checkbox"
+                                id="lembrar"
+                                name="lembrar"
+                            >
+
+                            <span>
+                                Lembrar senha
+                            </span>
+
+                        </label>
+
+
+                        <a href="/esqueci-senha" class="forgot-password">
+                            Esqueci minha senha
+                        </a>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         BOTÃO ENTRAR
+                         ================================================= -->
+
+                    <button
+                        type="submit"
+                        class="btn-submit"
+                    >
+
+                        <span>Entrar</span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+
+                <!-- =================================================
+                     CADASTRO
+                     ================================================= -->
+
+                <div class="form-footer">
+
+                    <p>
+                        Ainda não tem uma conta?
+                    </p>
+
+                        <a href="/cadastro" class="btn-register">
+                            <span>Cadastre-se</span>
+                            <i class="fa-regular fa-user"></i>
+                        </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MOSTRAR / OCULTAR SENHA
+         ========================================================= -->
+
+    <script>
+
+        const togglePassword =
+            document.querySelector("#togglePassword");
+
+        const passwordField =
+            document.querySelector("#senha");
+
+
+        if (togglePassword && passwordField) {
+
+            togglePassword.addEventListener(
+                "click",
+                function () {
+
+                    const type =
+                        passwordField.getAttribute("type") === "password"
+                            ? "text"
+                            : "password";
+
+                    passwordField.setAttribute(
+                        "type",
+                        type
+                    );
+
+
+                    /* Alterna o ícone */
+
+                    this.classList.toggle("fa-eye");
+
+                    this.classList.toggle("fa-eye-slash");
+
+
+                    /* Atualiza acessibilidade */
+
+                    const mostrandoSenha =
+                        type === "text";
+
+
+                    this.setAttribute(
+                        "title",
+                        mostrandoSenha
+                            ? "Ocultar senha"
+                            : "Mostrar senha"
+                    );
+
+
+                    this.setAttribute(
+                        "aria-label",
+                        mostrandoSenha
+                            ? "Ocultar senha"
+                            : "Mostrar senha"
+                    );
+
+                }
+            );
+
+
+            /* Permite usar o botão pelo teclado */
+
+            togglePassword.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Enter" ||
+                        event.key === " "
+                    ) {
+
+                        event.preventDefault();
+
+                        this.click();
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+    <!-- =========================================================
+         JAVASCRIPT DO LOGIN
+         ========================================================= -->
+
+    <script src="/js/login.js"></script>
+    
+
+</body>
+
+</html>

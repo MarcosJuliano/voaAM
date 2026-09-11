@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>voaAM - Cadastro</title>
+
+    <link rel="stylesheet" href="/css/cadastro.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="cadastro-container">
+
+        <!-- LADO ESQUERDO -->
+        <div class="cadastro-banner">
+
+            <img src="/img/fundo.png"
+                 alt="voaAM - Estudos para vestibulares"
+                 class="cadastro-banner-image">
+
+        </div>
+
+
+        <!-- LADO DIREITO -->
+        <div class="cadastro-section">
+
+            <div class="cadastro-wrapper">
+
+                <div class="cadastro-header">
+                    <h1>Crie sua conta</h1>
+
+                    <p>
+                        Cadastre-se no voaAM e comece sua preparação
+                        para os vestibulares.
+                    </p>
+                </div>
+
+
+                <form id="cadastroForm">
+
+                    <!-- NOME -->
+                    <div class="input-group">
+
+                        <label for="nome">
+                            Nome completo
+                        </label>
+
+                        <div class="input-field-wrapper">
+
+                            <i class="fa-regular fa-user icon-left"></i>
+
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Digite seu nome completo"
+                                autocomplete="name"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- E-MAIL -->
+                    <div class="input-group">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <div class="input-field-wrapper">
+
+                            <i class="fa-regular fa-envelope icon-left"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Digite seu e-mail"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SENHA -->
+                    <div class="input-group">
+
+                        <label for="senha">
+                            Senha
+                        </label>
+
+                        <div class="input-field-wrapper">
+
+                            <i class="fa-solid fa-lock icon-left"></i>
+
+                            <input
+                                type="password"
+                                id="senha"
+                                name="senha"
+                                placeholder="Crie uma senha"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                            <i
+                                class="fa-regular fa-eye-slash icon-right"
+                                id="toggleSenha"
+                                title="Mostrar senha"
+                                aria-label="Mostrar senha"
+                                role="button"
+                                tabindex="0">
+                            </i>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRMAR SENHA -->
+                    <div class="input-group">
+
+                        <label for="confirmarSenha">
+                            Confirmar senha
+                        </label>
+
+                        <div class="input-field-wrapper">
+
+                            <i class="fa-solid fa-lock icon-left"></i>
+
+                            <input
+                                type="password"
+                                id="confirmarSenha"
+                                name="confirmarSenha"
+                                placeholder="Digite a senha novamente"
+                                autocomplete="new-password"
+                                required
+                            >
+
+                            <i
+                                class="fa-regular fa-eye-slash icon-right"
+                                id="toggleConfirmarSenha"
+                                title="Mostrar senha"
+                                aria-label="Mostrar senha"
+                                role="button"
+                                tabindex="0">
+                            </i>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TERMOS -->
+                    <div class="terms-group">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                id="termos"
+                                name="termos"
+                                required
+                            >
+
+                            <span>
+                                Li e concordo com os
+                                <a href="#" class="terms-link">
+                                    termos de uso
+                                </a>.
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- BOTÃO -->
+                    <button
+                        type="submit"
+                        class="btn-submit">
+
+                        <span>Criar minha conta</span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+
+                <!-- VOLTAR PARA LOGIN -->
+                <div class="cadastro-footer">
+
+                    <p>
+                        Já possui uma conta?
+                    </p>
+
+                    <a href="/" class="btn-login">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        <span>Voltar para o login</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="/js/cadastro.js"></script>
+
+</body>
+</html>
