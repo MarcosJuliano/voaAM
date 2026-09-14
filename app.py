@@ -8,7 +8,10 @@ from banco import conectar, inicializar_banco
 app = Flask(__name__, static_folder=None)
 
 # Chave usada para controlar a sessão do usuário
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "chave-secreta-do-projeto")
+app.secret_key = os.environ.get(
+    "FLASK_SECRET_KEY",
+    "chave-secreta-do-projeto"
+)
 
 
 # =========================================================
@@ -44,6 +47,15 @@ def dashboard():
         return render_template("login.html")
 
     return render_template("dashboard.html")
+
+
+# =========================================================
+# PERFIL
+# =========================================================
+
+@app.route("/perfil")
+def perfil():
+    return render_template("perfil.html")
 
 
 # =========================================================
@@ -133,7 +145,11 @@ def realizar_login():
             "message": "Dados de login não foram enviados."
         }), 400
 
-    email = dados.get("emailOrInscricao", "").strip().lower()
+    email = dados.get(
+        "emailOrInscricao",
+        ""
+    ).strip().lower()
+
     senha = dados.get("senha", "")
 
     if not email or not senha:
@@ -256,5 +272,3 @@ def img_files(filename):
 if __name__ == "__main__":
 
     app.run(debug=True)
-
-    
