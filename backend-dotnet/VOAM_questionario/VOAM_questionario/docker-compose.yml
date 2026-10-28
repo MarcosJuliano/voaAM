@@ -1,0 +1,10 @@
+services:
+  voam-questionario:
+    container_name: voam_questionario_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true  # Mantém a entrada padrão aberta
+    tty: true         # Aloca um pseudo-TTY para o container
+    ports:
+      - "8080:8080"

@@ -1,0 +1,8 @@
+
+[
+  {
+    "enunciado"",
+    "Alternativas": [""
+    ],
+    "Alternativacorreta": ""
+  }

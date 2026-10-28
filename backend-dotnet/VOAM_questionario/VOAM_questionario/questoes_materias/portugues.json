@@ -1,0 +1,32 @@
+[
+  {
+    "enunciado": "Identifique a alternativa em que a palavra *QUE* atua como uma conjunção integrante, introduzindo uma oração subordinada substantiva:",
+    "Alternativas": [
+      "Quero *que* você estude para o simulado.",
+      "A matéria *que* caiu na prova era difícil.",
+      "O jovem *que* chegou atrasado perdeu o exame.",
+      "Comprei o livro *que* o professor recomendou."
+    ],
+    "Alternativacorreta": "Quero *que* você estude para o simulado."
+  },
+  {
+    "enunciado": "Assinale a alternativa que apresenta uma figura de linguagem classificada como Metonímia:",
+    "Alternativas": [
+      "Ele leu Machado de Assis durante as férias inteiras.",
+      "O Sol estava quente como um caldeirão fervente.",
+      "O jardim chorava a ausência de suas belas flores.",
+      "Aquela estrutura é um gigante de concreto armado."
+    ],
+    "Alternativacorreta": "Ele leu Machado de Assis durante as férias inteiras."
+  },
+  {
+    "enunciado": "Qual função da linguagem predomina em um texto cujo objetivo principal é testar ou garantir o canal de comunicação, como em 'Alô? Está me ouvindo?'?",
+    "Alternativas": [
+      "Função Fática",
+      "Função Metalinguística",
+      "Função Apelativa",
+      "Função Referencial"
+    ],
+    "Alternativacorreta": "Função Fática"
+  }
+]
