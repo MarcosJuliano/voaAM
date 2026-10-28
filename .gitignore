@@ -1,27 +1,27 @@
 # Python
 __pycache__/
 *.py[cod]
-*.pyo
 .venv/
 venv/
-env/
 
-# Bancos de dados locais
-*.db
-*.sqlite
-*.sqlite3
-
-# Node
-node_modules/
-
-# Variaveis de ambiente
+# Segredos locais
 .env
 .env.*
+!.env.example
 
-# Editores
+# Dados locais do SQLite (não enviar contas de usuários ao GitHub)
+instance/*.db
+instance/*.sqlite
+instance/*.sqlite3
+!instance/.gitkeep
+
+# Dependências Node antigas (enquanto a migração é testada)
+backend/node_modules/
+backend/.env
+
+# Editores e sistema
 .vscode/
 .idea/
-
-# Sistema
 .DS_Store
 Thumbs.db
+*.log

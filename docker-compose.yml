@@ -9,12 +9,17 @@ services:
       - .:/app
     environment:
       PYTHONUNBUFFERED: "1"
+      FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:-dev-only-change-this-key}
+      DATABASE_PATH: /app/instance/voaam.db
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
     command:
       - python
       - -m
       - flask
       - --app
-      - app.py
+      - app:app
       - run
       - --host=0.0.0.0
       - --port=5000

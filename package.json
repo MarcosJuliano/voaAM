@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "sqlite3": "^5.1.7"
-  },
-  "allowScripts": {
-    "sqlite3@5.1.7": true
-  }
-}
