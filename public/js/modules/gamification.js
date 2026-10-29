@@ -4,16 +4,27 @@
 
 // ─── STREAK ───
 function verificarStreak() {
-  const hoje = new Date().toDateString();
-  const ultimoDia = localStorage.getItem('ultimoDia');
-  const ontem = new Date(Date.now() - 86400000).toDateString();
-  if (ultimoDia === hoje) return; // já contou hoje
-  if (ultimoDia === ontem) { state.streak++; }
-  else if (ultimoDia !== hoje) { state.streak = 1; }
-  localStorage.setItem('ultimoDia', hoje);
-  salvarState();
   const el = document.getElementById('streak-days');
-  if (el) el.textContent = `${state.streak} dia${state.streak>1?'s':''} seguido${state.streak>1?'s':''}!`;
+  if (el) el.textContent = `${state.streak} dia${state.streak !== 1 ? 's' : ''} de sequência`;
+  const st = document.getElementById('perfil-streak');
+  if (st) st.textContent = String(state.streak);
+}
+
+async function registrarVisita() {
+  try {
+    const resposta = await fetch('/api/atividade', {method:'POST', credentials:'same-origin'});
+    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+    const dados = await resposta.json();
+    state.streak = Number(dados.sequencia) || 0;
+    salvarState();
+    verificarStreak();
+    const el = document.getElementById('perfil-ultima-atividade');
+    if (el) el.textContent = dados.ultima_atividade.split('-').reverse().join('/');
+    localStorage.setItem('voaam_ultima_atividade', dados.ultima_atividade);
+  } catch(erro) {
+    console.warn('[VoaAM] Não foi possível registrar visita:', erro);
+    verificarStreak();
+  }
 }
 
 // ─── GAMIFICATION ───

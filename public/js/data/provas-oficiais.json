@@ -1,0 +1,82 @@
+[
+  {
+    "vestibular": "ENEM",
+    "ano": 2025,
+    "titulo": "ENEM 2025",
+    "url_oficial": "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos/2025",
+    "instituicao": "INEP",
+    "observacao": "Página oficial por ano: escolha o dia, a cor do caderno, a prova e o gabarito."
+  },
+  {
+    "vestibular": "SIS",
+    "ano": 2025,
+    "titulo": "SIS 2025",
+    "url_oficial": "https://www.vunesp.com.br/ueam2502",
+    "instituicao": "UEA / Vunesp",
+    "observacao": "Na página do processo selecione “Provas e Gabaritos” e a etapa correspondente."
+  },
+  {
+    "vestibular": "MACRO",
+    "ano": 2025,
+    "titulo": "Vestibular UEA 2025",
+    "url_oficial": "https://www.vunesp.com.br/UEAM2501",
+    "instituicao": "UEA / Vunesp",
+    "observacao": "Na página do vestibular selecione “Provas e Gabaritos” para os cadernos disponíveis."
+  },
+  {
+    "vestibular": "ENEM",
+    "ano": 2024,
+    "titulo": "ENEM 2024",
+    "url_oficial": "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos/2024",
+    "instituicao": "INEP",
+    "observacao": "Página oficial por ano: escolha o dia, a cor do caderno, a prova e o gabarito."
+  },
+  {
+    "vestibular": "SIS",
+    "ano": 2024,
+    "titulo": "SIS 2024",
+    "url_oficial": "https://www.vunesp.com.br/UEAM2402",
+    "instituicao": "UEA / Vunesp",
+    "observacao": "Na página do processo selecione “Provas e Gabaritos” e a etapa correspondente."
+  },
+  {
+    "vestibular": "MACRO",
+    "ano": 2024,
+    "titulo": "Vestibular UEA 2024",
+    "url_oficial": "https://www.vunesp.com.br/UEAM2401",
+    "instituicao": "UEA / Vunesp",
+    "observacao": "Na página do vestibular selecione “Provas e Gabaritos” para os cadernos disponíveis."
+  },
+  {
+    "vestibular": "ENEM",
+    "ano": 2023,
+    "titulo": "ENEM 2023",
+    "url_oficial": "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos/2023",
+    "instituicao": "INEP",
+    "observacao": "Página oficial por ano: escolha o dia, a cor do caderno, a prova e o gabarito."
+  },
+  {
+    "vestibular": "SIS",
+    "ano": 2023,
+    "titulo": "SIS 2023",
+    "url_oficial": "https://www.vunesp.com.br/UEAM2302/",
+    "instituicao": "UEA / Vunesp",
+    "observacao": "Na página do processo selecione “Provas e Gabaritos” e a etapa correspondente."
+  },
+  {
+    "vestibular": "MACRO",
+    "ano": 2023,
+    "titulo": "Vestibular UEA 2023",
+    "url_oficial": "https://www.vunesp.com.br/UEAM2301",
+    "instituicao": "UEA / Vunesp",
+    "observacao": "Na página do vestibular selecione “Provas e Gabaritos” para os cadernos disponíveis."
+  },
+  {
+    "vestibular": "PSC",
+    "ano": 0,
+    "titulo": "Acervo oficial PSC — UFAM",
+    "url_oficial": "https://edoc.ufam.edu.br/handle/123456789/552",
+    "instituicao": "COMPEC / UFAM",
+    "observacao": "Acervo oficial da COMPEC. Procure a edição e a etapa desejadas; não é um PDF direto."
+  }
+]

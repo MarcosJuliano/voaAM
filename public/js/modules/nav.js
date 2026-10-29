@@ -12,6 +12,11 @@ const SLOT_MAP = {
 };
 
 function goTo(screen) {
+  // Compatibilidade: a tela 'vestibulares' foi removida; abre os anos de prova no Praticar.
+  if (screen === 'vestibulares') {
+    if (typeof abrirVestibularDoInicio === 'function') abrirVestibularDoInicio('ENEM');
+    return;
+  }
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('screen-' + screen)?.classList.add('active');
@@ -35,42 +40,71 @@ function goTo(screen) {
 // ─── PERFIL ───
 function renderPerfil() {
   if (!perfil) return;
-  const primeiro = perfil.nome.split(' ')[0];
-  const el = document.getElementById('perfil-nome');
-  if (el) el.textContent = perfil.nome;
-  const info = document.getElementById('perfil-info');
-  const serieLabel = ['','1ª Série','2ª Série','3ª Série','EM Completo'];
-  if (info) info.textContent = `${serieLabel[perfil.serie]||''} • ${(perfil.vests||[]).join(' + ')}`;
-  const xpEl = document.getElementById('perfil-xp');
-  if (xpEl) xpEl.textContent = state.xp;
-  const acEl = document.getElementById('perfil-acertos');
-  if (acEl) acEl.textContent = state.quizDone > 0 ? Math.round((state.quizCorrect/state.quizDone)*100)+'%' : '—';
-  const stEl = document.getElementById('perfil-streak');
-  if (stEl) stEl.textContent = '🔥'+state.streak;
-  const rankNome = document.getElementById('rank-nome');
-  if (rankNome) rankNome.textContent = primeiro;
-  const rankXp = document.getElementById('rank-xp');
-  if (rankXp) rankXp.textContent = state.xp+' XP';
-
-  // Dificuldades
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const serie = ['','1º ano','2º ano','3º ano','Ensino Médio completo'];
+  set('perfil-nome', perfil.nome);
+  set('perfil-info', `${serie[perfil.serie] || 'Não informada'} · ${(perfil.vests || []).join(', ')}`);
+  set('perfil-xp', state.xp);
+  set('perfil-acertos', state.quizDone ? Math.round(100*state.quizCorrect/state.quizDone)+'%' : '—');
+  set('perfil-streak', state.streak);
+  set('perfil-respondidas', state.quizDone);
+  set('perfil-aulas', state.aulas);
+  set('perfil-corretas', state.quizCorrect);
+  const c = typeof getCoracoes === 'function' ? getCoracoes() : {qtd:3};
+  set('perfil-vidas', `${c.qtd}/3`);
+  const ultima = localStorage.getItem('voaam_ultima_atividade');
+  set('perfil-ultima-atividade', ultima ? ultima.split('-').reverse().join('/') : 'Aguardando sincronização');
   const difEl = document.getElementById('perfil-dificuldades');
   if (difEl) {
-    const temas = Object.entries(temasFragos).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
-    if (temas.length) {
-      difEl.innerHTML = temas.map(([mat,n]) =>
-        `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
-          <span>• ${mat}</span>
-          <span style="color:var(--red);font-weight:700">${n} erro${n>1?'s':''}</span>
-        </div>`).join('');
+    const temas = Object.entries(temasFragos || {}).filter(([,n]) => n > 0).sort((a,b) => b[1]-a[1]);
+    difEl.replaceChildren();
+    if (!temas.length) {
+      difEl.textContent = 'Nenhum assunto identificado. Pratique para receber recomendações.';
     } else {
-      difEl.innerHTML = '<span style="font-size:12px;color:var(--text2)">Nenhum erro registrado ainda. Continue praticando!</span>';
+      temas.slice(0,5).forEach(([nome,n]) => {
+        const linha = document.createElement('div');
+        linha.className = 'perfil-recomendacao';
+        const titulo = document.createElement('span'); titulo.textContent = nome;
+        const quantidade = document.createElement('strong'); quantidade.textContent = `${n} erro${n === 1 ? '' : 's'}`;
+        linha.append(titulo, quantidade); difEl.appendChild(linha);
+      });
     }
   }
 }
 
 function editarPerfil() {
-  localStorage.removeItem('voaam_perfil');
-  location.reload();
+  if (!perfil) return;
+  document.getElementById('editar-nome').value = perfil.nome || '';
+  document.getElementById('editar-serie').value = String(perfil.serie || 1);
+  document.querySelectorAll('input[name="editar-vest"]').forEach(c => {
+    c.checked = (perfil.vests || []).includes(c.value);
+  });
+  document.getElementById('editar-erro').textContent = '';
+  document.getElementById('editar-perfil-modal').hidden = false;
+  document.getElementById('editar-nome').focus();
+}
+function fecharEdicaoPerfil() {
+  document.getElementById('editar-perfil-modal').hidden = true;
+}
+async function salvarEdicaoPerfil(event) {
+  event.preventDefault();
+  const botao = document.getElementById('editar-salvar');
+  const erro = document.getElementById('editar-erro');
+  const nome = document.getElementById('editar-nome').value.trim();
+  const serie = Number(document.getElementById('editar-serie').value);
+  const vests = [...document.querySelectorAll('input[name="editar-vest"]:checked')].map(el => el.value);
+  if (!nome || !vests.length) { erro.textContent = 'Informe seu nome e selecione pelo menos um vestibular.'; return; }
+  botao.disabled = true;
+  try {
+    const res = await fetch('/api/perfil', {method:'PUT',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome, serie, vests})});
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Não foi possível salvar.');
+    authGuardarPerfil(data.perfil, data.usuario);
+    fecharEdicaoPerfil();
+    renderPerfil();
+    if (typeof showXPToast === 'function') showXPToast('Perfil atualizado com sucesso.');
+  } catch(e) { erro.textContent = e.message; }
+  finally { botao.disabled = false; }
 }
 // authLogout() definido em auth.js
 

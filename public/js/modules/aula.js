@@ -7,27 +7,62 @@ let currentQuizIdx = 0;
 let quizCorrect = 0;
 let answered = false;
 let isSimulado = false;
+let currentQuizTopicContext = null;
+let quizResultadoRegistrado = false;
 
 function openAula(quizId) {
-  const quiz = quizzes[quizId];
-  if(!quiz) {
-    // Generic placeholder for topics without quiz data
-    openGenericAula(quizId);
+  const overlay = document.getElementById('aula-view');
+  const titleEl = document.getElementById('aula-title');
+  const contentEl = document.getElementById('aula-content');
+  const catalogo = window.VOAAM_QUIZZES || (typeof quizzes !== 'undefined' ? quizzes : null);
+  const quiz = catalogo && Object.prototype.hasOwnProperty.call(catalogo, quizId)
+    ? catalogo[quizId]
+    : null;
+
+  if (!overlay || !titleEl || !contentEl) {
+    console.error('[VoaAM] Overlay de aula não encontrado.');
+    if (typeof showXPToast === 'function') showXPToast('A tela do quiz não carregou. Atualize a página.');
     return;
   }
+
+  if (!quiz || !Array.isArray(quiz.questions) || quiz.questions.length === 0) {
+    currentQuiz = null;
+    currentQuizTopicContext = null;
+    quizResultadoRegistrado = false;
+    titleEl.textContent = 'Conteúdo indisponível';
+    contentEl.innerHTML = `
+      <div class="result-card">
+        <div class="result-title">Este quiz não foi encontrado</div>
+        <p>Não foi possível carregar o quiz <strong>${String(quizId)}</strong>. Confira se a lista de quizzes foi carregada e se essa chave possui perguntas.</p>
+        <button class="btn-secondary" onclick="closeAula()">← Voltar à lista</button>
+      </div>`;
+    overlay.classList.add('open');
+    console.error('[VoaAM] Quiz ausente ou vazio:', quizId, {
+      catalogoDisponivel: !!catalogo,
+      chavesDisponiveis: catalogo ? Object.keys(catalogo) : []
+    });
+    return;
+  }
+
   currentQuiz = quiz;
   currentQuizIdx = 0;
   quizCorrect = 0;
+  answered = false;
   isSimulado = false;
-  document.getElementById('aula-title').textContent = quiz.title;
+  quizResultadoRegistrado = false;
+  currentQuizTopicContext = {
+    quizId,
+    disciplina: state.currentSubject,
+    serie: state.currentSubject === 'mat' ? state.currentSerie : state.currentSerieRed,
+  };
+  titleEl.textContent = quiz.title || 'Aula';
   renderAulaContent();
-  document.getElementById('aula-view').classList.add('open');
-  addXP(10);
-  state.aulas++;
-  updateStats();
+  overlay.classList.add('open');
 }
 
 function openGenericAula(id) {
+  currentQuizTopicContext = null;
+  quizResultadoRegistrado = false;
   document.getElementById('aula-title').textContent = 'Aula — Em breve';
   document.getElementById('aula-content').innerHTML = `
     <div class="video-area">
@@ -203,14 +238,25 @@ function showQuizResult() {
       </div>
     </div>
   `;
-  if(pct >= 80) {
+  if (pct >= 80) {
     setTimeout(() => showAchievement('🎓', 'Quiz Concluído!'), 500);
+  }
+
+  // O tópico só é marcado como concluído depois de responder a todas as questões.
+  if (!quizResultadoRegistrado && currentQuizTopicContext && !isSimulado) {
+    quizResultadoRegistrado = true;
+    if (typeof registrarConclusaoTopico === 'function') {
+      registrarConclusaoTopico(currentQuizTopicContext, total, quizCorrect).catch(erro => {
+        console.warn('[VoaAM] Falha ao registrar conclusão do tópico:', erro);
+      });
+    }
   }
 }
 
 function retryQuiz() {
   currentQuizIdx = 0;
   quizCorrect = 0;
+  quizResultadoRegistrado = false;
   renderAulaContent();
 }
 
@@ -218,3 +264,48 @@ function closeAula() {
   document.getElementById('aula-view').classList.remove('open');
   pararCronometro();
 }
+
+// API pública para iniciar simulados vindos de praticar.js. Mantém o estado do quiz
+// dentro deste módulo e evita que o botão dependa diretamente de variáveis lexicais.
+function voaAMAbrirSimulado(quiz, tempoSegundos) {
+  const overlay = document.getElementById('aula-view');
+  const titleEl = document.getElementById('aula-title');
+  const contentEl = document.getElementById('aula-content');
+  if (!overlay || !titleEl || !contentEl) {
+    console.error('[VoaAM] Não foi possível abrir o simulado: overlay ausente.');
+    if (typeof showXPToast === 'function') showXPToast('Não foi possível abrir o simulado. Atualize a página.');
+    return false;
+  }
+  if (!quiz || !Array.isArray(quiz.questions) || quiz.questions.length === 0) {
+    if (typeof showXPToast === 'function') showXPToast('Não há questões disponíveis para este simulado.');
+    return false;
+  }
+
+  currentQuiz = quiz;
+  currentQuizIdx = 0;
+  quizCorrect = 0;
+  answered = false;
+  isSimulado = true;
+  currentQuizTopicContext = null;
+  quizResultadoRegistrado = false;
+  titleEl.textContent = quiz.title || 'Simulado';
+  contentEl.innerHTML = `
+    <div class="topic-desc">${quiz.desc || 'Simulado cronometrado.'}</div>
+    <div class="quiz-title-bar">
+      <span class="quiz-badge">🎯 Simulado</span>
+      <span class="quiz-progress-text">0 / ${quiz.questions.length} questões</span>
+    </div>
+    <div id="quiz-area"></div>`;
+  overlay.classList.add('open');
+
+  if (typeof pararCronometro === 'function') pararCronometro();
+  if (Number.isFinite(tempoSegundos) && tempoSegundos > 0 && typeof iniciarCronometro === 'function') {
+    iniciarCronometro(tempoSegundos);
+  }
+  renderQuestion();
+  return true;
+}
+
+window.openAula = openAula;
+window.voaAMAbrirSimulado = voaAMAbrirSimulado;
+

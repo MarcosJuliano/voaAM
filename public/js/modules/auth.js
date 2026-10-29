@@ -55,18 +55,27 @@ async function authRequisicao(url, opcoes) {
   return dados;
 }
 
-function authGuardarPerfil(perfilRecebido) {
+function authGuardarPerfil(perfilRecebido, usuarioRecebido) {
   if (!perfilRecebido) return;
   perfil = perfilRecebido;
   localStorage.setItem('voaam_perfil', JSON.stringify(perfilRecebido));
+  if (usuarioRecebido && usuarioRecebido.id != null) {
+    const anterior=localStorage.getItem('voaam_usuario_id');
+    const novo=String(usuarioRecebido.id);
+    localStorage.setItem('voaam_usuario_id', novo);
+    if(anterior !== novo && typeof trocarStateUsuario === 'function') trocarStateUsuario();
+  }
   if (typeof state !== 'undefined') {
-    state.currentSerie = perfilRecebido.serie <= 3 ? perfilRecebido.serie : 3;
+    const chave = `voaam_serie:${localStorage.getItem('voaam_usuario_id') || 'local'}`;
+    const salvo = Number(localStorage.getItem(chave));
+    state.currentSerie = [1,2,3].includes(salvo) ? salvo : (perfilRecebido.serie <= 3 ? perfilRecebido.serie : 1);
+    if (typeof renderTopics === 'function') renderTopics();
   }
   if (typeof aplicarPerfil === 'function') aplicarPerfil();
 }
 
 function authFinalizarLogin(dados) {
-  authGuardarPerfil(dados.perfil);
+  authGuardarPerfil(dados.perfil, dados.usuario);
   const wrapper = document.getElementById('auth-wrapper');
   if (wrapper) wrapper.style.display = 'none';
   location.reload();
@@ -135,6 +144,7 @@ async function authLogout() {
     console.warn('[VoaAM] Não foi possível confirmar o logout no servidor:', erro);
   } finally {
     localStorage.removeItem('voaam_perfil');
+    localStorage.removeItem('voaam_usuario_id');
     location.reload();
   }
 }
@@ -149,11 +159,20 @@ async function authInit() {
     const dados = await resposta.json();
 
     if (dados.autenticado && dados.perfil) {
-      authGuardarPerfil(dados.perfil);
+      authGuardarPerfil(dados.perfil, dados.usuario);
       wrapper.style.display = 'none';
+      if (typeof registrarVisita === 'function') await registrarVisita();
+      if (typeof sincronizarVidas === 'function') await sincronizarVidas();
+      if (typeof reiniciarProgressoTopicos === 'function') {
+        reiniciarProgressoTopicos().catch(e => console.warn('[VoaAM] Não foi possível recarregar o progresso:', e));
+      }
     } else {
       localStorage.removeItem('voaam_perfil');
+      localStorage.removeItem('voaam_usuario_id');
       perfil = null;
+      if (typeof reiniciarProgressoTopicos === 'function') {
+        reiniciarProgressoTopicos().catch(e => console.warn('[VoaAM] Progresso:', e));
+      }
       wrapper.style.display = window.innerWidth >= 768 ? 'flex' : 'block';
     }
   } catch (erro) {

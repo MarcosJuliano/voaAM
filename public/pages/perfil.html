@@ -1,54 +1,57 @@
-<!-- pages/perfil.html — Perfil do aluno: stats, ranking e configurações -->
-<!-- ========== PERFIL ========== -->
-<div class="screen" id="screen-perfil">
-  <div style="padding:24px 20px">
-    <div style="text-align:center;margin-bottom:20px">
-      <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--violet));display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px">🎓</div>
-      <div style="font-family:var(--font-display);font-size:20px;font-weight:800" id="perfil-nome">—</div>
-      <div style="font-size:13px;color:var(--text2);margin-top:3px" id="perfil-info">—</div>
+<!-- Perfil do estudante: somente dados reais, sem ranking demonstrativo -->
+<section class="screen" id="screen-perfil" aria-labelledby="perfil-titulo">
+  <div class="perfil-page">
+    <header class="perfil-hero">
+      <div class="perfil-avatar"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#graduation-cap"></use></svg></div>
+      <div>
+        <h1 id="perfil-titulo"><span id="perfil-nome">Estudante</span></h1>
+        <p id="perfil-info">Sua jornada de estudos</p>
+      </div>
+    </header>
+    <div class="perfil-stats-grid" aria-label="Resumo do desempenho">
+      <div class="perfil-metric"><small>Experiência</small><strong id="perfil-xp">0</strong><span>XP acumulado no navegador</span></div>
+      <div class="perfil-metric"><small>Precisão</small><strong id="perfil-acertos">—</strong><span>Questões respondidas</span></div>
+      <div class="perfil-metric"><small>Sequência</small><strong id="perfil-streak">0</strong><span>Dias de acesso consecutivos</span></div>
+      <div class="perfil-metric"><small>Questões</small><strong id="perfil-respondidas">0</strong><span>Tentativas registradas</span></div>
+      <div class="perfil-metric"><small>Acertos</small><strong id="perfil-corretas">0</strong><span>Respostas corretas</span></div>
+      <div class="perfil-metric"><small>Conteúdos</small><strong id="perfil-aulas">0</strong><span>Primeiras conclusões</span></div>
     </div>
-
-    <!-- Stats -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--gold)" id="perfil-xp">0</div>
-        <div style="font-size:10px;color:var(--text2)">XP total</div>
+    <section class="perfil-section">
+      <h2><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#target"></use></svg> Assuntos para revisar</h2>
+      <div id="perfil-dificuldades" class="perfil-dificuldades">Ainda não há recomendações.</div>
+    </section>
+    <section class="perfil-section">
+      <h2><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#calendar-days"></use></svg> Atividade e recursos</h2>
+      <div class="perfil-info-grid">
+        <div><span>Última visita registrada</span><strong id="perfil-ultima-atividade">Aguardando sincronização</strong></div>
+        <div><span>Vidas disponíveis</span><strong id="perfil-vidas">3/3</strong></div>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--green)" id="perfil-acertos">0%</div>
-        <div style="font-size:10px;color:var(--text2)">acertos</div>
-      </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-        <div style="font-size:22px;font-weight:700;color:var(--red)" id="perfil-streak">🔥0</div>
-        <div style="font-size:10px;color:var(--text2)">streak</div>
-      </div>
-    </div>
-
-    <!-- Dificuldades observadas -->
-    <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:14px;padding:16px;margin-bottom:14px">
-      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:10px">⚠️ Pontos a reforçar</div>
-      <div id="perfil-dificuldades" style="font-size:13px;color:var(--text2);line-height:1.9">
-        <span style="color:var(--text2);font-size:12px">Nenhum erro registrado ainda. Continue praticando!</span>
-      </div>
-    </div>
-
-    <!-- Ranking -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
-      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px">🏆 Ranking da semana</div>
-      <div class="ranking-list">
-        <div class="rank-item"><div class="rank-pos gold">🥇</div><div class="rank-avatar">👩</div><div class="rank-name">Ana Paula M.</div><div class="rank-xp">1.240 XP</div></div>
-        <div class="rank-item"><div class="rank-pos silver">🥈</div><div class="rank-avatar">👦</div><div class="rank-name">Carlos R.</div><div class="rank-xp">980 XP</div></div>
-        <div class="rank-item"><div class="rank-pos bronze">🥉</div><div class="rank-avatar">👧</div><div class="rank-name">Isabela S.</div><div class="rank-xp">875 XP</div></div>
-        <div class="rank-item" style="border-color:var(--border-accent);background:rgba(59,130,246,0.05)">
-          <div class="rank-pos" style="color:var(--cyan)">—</div>
-          <div class="rank-avatar">😎</div>
-          <div class="rank-name" id="rank-nome">Você</div>
-          <div class="rank-xp" id="rank-xp">0 XP</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Editar perfil -->
-    <button onclick="editarPerfil()" style="width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer">✏️ Editar série e vestibular</button>
+      <p class="perfil-disclaimer">Uma vida retorna a cada 4 horas. A primeira conclusão de um novo tópico concede uma vida extra, até o máximo de 3. A sequência de dias é salva na sua conta. O XP e os totais de questões ainda são acumulados neste navegador.</p>
+    </section>
+    <button type="button" class="perfil-edit-button" onclick="editarPerfil()">
+      <svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#settings"></use></svg> Editar nome, série e vestibulares
+    </button>
   </div>
-</div>
+  <div class="perfil-modal-backdrop" id="editar-perfil-modal" hidden>
+    <form class="perfil-modal" onsubmit="salvarEdicaoPerfil(event)" aria-labelledby="editar-perfil-titulo">
+      <h2 id="editar-perfil-titulo">Editar meus dados</h2>
+      <label for="editar-nome">Nome</label><input id="editar-nome" maxlength="120" required autocomplete="name">
+      <label for="editar-serie">Etapa de estudo</label>
+      <select id="editar-serie" required>
+        <option value="1">1º ano</option><option value="2">2º ano</option>
+        <option value="3">3º ano</option><option value="4">Ensino Médio completo</option>
+      </select>
+      <fieldset class="perfil-vests"><legend>Vestibulares de interesse</legend>
+        <label><input type="checkbox" name="editar-vest" value="ENEM"> ENEM</label>
+        <label><input type="checkbox" name="editar-vest" value="PSC"> PSC</label>
+        <label><input type="checkbox" name="editar-vest" value="SIS"> SIS</label>
+        <label><input type="checkbox" name="editar-vest" value="MACRO"> MACRO</label>
+      </fieldset>
+      <p class="perfil-form-error" id="editar-erro" role="alert"></p>
+      <div class="perfil-modal-actions">
+        <button type="button" onclick="fecharEdicaoPerfil()">Cancelar</button>
+        <button type="submit" id="editar-salvar">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</section>

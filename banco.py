@@ -23,7 +23,7 @@ def conectar() -> sqlite3.Connection:
 
 
 def inicializar_banco() -> None:
-    """Executa o esquema sem remover dados de tabelas já existentes."""
+    """Executa o esquema e cadastra referências oficiais sem remover dados."""
     if not ARQUIVO_SQL.is_file():
         raise FileNotFoundError(f"Esquema SQL não encontrado: {ARQUIVO_SQL}")
 
@@ -31,6 +31,19 @@ def inicializar_banco() -> None:
     conexao = conectar()
     try:
         conexao.executescript(script)
+        # URLs vêm de um catálogo auditado e permanecem editáveis no SQLite.
+        catalogo = BASE_DIR / 'database' / 'provas_oficiais.json'
+        if catalogo.is_file():
+            import json
+            dados = json.loads(catalogo.read_text(encoding='utf-8'))
+            for item in dados:
+                conexao.execute(
+                    """INSERT OR IGNORE INTO documentos_provas
+                       (vestibular, ano, titulo, instituicao, url_oficial, observacao)
+                       VALUES (?, ?, ?, ?, ?, ?)""",
+                    (item['vestibular'], item['ano'], item['titulo'],
+                     item['instituicao'], item['url_oficial'], item['observacao']),
+                )
         conexao.commit()
     finally:
         conexao.close()

@@ -5780,3 +5780,5 @@ function getDificuldade(q) {
   return 1;
 }
 
+// Referência explícita para os módulos carregados dinamicamente pelo Router.
+window.VOAAM_BANCO = bancoDB;

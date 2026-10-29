@@ -1367,3 +1367,6 @@ const quizzes = {
   }
 
 };
+
+// Referência explícita para os módulos carregados dinamicamente pelo Router.
+window.VOAAM_QUIZZES = quizzes;

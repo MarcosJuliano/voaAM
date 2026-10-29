@@ -184,8 +184,9 @@ function exRenderQuestoesFiltradas() {
   // Fallback: se pouco, expande faixa
   if (filtrado.length < 3) filtrado = pool;
 
-  filtrado = filtrado.sort(() => Math.random() - 0.5).slice(0, 10);
-  filtrado.sort((a, b) => a._dif - b._dif);
+  // Ordem determinística por nível e ID; alternar de ano ou aba não sorteia outras questões.
+  filtrado.sort((a,b) => a._dif - b._dif || String(a.id).localeCompare(String(b.id)));
+  filtrado = filtrado.slice(0, 10);
 
   const nivelLabels = ['','Fácil','Médio','Difícil'];
   const nivelIcons  = ['','🟢','🟡','🔴'];

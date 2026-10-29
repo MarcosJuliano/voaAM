@@ -1503,3 +1503,65 @@ body {
   outline: 2px solid var(--accent2);
   outline-offset: 3px;
 }
+
+
+/* voaAM v3 — ícones e refinamento do header, vidas e perfil. */
+.voa-svg-icon {display:inline-block;width:1.12em;height:1.12em;vertical-align:-.16em;flex-shrink:0;stroke:currentColor;fill:none;}
+.nav-icon .voa-svg-icon {width:22px;height:22px;vertical-align:middle;}
+.topic-icon .voa-svg-icon,.action-icon .voa-svg-icon,.vest-badge .voa-svg-icon {width:22px;height:22px;}
+.header-right {display:flex;align-items:center;justify-content:flex-end;gap:9px;min-width:0;flex-wrap:wrap;}
+.header-xp {display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.vidas-area {position:relative;}
+.vidas-pill {border:1px solid var(--border);border-radius:24px;padding:6px 10px;color:var(--text);background:var(--surface2);font:600 12px var(--font);display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;}
+.vidas-pill .voa-svg-icon {color:var(--red);width:17px;height:17px;}
+#vidas-next {font-size:10px;font-weight:500;color:var(--text2);}
+.vidas-popover {position:absolute;z-index:9999;top:calc(100% + 10px);right:0;width:min(300px,88vw);padding:16px;border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);background:var(--card);color:var(--text);font-size:13px;line-height:1.5;}
+.vidas-popover p {margin:8px 0 12px;color:var(--text2);}
+.vidas-popover button {background:var(--accent);color:white;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font:inherit;}
+[hidden] {display:none !important;}
+/* A legenda e o círculo não podem ficar sobrepostos. */
+.theme-toggle {width:112px;min-width:112px;height:36px;display:block;overflow:hidden;}
+.theme-toggle::before {top:5px;width:26px;height:26px;}
+[data-theme="dark"] .theme-toggle::before {left:5px;}
+[data-theme="light"] .theme-toggle::before {left:81px;}
+.theme-toggle-label {top:50%;font-size:11px;line-height:1;text-transform:uppercase;}
+[data-theme="dark"] .theme-toggle-label-dark {left:43px;right:7px;text-align:center;opacity:1;}
+[data-theme="light"] .theme-toggle-label-light {left:9px;right:40px;text-align:center;opacity:1;}
+[data-theme="dark"] .theme-toggle-label-light, [data-theme="light"] .theme-toggle-label-dark {opacity:0;}
+/* Perfil: painel útil, sem ranking inventado */
+.perfil-page {max-width:960px;margin:0 auto;padding:28px 22px 48px;color:var(--text);}
+.perfil-hero {display:flex;align-items:center;gap:18px;margin-bottom:26px;}
+.perfil-avatar {width:72px;height:72px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(140deg,var(--accent),#7c3aed);color:white;font-size:32px;}
+.perfil-avatar .voa-svg-icon {width:35px;height:35px;}
+.perfil-hero h1 {font:800 24px var(--font-display);margin:0 0 3px;}
+.perfil-hero p {margin:0;color:var(--text2);font-size:13px;}
+.perfil-stats-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:22px;}
+.perfil-metric {border:1px solid var(--border);border-radius:14px;background:var(--card);padding:17px;display:flex;flex-direction:column;gap:6px;}
+.perfil-metric small {font-size:11px;text-transform:uppercase;font-weight:700;color:var(--text2);letter-spacing:.04em;}
+.perfil-metric strong {font-size:25px;line-height:1.2;color:var(--accent2);}
+.perfil-metric span {font-size:11px;color:var(--text2);}
+.perfil-section {background:var(--surface);border:1px solid var(--border);border-radius:15px;padding:18px;margin:0 0 15px;}
+.perfil-section h2 {font-size:14px;font-weight:800;margin:0 0 14px;display:flex;gap:9px;align-items:center;}
+.perfil-dificuldades {font-size:13px;color:var(--text2);line-height:1.7;}
+.perfil-recomendacao {display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--border);padding:8px 0;}
+.perfil-recomendacao:first-child {border:0;}
+.perfil-recomendacao strong {color:var(--red);}
+.perfil-info-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.perfil-info-grid>div {display:flex;flex-direction:column;gap:5px;padding:10px;border-radius:10px;background:var(--card);}
+.perfil-info-grid span {font-size:11px;color:var(--text2);}
+.perfil-info-grid strong {font-size:13px;}
+.perfil-disclaimer {font-size:11px;line-height:1.65;color:var(--text2);margin:15px 0 0;}
+.perfil-edit-button {width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font:700 13px var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;}
+.perfil-modal-backdrop {position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9900;display:grid;place-items:center;padding:20px;}
+.perfil-modal {background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:18px;padding:24px;width:min(460px,100%);display:flex;flex-direction:column;gap:10px;max-height:90vh;overflow:auto;}
+.perfil-modal h2 {font-size:19px;margin:0 0 8px;}
+.perfil-modal label,.perfil-vests legend {font-size:12px;font-weight:700;color:var(--text2);}
+.perfil-modal input:not([type="checkbox"]),.perfil-modal select {width:100%;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);padding:11px;font:inherit;}
+.perfil-vests {border:1px solid var(--border);border-radius:10px;padding:12px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.perfil-vests label {display:flex;align-items:center;gap:6px;}
+.perfil-form-error {min-height:14px;color:var(--red);font-size:12px;}
+.perfil-modal-actions {display:flex;gap:10px;justify-content:flex-end;}
+.perfil-modal-actions button {border:1px solid var(--border);border-radius:9px;padding:10px 14px;font:700 13px var(--font);background:var(--surface2);color:var(--text);cursor:pointer;}
+.perfil-modal-actions button[type="submit"] {background:var(--accent);color:white;}
+.perfil-modal-actions button:disabled {opacity:.5;cursor:wait;}
+@media(max-width:760px) {.header-right{gap:4px}.vidas-pill{padding:5px 7px}#vidas-next{display:none}.theme-toggle{min-width:92px;width:92px}[data-theme="light"] .theme-toggle::before{left:61px}[data-theme="dark"] .theme-toggle-label-dark {left:35px;right:2px}[data-theme="light"] .theme-toggle-label-light {right:34px}.perfil-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.perfil-info-grid{grid-template-columns:1fr}.perfil-page{padding:16px 12px 40px}}

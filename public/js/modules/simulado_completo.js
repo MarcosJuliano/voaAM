@@ -132,7 +132,11 @@ function scGetQuestoes(provaKey) {
   if (p.tipo === 'linear') {
     // ENEM / MACRO: questoes é array direto
     return (d.questoes || [])
-      .filter(q => q.enunciado && q.enunciado.trim() !== '')
+      .filter(q => q.enunciado && q.enunciado.trim() !== '' &&
+        q.alt && Object.keys(q.alt).length >= 4 &&
+        Object.values(q.alt).every(alt => String(alt || '').trim().length > 0) &&
+        // No material original a imagem desta questão não foi incluída.
+        !(provaKey === 'ENEM2024' && q.num === 172))
       .map(q => ({ ...q, _ano: null }));
   }
 
@@ -143,7 +147,7 @@ function scGetQuestoes(provaKey) {
     let offset = 0;
     for (const ano of (p.anos || [])) {
       const lista = (d.questoes && d.questoes[ano]) || [];
-      const filtrada = lista.filter(q => q.enunciado && q.enunciado.trim() !== '');
+      const filtrada = lista.filter(q => q.enunciado && q.enunciado.trim() !== '' && q.alt && Object.values(q.alt).every(a => String(a || '').trim()));
       filtrada.forEach(q => {
         result.push({
           ...q,
@@ -234,7 +238,7 @@ function scMostrarAnos(grupoId) {
               </div>
               <div style="font-size:11px;color:var(--text2);margin-top:3px">
                 ${temDados
-                  ? `${questoes.length} questões · ${p.tempoMinutos} min · Gabarito oficial`
+                  ? `${questoes.length} questões · ${p.tempoMinutos} min · Gabarito cadastrado`
                   : 'Sem questões cadastradas'}
               </div>
             </div>
@@ -250,7 +254,11 @@ function scMostrarAnos(grupoId) {
 function scMostrarConfirmacao(key, grupoId) {
   const container = document.getElementById('sim-cards-container');
   if (!container) return;
-  const p       = SC_PROVAS[key];
+  const p = SC_PROVAS[key];
+  if (!p) {
+    console.error('[VoaAM] Prova desconhecida:', key);
+    return;
+  }
   const questoes = scGetQuestoes(key);
   const temDados = questoes.length > 0;
   const temSelecao = (SC_GRUPOS[grupoId] || []).length > 1;
@@ -282,7 +290,7 @@ function scMostrarConfirmacao(key, grupoId) {
           <div style="font-size:10px;color:var(--text2)">Tempo</div>
         </div>
         <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:15px;font-weight:800;color:${p.cor}">Oficial</div>
+          <div style="font-size:15px;font-weight:800;color:${p.cor}">Registrado</div>
           <div style="font-size:10px;color:var(--text2)">Gabarito</div>
         </div>
       </div>
@@ -383,7 +391,7 @@ function scRenderQ() {
       <figure class="sc-img-box" style="margin:12px 0">
         <img src="${q.img}" alt="Figura Q${q._numOriginal || q.num}" loading="lazy"
           onclick="scZoomAbrir('${q.img}')"
-          onerror="this.closest('figure').style.display='none'"
+          onerror="this.closest('figure').querySelector('figcaption').textContent='Figura indisponível. Consulte o caderno oficial no Banco de Provas.';this.style.display='none'"
           style="max-width:100%;border-radius:8px;cursor:zoom-in">
         <figcaption style="display:flex;align-items:center;justify-content:space-between;
           font-size:11px;color:var(--text2);margin-top:6px;padding:0 2px">
@@ -665,3 +673,7 @@ function scZoomFechar() {
   document.removeEventListener('keydown', scZoomEsc);
 }
 function scZoomEsc(e) { if (e.key === 'Escape') scZoomFechar(); }
+
+// APIs globais usadas nos onclick gerados dinamicamente pelo módulo Praticar.
+Object.assign(window, { scMostrarAnos, scMostrarConfirmacao, scIniciarDireto, scFechar, scRecomear, scZoomAbrir, scZoomFechar });
+window.VOAAM_SC_GRUPOS = SC_GRUPOS;

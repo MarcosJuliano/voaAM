@@ -288,43 +288,73 @@ function voltarParaModos() {
 }
 
 function iniciarSimuladoNovo(vestKey, modo) {
-  const cfg = simConfig[vestKey];
-  if (!cfg) return;
-  const qs   = modo === 'simples' ? Math.ceil(cfg.qs / 2) : cfg.qs;
-  const mins = modo === 'simples' ? Math.ceil(cfg.horas * 60 / 2) : cfg.horas * 60;
+  try {
+    const cfg = simConfig[vestKey];
+    if (!cfg) {
+      console.error('[VoaAM] Vestibular desconhecido:', vestKey);
+      if (typeof showXPToast === 'function') showXPToast('Vestibular inválido. Escolha novamente.');
+      return;
+    }
 
-  const vestMap  = { ENEM:'ENEM', MACRO:'MACRO', PSC1:'PSC', PSC2:'PSC', PSC3:'PSC', SIS1:'SIS', SIS2:'SIS', SIS3:'SIS' };
-  const etapaMap = { PSC1:1, PSC2:2, PSC3:3, SIS1:1, SIS2:2, SIS3:3 };
-  const vestNome = vestMap[vestKey];
-  const etapa    = etapaMap[vestKey];
+    const quantidadeSolicitada = modo === 'simples' ? Math.ceil(cfg.qs / 2) : cfg.qs;
+    const minutos = modo === 'simples' ? Math.ceil(cfg.horas * 60 / 2) : cfg.horas * 60;
+    const vestMap = { ENEM: 'ENEM', MACRO: 'MACRO', PSC1: 'PSC', PSC2: 'PSC', PSC3: 'PSC', SIS1: 'SIS', SIS2: 'SIS', SIS3: 'SIS' };
+    const etapaMap = { PSC1: 1, PSC2: 2, PSC3: 3, SIS1: 1, SIS2: 2, SIS3: 3 };
+    const vestNome = vestMap[vestKey];
+    const etapa = etapaMap[vestKey];
 
-  let pool = bancoDB.filter(q => q.vest === vestNome && q.opcoes && q.opcoes.length > 0);
-  if (etapa) pool = pool.filter(q => !q.etapa || q.etapa === etapa);
-  const embaralhadas = pool.sort(() => Math.random() - 0.5).slice(0, qs);
-  if (!embaralhadas.length) { showXPToast('⚠️ Banco de questões insuficiente'); return; }
+    const banco = window.VOAAM_BANCO || (typeof bancoDB !== 'undefined' ? bancoDB : null);
+    if (!Array.isArray(banco)) {
+      console.error('[VoaAM] Banco de questões não foi carregado.');
+      if (typeof showXPToast === 'function') showXPToast('O banco de questões não carregou. Atualize a página.');
+      return;
+    }
 
-  const questoes = embaralhadas.map(q => ({
-    q: q.enunciado, opts: q.opcoes, correct: q.correta,
-    explanation: q.contexto || `Gabarito: ${q.gabarito}`, materia: q.materia, id: q.id
-  }));
-  const modoLabel = modo === 'simples' ? 'Simples' : 'Completo';
-  currentQuiz = {
-    title: `${cfg.label} — Simulado ${modoLabel}`,
-    desc: `${modo === 'simples' ? '⚡' : '🏆'} Simulado ${modoLabel} • ${qs} questões • ${mins >= 60 ? (mins/60).toFixed(1).replace('.0','')+'h' : mins+'min'} cronometrado`,
-    video: null, questions: questoes
-  };
-  currentQuizIdx = 0; quizCorrect = 0; isSimulado = true;
-  document.getElementById('aula-title').textContent = currentQuiz.title;
-  document.getElementById('aula-content').innerHTML = `
-    <div class="topic-desc">${currentQuiz.desc}</div>
-    <div class="quiz-title-bar">
-      <span class="quiz-badge" style="background:${cfg.cor};color:${cfg.corNum}">${cfg.emoji} ${cfg.label}</span>
-      <span class="quiz-progress-text">0 / ${questoes.length} questões</span>
-    </div>
-    <div id="quiz-area"></div>`;
-  document.getElementById('aula-view').classList.add('open');
-  iniciarCronometro(mins * 60);
-  renderQuestion();
+    let pool = banco.filter(q => q && q.vest === vestNome && Array.isArray(q.opcoes) && q.opcoes.length > 1);
+    if (etapa) pool = pool.filter(q => !q.etapa || Number(q.etapa) === etapa);
+    pool = pool.filter(q => {
+      const correta = Number.isInteger(q.correta) ? q.correta : ['A', 'B', 'C', 'D', 'E'].indexOf(String(q.gabarito || '').toUpperCase());
+      return correta >= 0 && correta < q.opcoes.length && String(q.enunciado || '').trim().length > 0;
+    });
+
+    // Embaralhamento Fisher–Yates, evitando o comparador aleatório de sort().
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    const selecionadas = pool.slice(0, quantidadeSolicitada);
+    if (!selecionadas.length) {
+      console.warn('[VoaAM] Nenhuma questão disponível para o simulado:', { vestKey, vestNome, etapa, banco: banco.length });
+      if (typeof showXPToast === 'function') showXPToast('Não há questões cadastradas para este simulado.');
+      return;
+    }
+
+    const questoes = selecionadas.map(q => ({
+      q: q.enunciado,
+      opts: q.opcoes,
+      correct: Number.isInteger(q.correta) ? q.correta : ['A', 'B', 'C', 'D', 'E'].indexOf(String(q.gabarito || '').toUpperCase()),
+      explanation: q.contexto || `Gabarito: ${q.gabarito || ''}`,
+      materia: q.materia,
+      id: q.id
+    }));
+    const modoLabel = modo === 'simples' ? 'Simples' : 'Completo';
+    const descricao = `${modo === 'simples' ? '⚡' : '🏆'} Simulado ${modoLabel} • ${questoes.length} questões • ${minutos >= 60 ? (minutos / 60).toFixed(1).replace('.0', '') + 'h' : minutos + 'min'} cronometrado`;
+
+    if (typeof window.voaAMAbrirSimulado !== 'function') {
+      console.error('[VoaAM] O módulo de aula não expôs voaAMAbrirSimulado.');
+      if (typeof showXPToast === 'function') showXPToast('O módulo do simulado não carregou. Atualize a página.');
+      return;
+    }
+    window.voaAMAbrirSimulado({
+      title: `${cfg.label} — Simulado ${modoLabel}`,
+      desc: descricao,
+      video: null,
+      questions: questoes
+    }, minutos * 60);
+  } catch (erro) {
+    console.error('[VoaAM] Falha ao iniciar simulado:', erro);
+    if (typeof showXPToast === 'function') showXPToast('O simulado não pôde ser iniciado. Veja o Console para detalhes.');
+  }
 }
 
 function pratAba(aba) {
@@ -446,3 +476,39 @@ function iniciarSimuladoCatalogo(id) {
 function abrirModalSimulado() { goTo('praticar'); pratAba('sim'); }
 function fecharModalSimulado() {}
 
+
+
+// Abre os simulados disponíveis ao clicar no cartão do vestibular na página inicial.
+// Não usa a rota antiga 'vestibulares', que não existe nesta SPA.
+function abrirVestibularDoInicio(vestibular) {
+  const codigo = String(vestibular || 'ENEM').trim().toUpperCase();
+  const grupos = {
+    ENEM: 'ENEM',
+    MACRO: 'MACRO',
+    PSC: 'PSC1',
+    PSC1: 'PSC1',
+    PSC2: 'PSC2',
+    PSC3: 'PSC3',
+    SIS: 'SIS1',
+    SIS1: 'SIS1',
+    SIS2: 'SIS2',
+    SIS3: 'SIS3',
+  };
+  const grupo = grupos[codigo] || 'ENEM';
+
+  if (typeof goTo === 'function') goTo('praticar');
+  if (typeof pratAba === 'function') pratAba('sim');
+  if (typeof simModoAba === 'function') simModoAba('completo');
+
+  if (typeof scMostrarAnos === 'function' && typeof SC_GRUPOS !== 'undefined' && SC_GRUPOS[grupo]) {
+    scMostrarAnos(grupo);
+  } else {
+    console.error('[VoaAM] Não foi possível abrir as provas para:', grupo);
+    if (typeof showXPToast === 'function') {
+      showXPToast('Não foi possível abrir as provas. Atualize a página e tente novamente.');
+    }
+  }
+}
+
+window.iniciarSimuladoNovo = iniciarSimuladoNovo;
+if (typeof abrirVestibularDoInicio === 'function') window.abrirVestibularDoInicio = abrirVestibularDoInicio;

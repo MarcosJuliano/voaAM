@@ -58,3 +58,43 @@ CREATE TABLE IF NOT EXISTS historico_questoes (
 
 CREATE INDEX IF NOT EXISTS idx_redacoes_usuario ON redacoes(usuario_id, atualizada_em);
 CREATE INDEX IF NOT EXISTS idx_historico_usuario ON historico_questoes(usuario_id, respondida_em);
+
+
+-- Conclusões dos tópicos de aula/quiz por estudante.
+CREATE TABLE IF NOT EXISTS topicos_concluidos (
+    usuario_id INTEGER NOT NULL,
+    topico_id TEXT NOT NULL,
+    disciplina TEXT NOT NULL CHECK (disciplina IN ('mat', 'red')),
+    serie INTEGER NOT NULL CHECK (serie BETWEEN 1 AND 3),
+    quiz_id TEXT NOT NULL,
+    questoes_total INTEGER NOT NULL CHECK (questoes_total > 0),
+    acertos INTEGER NOT NULL CHECK (acertos >= 0 AND acertos <= questoes_total),
+    percentual INTEGER NOT NULL CHECK (percentual BETWEEN 0 AND 100),
+    concluido_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (usuario_id, topico_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_topicos_concluidos_usuario
+    ON topicos_concluidos(usuario_id, disciplina, serie);
+
+
+-- Índice de referências a páginas oficiais. Nenhum PDF armazenado aqui.
+CREATE TABLE IF NOT EXISTS documentos_provas (
+    vestibular TEXT NOT NULL CHECK (vestibular IN ('ENEM', 'PSC', 'SIS', 'MACRO')),
+    ano INTEGER NOT NULL CHECK (ano BETWEEN 0 AND 2100),
+    titulo TEXT NOT NULL,
+    instituicao TEXT NOT NULL,
+    url_oficial TEXT NOT NULL,
+    observacao TEXT NOT NULL DEFAULT '',
+    PRIMARY KEY (vestibular, ano)
+);
+
+-- Vidas separadas da pontuação, para recarga gradual por conta.
+CREATE TABLE IF NOT EXISTS vidas (
+    usuario_id INTEGER PRIMARY KEY,
+    quantidade INTEGER NOT NULL DEFAULT 3 CHECK (quantidade BETWEEN 0 AND 3),
+    proxima_recarga INTEGER, -- Unix timestamp UTC, próxima vida
+    FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);

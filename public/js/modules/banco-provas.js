@@ -1,140 +1,90 @@
-// =============================================================
-// js/modules/banco-provas.js
-// Banco de Provas — accordion de anos + links de PDF por vestibular
-// Todas as funções são globais para funcionar com onclick no HTML
-// =============================================================
-
-// ─── ACCORDION DOS CARDS PRINCIPAIS (vest-full-card) ─────────
+// Banco de Provas — somente referências oficiais, cadastradas no SQLite.
+// Sem HEAD em PDF local, sem gerar links falsos para arquivos inexistentes.
 function toggleVest(id) {
-  document.getElementById(id)?.classList.toggle('open');
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
 }
-
-// ─── ACCORDION DOS ANOS ──────────────────────────────────────
 function bpAno(id) {
-  document.getElementById(id)?.classList.toggle('open');
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
 }
-
-// ─── ABRIR PDF (verifica existência antes) ───────────────────
-async function bpVerificar(event, href) {
-  event.preventDefault();
-  try {
-    const res = await fetch(href, { method: 'HEAD' });
-    if (res.ok) {
-      window.open(href, '_blank', 'noopener,noreferrer');
-    } else {
-      showXPToast('📭 Arquivo não disponível ainda');
-    }
-  } catch {
-    // Falha de rede ou CORS — tenta abrir mesmo assim
-    window.open(href, '_blank', 'noopener,noreferrer');
-  }
-  return false;
+function bpEscapar(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
-// ─── HELPERS DE RENDERIZAÇÃO ─────────────────────────────────
-function _bpAnos() {
-  const r = [];
-  for (let y = new Date().getFullYear(); y >= 2016; y--) r.push(y);
-  return r;
-}
-
-function _bpBtnProva(href) {
-  return `<a href="${href}" target="_blank" rel="noopener noreferrer"
-    class="bp-dl-btn bp-dl-btn-prova"
-    onclick="return bpVerificar(event,'${href}')">📄 Prova</a>`;
-}
-
-function _bpBtnGab(href) {
-  return `<a href="${href}" target="_blank" rel="noopener noreferrer"
-    class="bp-dl-btn bp-dl-btn-gab"
-    onclick="return bpVerificar(event,'${href}')">✅ Gabarito</a>`;
-}
-
-function _bpRow(nome, prova, gab) {
-  return `<div class="bp-dl-row">
-    <span class="bp-dl-nome">${nome}</span>
-    <div class="bp-dl-btns">${_bpBtnProva(prova)}${_bpBtnGab(gab)}</div>
-  </div>`;
-}
-
-function _bpEtiqueta(txt) {
-  return `<div class="bp-etapa-titulo">${txt}</div>`;
-}
-
-function _bpBlocoAno(id, ano, conteudo) {
-  return `<div class="bp-ano" id="${id}">
-    <div class="bp-ano-header" onclick="bpAno('${id}')">
-      <span class="bp-ano-titulo">${ano}</span>
-      <span class="bp-ano-chevron">▾</span>
+const BP_IDS = ['ENEM','PSC','MACRO','SIS'];
+function bpBlocoAno(vest, doc) {
+  const nome = doc.ano === 0 ? 'Acervo' : doc.ano;
+  const chave = `bpa-${vest.toLowerCase()}-${doc.ano}`;
+  const onlineKey = (vest === 'ENEM' || vest === 'MACRO') && doc.ano > 0
+    ? `${vest}${doc.ano}` : null;
+  const onlineDisponivel = onlineKey && typeof scGetQuestoes === 'function'
+    && scGetQuestoes(onlineKey).length > 0;
+  const online = onlineDisponivel
+    ? `<button type="button" class="bp-btn bp-btn-g" onclick="bpIniciarSimulado('${onlineKey}')">🎯 Simulado online</button>`
+    : '';
+  return `<div class="bp-ano" id="${chave}">
+    <button type="button" class="bp-ano-hdr" onclick="bpAno('${chave}')" aria-label="Expandir ${bpEscapar(nome)}">
+      <span class="bp-ano-hdr-txt">${bpEscapar(nome)}</span>
+      <span class="bp-chev" aria-hidden="true">▾</span>
+    </button>
+    <div class="bp-ano-body">
+      <div class="bp-row">
+        <div style="flex:1;min-width:0">
+          <div class="bp-row-nome">${bpEscapar(doc.titulo)}</div>
+          <div class="bp-note">${bpEscapar(doc.observacao)}</div>
+          <div class="bp-note">Fonte: ${bpEscapar(doc.instituicao)}</div>
+        </div>
+        <div class="bp-row-btns">${online}
+          <a class="bp-btn bp-btn-p" href="${bpEscapar(doc.url_oficial)}" target="_blank" rel="noopener noreferrer">↗ Portal oficial</a>
+        </div>
+      </div>
     </div>
-    <div class="bp-ano-corpo">${conteudo}</div>
   </div>`;
 }
-
-// ─── RENDER PRINCIPAL ─────────────────────────────────────────
-function initBancoProvas() {
-  const anos = _bpAnos();
-
-  // ── ENEM ──────────────────────────────────────────────────
-  const elEnem = document.getElementById('bp-enem-anos');
-  if (elEnem && !elEnem.dataset.rendered) {
-    elEnem.innerHTML = anos.map(y =>
-      _bpBlocoAno(`bpa-enem-${y}`, y,
-        _bpRow('ENEM — Matemática e Ciências da Natureza',
-          `assets/documents/ENEM/${y}/PROVA-ENEM-${y}.pdf`,
-          `assets/documents/ENEM/${y}/GABARITO-ENEM-${y}.pdf`)
-      )
-    ).join('');
-    elEnem.dataset.rendered = '1';
+function bpIniciarSimulado(key) {
+  const grupo = key.startsWith('ENEM') ? 'ENEM' : 'MACRO';
+  if (typeof goTo !== 'function' || typeof simModoAba !== 'function' ||
+      typeof scMostrarConfirmacao !== 'function') {
+    console.error('[VoaAM] Módulos do simulado não disponíveis.');
+    if (typeof showXPToast === 'function') showXPToast('O simulado ainda não carregou. Atualize a página.');
+    return;
   }
-
-  // ── PSC ──────────────────────────────────────────────────
-  const elPsc = document.getElementById('bp-psc-anos');
-  if (elPsc && !elPsc.dataset.rendered) {
-    elPsc.innerHTML = anos.map(y =>
-      _bpBlocoAno(`bpa-psc-${y}`, y,
-        [1, 2, 3].map(e =>
-          _bpEtiqueta(`${e}ª Etapa`) +
-          _bpRow(`PSC ${e}ª Etapa ${y}`,
-            `assets/documents/PSC/${y}/${e}-ETAPA/PROVA-PSC-${e}-ETAPA-${y}.pdf`,
-            `assets/documents/PSC/${y}/${e}-ETAPA/GABARITO-PSC-${e}-ETAPA-${y}.pdf`)
-        ).join('')
-      )
-    ).join('');
-    elPsc.dataset.rendered = '1';
-  }
-
-  // ── MACRO ────────────────────────────────────────────────
-  const elMacro = document.getElementById('bp-macro-anos');
-  if (elMacro && !elMacro.dataset.rendered) {
-    elMacro.innerHTML = anos.map(y =>
-      _bpBlocoAno(`bpa-macro-${y}`, y,
-        _bpEtiqueta('Conhecimentos Gerais') +
-        _bpRow(`MACRO ${y} — Conhecimentos Gerais`,
-          `assets/documents/MACRO/${y}/CONHECIMENTOS-GERAIS/PROVACG-MACRO-${y}.pdf`,
-          `assets/documents/MACRO/${y}/CONHECIMENTOS-GERAIS/GABARITOCG-MACRO-${y}.pdf`) +
-        _bpEtiqueta('Conhecimentos Específicos') +
-        _bpRow(`MACRO ${y} — Conhecimentos Específicos`,
-          `assets/documents/MACRO/${y}/CONHECIMENTOS-ESPECIFICOS/PROVACE-MACRO-${y}.pdf`,
-          `assets/documents/MACRO/${y}/CONHECIMENTOS-ESPECIFICOS/GABARITOCE-MACRO-${y}.pdf`)
-      )
-    ).join('');
-    elMacro.dataset.rendered = '1';
-  }
-
-  // ── SIS ──────────────────────────────────────────────────
-  const elSis = document.getElementById('bp-sis-anos');
-  if (elSis && !elSis.dataset.rendered) {
-    elSis.innerHTML = anos.map(y =>
-      _bpBlocoAno(`bpa-sis-${y}`, y,
-        [1, 2, 3].map(e =>
-          _bpEtiqueta(`${e}ª Etapa`) +
-          _bpRow(`SIS ${e}ª Etapa ${y}`,
-            `assets/documents/SIS/${y}/${e}-ETAPA/PROVA-SIS-${e}-ETAPA-${y}.pdf`,
-            `assets/documents/SIS/${y}/${e}-ETAPA/GABARITO-SIS-${e}-ETAPA-${y}.pdf`)
-        ).join('')
-      )
-    ).join('');
-    elSis.dataset.rendered = '1';
+  goTo('praticar');
+  simModoAba('completo');
+  scMostrarConfirmacao(key, grupo);
+}
+async function initBancoProvas() {
+  const containers = Object.fromEntries(BP_IDS.map(v => [v, document.getElementById(`bp-${v.toLowerCase()}-anos`)]));
+  for (const el of Object.values(containers)) if (el) el.innerHTML = '<p class="bp-loading">Carregando referências oficiais…</p>';
+  try {
+    const res = await fetch('/api/provas-oficiais', {headers:{Accept:'application/json'}});
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const {documentos} = await res.json();
+    if (!Array.isArray(documentos)) throw new Error('Formato de catálogo inválido');
+    for (const vest of BP_IDS) {
+      const destino = containers[vest];
+      if (!destino) continue;
+      const docs = documentos.filter(d => d.vestibular === vest);
+      destino.innerHTML = docs.length ? docs.map(d => bpBlocoAno(vest,d)).join('')
+        : '<p class="bp-loading">Nenhuma referência oficial cadastrada neste momento.</p>';
+    }
+  } catch (erro) {
+    console.warn('[VoaAM] API de provas indisponível; carregando acervo estático:', erro);
+    try {
+      const resposta = await fetch('/data/provas-oficiais.json', {cache:'no-store'});
+      if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+      const docs = await resposta.json();
+      for (const vest of BP_IDS) {
+        const destino = containers[vest];
+        if (!destino) continue;
+        const filtrados = docs.filter(d => d.vestibular === vest);
+        destino.innerHTML = filtrados.length ? filtrados.map(d => bpBlocoAno(vest,d)).join('')
+          : '<p class="bp-loading">Nenhuma referência oficial cadastrada.</p>';
+      }
+    } catch(falha) {
+      console.error('[VoaAM] Catálogo oficial indisponível:', falha);
+      for (const destino of Object.values(containers)) if (destino)
+        destino.innerHTML = '<p class="bp-loading">Não foi possível abrir o acervo. <button type="button" onclick="initBancoProvas()">Tentar novamente</button></p>';
+    }
   }
 }

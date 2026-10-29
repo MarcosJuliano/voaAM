@@ -75,7 +75,7 @@ function renderExercicios() {
   const finalPool = novas.length >= 3 ? novas : pool; // se ficou pouco, reutiliza
 
   // Prioriza temas fracos
-  finalPool.sort((a,b) => (temasFragos[b.materia]||0) - (temasFragos[a.materia]||0) || Math.random()-0.5);
+  finalPool.sort((a,b) => (temasFragos[b.materia]||0) - (temasFragos[a.materia]||0) || String(a.id).localeCompare(String(b.id)));
 
   const total = finalPool.length;
   const count = document.getElementById('ex-count');
@@ -246,7 +246,7 @@ function carregarProximaQuestao() {
   }
 
   // Prioriza temas fracos
-  novas.sort((a,b) => (temasFragos[b.materia]||0) - (temasFragos[a.materia]||0) || Math.random()-0.5);
+  novas.sort((a,b) => (temasFragos[b.materia]||0) - (temasFragos[a.materia]||0) || String(a.id).localeCompare(String(b.id)));
 
   exTotal = pool.length;
   const bar = document.getElementById('ex-progress-bar');
