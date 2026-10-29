@@ -5,35 +5,30 @@ const simuladoQuestions = {
     {
       q: '(PSC 2023) Uma torneira enche um tanque em 3 horas. Outra enche o mesmo tanque em 6 horas. Trabalhando juntas, em quanto tempo encherão o tanque?',
       opts: ['1 hora', '2 horas', '4 horas', '9 horas'],
-      correct: 1,
-      explanation: 'Taxa combinada = 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2 tanque/hora. Tempo = 1/(1/2) = 2 horas.'
-    },
+      
+      },
     {
       q: '(PSC 2022) Se f(x) = 2x² − 3x + 1, então f(2) é igual a:',
       opts: ['3', '2', '1', '4'],
-      correct: 0,
-      explanation: 'f(2) = 2·(4) − 3·(2) + 1 = 8 − 6 + 1 = 3'
-    },
+      
+      },
     {
       q: '(PSC 2024) Um produto custava R$80,00. Depois de dois aumentos consecutivos de 10%, o novo preço é:',
       opts: ['R$ 96,00', 'R$ 96,80', 'R$ 88,00', 'R$ 97,00'],
-      correct: 1,
-      explanation: '80 × 1,10 × 1,10 = 80 × 1,21 = R$ 96,80'
-    },
+      
+      },
   ],
   enem: [
     {
       q: '(ENEM 2023) Um corredor completa uma maratona de 42 km em 3h30min. Qual é a velocidade média em km/h?',
       opts: ['12 km/h', '13 km/h', '14 km/h', '15 km/h'],
-      correct: 0,
-      explanation: '3h30min = 3,5h. v = d/t = 42/3,5 = 12 km/h'
-    },
+      
+      },
     {
       q: '(ENEM 2022) Em uma urna com 4 bolas vermelhas e 6 azuis, qual a probabilidade de sortear uma bola vermelha?',
       opts: ['0,3', '0,4', '0,6', '0,5'],
-      correct: 1,
-      explanation: 'P = 4/10 = 0,4 = 40%'
-    },
+      
+      },
   ],
   red: [
     {
@@ -44,9 +39,8 @@ const simuladoQuestions = {
         'Introdução, desenvolvimento e conclusão',
         'Citação de autor e dados estatísticos'
       ],
-      correct: 1,
-      explanation: 'A banca espera os 5 elementos: agente, ação, modo/meio, finalidade e detalhamento.'
-    },
+      
+      },
   ]
 };
 
@@ -245,8 +239,8 @@ function iniciarSimuladoCatalogo(id) {
   // Embaralha e pega até sim.qs
   pool = pool.sort(() => Math.random()-0.5).slice(0, sim.qs);
   const qs = pool.map(q => ({
-    q: q.enunciado, opts: q.opcoes, correct: q.correta,
-    explanation: q.contexto || `Gabarito: ${q.gabarito}`, materia: q.materia, id: q.id
+    q: q.enunciado, opts: q.opcoes, correct: null,
+    explanation: "", materia: q.materia, id: q.id
   }));
   currentQuiz = { title: `${vest} — ${sim.titulo}`, desc: `Simulado cronometrado. ${sim.tempo} minutos. ${sim.sub}.`, video: null, questions: qs };
   currentQuizIdx = 0; quizCorrect = 0; isSimulado = true;

@@ -44,10 +44,15 @@ function startSimuladoComEtapa(vest, etapaKey) {
   const qtdQuestoes = etapa.materias.length > 0
     ? Math.min(pool.length, Math.max(10, Math.round(etapa.minutos / 8)))
     : Math.min(pool.length, 15);
-  const embaralhadas = pool.sort(() => Math.random()-0.5).slice(0, qtdQuestoes);
+  const embaralhadas = [...pool];
+  for (let i=embaralhadas.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [embaralhadas[i],embaralhadas[j]]=[embaralhadas[j],embaralhadas[i]];
+  }
+  embaralhadas.length=Math.min(embaralhadas.length,qtdQuestoes);
   const qs = embaralhadas.map(q => ({
-    q: q.enunciado, opts: q.opcoes, correct: q.correta,
-    explanation: q.contexto || `Gabarito: ${q.gabarito}`, materia: q.materia, id: q.id
+    q: q.enunciado, opts: q.opcoes, correct: null,
+    explanation: "", materia: q.materia, id: q.id
   }));
   if (!qs.length) { showXPToast('⚠️ Sem questões para essa etapa'); return; }
   currentQuiz = { title: `${vest} — ${etapa.label}`, desc: `Simulado cronometrado. ${etapa.minutos} minutos. Questões do banco oficial.`, video: null, questions: qs };
@@ -74,9 +79,14 @@ function startSimulado(type) {
   } else {
     pool = bancoDB.filter(q => q.vest === type.toUpperCase() && q.opcoes.length > 0);
   }
-  const qs = pool.sort(()=>Math.random()-0.5).slice(0,10).map(q => ({
-    q: q.enunciado, opts: q.opcoes, correct: q.correta,
-    explanation: q.contexto || `Gabarito: ${q.gabarito}`, materia: q.materia, id: q.id
+  const embaralhadas=[...pool];
+  for(let i=embaralhadas.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [embaralhadas[i],embaralhadas[j]]=[embaralhadas[j],embaralhadas[i]];
+  }
+  const qs = embaralhadas.slice(0,10).map(q => ({
+    q: q.enunciado, opts: q.opcoes, correct: null,
+    explanation: "", materia: q.materia, id: q.id
   }));
   if (!qs.length) { showXPToast('⚠️ Sem questões no banco ainda'); return; }
   const titulos = {'mat-sis':'Simulado Matemática SIS', psc:'Simulado PSC', sis:'Simulado SIS'};

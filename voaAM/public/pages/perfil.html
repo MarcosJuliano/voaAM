@@ -1,0 +1,69 @@
+<!-- Perfil do estudante: somente dados reais, sem ranking demonstrativo -->
+<section class="screen" id="screen-perfil" aria-labelledby="perfil-titulo">
+  <div class="perfil-page">
+    <header class="perfil-hero">
+      <div class="perfil-avatar"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#graduation-cap"></use></svg></div>
+      <div>
+        <h1 id="perfil-titulo"><span id="perfil-nome">Estudante</span></h1>
+        <p id="perfil-info">Sua jornada de estudos</p>
+      </div>
+    </header>
+    <section class="perfil-section perfil-level-card" aria-label="Progresso de nível">
+      <h2>Nível <span id="perfil-nivel">1</span> de 50</h2>
+      <div class="nivel-progresso"><div id="nivel-barra"></div></div>
+      <p id="nivel-descricao">Complete aulas, questões e temas de redação para avançar.</p>
+    </section>
+    <div class="perfil-stats-grid" aria-label="Resumo do desempenho">
+      <div class="perfil-metric"><small>Experiência</small><strong id="perfil-xp">0</strong><span>XP acumulado no navegador</span></div>
+      <div class="perfil-metric"><small>Precisão</small><strong id="perfil-acertos">—</strong><span>Questões respondidas</span></div>
+      <div class="perfil-metric"><small>Sequência</small><strong id="perfil-streak">0</strong><span>Dias de acesso consecutivos</span></div>
+      <div class="perfil-metric"><small>Questões</small><strong id="perfil-respondidas">0</strong><span>Tentativas registradas</span></div>
+      <div class="perfil-metric"><small>Acertos</small><strong id="perfil-corretas">0</strong><span>Respostas corretas</span></div>
+      <div class="perfil-metric"><small>Conteúdos</small><strong id="perfil-aulas">0</strong><span>Primeiras conclusões</span></div>
+    </div>
+    <section class="perfil-section">
+      <h2><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#target"></use></svg> Assuntos para revisar</h2>
+      <div id="perfil-dificuldades" class="perfil-dificuldades">Ainda não há recomendações.</div>
+    </section>
+    <section class="perfil-section">
+      <h2><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#calendar-days"></use></svg> Atividade e recursos</h2>
+      <div class="perfil-info-grid">
+        <div><span>Última visita registrada</span><strong id="perfil-ultima-atividade">Aguardando sincronização</strong></div>
+        <div><span>Vidas disponíveis</span><strong id="perfil-vidas">3/3</strong></div>
+      </div>
+      <p class="perfil-disclaimer">Uma vida retorna a cada 4 horas. A primeira conclusão de um novo tópico concede uma vida extra, até o máximo de 3. A sequência de dias é salva na sua conta. O XP e os totais de questões são calculados pelo servidor e armazenados no SQLite.</p>
+    </section>
+    <button type="button" class="perfil-edit-button" onclick="editarPerfil()">
+      <svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#settings"></use></svg> Editar nome, série e vestibulares
+    </button>
+    <button type="button" class="perfil-edit-button perfil-logout" onclick="authLogout()">Sair da conta</button>
+  </div>
+  <section class="perfil-google-link" aria-label="Integração com conta Google">
+ <h3>Conta Google</h3>
+ <p>Entre normalmente com sua senha e vincule a conta Google com o mesmo e-mail.</p>
+ <div class="google-vincular-slot" role="group" aria-label="Vincular Conta Google"></div>
+</section>
+  <div class="perfil-modal-backdrop" id="editar-perfil-modal" hidden>
+    <form class="perfil-modal" onsubmit="salvarEdicaoPerfil(event)" aria-labelledby="editar-perfil-titulo">
+      <h2 id="editar-perfil-titulo">Editar meus dados</h2>
+      <label for="editar-nome">Nome</label><input id="editar-nome" maxlength="120" required autocomplete="name">
+      <label for="editar-serie">Etapa de estudo</label>
+      <select id="editar-serie" required>
+        <option value="1">1º ano</option><option value="2">2º ano</option>
+        <option value="3">3º ano</option><option value="4">Ensino Médio completo</option>
+      </select>
+      <fieldset class="perfil-vests"><legend>Vestibulares de interesse</legend>
+        <label><input type="checkbox" name="editar-vest" value="ENEM"> ENEM</label>
+        <label><input type="checkbox" name="editar-vest" value="PSC"> PSC</label>
+        <label><input type="checkbox" name="editar-vest" value="SIS"> SIS</label>
+        <label><input type="checkbox" name="editar-vest" value="MACRO"> MACRO</label>
+      </fieldset>
+      <p class="perfil-form-error" id="editar-erro" role="alert"></p>
+      <div class="perfil-modal-actions">
+        <button type="button" onclick="fecharEdicaoPerfil()">Cancelar</button>
+        <button type="submit" id="editar-salvar">Salvar alterações</button>
+      </div>
+    </form>
+
+</div>
+</section>

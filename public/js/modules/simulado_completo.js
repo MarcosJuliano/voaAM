@@ -177,18 +177,18 @@ function scGetAssunto(provaKey, num, anoOriginal, numOriginal) {
   return (d.assuntos?.[num]) || '';
 }
 
-function scGetGabarito(provaKey, num, anoOriginal, numOriginal) {
-  const p = SC_PROVAS[provaKey];
-  if (!p) return null;
-  const d = p.data;
-  if (!d) return null;
-
-  if (p.tipo === 'multi') {
-    return (d.gabarito?.[anoOriginal]?.[numOriginal]) || null;
-  }
-  // linear (ENEM/MACRO)
-  return (d.gabarito?.[num]) || null;
+let scGabaritosEncerramento = {};
+function scIdQuestao(q){
+ const ano=q._ano || Number(String(SC.provaKey).match(/20\d\d/)?.[0]) || null;
+ return `oficial:${SC.provaKey}:${ano}:${q._numOriginal || q.num}`;
 }
+function scGetGabarito(provaKey,num,anoOriginal,numOriginal) {
+ const ano=anoOriginal || Number(String(provaKey).match(/20\d\d/)?.[0]) || null;
+ const id=`oficial:${provaKey}:${ano}:${numOriginal || num}`;
+ const indice=scGabaritosEncerramento[id];
+ return Number.isInteger(indice)?'ABCDE'[indice]:null;
+}
+
 
 // ─── scMostrarAnos: chamado por praticar.js ao clicar no card ─
 // grupoId = 'ENEM' | 'MACRO' | 'PSC1' | 'PSC2' | ... | 'SIS3'
@@ -327,6 +327,7 @@ function scIniciarDireto(key) {
 
   SC.atual       = 0;
   SC.respostas   = {};
+  scGabaritosEncerramento = {};
   SC.tempoInicio = Date.now();
 
   const overlay = _el('sc-overlay');
@@ -475,13 +476,16 @@ function scToggleLog() {
 
 // ─── CONFIRMAR SAÍDA ─────────────────────────────────────────
 function scConfirmarSaida() {
-  const resp  = Object.values(SC.respostas).filter(r => r !== 'pulada').length;
-  const total = SC.questoes.length;
-  const msg   = resp < total
-    ? `Você respondeu ${resp} de ${total} questões.\nDeseja encerrar mesmo assim?`
-    : 'Deseja encerrar a prova?';
-  if (confirm(msg)) scEncerrar();
+  const total=SC.questoes.length;
+  const resp=Object.values(SC.respostas).filter(r=>r && r!=='pulada').length;
+  const modal=document.getElementById('sc-exit-modal');
+  if (!modal) return;
+  document.getElementById('sc-exit-msg').textContent=`Você respondeu ${resp} de ${total} questões. Deseja realmente encerrar e ver o resultado?`;
+  modal.hidden=false;
+  modal.querySelector('button')?.focus();
 }
+function scCancelarSaida(){const m=document.getElementById('sc-exit-modal');if(m)m.hidden=true;}
+function scAceitarSaida(){scCancelarSaida();scEncerrar();}
 
 // ─── ENCERRAR ────────────────────────────────────────────────
 function scEncerrar() {
@@ -493,7 +497,26 @@ function scEncerrar() {
 }
 
 // ─── RESULTADO ───────────────────────────────────────────────
-function scMostrarResultado() {
+async function scMostrarResultado() {
+  // Corrige no Flask SOMENTE quando o aluno encerra o simulado.
+  const tentativas=SC.questoes.flatMap(q=>{
+    const indice='ABCDE'.indexOf(String(SC.respostas[q.num]||'').toUpperCase());
+    return indice<0?[]:[{id:scIdQuestao(q),alternativa:indice}];
+  });
+  try {
+    if(tentativas.length){
+      const r=await fetch('/api/avaliacao/lote',{method:'POST',credentials:'same-origin',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify({respostas:tentativas})});
+      const d=await r.json();if(!r.ok)throw new Error(d.message||`HTTP ${r.status}`);
+      scGabaritosEncerramento=Object.fromEntries(Object.entries(d.resultados||{}).map(([id,v])=>[id,v.correta]));
+      if(typeof atualizarProgresso==='function')await atualizarProgresso();
+      if(typeof atualizarNivel==='function')atualizarNivel();
+    }
+  }catch(e){
+    console.error('[voaAM] Falha na correção do simulado:',e);
+    _el('sc-resultado').textContent='Falha ao corrigir no servidor. Suas respostas não foram confirmadas. Verifique a conexão e tente novamente.';
+    return;
+  }
   const p     = SC_PROVAS[SC.provaKey];   // ← bug corrigido: p estava ausente
   const total = SC.questoes.length;
   let ac = 0, er = 0, pu = 0, vz = 0;
@@ -633,6 +656,7 @@ function scMostrarResultado() {
 
 // ─── FECHAR ─────────────────────────────────────────────────
 function scFechar() {
+  scCancelarSaida();
   clearInterval(SC.timer);
   const overlay = _el('sc-overlay');
   if (overlay) overlay.style.display = 'none';

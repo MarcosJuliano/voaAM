@@ -19,8 +19,9 @@ function bpBlocoAno(vest, doc) {
     ? `${vest}${doc.ano}` : null;
   const onlineDisponivel = onlineKey && typeof scGetQuestoes === 'function'
     && scGetQuestoes(onlineKey).length > 0;
+  const etapas = (vest === 'SIS' || vest === 'PSC') ? [1,2,3].filter(i => typeof scGetQuestoes === 'function' && scGetQuestoes(`${vest}${i}`).length > 0).map(i => `<button type="button" class="bp-btn bp-btn-g" onclick="bpIniciarSimulado('${vest}${i}')">Etapa ${i} · Simulado online</button>`).join('') : '';
   const online = onlineDisponivel
-    ? `<button type="button" class="bp-btn bp-btn-g" onclick="bpIniciarSimulado('${onlineKey}')">🎯 Simulado online</button>`
+    ? `<button type="button" class="bp-btn bp-btn-g" onclick="bpIniciarSimulado('${onlineKey}')">Simulado online</button>`
     : '';
   return `<div class="bp-ano" id="${chave}">
     <button type="button" class="bp-ano-hdr" onclick="bpAno('${chave}')" aria-label="Expandir ${bpEscapar(nome)}">
@@ -34,15 +35,15 @@ function bpBlocoAno(vest, doc) {
           <div class="bp-note">${bpEscapar(doc.observacao)}</div>
           <div class="bp-note">Fonte: ${bpEscapar(doc.instituicao)}</div>
         </div>
-        <div class="bp-row-btns">${online}
-          <a class="bp-btn bp-btn-p" href="${bpEscapar(doc.url_oficial)}" target="_blank" rel="noopener noreferrer">↗ Portal oficial</a>
+        <div class="bp-row-btns">${online}${etapas}
+          <a class="bp-btn bp-btn-p" href="${bpEscapar(doc.url_oficial)}" target="_blank" rel="noopener noreferrer">Portal oficial</a>
         </div>
       </div>
     </div>
   </div>`;
 }
 function bpIniciarSimulado(key) {
-  const grupo = key.startsWith('ENEM') ? 'ENEM' : 'MACRO';
+  const grupo = key.startsWith('ENEM') ? 'ENEM' : key.startsWith('MACRO') ? 'MACRO' : key;
   if (typeof goTo !== 'function' || typeof simModoAba !== 'function' ||
       typeof scMostrarConfirmacao !== 'function') {
     console.error('[VoaAM] Módulos do simulado não disponíveis.');

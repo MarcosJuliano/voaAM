@@ -1,0 +1,32 @@
+﻿[
+  {
+    "enunciado": "Qual organela celular é responsável pela produção de energia (ATP) por meio do processo de respiração celular aeróbica?",
+    "Alternativas": [
+      "Mitocôndria",
+      "Complexo de Golgi",
+      "Cloroplasto",
+      "Ribossomo"
+    ],
+    "Alternativacorreta": "Mitocôndria"
+  },
+  {
+    "enunciado": "No sistema ABO de grupos sanguíneos humanos, um casal onde o homem é do tipo O (ii) e a mulher é tipo AB (IAIB) pode ter filhos de quais tipos sanguíneos?",
+    "Alternativas": [
+      "Apenas tipos A ou B",
+      "Apenas tipos AB ou O",
+      "Tipos A, B ou O",
+      "Apenas tipo O"
+    ],
+    "Alternativacorreta": "Apenas tipos A ou B"
+  },
+  {
+    "enunciado": "Qual das seguintes doenças humanas é causada por uma bactéria e pode ser prevenida por meio da vacinação?",
+    "Alternativas": [
+      "Tétano",
+      "Dengue",
+      "Gripe",
+      "Malária"
+    ],
+    "Alternativacorreta": "Tétano"
+  }
+]

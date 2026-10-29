@@ -13,11 +13,60 @@ let redModalId = null;
 
 // ─── HELPERS localStorage ────────────────────────────────────
 function redGetHistorico() {
-  try { return JSON.parse(localStorage.getItem(RED_HISTORICO_KEY) || '[]'); }
+  try { return JSON.parse(localStorage.getItem(RED_HISTORICO_KEY + ':' + (localStorage.getItem('voaam_usuario_id') || 'local')) || '[]'); }
   catch { return []; }
 }
 function redSaveHistorico(lista) {
-  localStorage.setItem(RED_HISTORICO_KEY, JSON.stringify(lista));
+  localStorage.setItem(RED_HISTORICO_KEY + ':' + (localStorage.getItem('voaam_usuario_id') || 'local'), JSON.stringify(lista));
+}
+
+// Catálogo com referência da fonte. Sem inventar textos motivadores.
+async function redCarregarTemas() {
+  const container=document.getElementById('red-temas-lista');
+  if(!container)return;
+  try {
+    const r=await fetch('/api/temas-redacao',{credentials:'same-origin'});
+    if(!r.ok)throw new Error(`HTTP ${r.status}`);
+    const {temas}=await r.json();
+    const sel=document.getElementById('red-seletor-tema');
+    if(sel){
+      const anterior=sel.value;
+      sel.replaceChildren(new Option('Selecione um tema',''));
+      temas.forEach(t=>sel.add(new Option(`${t.vestibular} ${t.ano} — ${t.tema}`,t.id)));
+      if([...sel.options].some(o=>o.value===anterior))sel.value=anterior;
+    }
+    const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    container.innerHTML=temas.map(t=>`<article class="red-tema-card" data-vest="${esc(t.vestibular)}" data-tema-id="${esc(t.id)}" onclick="redSelecionarTema(this)">
+      <div class="red-tema-cab"><span class="red-vest-badge">${esc(t.vestibular)} ${t.ano}${t.etapa?' · Etapa '+t.etapa:''}</span>
+      <div style="font-weight:700;color:var(--text);font-size:15px;margin-top:7px">${esc(t.tema)}</div>
+      <p style="font-size:12px;color:var(--text2)">${esc(t.modalidade)}</p></div>
+      <div class="red-motivadores" style="display:none;margin-top:12px">
+        <p>Para ler a coletânea original, consulte a página da fonte. O voaAM não reproduz textos de apoio não fornecidos.</p>
+        <a href="${esc(t.fonte)}" target="_blank" rel="noopener noreferrer">Consultar fonte do tema</a>
+        <button class="red-escrever-tema" onclick="redEscreverTema(event,this)">Escrever sobre este tema</button>
+      </div>
+      <button class="red-expand-btn" onclick="redExpandirTema(event,this)"><span>Ver proposta e fonte</span><span class="red-expand-icon">▾</span></button>
+    </article>`).join('');
+  } catch(e) {
+    console.warn('Temas indisponíveis:',e);
+    container.innerHTML='<p>Não foi possível carregar os temas. Atualize a página e tente novamente.</p>';
+  }
+}
+
+async function redConfigurarAvaliacao(){
+  try{
+    const r=await fetch('/api/config-publica');const c=await r.json();
+    const sel=document.getElementById('red-modo-avaliacao');
+    if(sel && c.ia_configurada && !sel.querySelector('[value="gemini"]'))
+      sel.add(new Option('Gemini (IA opcional; confira limites e custos)','gemini'));
+  }catch(e){console.warn('Configuração do avaliador indisponível:',e);}
+}
+function redEditorTemaSelecionar(id){
+  const card=[...document.querySelectorAll('.red-tema-card')].find(c=>c.dataset.temaId===id);
+  if(card){
+    const b=card.querySelector('.red-escrever-tema');
+    if(b)redEscreverTema({stopPropagation(){}},b);
+  }
 }
 
 // ─── ABAS ────────────────────────────────────────────────────
@@ -107,7 +156,7 @@ function redEscreverTema(event, btn) {
   // Preenche header do editor
   const badgeEl  = document.getElementById('red-editor-vest-badge');
   const tituloEl = document.getElementById('red-editor-tema-titulo');
-  if (badgeEl)  badgeEl.textContent  = '✍️ ' + badge;
+  if (badgeEl)  badgeEl.textContent  = badge;
   if (tituloEl) tituloEl.textContent = titulo;
 
   // Guarda meta no textarea para uso posterior
@@ -123,6 +172,7 @@ function redEscreverTema(event, btn) {
     redAtualizarContadores(textarea);
   }
 
+  const seletor=document.getElementById('red-seletor-tema');if(seletor)seletor.value=temaId;
   redAba('editor');
 }
 
@@ -159,7 +209,7 @@ function redSalvarRascunho() {
 }
 
 // ─── CONCLUIR → ENVIA AO HISTÓRICO ───────────────────────────
-function redEnviarHistorico() {
+async function redEnviarHistorico() {
   const textarea = document.getElementById('red-editor-textarea');
   if (!textarea || !textarea.value.trim()) {
     redMostrarFeedbackErro('Escreva sua redação antes de concluir.');
@@ -191,7 +241,16 @@ function redEnviarHistorico() {
   const idx = lista.findIndex(r => r.temaId === temaId && r.status === 'concluida');
   if (idx > -1) lista[idx] = entrada;
   else lista.unshift(entrada);
+  // Primeiro confirma o armazenamento do texto no SQLite por usuário.
+  try {
+    const resposta=await fetch('/api/redacoes', {method:'POST',credentials:'same-origin',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({tema_id:temaId,texto})});
+    const dados=await resposta.json().catch(()=>({}));
+    if(!resposta.ok)throw new Error(dados.message||'Falha ao salvar redação no servidor.');
+  }catch(e){redMostrarFeedbackErro(e.message);return;}
   redSaveHistorico(lista);
+  if(typeof atualizarNivel==='function') atualizarNivel();
 
   // Remove rascunho após concluir
   localStorage.removeItem(RED_RASCUNHO_KEY + temaId);
@@ -221,10 +280,11 @@ async function redCorrigir() {
     return;
   }
   const tema = textarea.getAttribute('data-titulo') || 'Tema não informado';
+  const vestibular=(textarea.getAttribute('data-badge')||'ENEM').split(' ')[0];
   const texto = textarea.value;
   // Desabilita botão durante a requisição para evitar cliques duplos
   const btnCorrigir = document.querySelector('[onclick*="redCorrigir"]');
-  if (btnCorrigir) { btnCorrigir.disabled = true; btnCorrigir.textContent = '🤖 Corrigindo...'; }
+  if (btnCorrigir) { btnCorrigir.disabled = true; btnCorrigir.textContent = 'Avaliando texto...'; }
 
   let resultadoDiv = document.getElementById('red-resultado-ia');
   if (!resultadoDiv) {
@@ -239,15 +299,16 @@ async function redCorrigir() {
     if (editorPanel) editorPanel.appendChild(resultadoDiv);
   }
 
-  resultadoDiv.innerHTML = '🤖 Corrigindo redação com IA...';
+  resultadoDiv.textContent = 'Analisando estrutura, extensão e sinais de coesão. Esta avaliação local não atribui nota.';
   resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   try {
-    const resposta = await fetch('/api/corrigir-redacao', {
+    const usarGemini=document.getElementById('red-modo-avaliacao')?.value==='gemini';
+    const resposta = await fetch(usarGemini?'/api/corrigir-redacao':'/api/redacao/avaliar-gratis', {
       method: 'POST',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tema, texto })
+      body: JSON.stringify({ tema, texto, vestibular })
     });
     const dados = await resposta.json();
     if (!resposta.ok) {
@@ -263,8 +324,11 @@ async function redCorrigir() {
   } catch (erro) {
     console.warn('Falha ao corrigir redação:', erro);
     resultadoDiv.textContent =
-      '⚠️ ' + (erro.message || 'A correção por IA está indisponível no momento.') +
+      'Aviso: ' + (erro.message || 'A correção por IA está indisponível no momento.') +
       '\n\nVocê ainda pode salvar seu rascunho e revisá-lo manualmente.';
+  }
+  finally {
+    if (btnCorrigir) { btnCorrigir.disabled = false; btnCorrigir.textContent = 'Analisar redação'; }
   }
 }
 
@@ -477,7 +541,11 @@ document.addEventListener('click', function(e) {
   const check = setInterval(() => {
     if (document.getElementById('red-hist-badge')) {
       redAtualizarBadge();
+      redCarregarTemas();
       clearInterval(check);
     }
   }, 200);
 })();
+
+// Avaliação local é o padrão. Gemini só é exposto quando habilitado explicitamente.
+setTimeout(redConfigurarAvaliacao,200);

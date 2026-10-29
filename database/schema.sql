@@ -98,3 +98,35 @@ CREATE TABLE IF NOT EXISTS vidas (
     proxima_recarga INTEGER, -- Unix timestamp UTC, próxima vida
     FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
+
+
+-- Treinos personalizados: escolhas e respostas persistidas por conta.
+CREATE TABLE IF NOT EXISTS treinos_personalizados (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ usuario_id INTEGER NOT NULL,
+ filtros_json TEXT NOT NULL,
+ questoes_json TEXT NOT NULL,
+ respostas_json TEXT NOT NULL DEFAULT '{}',
+ criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ encerrado_em TEXT,
+ FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_treinos_usuario ON treinos_personalizados(usuario_id, id);
+
+-- V5: conceder XP somente uma vez por questão e conta, sempre no Flask.
+CREATE TABLE IF NOT EXISTS recompensas_questoes (
+ usuario_id INTEGER NOT NULL,
+ questao_id TEXT NOT NULL,
+ xp INTEGER NOT NULL CHECK(xp BETWEEN 0 AND 20),
+ criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY(usuario_id,questao_id),
+ FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+-- Contas Google vinculadas pelo identificador estável "sub", nunca só pelo e-mail.
+CREATE TABLE IF NOT EXISTS google_identidades (
+ google_sub TEXT PRIMARY KEY,
+ usuario_id INTEGER NOT NULL UNIQUE,
+ criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);

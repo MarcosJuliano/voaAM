@@ -136,37 +136,25 @@ function abrirExercicio(id) {
   pararCronometro();
 }
 
-function responderExercicio(qId, idx) {
+async function responderExercicio(qId, idx) {
   const q = bancoDB.find(x => x.id === qId);
   if (!q) return;
-  const letras = ['A','B','C','D','E'];
-  document.querySelectorAll(`[id^="exopt-${qId}-"]`).forEach(b => { b.disabled=true; b.style.cursor='default'; });
-  const corrBtn = document.getElementById(`exopt-${qId}-${q.correta}`);
-  if (corrBtn) { corrBtn.style.borderColor='var(--green)'; corrBtn.style.background='rgba(45,201,138,0.1)'; }
-  const fb = document.getElementById(`exfb-${qId}`);
-
-  if (idx === q.correta) {
-    if (fb) fb.innerHTML = `<div style="background:rgba(45,201,138,0.1);border:1px solid rgba(45,201,138,0.25);border-radius:10px;padding:12px;font-size:13px;color:var(--green);margin-bottom:10px">✅ Correto! Gabarito: <strong>${q.gabarito}</strong><br><span style="font-size:12px;color:var(--text2)">${q.contexto||''}</span></div>`;
-    marcarTemaAcerto(q.materia, q.id);
-    addXP(20); spawnStars();
-  } else {
-    const errBtn = document.getElementById(`exopt-${qId}-${idx}`);
-    if (errBtn) { errBtn.style.borderColor='var(--red)'; errBtn.style.background='rgba(255,82,82,0.08)'; }
-    const vidas = perderCoracao();
-    if (fb) fb.innerHTML = `<div style="background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.2);border-radius:10px;padding:12px;font-size:13px;color:#ff8a80;margin-bottom:10px">
-      ❌ Incorreto. Resposta: <strong>${letras[q.correta]}</strong><br>
-      <span style="color:var(--gold);font-size:12px">💡 Reforçar: <strong>${q.materia}</strong></span><br>
-      <span style="font-size:12px;color:var(--text2)">Vidas restantes: ${'❤️'.repeat(vidas)}${'🖤'.repeat(3-vidas)}</span>
-    </div>`;
-    marcarTemaFraco(q.materia, q.id);
-    addXP(5);
-    if (vidas <= 0) {
-      setTimeout(() => { closeAula(); showXPToast('💔 Sem vidas! Volte amanhã.'); }, 1500);
-    }
+  const botoes = document.querySelectorAll(`[id^="exopt-${qId}-"]`);
+  botoes.forEach(b=>b.disabled=true);
+  const fb=document.getElementById(`exfb-${qId}`);
+  try {
+    const r=await avaliarRespostaServidor('banco:'+qId,idx);
+    const correto=document.getElementById(`exopt-${qId}-${r.correta}`);
+    if(correto){correto.style.borderColor='var(--green)';correto.style.background='rgba(45,201,138,0.1)';}
+    if(fb)fb.textContent=(r.acertou?'Resposta correta! ':'Resposta incorreta. ')+`Gabarito: ${'ABCDE'[r.correta]}. `+(r.explicacao||'');
+    if(r.acertou){marcarTemaAcerto(q.materia,q.id);spawnStars();}
+    else {marcarTemaFraco(q.materia,q.id);perderCoracao();}
+  } catch(e) {
+    botoes.forEach(b=>b.disabled=false);
+    if(fb)fb.textContent='Correção indisponível: '+e.message;
   }
-  state.quizDone++; if (idx === q.correta) state.quizCorrect++;
-  salvarState(); updateStats();
 }
+
 
 // ─── EXERCÍCIOS ESTILO DUOLINGO ───
 let exTabAtual = 'Matemática';
@@ -306,53 +294,27 @@ function renderQuestaoEx(q) {
     </button>`;
 }
 
-function responderEx(idx) {
-  if (exRespondida) return;
-  exRespondida = true;
-  const q = exQuestaoAtual;
-  const letras = ['A','B','C','D','E'];
-
-  // Desabilita todos
-  for (let i = 0; i < q.opcoes.length; i++) {
-    const btn = document.getElementById('exo-'+i);
-    if (btn) btn.disabled = true;
+async function responderEx(idx) {
+  if(exRespondida || !exQuestaoAtual)return;
+  exRespondida=true;
+  const q=exQuestaoAtual;
+  const botoes=document.querySelectorAll('[id^="exo-"]');botoes.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('ex-feedback');
+  const proximo=document.getElementById('ex-proxima-btn');
+  try {
+    const r=await avaliarRespostaServidor('banco:'+q.id,idx);
+    const certo=document.getElementById('exo-'+r.correta);
+    if(certo)certo.style.borderColor='var(--green)';
+    if(fb)fb.textContent=(r.acertou?'Resposta correta! ':'Resposta incorreta. ')+`Gabarito: ${'ABCDE'[r.correta]}. `+(r.explicacao||'');
+    if(r.acertou){marcarTemaAcerto(q.materia,q.id);exFeitas++;spawnStars();}
+    else{marcarTemaFraco(q.materia,q.id);perderCoracao();renderCoraoesEx(getCoracoes().qtd);}
+    if(proximo)proximo.style.display='block';
+  } catch(e) {
+    exRespondida=false;botoes.forEach(b=>b.disabled=false);
+    if(fb)fb.textContent='Correção indisponível: '+e.message;
   }
-
-  const corrBtn = document.getElementById('exo-'+q.correta);
-  const fb = document.getElementById('ex-feedback');
-  const proxBtn = document.getElementById('ex-proxima-btn');
-
-  if (idx === q.correta) {
-    if (corrBtn) { corrBtn.style.borderColor='var(--green)'; corrBtn.style.background='rgba(45,201,138,0.12)'; }
-    if (fb) fb.innerHTML = `<div style="background:rgba(45,201,138,0.1);border:1px solid rgba(45,201,138,0.3);border-radius:12px;padding:14px;font-size:14px;color:var(--green);font-weight:600">✅ Correto! Gabarito: ${q.gabarito}</div>`;
-    marcarTemaAcerto(q.materia, q.id);
-    addXP(20); spawnStars();
-    exFeitas++;
-  } else {
-    const errBtn = document.getElementById('exo-'+idx);
-    if (errBtn) { errBtn.style.borderColor='var(--red)'; errBtn.style.background='rgba(255,82,82,0.08)'; }
-    if (corrBtn) { corrBtn.style.borderColor='var(--green)'; corrBtn.style.background='rgba(45,201,138,0.1)'; }
-    const vidas = perderCoracao();
-    renderCoraoesEx(vidas);
-    if (fb) fb.innerHTML = `<div style="background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.25);border-radius:12px;padding:14px;font-size:14px;color:#ff8a80">
-      ❌ Resposta: <strong style="color:var(--text)">${letras[q.correta]}</strong><br>
-      <span style="font-size:12px;color:var(--gold)">💡 Reforçar: <strong>${q.materia}</strong></span>
-    </div>`;
-    marcarTemaFraco(q.materia, q.id);
-    addXP(5);
-    if (vidas <= 0) {
-      setTimeout(() => {
-        fecharExercicios();
-        document.getElementById('bloqueado-view').style.display = 'flex';
-        iniciarTimerRecarga(getCoracoes().recargaTs);
-      }, 1800);
-    }
-  }
-
-  state.quizDone++; if (idx === q.correta) state.quizCorrect++;
-  salvarState(); updateStats();
-  if (proxBtn) proxBtn.style.display = 'block';
 }
+
 
 function proximaQuestao() {
   carregarProximaQuestao();

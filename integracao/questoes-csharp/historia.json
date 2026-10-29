@@ -1,0 +1,32 @@
+﻿[
+  {
+    "enunciado": "Durante o período da História do Brasil conhecido como Primeiro Reinado, qual foi o principal estopim para a abdicação de D. Pedro I em 1831?",
+    "Alternativas": [
+      "A crescente crise política, econômica e a Noite das Garrafadas.",
+      "A assinatura da Lei Áurea que aboliu a escravidão.",
+      "A eclosão imediata da Proclamação da República.",
+      "O início da Guerra do Paraguai contra os países vizinhos."
+    ],
+    "Alternativacorreta": "A crescente crise política, econômica e a Noite das Garrafadas."
+  },
+  {
+    "enunciado": "Qual característica econômica foi a base do sistema feudal na Europa Ocidental durante a Idade Média?",
+    "Alternativas": [
+      "Produção agrária de subsistência e baseada no trabalho servil.",
+      "Comércio marítimo globalizado e uso intenso de moedas de ouro.",
+      "Industrialização focada nas corporações de ofício urbanas.",
+      "Exportação massiva de commodities para o continente americano."
+    ],
+    "Alternativacorreta": "Produção agrária de subsistência e baseada no trabalho servil."
+  },
+  {
+    "enunciado": "A política do 'New Deal', implementada nos Estados Unidos na década de 1930 pelo presidente Franklin D. Roosevelt, tinha como objetivo principal:",
+    "Alternativas": [
+      "Recuperar a economia americana após a Crise de 1929.",
+      "Financiar a reconstrução europeia após a Primeira Guerra.",
+      "Declarar guerra contra os blocos socialistas emergentes.",
+      "Estimular a compra de produtos agrícolas exclusivamente britânicos."
+    ],
+    "Alternativacorreta": "Recuperar a economia americana após a Crise de 1929."
+  }
+]

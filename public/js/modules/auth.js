@@ -129,27 +129,55 @@ async function authCadastrar() {
   }
 }
 
-function authGoogle() {
-  const telaCadastro = document.getElementById('auth-cadastro')?.classList.contains('auth-active');
-  authMostrarErro(
-    telaCadastro ? 'auth-cad-error' : 'auth-login-error',
-    'O login com Google ainda não está integrado. Use e-mail e senha por enquanto.'
-  );
+async function authGoogleInit(){
+  const slots=[...document.querySelectorAll('.google-login-slot, .google-vincular-slot')];
+  if(!slots.length)return;
+  try {
+    const r=await fetch('/api/config-publica');const c=await r.json();
+    if(!c.google_client_id){
+      slots.forEach(s=>s.textContent='Google Login disponível após configurar GOOGLE_CLIENT_ID.');
+      return;
+    }
+    if(!window.google?.accounts?.id){
+      await new Promise((resolve,reject)=>{
+        const script=document.createElement('script');script.src='https://accounts.google.com/gsi/client';
+        script.async=true;script.onload=resolve;script.onerror=()=>reject(new Error('Biblioteca Google indisponível.'));
+        document.head.append(script);
+      });
+    }
+    window.google.accounts.id.initialize({
+      client_id:c.google_client_id,
+      callback:async ({credential})=>{
+        try {
+          const vinculando=document.getElementById('auth-wrapper')?.style.display==='none';
+          await authRequisicao(vinculando?'/api/auth/google/vincular':'/api/auth/google',
+            {method:'POST',body:JSON.stringify({credential})});
+          if(vinculando){if(typeof showXPToast==='function')showXPToast('Conta Google vinculada.');}
+          else location.reload();
+        }catch(e){
+          authMostrarErro(document.getElementById('auth-cadastro')?.classList.contains('auth-active')?'auth-cad-error':'auth-login-error',e.message);
+        }
+      }
+    });
+    slots.forEach(s=>window.google.accounts.id.renderButton(s,{type:'standard',theme:'outline',size:'large',width:270,text:'signin_with'}));
+  }catch(e){slots.forEach(s=>s.textContent='Login Google indisponível. Continue com e-mail e senha.');}
 }
 
 async function authLogout() {
   try {
     await authRequisicao('/api/logout', { method: 'POST', body: '{}' });
-  } catch (erro) {
-    console.warn('[VoaAM] Não foi possível confirmar o logout no servidor:', erro);
-  } finally {
     localStorage.removeItem('voaam_perfil');
     localStorage.removeItem('voaam_usuario_id');
     location.reload();
+  } catch (erro) {
+    console.warn('[VoaAM] Logout não confirmado no servidor:', erro);
+    if(typeof showXPToast==='function') showXPToast('Não foi possível sair da conta. Tente novamente.');
+    else alert('Não foi possível sair: '+erro.message);
   }
 }
 
 async function authInit() {
+  authGoogleInit();
   const wrapper = document.getElementById('auth-wrapper');
   if (!wrapper) return;
 
@@ -162,6 +190,8 @@ async function authInit() {
       authGuardarPerfil(dados.perfil, dados.usuario);
       wrapper.style.display = 'none';
       if (typeof registrarVisita === 'function') await registrarVisita();
+      if (typeof atualizarProgresso === 'function') await atualizarProgresso();
+      if (typeof atualizarNivel === 'function') atualizarNivel();
       if (typeof sincronizarVidas === 'function') await sincronizarVidas();
       if (typeof reiniciarProgressoTopicos === 'function') {
         reiniciarProgressoTopicos().catch(e => console.warn('[VoaAM] Não foi possível recarregar o progresso:', e));

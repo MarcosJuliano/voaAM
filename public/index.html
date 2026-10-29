@@ -79,6 +79,7 @@
 
 <!-- Simulado Completo — fora do app-wrapper para não ser afetado pelo grid -->
 <div id="slot-sc-view"></div>
+<div id="slot-treino-view"></div>
 
 
 <!-- ROUTER ───────────────────────────────────────────────────
@@ -99,6 +100,7 @@ const Router = {
     'slot-exercicios-view':   'components/exercicios-view.html',
     'slot-bloqueado-view':    'components/bloqueado-view.html',
     'slot-sc-view':           'components/simulado-completo-view.html',
+    'slot-treino-view':       'components/treino-view.html',
     'slot-page-home':         'pages/home.html',
     'slot-page-materia':      'pages/materia.html',
     'slot-page-praticar':     'pages/praticar.html',
@@ -139,6 +141,8 @@ const Router = {
     'js/modules/banco-provas.js',      // tela Banco de Provas
     'js/modules/simulado_completo.js', // simulado completo
     'js/modules/redacao.js',      // página de redação
+    'js/modules/treino-personalizado.js', // seleção no Flask, inspirada no protótipo C#
+    'js/modules/nivel.js',
     'js/modules/nav.js',          // goTo, perfil, tema
     'js/app.js',                  // init final
   ],

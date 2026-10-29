@@ -312,10 +312,8 @@ function iniciarSimuladoNovo(vestKey, modo) {
 
     let pool = banco.filter(q => q && q.vest === vestNome && Array.isArray(q.opcoes) && q.opcoes.length > 1);
     if (etapa) pool = pool.filter(q => !q.etapa || Number(q.etapa) === etapa);
-    pool = pool.filter(q => {
-      const correta = Number.isInteger(q.correta) ? q.correta : ['A', 'B', 'C', 'D', 'E'].indexOf(String(q.gabarito || '').toUpperCase());
-      return correta >= 0 && correta < q.opcoes.length && String(q.enunciado || '').trim().length > 0;
-    });
+    // O gabarito não é mais publicado: filtra apenas conteúdo acessível.
+    pool = pool.filter(q => String(q.enunciado || '').trim().length > 0 && q.opcoes.every(o=>String(o||'').trim()));
 
     // Embaralhamento Fisher–Yates, evitando o comparador aleatório de sort().
     for (let i = pool.length - 1; i > 0; i--) {
@@ -332,8 +330,8 @@ function iniciarSimuladoNovo(vestKey, modo) {
     const questoes = selecionadas.map(q => ({
       q: q.enunciado,
       opts: q.opcoes,
-      correct: Number.isInteger(q.correta) ? q.correta : ['A', 'B', 'C', 'D', 'E'].indexOf(String(q.gabarito || '').toUpperCase()),
-      explanation: q.contexto || `Gabarito: ${q.gabarito || ''}`,
+      correct: null,
+      explanation: "",
       materia: q.materia,
       id: q.id
     }));
@@ -363,25 +361,34 @@ function pratAba(aba) {
   const btnEx = document.getElementById('pratab-ex');
   const panelSim = document.getElementById('prat-sim-panel');
   const panelEx = document.getElementById('prat-ex-panel');
+  const panelCustom = document.getElementById('prat-custom-panel');
+  const btnCustom = document.getElementById('pratab-custom');
   if (!btnSim) return;
 
   const isSim = aba === 'sim';
+  const isCustom = aba === 'personalizado';
+  if (panelCustom) panelCustom.style.display = isCustom ? 'block' : 'none';
+  if (btnCustom) btnCustom.classList.toggle('active', isCustom);
   btnSim.style.borderColor = isSim ? 'var(--border-accent)' : 'var(--border)';
   btnSim.style.background  = isSim ? 'rgba(59,130,246,0.1)' : 'var(--surface)';
   btnSim.style.color        = isSim ? 'var(--accent2)'       : 'var(--text2)';
-  btnEx.style.borderColor  = !isSim ? 'rgba(245,158,11,0.4)' : 'var(--border)';
-  btnEx.style.background   = !isSim ? 'rgba(245,158,11,0.08)' : 'var(--surface)';
+  btnEx.style.borderColor  = aba === 'ex' ? 'rgba(245,158,11,0.4)' : 'var(--border)';
+  btnEx.style.background   = aba === 'ex' ? 'rgba(245,158,11,0.08)' : 'var(--surface)';
   btnEx.style.color         = !isSim ? 'var(--gold)'          : 'var(--text2)';
   if (panelSim) panelSim.style.display = isSim ? 'block' : 'none';
-  if (panelEx)  panelEx.style.display  = !isSim ? 'block' : 'none';
+  if (panelEx)  panelEx.style.display  = aba === 'ex' ? 'block' : 'none';
 
+  if (isCustom) {
+    if (typeof treinoCarregarFiltros === 'function') treinoCarregarFiltros();
+    return;
+  }
   if (isSim) {
     // Reset sim state: hide vest picker and cards, go back to mode selection
     const picker = document.getElementById('sim-vest-picker');
     const cards  = document.getElementById('sim-cards-container');
     if (picker) picker.style.display = 'none';
     if (cards)  cards.innerHTML = '';
-    simModoAtual = null;
+    simModoAtual = 'simples';
     const btnSimples  = document.getElementById('simtab-simples');
     const btnCompleto = document.getElementById('simtab-completo');
     if (btnSimples) {
@@ -394,6 +401,10 @@ function pratAba(aba) {
       btnCompleto.style.background  = 'var(--surface)';
       btnCompleto.style.color       = 'var(--text2)';
     }
+    simModoAba('simples');
+    // Já apresenta o simulado do vestibular principal ao chegar em Praticar.
+    const padrao=(typeof perfil!=='undefined' && perfil?.vests?.[0]) || 'ENEM';
+    simSelecionarVestibular(({SIS:'SIS1',PSC:'PSC1'})[padrao] || padrao);
   } else {
     // Reset exercise sub-panels — always show Assuntos first
     exAssuntoAtual = null;
@@ -454,8 +465,8 @@ function iniciarSimuladoCatalogo(id) {
   // Embaralha e pega até sim.qs
   pool = pool.sort(() => Math.random()-0.5).slice(0, sim.qs);
   const qs = pool.map(q => ({
-    q: q.enunciado, opts: q.opcoes, correct: q.correta,
-    explanation: q.contexto || `Gabarito: ${q.gabarito}`, materia: q.materia, id: q.id
+    q: q.enunciado, opts: q.opcoes, correct: null,
+    explanation: "", materia: q.materia, id: q.id
   }));
   currentQuiz = { title: `${vest} — ${sim.titulo}`, desc: `Simulado cronometrado. ${sim.tempo} minutos. ${sim.sub}.`, video: null, questions: qs };
   currentQuizIdx = 0; quizCorrect = 0; isSimulado = true;

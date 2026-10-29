@@ -9,20 +9,9 @@ let perfil = JSON.parse(localStorage.getItem('voaam_perfil') || 'null');
 
 // ─── STATE ───
 const ESTADO_DEFAULT = {xp:0, streak:0, aulas:0, quizDone:0, quizCorrect:0};
-function chaveStateUsuario() {return `voaam_stats:${localStorage.getItem('voaam_usuario_id') || 'local'}`;}
-function carregarStateUsuario() {
-  try {
-    const salvo = JSON.parse(localStorage.getItem(chaveStateUsuario()) || 'null');
-    return salvo && typeof salvo === 'object' ? salvo : null;
-  } catch(_) { return null; }
-}
-const estadoInicial = carregarStateUsuario() || {
-  xp: Number(localStorage.getItem('xp'))||0,
-  streak: Number(localStorage.getItem('streak'))||0,
-  aulas: Number(localStorage.getItem('aulas'))||0,
-  quizDone: Number(localStorage.getItem('quizDone'))||0,
-  quizCorrect: Number(localStorage.getItem('quizCorrect'))||0,
-};
+// O servidor é a fonte de verdade. O navegador não lê nem restaura XP antigo.
+const estadoInicial = {...ESTADO_DEFAULT}; // Estado autoritativo carregado da API /api/progresso.
+
 let state = {
   xp: estadoInicial.xp||0,
   streak: estadoInicial.streak||0,
@@ -35,22 +24,12 @@ let state = {
 };
 
 function salvarState() {
-  const dados = Object.fromEntries(Object.keys(ESTADO_DEFAULT).map(k => [k, state[k]]));
-  localStorage.setItem(chaveStateUsuario(), JSON.stringify(dados));
-  // Mantidos temporariamente para compatibilidade com módulos antigos, ainda não carregados pela SPA.
-  for(const [k,v] of Object.entries(dados)) localStorage.setItem(k,String(v));
+  // Segurança: XP/estatísticas NÃO são persistidos pelo navegador.
+  // O servidor é a única fonte de verdade para recompensas.
 }
 function trocarStateUsuario() {
-  const id=localStorage.getItem('voaam_usuario_id')||'local';
-  const dados=carregarStateUsuario();
-  // Para perfis já existentes, migra uma única vez as estatísticas legadas.
-  const migrado=localStorage.getItem('voaam_stats_migrado');
-  const inicial=dados || (!migrado ? estadoInicial : ESTADO_DEFAULT);
-  for(const k of Object.keys(ESTADO_DEFAULT)) state[k]=Number(inicial[k])||0;
-  if(!migrado) localStorage.setItem('voaam_stats_migrado',id);
-  salvarState();
-  if(typeof updateStats==='function') updateStats();
-  const x=document.getElementById('xp-count');if(x) x.textContent=state.xp;
+  Object.assign(state, ESTADO_DEFAULT);
+  if(typeof atualizarProgresso==='function')atualizarProgresso();
 }
 
 // ─── VIDAS: 3 no máximo, 1 recuperada a cada 4 horas. ───
@@ -156,8 +135,26 @@ function renderCoracoes() {
 function iniciarTimerRecarga(ts) { renderCoracoes(); }
 function abrirInfoVidas() {
   const dialog = document.getElementById('vidas-ajuda');
-  if(dialog) dialog.hidden = !dialog.hidden;
+  const botao = document.getElementById('vidas-toggle');
+  if (!dialog || !botao) return;
+  // Coloca o popover em body para escapar dos contextos de empilhamento do header/grid.
+  if (dialog.parentElement !== document.body) document.body.appendChild(dialog);
+  const estavaAberto = !dialog.hidden;
+  dialog.hidden = estavaAberto;
+  botao.setAttribute('aria-expanded', String(!estavaAberto));
+  if (!estavaAberto) {
+    const rect = botao.getBoundingClientRect();
+    const largura = Math.min(320, innerWidth - 24);
+    dialog.style.left = `${Math.max(12, Math.min(innerWidth - largura - 12, rect.left))}px`;
+    dialog.style.top = `${Math.min(innerHeight - 190, rect.bottom + 8)}px`;
+  }
 }
+document.addEventListener('click', ev => {
+  const d = document.getElementById('vidas-ajuda');
+  if (!d || d.hidden || ev.target.closest('#vidas-toggle, #vidas-ajuda')) return;
+  d.hidden = true;
+  document.getElementById('vidas-toggle')?.setAttribute('aria-expanded','false');
+});
 // ─── ONBOARDING (legado — mantido para compatibilidade) ───
 let obSerie = null, obVests = [], obDific = null;
 function obValidar(step) {

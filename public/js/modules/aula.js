@@ -5,6 +5,7 @@
 let currentQuiz = null;
 let currentQuizIdx = 0;
 let quizCorrect = 0;
+let quizXpGanho = 0;
 let answered = false;
 let isSimulado = false;
 let currentQuizTopicContext = null;
@@ -47,6 +48,7 @@ function openAula(quizId) {
   currentQuiz = quiz;
   currentQuizIdx = 0;
   quizCorrect = 0;
+  quizXpGanho = 0;
   answered = false;
   isSimulado = false;
   quizResultadoRegistrado = false;
@@ -158,35 +160,38 @@ function renderQuestion() {
   `;
 }
 
-function selectOption(idx) {
+async function selectOption(idx) {
   if(answered) return;
   answered = true;
   const q = currentQuiz.questions[currentQuizIdx];
-  const correct = q.correct;
   const feedback = document.getElementById('feedback-box');
   const nextBtn = document.getElementById('next-btn');
   const opts = document.querySelectorAll('.option-btn');
-
-  opts[correct].classList.add('correct');
-  opts.forEach(b => b.disabled = true);
-
-  if(idx === correct) {
-    quizCorrect++;
-    state.quizCorrect++;
-    feedback.className = 'feedback-box correct show';
-    feedback.innerHTML = '✅ Correto! ' + q.explanation;
-    addXP(20);
-    spawnStars();
-  } else {
-    opts[idx].classList.add('wrong');
-    feedback.className = 'feedback-box wrong show';
-    feedback.innerHTML = `❌ Ops! A resposta certa era a opção ${['A','B','C','D'][correct]}. ${q.explanation}`;
-    addXP(5);
+  opts.forEach(b=>b.disabled=true);
+  const qid = isSimulado ? (q.id?.startsWith('simulado:') ? q.id : 'banco:'+q.id)
+      : `quiz:${currentQuizTopicContext.quizId}:${currentQuizIdx}`;
+  try {
+    const r = await avaliarRespostaServidor(qid, idx);
+    const correct=r.correta;
+    quizXpGanho += Number(r.xp_ganho)||0;
+    opts[correct]?.classList.add('correct');
+    if (r.acertou) {
+      quizCorrect++;
+      feedback.className='feedback-box correct show';
+      feedback.textContent='Correto! '+(r.explicacao||'');
+      spawnStars();
+    } else {
+      opts[idx]?.classList.add('wrong');
+      feedback.className='feedback-box wrong show';
+      feedback.textContent=`Resposta incorreta. Alternativa correta: ${'ABCDE'[correct]}. ${r.explicacao||''}`;
+    }
+    nextBtn.classList.add('show');
+  } catch(e) {
+    answered=false;
+    opts.forEach(b=>b.disabled=false);
+    feedback.className='feedback-box wrong show';
+    feedback.textContent='Não foi possível corrigir no servidor: '+e.message;
   }
-
-  state.quizDone++;
-  nextBtn.classList.add('show');
-  updateStats();
 }
 
 function nextQuestion() {
@@ -227,7 +232,7 @@ function showQuizResult() {
           <div class="rstat-lbl">Erros</div>
         </div>
         <div class="rstat">
-          <div class="rstat-val" style="color:var(--gold)">${quizCorrect*20+5*(total-quizCorrect)}</div>
+          <div class="rstat-val" style="color:var(--gold)">${quizXpGanho}</div>
           <div class="rstat-lbl">XP ganho</div>
         </div>
       </div>
@@ -256,6 +261,7 @@ function showQuizResult() {
 function retryQuiz() {
   currentQuizIdx = 0;
   quizCorrect = 0;
+  quizXpGanho = 0;
   quizResultadoRegistrado = false;
   renderAulaContent();
 }
@@ -284,6 +290,7 @@ function voaAMAbrirSimulado(quiz, tempoSegundos) {
   currentQuiz = quiz;
   currentQuizIdx = 0;
   quizCorrect = 0;
+  quizXpGanho = 0;
   answered = false;
   isSimulado = true;
   currentQuizTopicContext = null;

@@ -28,14 +28,36 @@ async function registrarVisita() {
 }
 
 // ─── GAMIFICATION ───
+async function atualizarProgresso() {
+  try {
+    const r=await fetch('/api/progresso',{credentials:'same-origin'});
+    if(!r.ok) return;
+    const p=await r.json();
+    state.xp=Number(p.xp)||0;
+    state.quizDone=Number(p.questoes_respondidas)||0;
+    state.quizCorrect=Number(p.acertos)||0;
+    state.aulas=Number(p.aulas_concluidas)||0;
+    state.streak=Number(p.sequencia_dias)||0;
+    const xpCount=document.getElementById('xp-count');if(xpCount)xpCount.textContent=state.xp;
+    updateStats();verificarStreak();
+    if(typeof renderNivel==='function')renderNivel();
+  }catch(e){console.warn('Progresso no servidor indisponível:',e);}
+}
+async function avaliarRespostaServidor(questao_id,alternativa) {
+  const r=await fetch('/api/avaliacao/responder',{
+    method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({questao_id,alternativa})
+  });
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d.message||`HTTP ${r.status}`);
+  if(d.xp_ganho>0)showXPToast('+'+d.xp_ganho+' XP');
+  await atualizarProgresso();
+  if(typeof atualizarNivel==='function')atualizarNivel();
+  return d;
+}
 function addXP(amount) {
-  state.xp += amount;
-  salvarState();
-  const xpCount = document.getElementById('xp-count');
-  if (xpCount) xpCount.textContent = state.xp;
-  const rankXp = document.getElementById('rank-xp');
-  if (rankXp) rankXp.textContent = state.xp + ' XP';
-  showXPToast('+' + amount + ' XP');
+  // Compatibilidade: chamadas legadas não podem conceder XP arbitrário.
+  console.warn('[voaAM] addXP local desativado; usar a API de correção.',amount);
 }
 
 function showXPToast(msg) {

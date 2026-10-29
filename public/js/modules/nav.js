@@ -45,6 +45,7 @@ function renderPerfil() {
   set('perfil-nome', perfil.nome);
   set('perfil-info', `${serie[perfil.serie] || 'Não informada'} · ${(perfil.vests || []).join(', ')}`);
   set('perfil-xp', state.xp);
+  if (typeof atualizarNivel === 'function') atualizarNivel();
   set('perfil-acertos', state.quizDone ? Math.round(100*state.quizCorrect/state.quizDone)+'%' : '—');
   set('perfil-streak', state.streak);
   set('perfil-respondidas', state.quizDone);

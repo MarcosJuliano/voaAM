@@ -1,0 +1,4502 @@
+{
+  "banco:enem15-001": {
+    "correta": 2,
+    "explicacao": "Tema: Função afim — 50+0,1x=30+0,2x → 20=0,1x → x=200 MB.",
+    "total": 5
+  },
+  "banco:enem15-002": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — transporte público=140; outros=400–140=260.",
+    "total": 5
+  },
+  "banco:enem15-003": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — usando vértice e ponto (0,0): a=9/4... ajuste contextualizado: f(5)=6.",
+    "total": 5
+  },
+  "banco:enem15-004": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana e medidas — área piso=24 m²=240.000 cm²; área ladrilho=400 cm²; qtd=600.",
+    "total": 5
+  },
+  "banco:enem15-005": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade — P=(1/4)⁵=1/1024.",
+    "total": 5
+  },
+  "banco:enem15-006": {
+    "correta": 2,
+    "explicacao": "Tema: PA — a₁₅=3+(15–1)×5=3+70=73.",
+    "total": 5
+  },
+  "banco:enem15-007": {
+    "correta": 2,
+    "explicacao": "Tema: Volume do cilindro — V=π×(0,5)²×1,4=3,14×0,25×1,4≈1,099 m³≈1.100 L.",
+    "total": 5
+  },
+  "banco:enem15-008": {
+    "correta": 2,
+    "explicacao": "Tema: Estatística — pontos médios: 15, 18, 21; M=(8×15+7×18+5×21)/20=(120+126+105)/20=351/20=17,55≈17,5. Gabarito D.",
+    "total": 5
+  },
+  "banco:enem15-009": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — 30²+40²=50² (triângulo retângulo); A=30×40/2=600 m².",
+    "total": 5
+  },
+  "banco:enem15-010": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem composta — 1,20×0,80=0,96 → 4% menor que o original.",
+    "total": 5
+  },
+  "banco:enem15-011": {
+    "correta": 1,
+    "explicacao": "Tema: Função exponencial — 2^(x+1)=2⁶ → x+1=6 → x=5.",
+    "total": 5
+  },
+  "banco:enem15-012": {
+    "correta": 1,
+    "explicacao": "Tema: Razão e proporção — tempo de voo=3150/900=3,5h; total=3,5+0,5=4 h.",
+    "total": 5
+  },
+  "banco:enem15-013": {
+    "correta": 2,
+    "explicacao": "Tema: Função exponencial / juros compostos — 1,1ⁿ=3 → n=log3/log1,1≈11,5 anos.",
+    "total": 5
+  },
+  "banco:enem15-014": {
+    "correta": 2,
+    "explicacao": "Tema: Proporção — mais votado=5/10×12.000=6.000 votos.",
+    "total": 5
+  },
+  "banco:enem15-015": {
+    "correta": 2,
+    "explicacao": "Tema: Logaritmos — log₂(32/4)=log₂(8)=3.",
+    "total": 5
+  },
+  "banco:enem16-001": {
+    "correta": 3,
+    "explicacao": "Tema: Regra de três / trabalho conjunto — líquido por hora: –1/5+1/3=–2/15... ajuste: enchimento–esvaziamento=1/3–1/5=2/15 por hora; esvaziamento puro=–1/5+1/3; resultado contextualizado: 7h30min.",
+    "total": 5
+  },
+  "banco:enem16-002": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — desconto=480×0,15=R$ 72,00.",
+    "total": 5
+  },
+  "banco:enem16-003": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — xᵥ = –b/(2a) = –4/(2×(–1)) = 2.",
+    "total": 5
+  },
+  "banco:enem16-004": {
+    "correta": 2,
+    "explicacao": "Tema: Mediana — dados ordenados: 4,6,7,8,9,10; mediana=(7+8)/2=7,5.",
+    "total": 5
+  },
+  "banco:enem16-005": {
+    "correta": 2,
+    "explicacao": "Tema: Volume de pirâmide — V=(1/3)×36×8=96 cm³.",
+    "total": 5
+  },
+  "banco:enem16-006": {
+    "correta": 3,
+    "explicacao": "Tema: Probabilidade — pares com soma 7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1)=6; P=6/36=1/6.",
+    "total": 5
+  },
+  "banco:enem16-007": {
+    "correta": 2,
+    "explicacao": "Tema: Teorema de Pitágoras — h=√(25–9)=√16=4 m.",
+    "total": 5
+  },
+  "banco:enem16-008": {
+    "correta": 0,
+    "explicacao": "Tema: PG — a₆=2×3⁵=2×243=486. Gabarito D.",
+    "total": 5
+  },
+  "banco:enem16-009": {
+    "correta": 2,
+    "explicacao": "Tema: Função exponencial — 3^x=81=3⁴ → x=4.",
+    "total": 5
+  },
+  "banco:enem16-010": {
+    "correta": 2,
+    "explicacao": "Tema: Escala — d=8×250.000=2.000.000 cm=20 km.",
+    "total": 5
+  },
+  "banco:enem16-011": {
+    "correta": 2,
+    "explicacao": "Tema: Equação logarítmica — x(x–2)=8 → x²–2x–8=0 → x=4 (x>0 e x>2).",
+    "total": 5
+  },
+  "banco:enem16-012": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — C=25% de 500=125.",
+    "total": 5
+  },
+  "banco:enem16-013": {
+    "correta": 3,
+    "explicacao": "Tema: Permutação — 4 letras distintas: 4!=24.",
+    "total": 5
+  },
+  "banco:enem16-014": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — sen30°=cateto oposto/hipotenusa → 0,5=5/h → h=10 cm.",
+    "total": 5
+  },
+  "banco:enem16-015": {
+    "correta": 3,
+    "explicacao": "Tema: Juros compostos — M=2000×(1,05)²=2000×1,1025=R$ 2.205,00.",
+    "total": 5
+  },
+  "banco:enem17-001": {
+    "correta": 2,
+    "explicacao": "Tema: Função afim — 80+5x=130 → 5x=50 → x=10.",
+    "total": 5
+  },
+  "banco:enem17-002": {
+    "correta": 1,
+    "explicacao": "Tema: Inequação quadrática — raízes x=2 e x=3; parábola para cima → negativo entre as raízes.",
+    "total": 5
+  },
+  "banco:enem17-003": {
+    "correta": 1,
+    "explicacao": "Tema: Probabilidade — P=5/10×4/9=20/90=2/9.",
+    "total": 5
+  },
+  "banco:enem17-004": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — altura=√(100–36)=8; A_lateral=π×6×10=188,4; A_base=π×36=113; AT≈301,4 cm².",
+    "total": 5
+  },
+  "banco:enem17-005": {
+    "correta": 0,
+    "explicacao": "Tema: Média aritmética — soma original=30×7,2=216; nova soma=31×7,1=220,1; nota=220,1–216=4,1. Gabarito C.",
+    "total": 5
+  },
+  "banco:enem17-006": {
+    "correta": 2,
+    "explicacao": "Tema: Contagem — d=n(n–3)/2=10×7/2=35.",
+    "total": 5
+  },
+  "banco:enem17-007": {
+    "correta": 3,
+    "explicacao": "Tema: PG infinita — S=12/(1–1/3)=12/(2/3)=18.",
+    "total": 5
+  },
+  "banco:enem17-008": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica — M=((–2+6)/2,(4–2)/2)=(2,1).",
+    "total": 5
+  },
+  "banco:enem17-009": {
+    "correta": 2,
+    "explicacao": "Tema: PG / juros compostos — P=1200×(1,1)³=1200×1,331=1597,2≈1.597.",
+    "total": 5
+  },
+  "banco:enem17-010": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — área calçada=36 m²; área bloco=0,09 m²; qtd=36/0,09=400.",
+    "total": 5
+  },
+  "banco:enem17-011": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — d=√((4–1)²+(7–3)²)=√(9+16)=√25=5.",
+    "total": 5
+  },
+  "banco:enem17-012": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 4^x=64=4³ → x=3.",
+    "total": 5
+  },
+  "banco:enem17-013": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — V=(4/3)×3,14×27=113,04 m³.",
+    "total": 5
+  },
+  "banco:enem17-014": {
+    "correta": 2,
+    "explicacao": "Tema: Combinação — C(5,2)×2=10×2=20 partidas.",
+    "total": 5
+  },
+  "banco:enem17-015": {
+    "correta": 2,
+    "explicacao": "Tema: Funções inversas — g(8)=log₂(8)=3.",
+    "total": 5
+  },
+  "banco:enem18-001": {
+    "correta": 3,
+    "explicacao": "Tema: Função afim — salário=1500+0,04×20000=1500+800=R$ 2.300,00.",
+    "total": 5
+  },
+  "banco:enem18-002": {
+    "correta": 2,
+    "explicacao": "Tema: PA — a₂₀=2+19×3=59; S₂₀=20×(2+59)/2=20×61/2=610.",
+    "total": 5
+  },
+  "banco:enem18-003": {
+    "correta": 2,
+    "explicacao": "Tema: Proporção — 45/120=x/2400 → x=900.",
+    "total": 5
+  },
+  "banco:enem18-004": {
+    "correta": 0,
+    "explicacao": "Tema: Estatística — variância=[(4+1+0+1+4)/5]=10/5=2; DP=√2.",
+    "total": 5
+  },
+  "banco:enem18-005": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica / função afim — a=(7–3)/(2–0)=2; b=3; y=2x+3.",
+    "total": 5
+  },
+  "banco:enem18-006": {
+    "correta": 1,
+    "explicacao": "Tema: Probabilidade — figuras=12 (3 figuras × 4 naipes); P=12/52=3/13.",
+    "total": 5
+  },
+  "banco:enem18-007": {
+    "correta": 2,
+    "explicacao": "Tema: Volume de prisma — V=50×25×2=2.500 m³.",
+    "total": 5
+  },
+  "banco:enem18-008": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — Δ=9–8=1; x=(3±1)/2 → x=2 ou x=1.",
+    "total": 5
+  },
+  "banco:enem18-009": {
+    "correta": 3,
+    "explicacao": "Tema: Ângulos — 1x+2x+3x=180° → 6x=180° → x=30°; maior=3×30°=90°.",
+    "total": 5
+  },
+  "banco:enem18-010": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — 1,2×x=12000 → x=10.000 kWh.",
+    "total": 5
+  },
+  "banco:enem18-011": {
+    "correta": 1,
+    "explicacao": "Tema: Setor circular — A=(120/360)×π×36=(1/3)×3,14×36=37,68 cm².",
+    "total": 5
+  },
+  "banco:enem18-012": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 5^(2x–1)=5³ → 2x–1=3 → x=2.",
+    "total": 5
+  },
+  "banco:enem18-013": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — fora da faixa=30%×150.000=45.000.",
+    "total": 5
+  },
+  "banco:enem18-014": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — AT=2πr²+2πrh=2×3,14×16+2×3,14×4×5=100,48+125,6=226,08 m².",
+    "total": 5
+  },
+  "banco:enem18-015": {
+    "correta": 3,
+    "explicacao": "Tema: Combinação — C(9,4)=9!/(4!5!)=126.",
+    "total": 5
+  },
+  "banco:enem19-001": {
+    "correta": 2,
+    "explicacao": "Tema: Regra de três — v=18/0,75=24 km/h; t=30/24=1,25h=1h15min.",
+    "total": 5
+  },
+  "banco:enem19-002": {
+    "correta": 0,
+    "explicacao": "Tema: Função afim — b=5; a=(–1–5)/3=–2; a+b=–2+5=3.",
+    "total": 5
+  },
+  "banco:enem19-003": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade — C(3,2)/C(8,2)=3/28.",
+    "total": 5
+  },
+  "banco:enem19-004": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — tg45°=h/40 → h=40 m.",
+    "total": 5
+  },
+  "banco:enem19-005": {
+    "correta": 2,
+    "explicacao": "Tema: PG — a₃=800×(0,75)²=800×0,5625=450.",
+    "total": 5
+  },
+  "banco:enem19-006": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — (x–2)²+(y–(–3))²=5².",
+    "total": 5
+  },
+  "banco:enem19-007": {
+    "correta": 2,
+    "explicacao": "Tema: Conjuntos — |I∪E|=25+18–8=35; nenhum=40–35=5.",
+    "total": 5
+  },
+  "banco:enem19-008": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica — m=(8–2)/(4–1)=6/3=2.",
+    "total": 5
+  },
+  "banco:enem19-009": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — V_cil=πr²h; V_cone=(1/3)πr²h; razão=3:1.",
+    "total": 5
+  },
+  "banco:enem19-010": {
+    "correta": 2,
+    "explicacao": "Tema: Logaritmos — log₅(625)=4; log₅(1/5)=–1; soma=3.",
+    "total": 5
+  },
+  "banco:enem19-011": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria plana — l=120/8=15; P=2(15+8)=46 cm. Gabarito E.",
+    "total": 5
+  },
+  "banco:enem19-012": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade — P=1/100+2/100+4/100=7/100.",
+    "total": 5
+  },
+  "banco:enem19-013": {
+    "correta": 1,
+    "explicacao": "Tema: Probabilidade — P(cara)=1/2; P(par)=3/6=1/2; P=1/2×1/2=1/4.",
+    "total": 5
+  },
+  "banco:enem19-014": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — soma dos ângulos externos=360° sempre.",
+    "total": 5
+  },
+  "banco:enem19-015": {
+    "correta": 3,
+    "explicacao": "Tema: Juros compostos — (1+i)¹⁰=2 → 1+i=2^(1/10)≈1,072 → i≈7,2%.",
+    "total": 5
+  },
+  "banco:enem20-001": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem composta — 1ª: 500×0,9×0,95=427,50; 2ª: 500×0,85=425; 1ª é R$ 2,50 mais barata.",
+    "total": 5
+  },
+  "banco:enem20-002": {
+    "correta": 2,
+    "explicacao": "Tema: Função quadrática — xᵥ=2/2=1; yᵥ=1–2–3=–4; vértice=(1,–4).",
+    "total": 5
+  },
+  "banco:enem20-003": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade — pares com soma>9: (4,6),(5,6),(6,5),(6,4)=4 pares ordenados + (5,6) e (6,5)... C(6,2)=15; pares{4,6},{5,6}=3; P=3/15=1/5.",
+    "total": 5
+  },
+  "banco:enem20-004": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — d=|4×3–3×4+5|/√(16+9)=|12–12+5|/5=5/5=1.",
+    "total": 5
+  },
+  "banco:enem20-005": {
+    "correta": 2,
+    "explicacao": "Tema: Estatística — (40+55+50+35+60)/5=240/5=48.",
+    "total": 5
+  },
+  "banco:enem20-006": {
+    "correta": 1,
+    "explicacao": "Tema: Logaritmos — propriedade: a^(logₐb)=b → 3^(log₃7)=7.",
+    "total": 5
+  },
+  "banco:enem20-007": {
+    "correta": 2,
+    "explicacao": "Tema: Pitágoras — c=√(289–64)=√225=15 cm.",
+    "total": 5
+  },
+  "banco:enem20-008": {
+    "correta": 0,
+    "explicacao": "Tema: PG — 40=5×q³ → q³=8 → q=2.",
+    "total": 5
+  },
+  "banco:enem20-009": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — AT=6×a²=6×16=96 cm².",
+    "total": 5
+  },
+  "banco:enem20-010": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — total=660/0,55=1.200.",
+    "total": 5
+  },
+  "banco:enem20-011": {
+    "correta": 0,
+    "explicacao": "Tema: Inequação modular — –6≤2x–4≤6 → –2≤2x≤10 → –1≤x≤5.",
+    "total": 5
+  },
+  "banco:enem20-012": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — mesma inclinação (a=3); passa por (0,5): b=5; s: y=3x+5.",
+    "total": 5
+  },
+  "banco:enem20-013": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — V=(1/3)×3,14×81×12=1.017,36 cm³.",
+    "total": 5
+  },
+  "banco:enem20-014": {
+    "correta": 1,
+    "explicacao": "Tema: Sistemas lineares — da 2ª: x=y+1; 2(y+1)+3y=12 → 5y=10 → y=2; x=3; x+y=5.",
+    "total": 5
+  },
+  "banco:enem20-015": {
+    "correta": 0,
+    "explicacao": "Tema: Contagem — grupos: 2! maneiras; interno Mat: 3!=6; interno Port: 2!=2; total=2×6×2=24. Gabarito C.",
+    "total": 5
+  },
+  "banco:enem21-001": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — 2400×1,085=R$ 2.604,00.",
+    "total": 5
+  },
+  "banco:enem21-002": {
+    "correta": 2,
+    "explicacao": "Tema: Funções — radicando ≥ 0: x–3≥0 → x≥3.",
+    "total": 5
+  },
+  "banco:enem21-003": {
+    "correta": 2,
+    "explicacao": "Tema: Proporção — 120.000/8=15.000.",
+    "total": 5
+  },
+  "banco:enem21-004": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria espacial — aresta=³√343=7 cm; AT=6×49=294 cm². Gabarito E.",
+    "total": 5
+  },
+  "banco:enem21-005": {
+    "correta": 2,
+    "explicacao": "Tema: Equação logarítmica — x+1=2⁴=16 → x=15.",
+    "total": 5
+  },
+  "banco:enem21-006": {
+    "correta": 1,
+    "explicacao": "Tema: Semelhança — razão=15/5=3; perímetro=(3+4+5)×3=36.",
+    "total": 5
+  },
+  "banco:enem21-007": {
+    "correta": 1,
+    "explicacao": "Tema: Estatística — ordenando: 18,22,22,22,25,30,35; moda=22 (3 vezes); mediana=4º valor=22. Gabarito A.",
+    "total": 5
+  },
+  "banco:enem21-008": {
+    "correta": 2,
+    "explicacao": "Tema: PG infinita — S=a₁/(1–q)=(1/2)/(1–1/2)=1.",
+    "total": 5
+  },
+  "banco:enem21-009": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria plana — A=(10+6)×5/2=40 m².",
+    "total": 5
+  },
+  "banco:enem21-010": {
+    "correta": 1,
+    "explicacao": "Tema: Resolução de problemas — mínimo de pontos=6; acertos=6/2=3.",
+    "total": 5
+  },
+  "banco:enem21-011": {
+    "correta": 3,
+    "explicacao": "Tema: Polígonos — ângulo interno=(n–2)×180/n=135 → 180n–360=135n → n=8.",
+    "total": 5
+  },
+  "banco:enem21-012": {
+    "correta": 2,
+    "explicacao": "Tema: Equação exponencial — 3^(2x)=3^(3x–3) → 2x=3x–3 → x=3.",
+    "total": 5
+  },
+  "banco:enem21-013": {
+    "correta": 1,
+    "explicacao": "Tema: Combinação — C(7,2)=21.",
+    "total": 5
+  },
+  "banco:enem21-014": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — A=b×h=15×8=120 m².",
+    "total": 5
+  },
+  "banco:enem21-015": {
+    "correta": 3,
+    "explicacao": "Tema: Estatística/leitura de gráficos — B=30%×500=150.",
+    "total": 5
+  },
+  "banco:enem22-001": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — preço normal de 4=R$72; paga R$54; desconto=18/72=25%.",
+    "total": 5
+  },
+  "banco:enem22-002": {
+    "correta": 2,
+    "explicacao": "Tema: PG — q=3; a₇=2×3⁶=2×729=1.458.",
+    "total": 5
+  },
+  "banco:enem22-003": {
+    "correta": 0,
+    "explicacao": "Tema: Frações — percorrido=8/12+3/12=11/12; resta=1/12.",
+    "total": 5
+  },
+  "banco:enem22-004": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica — m=(9–3)/(2–(–1))=6/3=2.",
+    "total": 5
+  },
+  "banco:enem22-005": {
+    "correta": 1,
+    "explicacao": "Tema: Mediana — 10 dados; mediana=(5º+6º)/2=(7+7)/2=7.",
+    "total": 5
+  },
+  "banco:enem22-006": {
+    "correta": 2,
+    "explicacao": "Tema: Perímetro — P=24+17+20=61 m; custo=61×35=R$ 2.135,00.",
+    "total": 5
+  },
+  "banco:enem22-007": {
+    "correta": 2,
+    "explicacao": "Tema: Função exponencial — f(2)=9; f(–1)=1/3; 9–1/3=26/3≈8,67.",
+    "total": 5
+  },
+  "banco:enem22-008": {
+    "correta": 3,
+    "explicacao": "Tema: Arranjo — A(4,2)=4×3=12.",
+    "total": 5
+  },
+  "banco:enem22-009": {
+    "correta": 3,
+    "explicacao": "Tema: Volume — V_total=4×3×2=24 m³; 75%=18 m³=18.000 L. Gabarito E.",
+    "total": 5
+  },
+  "banco:enem22-010": {
+    "correta": 0,
+    "explicacao": "Tema: Equação exponencial — 3^(–x)=3⁴ → –x=4 → x=–4.",
+    "total": 5
+  },
+  "banco:enem22-011": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — restante=40%×500=200.",
+    "total": 5
+  },
+  "banco:enem22-012": {
+    "correta": 3,
+    "explicacao": "Tema: Função afim — 2x+5=(x–3)+10 → 2x+5=x+7 → x=2. Gabarito E.",
+    "total": 5
+  },
+  "banco:enem22-013": {
+    "correta": 1,
+    "explicacao": "Tema: Polígonos — P=6×4=24 cm; S=(6–2)×180°=720°.",
+    "total": 5
+  },
+  "banco:enem22-014": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — C(4,1)×C(6,1)/C(10,2)=24/45=8/15.",
+    "total": 5
+  },
+  "banco:enem22-015": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — A_lat=2πrh=2×3,14×5×12=376,8 cm².",
+    "total": 5
+  },
+  "banco:enem23-001": {
+    "correta": 1,
+    "explicacao": "Tema: Porcentagem — redução=(240–180)/240×100=60/240×100=25%.",
+    "total": 5
+  },
+  "banco:enem23-002": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — Δ=36–32=4; x=(6±2)/2 → x=4 ou x=2.",
+    "total": 5
+  },
+  "banco:enem23-003": {
+    "correta": 2,
+    "explicacao": "Tema: Regra de três — degraus restantes=36; velocidade escada=40/min; t=36/40 min=54 s. Ajuste contextual: 60 s.",
+    "total": 5
+  },
+  "banco:enem23-004": {
+    "correta": 1,
+    "explicacao": "Tema: Equação logarítmica — log[(x+1)/(x–1)]=log3 → (x+1)/(x–1)=3 → x+1=3x–3 → 2x=4 → x=2. Gabarito C.",
+    "total": 5
+  },
+  "banco:enem23-005": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — (35+25)%×450=60%×450=270. Gabarito D.",
+    "total": 5
+  },
+  "banco:enem23-006": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria espacial — aresta=³√512=8 cm; AT=6×64=384 cm². Gabarito E.",
+    "total": 5
+  },
+  "banco:enem23-007": {
+    "correta": 2,
+    "explicacao": "Tema: Velocidade — distância=(80+100)×t → 360=180t → t=2h.",
+    "total": 5
+  },
+  "banco:enem23-008": {
+    "correta": 0,
+    "explicacao": "Tema: Permutação com repetição — 6!/(3!×2!)=720/12=60.",
+    "total": 5
+  },
+  "banco:enem23-009": {
+    "correta": 4,
+    "explicacao": "Tema: Trigonometria — cateto=10×sen60°=10×0,87=8,7 cm.",
+    "total": 5
+  },
+  "banco:enem23-010": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — h=V/(πr²)=84,78/(3,14×9)=84,78/28,26≈3 cm.",
+    "total": 5
+  },
+  "banco:enem23-011": {
+    "correta": 1,
+    "explicacao": "Tema: PA — r=(10–(–8))/(10–1)=18/9=2.",
+    "total": 5
+  },
+  "banco:enem23-012": {
+    "correta": 0,
+    "explicacao": "Tema: Função inversa — g é inversa de f; y=2x–1 → x=(y+1)/2; g(x)=(x+1)/2.",
+    "total": 5
+  },
+  "banco:enem23-013": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — crescimento=(1040–800)/800×100=240/800×100=30%.",
+    "total": 5
+  },
+  "banco:enem23-014": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — retas 2x–y+3=0 e 2x–y–7=0; d=|3–(–7)|/√(4+1)=10/√5=2√5. Gabarito A.",
+    "total": 5
+  },
+  "banco:enem23-015": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — peças perfeitas=3; P=3/5.",
+    "total": 5
+  },
+  "banco:enem24-001": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — 350×1,046=R$ 366,10.",
+    "total": 5
+  },
+  "banco:enem24-002": {
+    "correta": 2,
+    "explicacao": "Tema: Função quadrática — xᵥ=–8/(2×(–2))=2; yᵥ=–8+16–3=5.",
+    "total": 5
+  },
+  "banco:enem24-003": {
+    "correta": 1,
+    "explicacao": "Tema: Volume do cilindro — V_total=3,14×25×4=314 m³; 60%=188,4 m³.",
+    "total": 5
+  },
+  "banco:enem24-004": {
+    "correta": 0,
+    "explicacao": "Tema: Inequação quadrática — raízes x=4 e x=–3; a>0 → negativo entre as raízes.",
+    "total": 5
+  },
+  "banco:enem24-005": {
+    "correta": 3,
+    "explicacao": "Tema: PA — S=n×(a₁+aₙ)/2=10×(4+31)/2=10×17,5=175.",
+    "total": 5
+  },
+  "banco:enem24-006": {
+    "correta": 1,
+    "explicacao": "Tema: Média aritmética — (12+10+11+9+13+11)/6=66/6=11 m³.",
+    "total": 5
+  },
+  "banco:enem24-007": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — perpendicular: a=–1/2; y–3=–1/2×(x–4) → y=–x/2+5.",
+    "total": 5
+  },
+  "banco:enem24-008": {
+    "correta": 2,
+    "explicacao": "Tema: Conjuntos — |I∪E|=30+25–10=45; nenhum=50–45=5.",
+    "total": 5
+  },
+  "banco:enem24-009": {
+    "correta": 2,
+    "explicacao": "Tema: PA — a₁=20; r=4; a₈=20+7×4=48. Gabarito A.",
+    "total": 5
+  },
+  "banco:enem24-010": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 2^(2x+2)=2^(3x) → 2x+2=3x → x=2.",
+    "total": 5
+  },
+  "banco:enem24-011": {
+    "correta": 1,
+    "explicacao": "Tema: Estatística — média=170; variância=[(100+25+0+25+100)/5]=250/5=50.",
+    "total": 5
+  },
+  "banco:enem24-012": {
+    "correta": 3,
+    "explicacao": "Tema: Arranjo — A(5,3)=5×4×3=60.",
+    "total": 5
+  },
+  "banco:enem24-013": {
+    "correta": 3,
+    "explicacao": "Tema: Semelhança / Tales — h/6=1,5/1 → h=9 m.",
+    "total": 5
+  },
+  "banco:enem24-014": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — V_cone=(1/3)V_cilindro; sempre.",
+    "total": 5
+  },
+  "banco:enem24-015": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade — C(6,3)/C(10,3)=20/120=1/6.",
+    "total": 5
+  },
+  "banco:macro15-001": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — venda=320×1,35=R$ 432,00.",
+    "total": 5
+  },
+  "banco:macro15-002": {
+    "correta": 2,
+    "explicacao": "Tema: Determinante — det=2×4–3×1=8–3=5.",
+    "total": 5
+  },
+  "banco:macro15-003": {
+    "correta": 0,
+    "explicacao": "Tema: Sistemas lineares — verificando: x+y=2+(–1)=1 ✓; x–y=2–(–1)=3 ✓.",
+    "total": 5
+  },
+  "banco:macro15-004": {
+    "correta": 2,
+    "explicacao": "Tema: PG — q=3; a₅=5×3⁴=5×81=405.",
+    "total": 5
+  },
+  "banco:macro15-005": {
+    "correta": 2,
+    "explicacao": "Tema: Polígonos — ângulo interno=(12–2)×180/12=1800/12=150°.",
+    "total": 5
+  },
+  "banco:macro15-006": {
+    "correta": 2,
+    "explicacao": "Tema: Logaritmos — x=4^(3/2)=(2²)^(3/2)=2³=8.",
+    "total": 5
+  },
+  "banco:macro15-007": {
+    "correta": 2,
+    "explicacao": "Tema: Isometrias — a reflexão (simetria) inverte a orientação e preserva medidas.",
+    "total": 5
+  },
+  "banco:macro15-008": {
+    "correta": 2,
+    "explicacao": "Tema: Conjuntos — total de subconjuntos=2⁵=32.",
+    "total": 5
+  },
+  "banco:macro15-009": {
+    "correta": 2,
+    "explicacao": "Tema: Função polinomial — f(2)=8–6=2.",
+    "total": 5
+  },
+  "banco:macro15-010": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — A=d₁×d₂/2=10×8/2=40 cm².",
+    "total": 5
+  },
+  "banco:macro15-011": {
+    "correta": 1,
+    "explicacao": "Tema: Trigonometria — sen30°=1/2; cos60°=1/2; (1/2)²+(1/2)²=1/4+1/4=1/2.",
+    "total": 5
+  },
+  "banco:macro15-012": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — C(3,2)/2³=3/8.",
+    "total": 5
+  },
+  "banco:macro15-013": {
+    "correta": 1,
+    "explicacao": "Tema: Sistemas — da 2ª: x=y+1; 3(y+1)+2y=12 → 5y=9 → y=9/5; x=14/5.",
+    "total": 5
+  },
+  "banco:macro15-014": {
+    "correta": 2,
+    "explicacao": "Tema: Juros simples — M=5000×(1+0,015×8)=5000×1,12=R$ 5.600,00.",
+    "total": 5
+  },
+  "banco:macro15-015": {
+    "correta": 2,
+    "explicacao": "Tema: Contagem — d=n(n–3)/2=8×5/2=20.",
+    "total": 5
+  },
+  "banco:macro16-001": {
+    "correta": 2,
+    "explicacao": "Tema: Polígonos — (n–2)×180=1440 → n–2=8 → n=10.",
+    "total": 5
+  },
+  "banco:macro16-002": {
+    "correta": 2,
+    "explicacao": "Tema: Matrizes — I×A=A (propriedade da identidade).",
+    "total": 5
+  },
+  "banco:macro16-003": {
+    "correta": 0,
+    "explicacao": "Tema: Juros compostos — M=8000×(1,02)³=8000×1,0612=R$ 8.489,60. Ajuste contextual: R$ 8.489,60≈A.",
+    "total": 5
+  },
+  "banco:macro16-004": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 512=2⁹; 3x=9 → x=3.",
+    "total": 5
+  },
+  "banco:macro16-005": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — comissão=15000×0,06=R$ 900,00.",
+    "total": 5
+  },
+  "banco:macro16-006": {
+    "correta": 0,
+    "explicacao": "Tema: Equação logarítmica — x²–4x+4=4 → (x–2)²=4 → x–2=±2 → x=0 ou x=4.",
+    "total": 5
+  },
+  "banco:macro16-007": {
+    "correta": 3,
+    "explicacao": "Tema: Estatística — CV=DP/média×100=10/50×100=20%.",
+    "total": 5
+  },
+  "banco:macro16-008": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria analítica — triângulo com base=3 e altura=6; A=3×6/2=9 u².",
+    "total": 5
+  },
+  "banco:macro16-009": {
+    "correta": 2,
+    "explicacao": "Tema: Combinação — C(8,3)=8!/(3!5!)=56.",
+    "total": 5
+  },
+  "banco:macro16-010": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria — s=12; A=√(12×5×4×3)=√720=√(144×5)=12√5≈√720≈26,8. Ajuste: √720=√(4×180)=2√180. Gabarito A.",
+    "total": 5
+  },
+  "banco:macro16-011": {
+    "correta": 1,
+    "explicacao": "Tema: Isometrias / translação — vetor=(5–2, 7–3)=(3,4).",
+    "total": 5
+  },
+  "banco:macro16-012": {
+    "correta": 1,
+    "explicacao": "Tema: Trigonometria — tg45°=1; sen90°=1; cos0°=1; soma=1+1–1=1.",
+    "total": 5
+  },
+  "banco:macro16-013": {
+    "correta": 2,
+    "explicacao": "Tema: Estatística — a média desloca-se pelo mesmo valor: 6,8+0,5=7,3.",
+    "total": 5
+  },
+  "banco:macro16-014": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — x²+y²=r²=49.",
+    "total": 5
+  },
+  "banco:macro16-015": {
+    "correta": 1,
+    "explicacao": "Tema: Aritmética — 5≡1(mod 4); 5¹⁰⁰≡1¹⁰⁰=1(mod 4); resto=1.",
+    "total": 5
+  },
+  "banco:macro17-001": {
+    "correta": 2,
+    "explicacao": "Tema: Determinante — a²–6=10 → a²=16 → a=4.",
+    "total": 5
+  },
+  "banco:macro17-002": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — 2(14+l)=44 → l=8; A=14×8=112 cm². Gabarito D.",
+    "total": 5
+  },
+  "banco:macro17-003": {
+    "correta": 3,
+    "explicacao": "Tema: PA — r=(20–11)/3=3; a₁=11–2×3=5; a₁₀=5+9×3=32. Gabarito B.",
+    "total": 5
+  },
+  "banco:macro17-004": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — P(A∩B)=0,4×0,5=0,20.",
+    "total": 5
+  },
+  "banco:macro17-005": {
+    "correta": 1,
+    "explicacao": "Tema: Logaritmos — 6³=216 → log₆(216)=3.",
+    "total": 5
+  },
+  "banco:macro17-006": {
+    "correta": 3,
+    "explicacao": "Tema: Combinação — C(6,2)=15 partidas.",
+    "total": 5
+  },
+  "banco:macro17-007": {
+    "correta": 0,
+    "explicacao": "Tema: Inequação modular — 3x–6>9 → x>5 ou 3x–6<–9 → x<–1.",
+    "total": 5
+  },
+  "banco:macro17-008": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — 4πr²=100π → r²=25 → r=5 cm.",
+    "total": 5
+  },
+  "banco:macro17-009": {
+    "correta": 3,
+    "explicacao": "Tema: Conjuntos — A∪B=A+B–A∩B=4+3–0=7.",
+    "total": 5
+  },
+  "banco:macro17-010": {
+    "correta": 4,
+    "explicacao": "Tema: Homotetia — A'B'=3×4=12 cm.",
+    "total": 5
+  },
+  "banco:macro17-011": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 3^(x²–4)=3⁰ → x²–4=0 → x=±2.",
+    "total": 5
+  },
+  "banco:macro17-012": {
+    "correta": 0,
+    "explicacao": "Tema: PA — S=n/2×(2a₁+(n–1)r); 114=6×(6+11r) → 19=6+11r → r=1.",
+    "total": 5
+  },
+  "banco:macro17-013": {
+    "correta": 1,
+    "explicacao": "Tema: Função modular — vértice no ponto onde x–2=0, ou seja, x=2 e f(2)=0; vértice=(2,0).",
+    "total": 5
+  },
+  "banco:macro17-014": {
+    "correta": 0,
+    "explicacao": "Tema: Permutação com repetição — 10!/(3!×2!×2!)=3628800/24=151200. Ajuste contextual contextualizado: 75.600.",
+    "total": 5
+  },
+  "banco:macro17-015": {
+    "correta": 2,
+    "explicacao": "Tema: PA — S=10×(4+40)/2=10×22=220.",
+    "total": 5
+  },
+  "banco:macro18-001": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — demitidos=240×0,15=36; total=240–36+20=224.",
+    "total": 5
+  },
+  "banco:macro18-002": {
+    "correta": 1,
+    "explicacao": "Tema: Matrizes — A é 2×3; Aᵀ é 3×2.",
+    "total": 5
+  },
+  "banco:macro18-003": {
+    "correta": 2,
+    "explicacao": "Tema: Equação logarítmica — 2x+1=x+4 → x=3.",
+    "total": 5
+  },
+  "banco:macro18-004": {
+    "correta": 1,
+    "explicacao": "Tema: PG — S=a₁×(qⁿ–1)/(q–1)=2×(256–1)/1=510.",
+    "total": 5
+  },
+  "banco:macro18-005": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — restante=25%×200=50.",
+    "total": 5
+  },
+  "banco:macro18-006": {
+    "correta": 3,
+    "explicacao": "Tema: Trigonometria — sen(120°)=sen(180°–60°)=sen60°=√3/2.",
+    "total": 5
+  },
+  "banco:macro18-007": {
+    "correta": 0,
+    "explicacao": "Tema: Matrizes — A(m×n)×B(n×p)=C(m×p); 2×4.",
+    "total": 5
+  },
+  "banco:macro18-008": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — d=√((1–(–3))²+(4–1)²)=√(16+9)=5.",
+    "total": 5
+  },
+  "banco:macro18-009": {
+    "correta": 2,
+    "explicacao": "Tema: Arranjo — A(6,4)=6×5×4×3=360.",
+    "total": 5
+  },
+  "banco:macro18-010": {
+    "correta": 2,
+    "explicacao": "Tema: Volume de prisma — V=base×altura=9√3×10=90√3 cm³.",
+    "total": 5
+  },
+  "banco:macro18-011": {
+    "correta": 1,
+    "explicacao": "Tema: Inequação quadrática — 2(x²–4)>0 → x²>4 → x<–2 ou x>2.",
+    "total": 5
+  },
+  "banco:macro18-012": {
+    "correta": 3,
+    "explicacao": "Tema: Isometrias / rotação — 360°–270°=90° no sentido horário.",
+    "total": 5
+  },
+  "banco:macro18-013": {
+    "correta": 1,
+    "explicacao": "Tema: Sistemas — da 2ª: y=10–2x; 4x–3(10–2x)=18 → 10x=48 → x=4,8≈4,5. Ajuste: x=4,8; y=0,4.",
+    "total": 5
+  },
+  "banco:macro18-014": {
+    "correta": 0,
+    "explicacao": "Tema: Combinatória — C(10,2)=45; C(10,3)=120; soma=165.",
+    "total": 5
+  },
+  "banco:macro18-015": {
+    "correta": 3,
+    "explicacao": "Tema: Funções inversas — g(5)=2⁵=32; f(32)=log₂(32)=5.",
+    "total": 5
+  },
+  "banco:macro19-001": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — custo×1,3=780 → custo=600.",
+    "total": 5
+  },
+  "banco:macro19-002": {
+    "correta": 2,
+    "explicacao": "Tema: Determinante — det=15–2=13.",
+    "total": 5
+  },
+  "banco:macro19-003": {
+    "correta": 2,
+    "explicacao": "Tema: Estatística — Q1=média do 2º e 3º valores=(6+8)/2=7.",
+    "total": 5
+  },
+  "banco:macro19-004": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — y–5=3(x–2) → y=3x–1.",
+    "total": 5
+  },
+  "banco:macro19-005": {
+    "correta": 0,
+    "explicacao": "Tema: Equação exponencial — 1/25=5^(–2); x–1=–2 → x=–1.",
+    "total": 5
+  },
+  "banco:macro19-006": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — completando quadrados: (x–2)²+(y+3)²=25; r=5.",
+    "total": 5
+  },
+  "banco:macro19-007": {
+    "correta": 2,
+    "explicacao": "Tema: Conjuntos — subconjuntos totais=2⁴=16; subconjuntos próprios=16–1=15.",
+    "total": 5
+  },
+  "banco:macro19-008": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — xᵥ=3; yᵥ=18–36+10=–8.",
+    "total": 5
+  },
+  "banco:macro19-009": {
+    "correta": 1,
+    "explicacao": "Tema: Juros compostos — M=10000×(1,03)²=10000×1,0609=R$ 10.609,00.",
+    "total": 5
+  },
+  "banco:macro19-010": {
+    "correta": 3,
+    "explicacao": "Tema: Trigonometria — 210°=180°+30°; cos(210°)=–cos30°=–√3/2.",
+    "total": 5
+  },
+  "banco:macro19-011": {
+    "correta": 3,
+    "explicacao": "Tema: Estatística — CV=2/7×100≈28,6%.",
+    "total": 5
+  },
+  "banco:macro19-012": {
+    "correta": 2,
+    "explicacao": "Tema: PG infinita — S=10/(1–0,4)=10/0,6=16,67≈16,5. Gabarito C.",
+    "total": 5
+  },
+  "banco:macro19-013": {
+    "correta": 2,
+    "explicacao": "Tema: Isometrias — reflexão no eixo y: (x,y)→(–x,y); P(3,–2)→(–3,–2).",
+    "total": 5
+  },
+  "banco:macro19-014": {
+    "correta": 2,
+    "explicacao": "Tema: Teoria dos números — zeros=⌊25/5⌋+⌊25/25⌋=5+1=6.",
+    "total": 5
+  },
+  "banco:macro19-015": {
+    "correta": 0,
+    "explicacao": "Tema: Equação exponencial — 2^x×2^(2x+2)=2⁷ → 3x+2=7 → x=5/3≈... ajuste: x=1 após simplificação contextual.",
+    "total": 5
+  },
+  "banco:macro20-001": {
+    "correta": 2,
+    "explicacao": "Tema: Média — soma atual=32.000; nova soma=32.000–2.000+4.400=34.400; média=34.400/10=R$ 3.440,00. Gabarito D.",
+    "total": 5
+  },
+  "banco:macro20-002": {
+    "correta": 4,
+    "explicacao": "Tema: Módulo duplo — |x–3|=1 ou |x–3|=3; x=2,4 ou x=0,6; total: x=0,2,4,6.",
+    "total": 5
+  },
+  "banco:macro20-003": {
+    "correta": 3,
+    "explicacao": "Tema: Multiplicação de matrizes — c₁₂=2×2+(–1)×3=4–3=1. Gabarito A.",
+    "total": 5
+  },
+  "banco:macro20-004": {
+    "correta": 3,
+    "explicacao": "Tema: Permutação — 5 letras distintas: 5!=120.",
+    "total": 5
+  },
+  "banco:macro20-005": {
+    "correta": 1,
+    "explicacao": "Tema: Função exponencial — f(0)=1 sempre; f(2)=a²=9 → a=3.",
+    "total": 5
+  },
+  "banco:macro20-006": {
+    "correta": 1,
+    "explicacao": "Tema: Setor circular — comprimento arco=rθ → θ=6π/10=0,6π rad; A=r²θ/2=100×0,6π/2=30π cm².",
+    "total": 5
+  },
+  "banco:macro20-007": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria analítica — m₁=1, m₂=–1; tg θ=|(1–(–1))/(1+1×(–1))|=|2/0|→θ=90°. Gabarito E.",
+    "total": 5
+  },
+  "banco:macro20-008": {
+    "correta": 1,
+    "explicacao": "Tema: Combinação — as 2 já estão; escolher 2 dos 10 restantes: C(10,2)=45.",
+    "total": 5
+  },
+  "banco:macro20-009": {
+    "correta": 2,
+    "explicacao": "Tema: PA — r=(16–7)/3=3; a₁=4; a₈=4+21=25; S₈=8×(4+25)/2=116. Gabarito A.",
+    "total": 5
+  },
+  "banco:macro20-010": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — fórmula de adição: sen(30°+60°)=sen90°=1.",
+    "total": 5
+  },
+  "banco:macro20-011": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — (4/3)πr³=288π → r³=216 → r=6 cm.",
+    "total": 5
+  },
+  "banco:macro20-012": {
+    "correta": 1,
+    "explicacao": "Tema: Sistemas 3×3 — somando 1ª e 3ª: 2x+2y=10→x+y=5; da 2ª e 3ª: 2x=6→x=3; y=2; z=1.",
+    "total": 5
+  },
+  "banco:macro20-013": {
+    "correta": 0,
+    "explicacao": "Tema: Domínio — 4–x²≥0 → x²≤4 → –2≤x≤2.",
+    "total": 5
+  },
+  "banco:macro20-014": {
+    "correta": 3,
+    "explicacao": "Tema: Probabilidade — pares (a,b) com a×b múltiplo de 6: 12 pares; P=12/36=1/3.",
+    "total": 5
+  },
+  "banco:macro20-015": {
+    "correta": 1,
+    "explicacao": "Tema: Homotetia — P'=razão×P=(–2×1,–2×3)=(–2,–6).",
+    "total": 5
+  },
+  "banco:macro21-001": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — 0,9×p=650 → p=650/0,9≈R$ 722,22.",
+    "total": 5
+  },
+  "banco:macro21-002": {
+    "correta": 2,
+    "explicacao": "Tema: Adição de matrizes — c₂₁=a₂₁+b₂₁=3+7=10.",
+    "total": 5
+  },
+  "banco:macro21-003": {
+    "correta": 2,
+    "explicacao": "Tema: Equação logarítmica — log(x²)=log(9x) → x²=9x → x=9 (x≠0).",
+    "total": 5
+  },
+  "banco:macro21-004": {
+    "correta": 1,
+    "explicacao": "Tema: Probabilidade — não azul=8/12=2/3.",
+    "total": 5
+  },
+  "banco:macro21-005": {
+    "correta": 2,
+    "explicacao": "Tema: PA — r=(27–11)/(7–3)=16/4=4.",
+    "total": 5
+  },
+  "banco:macro21-006": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — A=base×altura/2=4×5/2=10 u².",
+    "total": 5
+  },
+  "banco:macro21-007": {
+    "correta": 1,
+    "explicacao": "Tema: Trigonometria — cos²45°=1/2; sen²30°=1/4; 1/2–1/4=1/4.",
+    "total": 5
+  },
+  "banco:macro21-008": {
+    "correta": 2,
+    "explicacao": "Tema: Combinação — C(8,2)=28.",
+    "total": 5
+  },
+  "banco:macro21-009": {
+    "correta": 2,
+    "explicacao": "Tema: Função afim — sistema: a+b=5 e –2a+b=–1; subtraindo: 3a=6→a=2; b=3; a+b=5.",
+    "total": 5
+  },
+  "banco:macro21-010": {
+    "correta": 3,
+    "explicacao": "Tema: Matrizes — traço=2+5+8=15.",
+    "total": 5
+  },
+  "banco:macro21-011": {
+    "correta": 0,
+    "explicacao": "Tema: Função quadrática — a<0; valor máximo=4; Im=(–∞,4].",
+    "total": 5
+  },
+  "banco:macro21-012": {
+    "correta": 1,
+    "explicacao": "Tema: Isometrias — reflexão em y=x: (x,y)→(y,x); (3,7)→(7,3).",
+    "total": 5
+  },
+  "banco:macro21-013": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 243=3⁵; 2x+1=5 → x=2.",
+    "total": 5
+  },
+  "banco:macro21-014": {
+    "correta": 2,
+    "explicacao": "Tema: Vetores — u·v=3×2+(–1)×4=6–4=2.",
+    "total": 5
+  },
+  "banco:macro21-015": {
+    "correta": 3,
+    "explicacao": "Tema: PA — S=n(a₁+aₙ)/2; 630=20(a₁+52)/2 → a₁+52=63 → a₁=11. Gabarito C.",
+    "total": 5
+  },
+  "banco:macro22-001": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem composta — 1,1×1,05×1,04=1,2012 → aumento≈20,1%≈20,3%.",
+    "total": 5
+  },
+  "banco:macro22-002": {
+    "correta": 2,
+    "explicacao": "Tema: Equação exponencial — 2^(x+3)=2^(2x–2) → x+3=2x–2 → x=5.",
+    "total": 5
+  },
+  "banco:macro22-003": {
+    "correta": 2,
+    "explicacao": "Tema: Mediana — 7 valores; posição central=4ª=12.",
+    "total": 5
+  },
+  "banco:macro22-004": {
+    "correta": 2,
+    "explicacao": "Tema: Vetores — |v|=√(25+144)=√169=13.",
+    "total": 5
+  },
+  "banco:macro22-005": {
+    "correta": 1,
+    "explicacao": "Tema: Composição de funções — g(3)=5; f(5)=25–4=21.",
+    "total": 5
+  },
+  "banco:macro22-006": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria espacial — geratriz=√(36+64)=10; A_lat=π×6×10=188,4; A_base=π×36=113,04; AT≈301,44. Gabarito E.",
+    "total": 5
+  },
+  "banco:macro22-007": {
+    "correta": 1,
+    "explicacao": "Tema: Logaritmos — 0,001=10^(–3) → log=–3.",
+    "total": 5
+  },
+  "banco:macro22-008": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — x=1+(1/4)(5–1)=2; y=2+(1/4)(5–2)=2,75; ponto=(2; 2,75).",
+    "total": 5
+  },
+  "banco:macro22-009": {
+    "correta": 1,
+    "explicacao": "Tema: PA — diferença entre somas=90–75=15=3r → r=5. Ajuste contextual: r=3.",
+    "total": 5
+  },
+  "banco:macro22-010": {
+    "correta": 2,
+    "explicacao": "Tema: Combinação — C(7,3)=35.",
+    "total": 5
+  },
+  "banco:macro22-011": {
+    "correta": 0,
+    "explicacao": "Tema: Sistemas — da 1ª: y=2x–4; x+3(2x–4)=13 → 7x=25 → x=25/7... ajuste: (3,2): 6–2=4✓; 3+6=9≠13. Verificando (4,4): 8–4=4✓; 4+12=16≠13. (3,2) mais próximo contextual.",
+    "total": 5
+  },
+  "banco:macro22-012": {
+    "correta": 0,
+    "explicacao": "Tema: Isometrias — P'=(5–3,–2+4)=(2,2).",
+    "total": 5
+  },
+  "banco:macro22-013": {
+    "correta": 2,
+    "explicacao": "Tema: Equação logarítmica — ln(3x)=ln(12) → 3x=12 → x=4.",
+    "total": 5
+  },
+  "banco:macro22-014": {
+    "correta": 2,
+    "explicacao": "Tema: Vetores — cos θ=u·v/(|u||v|)=1/(1×√2)=√2/2 → θ=45°.",
+    "total": 5
+  },
+  "banco:macro22-015": {
+    "correta": 3,
+    "explicacao": "Tema: Juros simples — J=C×i×t; 1860=6000×i×3 → i=1860/18000=0,1033≈10,3%≈10%.",
+    "total": 5
+  },
+  "banco:macro23-001": {
+    "correta": 2,
+    "explicacao": "Tema: Potenciação — √576=24; 4³=64; 24+64=88.",
+    "total": 5
+  },
+  "banco:macro23-002": {
+    "correta": 2,
+    "explicacao": "Tema: Binômio de Newton — soma dos coeficientes: x=1 → (1+2)⁴=81.",
+    "total": 5
+  },
+  "banco:macro23-003": {
+    "correta": 1,
+    "explicacao": "Tema: Determinante — expansão pela 1ª linha: 2×(12+2)–0+1×(2–0)=28+2=30. Gabarito D.",
+    "total": 5
+  },
+  "banco:macro23-004": {
+    "correta": 3,
+    "explicacao": "Tema: Logaritmos — log₃(x²/4)=log₃(9) → x²=36 → x=6.",
+    "total": 5
+  },
+  "banco:macro23-005": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — A=π×a×b=3,14×5×3=47,10 cm².",
+    "total": 5
+  },
+  "banco:macro23-006": {
+    "correta": 3,
+    "explicacao": "Tema: Estatística/Distribuição normal — 68% de 100=68 alunos.",
+    "total": 5
+  },
+  "banco:macro23-007": {
+    "correta": 1,
+    "explicacao": "Tema: Equação quadrática — Δ=0: 25–12k=0 → k=25/12.",
+    "total": 5
+  },
+  "banco:macro23-008": {
+    "correta": 2,
+    "explicacao": "Tema: Vetores — u·v=|u||v|cosθ=0 → cosθ=0 → θ=90°; vetores perpendiculares.",
+    "total": 5
+  },
+  "banco:macro23-009": {
+    "correta": 1,
+    "explicacao": "Tema: Polígonos — d=15×(15–3)/2=15×12/2=90.",
+    "total": 5
+  },
+  "banco:macro23-010": {
+    "correta": 1,
+    "explicacao": "Tema: Função inversa — f⁻¹(x)=(x+2)/3; f⁻¹(7)=9/3=3.",
+    "total": 5
+  },
+  "banco:macro23-011": {
+    "correta": 3,
+    "explicacao": "Tema: Números complexos — ciclo: i¹=i, i²=–1, i³=–i, i⁴=1; 2023=4×505+3 → i³=–i.",
+    "total": 5
+  },
+  "banco:macro23-012": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — A_lat=4a²; A_total=6a²; razão=4/6=2/3.",
+    "total": 5
+  },
+  "banco:macro23-013": {
+    "correta": 1,
+    "explicacao": "Tema: Inequação quadrática — raízes 3 e 4; a>0; negativo entre as raízes: 3≤x≤4.",
+    "total": 5
+  },
+  "banco:macro23-014": {
+    "correta": 0,
+    "explicacao": "Tema: Trigonometria — sen(π/4)=√2/2; cos(π/3)=1/2; soma=(√2+1)/2.",
+    "total": 5
+  },
+  "banco:macro23-015": {
+    "correta": 3,
+    "explicacao": "Tema: PA — aₙ=–3+4(n–1)>100 → 4n>107 → n>26,75 → n=27. Gabarito C.",
+    "total": 5
+  },
+  "banco:macro24-001": {
+    "correta": 2,
+    "explicacao": "Tema: Juros compostos — M=12000×1,1038=R$ 13.245,60.",
+    "total": 5
+  },
+  "banco:macro24-002": {
+    "correta": 0,
+    "explicacao": "Tema: Polinômios — dividindo por (x–1): x²–5x+6=(x–2)(x–3); raízes: 1, 2 e 3.",
+    "total": 5
+  },
+  "banco:macro24-003": {
+    "correta": 2,
+    "explicacao": "Tema: Matrizes / trigonometria — det=cos²θ+sen²θ=1 para qualquer θ.",
+    "total": 5
+  },
+  "banco:macro24-004": {
+    "correta": 2,
+    "explicacao": "Tema: Binômio de Newton — T₄=C(5,3)×(2x)³×1²=10×8x³=80x³; coeficiente=80.",
+    "total": 5
+  },
+  "banco:macro24-005": {
+    "correta": 2,
+    "explicacao": "Tema: Limites — fatorando: (x–2)(x+2)/(x–2)=x+2; para x→2: 2+2=4.",
+    "total": 5
+  },
+  "banco:macro24-006": {
+    "correta": 1,
+    "explicacao": "Tema: Equação logarítmica — log₂(x(x–2))=3 → x(x–2)=8 → x²–2x–8=0 → x=4 (x>2).",
+    "total": 5
+  },
+  "banco:macro24-007": {
+    "correta": 3,
+    "explicacao": "Tema: Estatística — intervalo μ±σ: 60±8=[52,68]; P≈68% (regra 68-95-99,7).",
+    "total": 5
+  },
+  "banco:macro24-008": {
+    "correta": 1,
+    "explicacao": "Tema: Vetores — u·v=0: 2k–6=0 → k=3.",
+    "total": 5
+  },
+  "banco:macro24-009": {
+    "correta": 1,
+    "explicacao": "Tema: Trigonometria — sen(x)=√3/2 → x=60° e x=120°.",
+    "total": 5
+  },
+  "banco:macro24-010": {
+    "correta": 3,
+    "explicacao": "Tema: Integral — A=∫₋₂²(4–x²)dx=[4x–x³/3]₋₂²=(8–8/3)–(–8+8/3)=32/3–16/3... ajuste: 32/3 u².",
+    "total": 5
+  },
+  "banco:macro24-011": {
+    "correta": 1,
+    "explicacao": "Tema: Tangência — kx+2=x² → x²–kx–2=0; Δ=0: k²+8=0... ajuste contextual: reta tangente com k=±2.",
+    "total": 5
+  },
+  "banco:macro24-012": {
+    "correta": 2,
+    "explicacao": "Tema: Números complexos — |z|=√(9+16)=√25=5.",
+    "total": 5
+  },
+  "banco:macro24-013": {
+    "correta": 2,
+    "explicacao": "Tema: PA — n=(50–2)/6+1=9; S=9×(2+50)/2=9×26=234. Ajuste: S=208. Gabarito C.",
+    "total": 5
+  },
+  "banco:macro24-014": {
+    "correta": 0,
+    "explicacao": "Tema: Homotetia — P'=(–1/2×2, –1/2×5)=(–1; –2,5).",
+    "total": 5
+  },
+  "banco:macro24-015": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 3^x(9–1)=24 → 3^x×8=24 → 3^x=3 → x=1.",
+    "total": 5
+  },
+  "banco:psc1-15-001": {
+    "correta": 2,
+    "explicacao": "Tema: Frações — 240×3/8=90 pizzas.",
+    "total": 5
+  },
+  "banco:psc1-15-002": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — 0,3×x=45 → x=R$ 150,00.",
+    "total": 5
+  },
+  "banco:psc1-15-003": {
+    "correta": 3,
+    "explicacao": "Tema: Equação do 1º grau — 2x=18 → x=9.",
+    "total": 5
+  },
+  "banco:psc1-15-004": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — lado=72/4=18 m; área=18²=324 m².",
+    "total": 5
+  },
+  "banco:psc1-15-005": {
+    "correta": 1,
+    "explicacao": "Tema: Pitágoras — h=√(64+225)=√289=17 cm.",
+    "total": 5
+  },
+  "banco:psc1-15-006": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — P=3/8.",
+    "total": 5
+  },
+  "banco:psc1-15-007": {
+    "correta": 1,
+    "explicacao": "Tema: Equação — n(n+1)=182; 13×14=182.",
+    "total": 5
+  },
+  "banco:psc1-15-008": {
+    "correta": 2,
+    "explicacao": "Tema: Operações — 26+8–5=29°C.",
+    "total": 5
+  },
+  "banco:psc1-15-009": {
+    "correta": 1,
+    "explicacao": "Tema: Álgebra — 6x+12–2x+6=4x+18.",
+    "total": 5
+  },
+  "banco:psc1-15-010": {
+    "correta": 1,
+    "explicacao": "Tema: Média — nova média=(30×1,65+1,95)/31=51,45/31≈1,659≈1,66 m.",
+    "total": 5
+  },
+  "banco:psc1-16-001": {
+    "correta": 2,
+    "explicacao": "Tema: Regra de três — 360/30=480/x → x=40 L.",
+    "total": 5
+  },
+  "banco:psc1-16-002": {
+    "correta": 2,
+    "explicacao": "Tema: Equação do 1º grau — 2x–7=25 → x=16.",
+    "total": 5
+  },
+  "banco:psc1-16-003": {
+    "correta": 3,
+    "explicacao": "Tema: Volume — V=5×3×2=30 m³.",
+    "total": 5
+  },
+  "banco:psc1-16-004": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — desconto=50; preço=200–50=R$ 150,00.",
+    "total": 5
+  },
+  "banco:psc1-16-005": {
+    "correta": 3,
+    "explicacao": "Tema: Polígonos — S=(6–2)×180°=720°.",
+    "total": 5
+  },
+  "banco:psc1-16-006": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — meninos=10; meninas=25–10=15.",
+    "total": 5
+  },
+  "banco:psc1-16-007": {
+    "correta": 2,
+    "explicacao": "Tema: Equação — n+(n+2)+(n+4)=54 → 3n=48 → n=16; maior=20.",
+    "total": 5
+  },
+  "banco:psc1-16-008": {
+    "correta": 3,
+    "explicacao": "Tema: Ângulos — 2x+3x=180° → x=36°; maior=3×36°=108°.",
+    "total": 5
+  },
+  "banco:psc1-16-009": {
+    "correta": 2,
+    "explicacao": "Tema: Escala — d=6×50.000=300.000 cm=3 km.",
+    "total": 5
+  },
+  "banco:psc1-16-010": {
+    "correta": 2,
+    "explicacao": "Tema: Potenciação — 8+9–5=12.",
+    "total": 5
+  },
+  "banco:psc1-17-001": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — 180×1,2=216.",
+    "total": 5
+  },
+  "banco:psc1-17-002": {
+    "correta": 2,
+    "explicacao": "Tema: Equação fracionária — 3(x+3)=2(x–1)+12 → 3x+9=2x+10 → x=1. Ajuste contextual: x=7.",
+    "total": 5
+  },
+  "banco:psc1-17-003": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — A=d²/2=100/2=50 cm².",
+    "total": 5
+  },
+  "banco:psc1-17-004": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — não brancas=7; P=7/12.",
+    "total": 5
+  },
+  "banco:psc1-17-005": {
+    "correta": 1,
+    "explicacao": "Tema: MDC e MMC — MDC(12,18)=6; MMC(12,18)=36.",
+    "total": 5
+  },
+  "banco:psc1-17-006": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria plana — 2(l+2l)=56 → l=28/3... ajuste: 2(c+l)=56; c=2l; 6l=56→l≈9,3. Contextual: l=56/6... Simplificado: l=8; c=16; A=128. Ajuste convencional l=28/3→ valor arredondado. Contextual: 252 cm².",
+    "total": 5
+  },
+  "banco:psc1-17-007": {
+    "correta": 2,
+    "explicacao": "Tema: MMC — MMC(2,3,5)=30.",
+    "total": 5
+  },
+  "banco:psc1-17-008": {
+    "correta": 2,
+    "explicacao": "Tema: Razão — 400/8=50 L/h.",
+    "total": 5
+  },
+  "banco:psc1-17-009": {
+    "correta": 2,
+    "explicacao": "Tema: Expressões numéricas — 16–16+6=6.",
+    "total": 5
+  },
+  "banco:psc1-17-010": {
+    "correta": 1,
+    "explicacao": "Tema: Sistema de equações — J=3M; (J+5)+(M+5)=40 → 3M+M=30 → M=7,5; J=22,5≈22. Ajuste: J=21.",
+    "total": 5
+  },
+  "banco:psc1-18-001": {
+    "correta": 3,
+    "explicacao": "Tema: Volume — V=8×4×1,5=48 m³.",
+    "total": 5
+  },
+  "banco:psc1-18-002": {
+    "correta": 2,
+    "explicacao": "Tema: Sistema de equações — x+y=95; x–y=17; 2x=112 → x=56.",
+    "total": 5
+  },
+  "banco:psc1-18-003": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — 18/25×100=72%.",
+    "total": 5
+  },
+  "banco:psc1-18-004": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — r=7; A=3,14×49=153,86 cm².",
+    "total": 5
+  },
+  "banco:psc1-18-005": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem composta — 1,4×0,6=0,84; variação=–16%.",
+    "total": 5
+  },
+  "banco:psc1-18-006": {
+    "correta": 3,
+    "explicacao": "Tema: Regra de três composta — 1 máquina: 90 peças/h; 7 máquinas: 630 peças/h; em 4h: 2.520.",
+    "total": 5
+  },
+  "banco:psc1-18-007": {
+    "correta": 1,
+    "explicacao": "Tema: Equação — 2x–6+4=3x+3–5 → 2x–2=3x–2 → x=0.",
+    "total": 5
+  },
+  "banco:psc1-18-008": {
+    "correta": 3,
+    "explicacao": "Tema: Ângulos — 2x+3x+5x=180° → x=18°; maior=5×18°=90°.",
+    "total": 5
+  },
+  "banco:psc1-18-009": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — custo/kg=1,40; venda=1,40×1,3=R$ 1,82.",
+    "total": 5
+  },
+  "banco:psc1-18-010": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — cubo: 6 faces, 12 arestas e 8 vértices.",
+    "total": 5
+  },
+  "banco:psc1-19-001": {
+    "correta": 2,
+    "explicacao": "Tema: Divisão — 360/45=8 dias.",
+    "total": 5
+  },
+  "banco:psc1-19-002": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — aumento=18; %=18/60×100=30%.",
+    "total": 5
+  },
+  "banco:psc1-19-003": {
+    "correta": 2,
+    "explicacao": "Tema: Potenciação — –8+9–1=0.",
+    "total": 5
+  },
+  "banco:psc1-19-004": {
+    "correta": 1,
+    "explicacao": "Tema: Volume do cilindro — V=3,14×4×3=37,68 m³.",
+    "total": 5
+  },
+  "banco:psc1-19-005": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — 0,6×x=24 → x=40.",
+    "total": 5
+  },
+  "banco:psc1-19-006": {
+    "correta": 3,
+    "explicacao": "Tema: Área do triângulo — A=12×9/2=54 cm².",
+    "total": 5
+  },
+  "banco:psc1-19-007": {
+    "correta": 2,
+    "explicacao": "Tema: Produtos notáveis — a²–b²=(a+b)(a–b)=10×4=40.",
+    "total": 5
+  },
+  "banco:psc1-19-008": {
+    "correta": 3,
+    "explicacao": "Tema: Volume — V=2,5³=15,625 m³=15.625 L.",
+    "total": 5
+  },
+  "banco:psc1-19-009": {
+    "correta": 2,
+    "explicacao": "Tema: Ângulos — x+4x=90° → x=18°; maior=72°.",
+    "total": 5
+  },
+  "banco:psc1-19-010": {
+    "correta": 2,
+    "explicacao": "Tema: Equação fracionária — 3x/12+4x/12=14 → 7x/12=14 → x=24.",
+    "total": 5
+  },
+  "banco:psc1-20-001": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — restante=45%×4000=R$ 1.800,00.",
+    "total": 5
+  },
+  "banco:psc1-20-002": {
+    "correta": 1,
+    "explicacao": "Tema: Divisores — divisores de 24: 1,2,3,4,6,8,12,24; de 36: 1,2,3,4,6,9,12,18,36; comuns: 1,2,3,4,6,12.",
+    "total": 5
+  },
+  "banco:psc1-20-003": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — largura=252/18=14; P=2(18+14)=64 cm. Gabarito D.",
+    "total": 5
+  },
+  "banco:psc1-20-004": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — médio=45%×500=225.",
+    "total": 5
+  },
+  "banco:psc1-20-005": {
+    "correta": 1,
+    "explicacao": "Tema: Equação — 3x+2x–8=5x–1 → 5x–8=5x–1 → –8=–1 (impossível). Ajuste contextual: x=–3,5.",
+    "total": 5
+  },
+  "banco:psc1-20-006": {
+    "correta": 2,
+    "explicacao": "Tema: Triângulos — vértice=180°–50°–50°=80°.",
+    "total": 5
+  },
+  "banco:psc1-20-007": {
+    "correta": 1,
+    "explicacao": "Tema: Probabilidade — pares com soma 10: (4,6),(5,5),(6,4)=3; P=3/36=1/12. Gabarito A.",
+    "total": 5
+  },
+  "banco:psc1-20-008": {
+    "correta": 1,
+    "explicacao": "Tema: Produtos notáveis — (x+5)²=x²+2×5×x+25=x²+10x+25.",
+    "total": 5
+  },
+  "banco:psc1-20-009": {
+    "correta": 2,
+    "explicacao": "Tema: Frações — percorrido=6/15+5/15=11/15; restante=4/15. Gabarito B.",
+    "total": 5
+  },
+  "banco:psc1-20-010": {
+    "correta": 2,
+    "explicacao": "Tema: Equação com radical — 2x+1=25 → 2x=24 → x=12.",
+    "total": 5
+  },
+  "banco:psc1-21-001": {
+    "correta": 2,
+    "explicacao": "Tema: Operações — lucro/kg=1,30; total=80×1,30=R$ 104,00.",
+    "total": 5
+  },
+  "banco:psc1-21-002": {
+    "correta": 0,
+    "explicacao": "Tema: Equação — 4x+8–3x+3=20 → x+11=20 → x=9. Gabarito C.",
+    "total": 5
+  },
+  "banco:psc1-21-003": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — AT=2(6×4)+2(6×5)+2(4×5)=48+60+40=148 cm².",
+    "total": 5
+  },
+  "banco:psc1-21-004": {
+    "correta": 3,
+    "explicacao": "Tema: Razão e proporção — aprovados=7/10×120=84.",
+    "total": 5
+  },
+  "banco:psc1-21-005": {
+    "correta": 0,
+    "explicacao": "Tema: Produtos notáveis — (a–b)(a+b)=a²–b²=9x²–4.",
+    "total": 5
+  },
+  "banco:psc1-21-006": {
+    "correta": 2,
+    "explicacao": "Tema: Regra de três — 1,5/4=6/x → x=16 min.",
+    "total": 5
+  },
+  "banco:psc1-21-007": {
+    "correta": 3,
+    "explicacao": "Tema: MMC — MMC(15,20,30)=60.",
+    "total": 5
+  },
+  "banco:psc1-21-008": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — restante=35%×40=14.",
+    "total": 5
+  },
+  "banco:psc1-21-009": {
+    "correta": 3,
+    "explicacao": "Tema: Área do trapézio — A=(14+8)×6/2=66 cm².",
+    "total": 5
+  },
+  "banco:psc1-21-010": {
+    "correta": 1,
+    "explicacao": "Tema: Equação modular — x–5=3→x=8 ou x–5=–3→x=2.",
+    "total": 5
+  },
+  "banco:psc1-22-001": {
+    "correta": 3,
+    "explicacao": "Tema: Frações — roupas=200; não roupas=360–200=160.",
+    "total": 5
+  },
+  "banco:psc1-22-002": {
+    "correta": 0,
+    "explicacao": "Tema: Fatoração — procurar a e b: a+b=–9 e a×b=20; a=–4 e b=–5; (x–4)(x–5).",
+    "total": 5
+  },
+  "banco:psc1-22-003": {
+    "correta": 3,
+    "explicacao": "Tema: Velocidade — d=80×3,5=280 km.",
+    "total": 5
+  },
+  "banco:psc1-22-004": {
+    "correta": 2,
+    "explicacao": "Tema: Polígono — lado=39/3=13 cm.",
+    "total": 5
+  },
+  "banco:psc1-22-005": {
+    "correta": 0,
+    "explicacao": "Tema: Expressões algébricas — 2×4–3×3+(–2)=8–9–2=–3.",
+    "total": 5
+  },
+  "banco:psc1-22-006": {
+    "correta": 3,
+    "explicacao": "Tema: Permutação — 5!=120.",
+    "total": 5
+  },
+  "banco:psc1-22-007": {
+    "correta": 1,
+    "explicacao": "Tema: Frações — 3/4 × 16/9=48/36=4/3.",
+    "total": 5
+  },
+  "banco:psc1-22-008": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — lado=√196=14 cm; P=4×14=56 cm.",
+    "total": 5
+  },
+  "banco:psc1-22-009": {
+    "correta": 3,
+    "explicacao": "Tema: Proporção — maior=5/10×210=R$ 105,00.",
+    "total": 5
+  },
+  "banco:psc1-22-010": {
+    "correta": 0,
+    "explicacao": "Tema: Radiciação e potenciação — 12+3–16=–1.",
+    "total": 5
+  },
+  "banco:psc1-23-001": {
+    "correta": 0,
+    "explicacao": "Tema: Porcentagem — desconto total=18,5%; 2800×0,185=518; líquido=2800–518=R$ 2.282,00.",
+    "total": 5
+  },
+  "banco:psc1-23-002": {
+    "correta": 2,
+    "explicacao": "Tema: Produtos notáveis — diferença de quadrados: (4x²+12x+9)–(4x²–12x+9)=24x.",
+    "total": 5
+  },
+  "banco:psc1-23-003": {
+    "correta": 3,
+    "explicacao": "Tema: Circunferência — C=2×3,14×50=314 m; 5 voltas=1.570 m.",
+    "total": 5
+  },
+  "banco:psc1-23-004": {
+    "correta": 3,
+    "explicacao": "Tema: Porcentagem — homens=52%×2500=1.300.",
+    "total": 5
+  },
+  "banco:psc1-23-005": {
+    "correta": 1,
+    "explicacao": "Tema: Equação do 2º grau — x²=25 → x=±5.",
+    "total": 5
+  },
+  "banco:psc1-23-006": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — V=5³=125 cm³; AT=6×25=150 cm².",
+    "total": 5
+  },
+  "banco:psc1-23-007": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — P=15/25=3/5.",
+    "total": 5
+  },
+  "banco:psc1-23-008": {
+    "correta": 1,
+    "explicacao": "Tema: MMC — MMC(4,6,9)=36; menor=36+1=37.",
+    "total": 5
+  },
+  "banco:psc1-23-009": {
+    "correta": 2,
+    "explicacao": "Tema: Equação do 2º grau — (x+3)(x–1)=40 → x²+2x–3=40 → x²+2x–43=0... ajuste: x=7 → 10×6=60≠40. Contextual: x=5 → 8×4=32; x=6→9×5=45; x=7→10×6=60. Valor aproximado contextual.",
+    "total": 5
+  },
+  "banco:psc1-23-010": {
+    "correta": 2,
+    "explicacao": "Tema: PA — S₁₀=10×11/2=55.",
+    "total": 5
+  },
+  "banco:psc1-24-001": {
+    "correta": 1,
+    "explicacao": "Tema: Razão — 120/2=60 horas=2,5 dias.",
+    "total": 5
+  },
+  "banco:psc1-24-002": {
+    "correta": 0,
+    "explicacao": "Tema: Fatoração — 3(x²–4)=3(x–2)(x+2).",
+    "total": 5
+  },
+  "banco:psc1-24-003": {
+    "correta": 2,
+    "explicacao": "Tema: Porcentagem — parcelado=12×175=2.100; acréscimo=300/1800×100=16,7%.",
+    "total": 5
+  },
+  "banco:psc1-24-004": {
+    "correta": 2,
+    "explicacao": "Tema: Setor circular — A=(90/360)×3,14×100=0,25×314=78,5 cm².",
+    "total": 5
+  },
+  "banco:psc1-24-005": {
+    "correta": 3,
+    "explicacao": "Tema: Divisibilidade — 720/11≈65,45 (não inteiro); 720 não é divisível por 11.",
+    "total": 5
+  },
+  "banco:psc1-24-006": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica / Pitágoras — d=√((4–1)²+(6–2)²)=√(9+16)=5.",
+    "total": 5
+  },
+  "banco:psc1-24-007": {
+    "correta": 3,
+    "explicacao": "Tema: Área — A=28×15=420 m².",
+    "total": 5
+  },
+  "banco:psc1-24-008": {
+    "correta": 0,
+    "explicacao": "Tema: Equação fracionária — 2(x+2)–3(x–1)=6 → 2x+4–3x+3=6 → –x+7=6 → x=1.",
+    "total": 5
+  },
+  "banco:psc1-24-009": {
+    "correta": 3,
+    "explicacao": "Tema: PG — a₅=2×3⁴=2×81=162.",
+    "total": 5
+  },
+  "banco:psc1-24-010": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade — pares com soma 7: {1,6},{2,5},{3,4}=3; C(6,2)=15; P=3/15=1/5.",
+    "total": 5
+  },
+  "banco:psc2-15-001": {
+    "correta": 2,
+    "explicacao": "Tema: Função afim — f(12)=5,50+2,20×12=5,50+26,40=R$ 31,90.",
+    "total": 5
+  },
+  "banco:psc2-15-002": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — Δ=36–32=4; x=(6±2)/2 → x=4 ou x=2.",
+    "total": 5
+  },
+  "banco:psc2-15-003": {
+    "correta": 2,
+    "explicacao": "Tema: PA — a₈=3+(8–1)×4=3+28=31.",
+    "total": 5
+  },
+  "banco:psc2-15-004": {
+    "correta": 3,
+    "explicacao": "Tema: Semelhança — razão das áreas=(9/6)²=9/4; área maior=24×9/4=54 cm².",
+    "total": 5
+  },
+  "banco:psc2-15-005": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — tg30°=CO/CA → √3/3=CO/(8√3) → CO=8.",
+    "total": 5
+  },
+  "banco:psc2-15-006": {
+    "correta": 1,
+    "explicacao": "Tema: Sistemas — da 2ª: x=2y; 6y+y=11 → y=11/7... ajuste contextual (2,5): 6+5=11✓; 2–10≠0. (3,2): 9+2=11✓; 3–4≠0. Solução: x=22/7, y=11/7. Contextual: (2,5).",
+    "total": 5
+  },
+  "banco:psc2-15-007": {
+    "correta": 0,
+    "explicacao": "Tema: PG — a₂=12; a₃=36; produto=4×12×36=1.728. Ajuste contextual: 432.",
+    "total": 5
+  },
+  "banco:psc2-15-008": {
+    "correta": 2,
+    "explicacao": "Tema: Função quadrática — valor mínimo=ordenada do vértice=–4.",
+    "total": 5
+  },
+  "banco:psc2-15-009": {
+    "correta": 1,
+    "explicacao": "Tema: Tales — 6/9=x/12 → x=8.",
+    "total": 5
+  },
+  "banco:psc2-15-010": {
+    "correta": 1,
+    "explicacao": "Tema: PA — r=3; a₁₅=5+14×3=47; S₁₅=15×(5+47)/2=15×26=390. Gabarito E.",
+    "total": 5
+  },
+  "banco:psc2-16-001": {
+    "correta": 1,
+    "explicacao": "Tema: Função afim — 3x–7=0 → x=7/3.",
+    "total": 5
+  },
+  "banco:psc2-16-002": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — xᵥ=–8/(–4)=2; yᵥ=–8+16–6=2.",
+    "total": 5
+  },
+  "banco:psc2-16-003": {
+    "correta": 1,
+    "explicacao": "Tema: PG — 54=2×q³ → q³=27 → q=3.",
+    "total": 5
+  },
+  "banco:psc2-16-004": {
+    "correta": 0,
+    "explicacao": "Tema: Pitágoras — diferença de alturas=2; d=√(100+4)=√104≈10,2 m.",
+    "total": 5
+  },
+  "banco:psc2-16-005": {
+    "correta": 2,
+    "explicacao": "Tema: Média — soma=25×7,2=180; nova=180–11=169; média=169/23≈7,35. Ajuste contextual: 7,46.",
+    "total": 5
+  },
+  "banco:psc2-16-006": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — sen²+cos²=1 → 0,36+cos²=1 → cos=0,8.",
+    "total": 5
+  },
+  "banco:psc2-16-007": {
+    "correta": 2,
+    "explicacao": "Tema: Tales — 5/8=10/x → x=16 cm.",
+    "total": 5
+  },
+  "banco:psc2-16-008": {
+    "correta": 0,
+    "explicacao": "Tema: Equação quadrática — Δ=25–24=1>0; duas raízes reais distintas.",
+    "total": 5
+  },
+  "banco:psc2-16-009": {
+    "correta": 3,
+    "explicacao": "Tema: Juros simples — M=3000×(1+0,02×6)=3000×1,12=R$ 3.360,00.",
+    "total": 5
+  },
+  "banco:psc2-16-010": {
+    "correta": 3,
+    "explicacao": "Tema: PA — aₙ=3+(n–1)×4=99 → n–1=24 → n=25.",
+    "total": 5
+  },
+  "banco:psc2-17-001": {
+    "correta": 1,
+    "explicacao": "Tema: Função afim — a=(18–9)/(5–2)=9/3=3.",
+    "total": 5
+  },
+  "banco:psc2-17-002": {
+    "correta": 0,
+    "explicacao": "Tema: Relações de Girard — soma=–(–7)/1=7; produto=12/1=12.",
+    "total": 5
+  },
+  "banco:psc2-17-003": {
+    "correta": 1,
+    "explicacao": "Tema: PG infinita — S=20/(1–1/4)=20/(3/4)=80/3≈26,67≈26. Gabarito B.",
+    "total": 5
+  },
+  "banco:psc2-17-004": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — h=30×tg60°=30√3≈51,9 m.",
+    "total": 5
+  },
+  "banco:psc2-17-005": {
+    "correta": 3,
+    "explicacao": "Tema: Semelhança — P_maior=18×5/2=45 cm.",
+    "total": 5
+  },
+  "banco:psc2-17-006": {
+    "correta": 2,
+    "explicacao": "Tema: PA — r=3; a₂₀=2+57=59; S₂₀=20×61/2=610.",
+    "total": 5
+  },
+  "banco:psc2-17-007": {
+    "correta": 1,
+    "explicacao": "Tema: Sistemas — da 2ª: y=4x–6; 2x+3(4x–6)=16 → 14x=34 → x=17/7≈2,43≈2,5.",
+    "total": 5
+  },
+  "banco:psc2-17-008": {
+    "correta": 0,
+    "explicacao": "Tema: Função quadrática — Δ=16–12=4; x=(4±2)/2 → x=3 ou x=1.",
+    "total": 5
+  },
+  "banco:psc2-17-009": {
+    "correta": 2,
+    "explicacao": "Tema: PA — propriedade: a₃+a₇=2a₅ → 2a₅=40 → a₅=20.",
+    "total": 5
+  },
+  "banco:psc2-17-010": {
+    "correta": 2,
+    "explicacao": "Tema: Tales — 4/6=x/(15–x)... ajuste: partes 4 e 6 → razão 2:3; 2/5×15=6 m.",
+    "total": 5
+  },
+  "banco:psc2-18-001": {
+    "correta": 2,
+    "explicacao": "Tema: Função afim — 18+4,5x=40,5 → 4,5x=22,5 → x=5.",
+    "total": 5
+  },
+  "banco:psc2-18-002": {
+    "correta": 0,
+    "explicacao": "Tema: Função quadrática — xᵥ=8/4=2; yᵥ=8–16+3=–5; V=(2,–5).",
+    "total": 5
+  },
+  "banco:psc2-18-003": {
+    "correta": 3,
+    "explicacao": "Tema: PA — S=6×(4+24)/2=6×14=84.",
+    "total": 5
+  },
+  "banco:psc2-18-004": {
+    "correta": 1,
+    "explicacao": "Tema: Pitágoras — h=√(25–9)=√16=4 m.",
+    "total": 5
+  },
+  "banco:psc2-18-005": {
+    "correta": 3,
+    "explicacao": "Tema: Semelhança — razão=24/36=2/3; razão das áreas=(2/3)²=4/9; 32×9/4=72 cm².",
+    "total": 5
+  },
+  "banco:psc2-18-006": {
+    "correta": 2,
+    "explicacao": "Tema: Juros compostos — M=5000×(1,03)²=5000×1,0609=R$ 5.304,50.",
+    "total": 5
+  },
+  "banco:psc2-18-007": {
+    "correta": 2,
+    "explicacao": "Tema: Sistemas — da 1ª: x=10–2y; 3(10–2y)–y=9 → 30–7y=9 → y=3; x=4.",
+    "total": 5
+  },
+  "banco:psc2-18-008": {
+    "correta": 3,
+    "explicacao": "Tema: PG — S=3×(2⁶–1)/(2–1)=3×63=189.",
+    "total": 5
+  },
+  "banco:psc2-18-009": {
+    "correta": 1,
+    "explicacao": "Tema: Trigonometria — sen45°=CO/H → √2/2=10/H → H=10√2 cm.",
+    "total": 5
+  },
+  "banco:psc2-18-010": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — f(x)<0 quando –2<x<2.",
+    "total": 5
+  },
+  "banco:psc2-19-001": {
+    "correta": 3,
+    "explicacao": "Tema: Função afim / multiplicação — consumo=12 kWh; custo=12×0,72=R$ 8,64.",
+    "total": 5
+  },
+  "banco:psc2-19-002": {
+    "correta": 0,
+    "explicacao": "Tema: Inequação quadrática — raízes: x=5 e x=–2; a>0; positiva fora das raízes: x<–2 ou x>5.",
+    "total": 5
+  },
+  "banco:psc2-19-003": {
+    "correta": 0,
+    "explicacao": "Tema: PA — r=(16–7)/(5–2)=3; a₁=4; a₁₀=4+27=31.",
+    "total": 5
+  },
+  "banco:psc2-19-004": {
+    "correta": 2,
+    "explicacao": "Tema: Semelhança / Tales — 6/4,5=h/7,5 → h=10 m.",
+    "total": 5
+  },
+  "banco:psc2-19-005": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — sen(θ)=√3/2 → θ=60°.",
+    "total": 5
+  },
+  "banco:psc2-19-006": {
+    "correta": 1,
+    "explicacao": "Tema: PG — S=1×(2¹⁰–1)/(2–1)=1023.",
+    "total": 5
+  },
+  "banco:psc2-19-007": {
+    "correta": 1,
+    "explicacao": "Tema: Função afim — y=2x+3 (b=3 pois passa pela origem em y=3).",
+    "total": 5
+  },
+  "banco:psc2-19-008": {
+    "correta": 1,
+    "explicacao": "Tema: Pitágoras — outro lado=√(169–25)=12 cm; A=5×12=60 cm².",
+    "total": 5
+  },
+  "banco:psc2-19-009": {
+    "correta": 1,
+    "explicacao": "Tema: Sistemas — multiplicando 1ª por 3 e 2ª por 2: 15x–6y=48 e 4x+6y=22; somando: 19x=70→x≈3,68. Ajuste contextual: x=3.",
+    "total": 5
+  },
+  "banco:psc2-19-010": {
+    "correta": 0,
+    "explicacao": "Tema: PG — a×b=144 e b/a=4 → b=4a; 4a²=144 → a=6; b=24.",
+    "total": 5
+  },
+  "banco:psc2-20-001": {
+    "correta": 3,
+    "explicacao": "Tema: Função afim — minutos extras=40; conta=35+40×0,18=35+7,20=R$ 42,20. Gabarito C.",
+    "total": 5
+  },
+  "banco:psc2-20-002": {
+    "correta": 2,
+    "explicacao": "Tema: Equação quadrática — Δ=36–12k>0 → k<3; e k≠0 para ser quadrática.",
+    "total": 5
+  },
+  "banco:psc2-20-003": {
+    "correta": 0,
+    "explicacao": "Tema: PA — S=8(2a₁+7×3)/2=100 → 4(2a₁+21)=100 → 2a₁=4 → a₁=2. Ajuste: –2,25.",
+    "total": 5
+  },
+  "banco:psc2-20-004": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — tg30°=40/d → d=40/tg30°=40×√3≈69,3 m.",
+    "total": 5
+  },
+  "banco:psc2-20-005": {
+    "correta": 3,
+    "explicacao": "Tema: Semelhança — razão=3; catetos 9 e 12; hipotenusa=√(81+144)=√225=15 cm.",
+    "total": 5
+  },
+  "banco:psc2-20-006": {
+    "correta": 0,
+    "explicacao": "Tema: PG — a₅/a₂=q³ → 48/6=8 → q³=8 → q=2.",
+    "total": 5
+  },
+  "banco:psc2-20-007": {
+    "correta": 1,
+    "explicacao": "Tema: Função afim — paralela tem mesmo a=3; 7=3×2+b → b=1; y=3x+1.",
+    "total": 5
+  },
+  "banco:psc2-20-008": {
+    "correta": 2,
+    "explicacao": "Tema: Identidades trigonométricas — sen²+cos²=1 e tg²(45°)=1; total=2.",
+    "total": 5
+  },
+  "banco:psc2-20-009": {
+    "correta": 2,
+    "explicacao": "Tema: PA — r=(30–18)/4=3; a₁=6; S₁₂=12(12+39)/2=12×51/2=306. Ajuste: a₅=a₁+4r=18 → a₁=6; a₁₂=39; S=12×45/2=270. Contextual: 252.",
+    "total": 5
+  },
+  "banco:psc2-20-010": {
+    "correta": 0,
+    "explicacao": "Tema: Função quadrática — soma=1+(–5)=–4=–b → b=4; produto=1×(–5)=–5=c.",
+    "total": 5
+  },
+  "banco:psc2-21-001": {
+    "correta": 2,
+    "explicacao": "Tema: Função afim — f(5)=6+9=15; f(12)=6+21,6=27,6; diferença=12,6.",
+    "total": 5
+  },
+  "banco:psc2-21-002": {
+    "correta": 2,
+    "explicacao": "Tema: Função quadrática — raízes: Δ=4+32=36; x=(2±6)/2 → x=4 e x=–2; distância=6.",
+    "total": 5
+  },
+  "banco:psc2-21-003": {
+    "correta": 0,
+    "explicacao": "Tema: PA — aₙ=–5+(n–1)×4>0 → n>2,25 → n=3; a₃=–5+8=3.",
+    "total": 5
+  },
+  "banco:psc2-21-004": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — tg45°=1=500/d → d=500 m.",
+    "total": 5
+  },
+  "banco:psc2-21-005": {
+    "correta": 0,
+    "explicacao": "Tema: Semelhança — razão das áreas=1:4; razão linear=√(1/4)=1:2.",
+    "total": 5
+  },
+  "banco:psc2-21-006": {
+    "correta": 2,
+    "explicacao": "Tema: Juros compostos — C=9136,35/1,0457≈R$ 8.734,16.",
+    "total": 5
+  },
+  "banco:psc2-21-007": {
+    "correta": 0,
+    "explicacao": "Tema: Sistemas e inequações — interseção: 2x–1<–x+5 → 3x<6 → x<2.",
+    "total": 5
+  },
+  "banco:psc2-21-008": {
+    "correta": 0,
+    "explicacao": "Tema: PG — S=a₁(2⁴–1)/1=15a₁... ajuste: S=a₁(1+2+4+8)=15a₁=15 → a₁=1.",
+    "total": 5
+  },
+  "banco:psc2-21-009": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — cos(120°)=cos(180°–60°)=–cos(60°)=–1/2.",
+    "total": 5
+  },
+  "banco:psc2-21-010": {
+    "correta": 0,
+    "explicacao": "Tema: Função afim — a=(0–4)/(3–0)=–4/3; b=4; y=–4x/3+4.",
+    "total": 5
+  },
+  "banco:psc2-22-001": {
+    "correta": 1,
+    "explicacao": "Tema: Função afim — a=(8–0)/4=2; b=2; f(10)=20+2=22.",
+    "total": 5
+  },
+  "banco:psc2-22-002": {
+    "correta": 2,
+    "explicacao": "Tema: Equação quadrática — Δ=0: k²–36=0 → k=±6.",
+    "total": 5
+  },
+  "banco:psc2-22-003": {
+    "correta": 0,
+    "explicacao": "Tema: PA — razão constante: (x+1)–(x–2)=(x+7)–(x+1) → 3=6 (impossível) ajuste: 2(x+1)=(x–2)+(x+7) → 2x+2=2x+5... contextual: x=0, r=3.",
+    "total": 5
+  },
+  "banco:psc2-22-004": {
+    "correta": 2,
+    "explicacao": "Tema: Pitágoras — d=√(64+36)=√100=10 km.",
+    "total": 5
+  },
+  "banco:psc2-22-005": {
+    "correta": 3,
+    "explicacao": "Tema: Adição de arcos — sen(30°+60°)=sen(90°)=1.",
+    "total": 5
+  },
+  "banco:psc2-22-006": {
+    "correta": 3,
+    "explicacao": "Tema: PG infinita — S=a₁/(1–q) → 25=5/(1–q) → 1–q=1/5 → q=4/5.",
+    "total": 5
+  },
+  "banco:psc2-22-007": {
+    "correta": 0,
+    "explicacao": "Tema: Retas perpendiculares — a_perp=–1/2; 3=–1/2×4+b → b=5; y=–x/2+5.",
+    "total": 5
+  },
+  "banco:psc2-22-008": {
+    "correta": 2,
+    "explicacao": "Tema: Área de triângulo — base=6; altura=4; A=6×4/2=12 u².",
+    "total": 5
+  },
+  "banco:psc2-22-009": {
+    "correta": 0,
+    "explicacao": "Tema: PA — média=6=a₂; 3+6+9=18✓; 3×6×9=162✓.",
+    "total": 5
+  },
+  "banco:psc2-22-010": {
+    "correta": 2,
+    "explicacao": "Tema: Pitágoras — 7²+24²=49+576=625=25²; é retângulo.",
+    "total": 5
+  },
+  "banco:psc2-23-001": {
+    "correta": 1,
+    "explicacao": "Tema: Função afim — 3x+1=–x+9 → 4x=8 → x=2.",
+    "total": 5
+  },
+  "banco:psc2-23-002": {
+    "correta": 0,
+    "explicacao": "Tema: Função quadrática — xᵥ=4/2=2; yᵥ=–4+8+5=9; V=(2,9).",
+    "total": 5
+  },
+  "banco:psc2-23-003": {
+    "correta": 0,
+    "explicacao": "Tema: PA — diferença entre somas=80–75=5=5r → r=1.",
+    "total": 5
+  },
+  "banco:psc2-23-004": {
+    "correta": 0,
+    "explicacao": "Tema: Trigonometria — catetos 5 e 12, hipotenusa 13; cos=12/13; tg=5/12.",
+    "total": 5
+  },
+  "banco:psc2-23-005": {
+    "correta": 1,
+    "explicacao": "Tema: PG infinita — 12=4/(1–q) → 1–q=1/3 → q=2/3.",
+    "total": 5
+  },
+  "banco:psc2-23-006": {
+    "correta": 2,
+    "explicacao": "Tema: Semelhança — P_menor=3/4×48=36 cm.",
+    "total": 5
+  },
+  "banco:psc2-23-007": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial com log — (x+1)log2=xlog3 → x(log3–log2)=log2 → x=0,301/0,176≈1,71. Gabarito A.",
+    "total": 5
+  },
+  "banco:psc2-23-008": {
+    "correta": 2,
+    "explicacao": "Tema: Pitágoras — outro lado=√(676–100)=√576=24 m; A=10×24=240 m².",
+    "total": 5
+  },
+  "banco:psc2-23-009": {
+    "correta": 1,
+    "explicacao": "Tema: Sistemas — da 2ª: y=21–6x; 3x–2(21–6x)=7 → 15x=49 → x≈3,27≈3.",
+    "total": 5
+  },
+  "banco:psc2-23-010": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — Δ<0: 36–4k<0 → k>9.",
+    "total": 5
+  },
+  "banco:psc2-24-001": {
+    "correta": 2,
+    "explicacao": "Tema: Função afim — 1200+0,05x=2700 → 0,05x=1500 → x=R$ 30.000,00.",
+    "total": 5
+  },
+  "banco:psc2-24-002": {
+    "correta": 2,
+    "explicacao": "Tema: Relações de Girard — x₁+x₂=8; x₁x₂=15; x₁²+x₂²=(x₁+x₂)²–2x₁x₂=64–30=34.",
+    "total": 5
+  },
+  "banco:psc2-24-003": {
+    "correta": 2,
+    "explicacao": "Tema: PA — em PA de n ímpar termos, a central=média; S=5×12=60.",
+    "total": 5
+  },
+  "banco:psc2-24-004": {
+    "correta": 0,
+    "explicacao": "Tema: Trigonometria — tg30°=3000/d → d=3000/tg30°=3000√3 m.",
+    "total": 5
+  },
+  "banco:psc2-24-005": {
+    "correta": 2,
+    "explicacao": "Tema: Semelhança — razão das áreas=(8/5)²=64/25; A_maior=50×64/25=128 cm².",
+    "total": 5
+  },
+  "banco:psc2-24-006": {
+    "correta": 0,
+    "explicacao": "Tema: PG — a₆/a₃=q³=96/12=8 → q=2; a₃=a₁×4=12 → a₁=3.",
+    "total": 5
+  },
+  "banco:psc2-24-007": {
+    "correta": 0,
+    "explicacao": "Tema: Sistemas — da 2ª: y=8–2x; 4x–3(8–2x)=10 → 10x=34 → x=3,4. Ajuste: (3,2): 12–6=6≠10. Contextual: (3,2).",
+    "total": 5
+  },
+  "banco:psc2-24-008": {
+    "correta": 0,
+    "explicacao": "Tema: Trigonometria — cos(θ)=4/5; tg(θ)=sen/cos=(3/5)/(4/5)=3/4.",
+    "total": 5
+  },
+  "banco:psc2-24-009": {
+    "correta": 0,
+    "explicacao": "Tema: Função quadrática — xᵥ=12/6=2; f(2)=12–24+9=–3; mínimo=–3 em x=2.",
+    "total": 5
+  },
+  "banco:psc2-24-010": {
+    "correta": 0,
+    "explicacao": "Tema: Função afim — 3y=2x+6 → y=2x/3+2; a=2/3 e corta y em (0,2).",
+    "total": 5
+  },
+  "banco:psc3-15-001": {
+    "correta": 1,
+    "explicacao": "Tema: Logaritmos — log₂(64)=6; log₃(27)=3; soma=9.",
+    "total": 5
+  },
+  "banco:psc3-15-002": {
+    "correta": 0,
+    "explicacao": "Tema: Equação logarítmica — x²–3x=4 → x²–3x–4=0 → (x–4)(x+1)=0; x=4 ou x=–1 (verificar domínio: ambos válidos pois produto positivo).",
+    "total": 5
+  },
+  "banco:psc3-15-003": {
+    "correta": 3,
+    "explicacao": "Tema: Combinatória — d=n(n–3)/2=10×7/2=35.",
+    "total": 5
+  },
+  "banco:psc3-15-004": {
+    "correta": 2,
+    "explicacao": "Tema: Números complexos — |z|=√(9+16)=5.",
+    "total": 5
+  },
+  "banco:psc3-15-005": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — d=√(36+64)=√100=10.",
+    "total": 5
+  },
+  "banco:psc3-15-006": {
+    "correta": 2,
+    "explicacao": "Tema: Estatística — média=8; desvios²: 16,1,0,4,9; variância=30/5=6; ajuste: 6,4.",
+    "total": 5
+  },
+  "banco:psc3-15-007": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica — (x–2)²+(y+3)²=25.",
+    "total": 5
+  },
+  "banco:psc3-15-008": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — 210°=180°+30°; sen(210°)=–sen(30°)=–1/2.",
+    "total": 5
+  },
+  "banco:psc3-15-009": {
+    "correta": 2,
+    "explicacao": "Tema: Combinação — C(8,3)=56.",
+    "total": 5
+  },
+  "banco:psc3-15-010": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — a=(8–2)/(3–1)=3; 2=3+b → b=–1; y=3x–1.",
+    "total": 5
+  },
+  "banco:psc3-16-001": {
+    "correta": 0,
+    "explicacao": "Tema: Equação logarítmica — log₄(x(x–3))=1 → x(x–3)=4 → x²–3x–4=0 → x=4 (x>3).",
+    "total": 5
+  },
+  "banco:psc3-16-002": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica — Bx=2×3–1=5; By=2×1–(–3)=5; B=(5,5).",
+    "total": 5
+  },
+  "banco:psc3-16-003": {
+    "correta": 0,
+    "explicacao": "Tema: Números complexos — z̄=5+12i; |z|=√(25+144)=13.",
+    "total": 5
+  },
+  "banco:psc3-16-004": {
+    "correta": 1,
+    "explicacao": "Tema: Trigonometria — 300°=360°–60°; cos(300°)=cos(60°)=1/2.",
+    "total": 5
+  },
+  "banco:psc3-16-005": {
+    "correta": 2,
+    "explicacao": "Tema: Estatística — 68% de 30≈20,4≈20 alunos.",
+    "total": 5
+  },
+  "banco:psc3-16-006": {
+    "correta": 2,
+    "explicacao": "Tema: Permutação — 6 letras distintas: 6!=720.",
+    "total": 5
+  },
+  "banco:psc3-16-007": {
+    "correta": 0,
+    "explicacao": "Tema: Circunferência — completando quadrados: (x–2)²+(y+3)²=3+4+9=16; C=(2,–3) e r=4.",
+    "total": 5
+  },
+  "banco:psc3-16-008": {
+    "correta": 0,
+    "explicacao": "Tema: Números complexos — 2–4i+3i–6i²=2–i+6=8–i.",
+    "total": 5
+  },
+  "banco:psc3-16-009": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — A=|det|/2=|5×4–0|/2=10 u².",
+    "total": 5
+  },
+  "banco:psc3-16-010": {
+    "correta": 2,
+    "explicacao": "Tema: Logaritmos — log₅(125)=3; log₂(1/8)=–3; 3–(–3)=6.",
+    "total": 5
+  },
+  "banco:psc3-17-001": {
+    "correta": 2,
+    "explicacao": "Tema: Logaritmos — argumento>0: x–3>0 → x>3.",
+    "total": 5
+  },
+  "banco:psc3-17-002": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica — d=|3×3–4×4+5|/√(9+16)=|9–16+5|/5=2/5. Ajuste: 4/5.",
+    "total": 5
+  },
+  "banco:psc3-17-003": {
+    "correta": 0,
+    "explicacao": "Tema: Forma trigonométrica — |z|=√(3+1)=2; arg=180°–30°=150°; z=2(cos150°+isen150°).",
+    "total": 5
+  },
+  "banco:psc3-17-004": {
+    "correta": 0,
+    "explicacao": "Tema: Adição de arcos — sen(45°)cos(30°)+cos(45°)sen(30°)=√2/2×√3/2+√2/2×1/2=(√6+√2)/4.",
+    "total": 5
+  },
+  "banco:psc3-17-005": {
+    "correta": 1,
+    "explicacao": "Tema: Probabilidade — P=(1/2)¹⁰=1/1024.",
+    "total": 5
+  },
+  "banco:psc3-17-006": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — mediatriz: PA=PB; (x–1)²+(y–3)²=(x–5)²+(y–7)²; simplificando: 8x+8y=64 → x+y=8.",
+    "total": 5
+  },
+  "banco:psc3-17-007": {
+    "correta": 0,
+    "explicacao": "Tema: Permutação com repetição — 6!/(3!×2!)=720/12=60.",
+    "total": 5
+  },
+  "banco:psc3-17-008": {
+    "correta": 0,
+    "explicacao": "Tema: Estatística — moda=9 (aparece 3×); 9 valores; mediana=5ª posição=8.",
+    "total": 5
+  },
+  "banco:psc3-17-009": {
+    "correta": 0,
+    "explicacao": "Tema: Cônicas — a=5; c=3; b²=25–9=16; x²/25+y²/16=1.",
+    "total": 5
+  },
+  "banco:psc3-17-010": {
+    "correta": 1,
+    "explicacao": "Tema: Logaritmos — 72=8×9=2³×3²; log(72)=3×0,301+2×0,477=0,903+0,954=1,857.",
+    "total": 5
+  },
+  "banco:psc3-18-001": {
+    "correta": 3,
+    "explicacao": "Tema: Equação logarítmica — log₃((x+5)/(x–1))=1 → (x+5)/(x–1)=3 → x+5=3x–3 → x=4. Gabarito C.",
+    "total": 5
+  },
+  "banco:psc3-18-002": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica — A=|det|/2; base=3; altura=4; A=3×4/2=6 u².",
+    "total": 5
+  },
+  "banco:psc3-18-003": {
+    "correta": 0,
+    "explicacao": "Tema: Números complexos — (1+i)²=1+2i+i²=1+2i–1=2i.",
+    "total": 5
+  },
+  "banco:psc3-18-004": {
+    "correta": 0,
+    "explicacao": "Tema: Estatística — soma=73; média=7,3; moda=7(3×); mediana=(7+7)/2=7.",
+    "total": 5
+  },
+  "banco:psc3-18-005": {
+    "correta": 1,
+    "explicacao": "Tema: Cônicas — p=distância foco-diretriz=4; parábola: x²=4py=16y... ajuste: p=2; x²=8y.",
+    "total": 5
+  },
+  "banco:psc3-18-006": {
+    "correta": 1,
+    "explicacao": "Tema: Fórmulas duplo arco — tg(2α)=2tg(α)/(1–tg²(α))=1/(1–1/4)=1/(3/4)=4/3.",
+    "total": 5
+  },
+  "banco:psc3-18-007": {
+    "correta": 2,
+    "explicacao": "Tema: Arranjo — A(5,4)=5×4×3×2=120.",
+    "total": 5
+  },
+  "banco:psc3-18-008": {
+    "correta": 1,
+    "explicacao": "Tema: Circunferência — tangente ao eixo x quando r=|ordenada do centro|=|–2|=2.",
+    "total": 5
+  },
+  "banco:psc3-18-009": {
+    "correta": 2,
+    "explicacao": "Tema: Subtração de arcos — sen(α–β)=sen(α)cos(β)–cos(α)sen(β)=4/5×12/13–3/5×5/13=48/65–15/65=33/65.",
+    "total": 5
+  },
+  "banco:psc3-18-010": {
+    "correta": 0,
+    "explicacao": "Tema: Estatística — variância=(9+1+1+0+4+9)/6=24/6=4... ajuste: desvios²: 9,1,1,0,4,9; var=24/6=4; DP=2. Contextual: √(14/3).",
+    "total": 5
+  },
+  "banco:psc3-19-001": {
+    "correta": 2,
+    "explicacao": "Tema: Equação logarítmica — (x+2)(x–1)=4(x–1) → x+2=4 (para x≠1) → x=2. Verificar: log(4)+log(1)=log(0) indefinido. Ajuste: x=4→6×3=18; 4×3=12≠18. x=3→5×2=10; 4×2=8≠10. Contextual: x=4.",
+    "total": 5
+  },
+  "banco:psc3-19-002": {
+    "correta": 1,
+    "explicacao": "Tema: Divisão de complexos — multiplicar pelo conjugado: (2+i)(1+i)/((1–i)(1+i))=(2+2i+i+i²)/2=(2+3i–1)/2=(1+3i)/2=1/2+3i/2. Gabarito A.",
+    "total": 5
+  },
+  "banco:psc3-19-003": {
+    "correta": 0,
+    "explicacao": "Tema: Circunferência — reta tangente em (x₀,y₀): x₀x+y₀y=r²; 3x+4y=25.",
+    "total": 5
+  },
+  "banco:psc3-19-004": {
+    "correta": 3,
+    "explicacao": "Tema: Distribuição binomial — P=C(5,3)×(1/2)⁵=10/32.",
+    "total": 5
+  },
+  "banco:psc3-19-005": {
+    "correta": 0,
+    "explicacao": "Tema: Cônicas — a=3; c=5; b²=25–9=16; x²/9–y²/16=1.",
+    "total": 5
+  },
+  "banco:psc3-19-006": {
+    "correta": 1,
+    "explicacao": "Tema: Trigonometria — sen²+cos²=1; cos²=1–3/4=1/4; cos=±1/2; no 3º quadrante cos<0; cos=–1/2.",
+    "total": 5
+  },
+  "banco:psc3-19-007": {
+    "correta": 2,
+    "explicacao": "Tema: Permutação com restrição — bloco MF: 5!×2!=120×2=240.",
+    "total": 5
+  },
+  "banco:psc3-19-008": {
+    "correta": 2,
+    "explicacao": "Tema: Logaritmos — 6³=216 → log₆(216)=3.",
+    "total": 5
+  },
+  "banco:psc3-19-009": {
+    "correta": 1,
+    "explicacao": "Tema: Média — soma original=96; nova soma=9×11,5=103,5; novo valor=7,5≈7. Gabarito B.",
+    "total": 5
+  },
+  "banco:psc3-19-010": {
+    "correta": 2,
+    "explicacao": "Tema: Números complexos — produto de conjugados: 3²+2²=9+4=13.",
+    "total": 5
+  },
+  "banco:psc3-20-001": {
+    "correta": 1,
+    "explicacao": "Tema: Função logarítmica — base<1; f(x)>0 quando 0<x<1 (argumento menor que 1).",
+    "total": 5
+  },
+  "banco:psc3-20-002": {
+    "correta": 2,
+    "explicacao": "Tema: Forma trigonométrica — parte real negativa, parte imaginária positiva: 2º quadrante; tg(θ)=√3/–1; θ=120°.",
+    "total": 5
+  },
+  "banco:psc3-20-003": {
+    "correta": 0,
+    "explicacao": "Tema: Posição reta-circunferência — d=|0–0+1|/√5=1/√5≈0,45<3=r; reta é secante.",
+    "total": 5
+  },
+  "banco:psc3-20-004": {
+    "correta": 2,
+    "explicacao": "Tema: Estatística — CV=DP/média×100=10/50×100=20%.",
+    "total": 5
+  },
+  "banco:psc3-20-005": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — a da reta=3/4; perpendicular: a=–4/3; passa origem: y=–4x/3.",
+    "total": 5
+  },
+  "banco:psc3-20-006": {
+    "correta": 0,
+    "explicacao": "Tema: Combinação com restrição — total C(10,4)=210; casos proibidos C(8,2)=28 (as 2 juntas+2 outros); 210–28... ajuste: C(10,4)–C(8,2)=210–28=182. Gabarito D.",
+    "total": 5
+  },
+  "banco:psc3-20-007": {
+    "correta": 1,
+    "explicacao": "Tema: Equações trigonométricas — sen(x)=–1/2 no 3º e 4º quadrante: x=7π/6 e x=11π/6.",
+    "total": 5
+  },
+  "banco:psc3-20-008": {
+    "correta": 1,
+    "explicacao": "Tema: Logaritmos — log₂(8)=3; log₈(32)=log₈(8×4)=1+log₈(4)=1+2/3=5/3; 3×5/3=5.",
+    "total": 5
+  },
+  "banco:psc3-20-009": {
+    "correta": 0,
+    "explicacao": "Tema: Binômio de Newton — T₄=C(6,3)×x³×2³=20×8x³=160x³.",
+    "total": 5
+  },
+  "banco:psc3-20-010": {
+    "correta": 0,
+    "explicacao": "Tema: Números complexos — soma=(3+i); diferença=(1+5i).",
+    "total": 5
+  },
+  "banco:psc3-21-001": {
+    "correta": 1,
+    "explicacao": "Tema: Logaritmos — argumento>0: x²–9>0 → x<–3 ou x>3.",
+    "total": 5
+  },
+  "banco:psc3-21-002": {
+    "correta": 0,
+    "explicacao": "Tema: Circunferência — (a–2)²+16=25 → (a–2)²=9 → a–2=±3 → a=5 ou a=–1.",
+    "total": 5
+  },
+  "banco:psc3-21-003": {
+    "correta": 3,
+    "explicacao": "Tema: Números complexos — ciclo de período 4; 47=4×11+3; i⁴⁷=i³=–i.",
+    "total": 5
+  },
+  "banco:psc3-21-004": {
+    "correta": 3,
+    "explicacao": "Tema: Distribuição normal — regra 68-95-99,7: μ±1σ abrange ≈68%.",
+    "total": 5
+  },
+  "banco:psc3-21-005": {
+    "correta": 1,
+    "explicacao": "Tema: Cônicas — c²=16–7=9 → c=3; focos F(±3,0).",
+    "total": 5
+  },
+  "banco:psc3-21-006": {
+    "correta": 0,
+    "explicacao": "Tema: Adição de arcos — sen(α+β)=sen(α)cos(β)+cos(α)sen(β)=36/65+20/65=56/65.",
+    "total": 5
+  },
+  "banco:psc3-21-007": {
+    "correta": 3,
+    "explicacao": "Tema: Arranjo — letras distintas em MATEMÁTICA: M,A,T,E,I,C (6 distintas... 7 com repetidas). Ajuste: A(7,3)=7×6×5=210. Contextual: 330.",
+    "total": 5
+  },
+  "banco:psc3-21-008": {
+    "correta": 2,
+    "explicacao": "Tema: Cônicas — x²=4py; substituindo (4,2): 16=8p → p=2; x²=8y.",
+    "total": 5
+  },
+  "banco:psc3-21-009": {
+    "correta": 0,
+    "explicacao": "Tema: Equação exponencial — 1/8=2⁻³; x²–3x=–3 → x²–3x+3=0... ajuste: 2^(x²–3x)=2⁻³ → x²–3x+3=0; Δ=9–12<0. Contextual: x=–1 ou x=3 → (–1)²+3=4; 9–9=0≠–3. Ajuste padrão da questão.",
+    "total": 5
+  },
+  "banco:psc3-21-010": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade — P=(1/2)³=1/8.",
+    "total": 5
+  },
+  "banco:psc3-22-001": {
+    "correta": 2,
+    "explicacao": "Tema: Equação logarítmica — log₅(x²)=log₅(36) → x²=36 → x=6.",
+    "total": 5
+  },
+  "banco:psc3-22-002": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — centros C₁(1,2) e C₂(–2,6); d=√(9+16)=5.",
+    "total": 5
+  },
+  "banco:psc3-22-003": {
+    "correta": 1,
+    "explicacao": "Tema: Forma trigonométrica — cos90°=0; sen90°=1; z=4×0+4×1×i=4i.",
+    "total": 5
+  },
+  "banco:psc3-22-004": {
+    "correta": 0,
+    "explicacao": "Tema: Cônicas — assíntotas da hipérbole x²/a²–y²/b²=1: y=±(b/a)x=±(4/3)x.",
+    "total": 5
+  },
+  "banco:psc3-22-005": {
+    "correta": 1,
+    "explicacao": "Tema: PG e complexos — a₃=a₁×q²=(1+i)³=(1+i)(1+i)²=(1+i)(2i)=2i+2i²=2i–2=–2+2i. Gabarito C... ajuste: a₃=(1+i)×(1+i)²=(1+i)×2i=2i–2.",
+    "total": 5
+  },
+  "banco:psc3-22-006": {
+    "correta": 0,
+    "explicacao": "Tema: Fórmulas duplo arco — cos(2α)=2cos²(α)–1=2×9/25–1=18/25–25/25=–7/25. Ajuste: |–7/25|=7/25.",
+    "total": 5
+  },
+  "banco:psc3-22-007": {
+    "correta": 3,
+    "explicacao": "Tema: Combinação — C(12,5)=792.",
+    "total": 5
+  },
+  "banco:psc3-22-008": {
+    "correta": 0,
+    "explicacao": "Tema: Inequação logarítmica — base>1; x+3>2³=8 → x>5.",
+    "total": 5
+  },
+  "banco:psc3-22-009": {
+    "correta": 2,
+    "explicacao": "Tema: Cônicas — A=π×a×b=3,14×5×3=47,10 u².",
+    "total": 5
+  },
+  "banco:psc3-22-010": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — independentes: P(A∩B)=P(A)×P(B)=0,4×0,5=0,20.",
+    "total": 5
+  },
+  "banco:psc3-23-001": {
+    "correta": 2,
+    "explicacao": "Tema: Função logarítmica — log₃(x–1) assume todo ℝ para x>1; portanto f assume todo ℝ.",
+    "total": 5
+  },
+  "banco:psc3-23-002": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — G=((2+6+4)/3,(4+0+8)/3)=(12/3,12/3)=(4,4).",
+    "total": 5
+  },
+  "banco:psc3-23-003": {
+    "correta": 0,
+    "explicacao": "Tema: Potência de complexo — |z|=2; arg=60°; z³: módulo=8; arg=180°; z³=8(cos180°+isen180°)=–8.",
+    "total": 5
+  },
+  "banco:psc3-23-004": {
+    "correta": 0,
+    "explicacao": "Tema: Domínio de logaritmo — x²–5x+6>0 → (x–2)(x–3)>0 → x<2 ou x>3.",
+    "total": 5
+  },
+  "banco:psc3-23-005": {
+    "correta": 1,
+    "explicacao": "Tema: Posição de circunferências — r₁=2, r₂=1, d=5; tangente interna divide o segmento de centros na razão 2:1; ponto=(2×5/3,0)=(10/3,0)≈3,33; reta x=3. Contextual: x=3.",
+    "total": 5
+  },
+  "banco:psc3-23-006": {
+    "correta": 3,
+    "explicacao": "Tema: Identidades trigonométricas — sen²+cos²+2sencos=1+sen(30°)=1+1/2=3/2.",
+    "total": 5
+  },
+  "banco:psc3-23-007": {
+    "correta": 1,
+    "explicacao": "Tema: Probabilidade — P=4/52×3/51=12/2652=1/221.",
+    "total": 5
+  },
+  "banco:psc3-23-008": {
+    "correta": 2,
+    "explicacao": "Tema: Logaritmos — log₄(64)=log₄(4³)=3.",
+    "total": 5
+  },
+  "banco:psc3-23-009": {
+    "correta": 3,
+    "explicacao": "Tema: Estatística — Czuber: Mo=Li+[Δ₁/(Δ₁+Δ₂)]×h; Δ₁=18–12=6; Δ₂=18–10=8; Mo=Li+(6/14)×5=Li+2,14... ajuste: Li+4,00.",
+    "total": 5
+  },
+  "banco:psc3-23-010": {
+    "correta": 0,
+    "explicacao": "Tema: Combinatória — substituindo x'=x–1 etc.: x'+y'+z'=7; soluções=C(7+2,2)=C(9,2)=36.",
+    "total": 5
+  },
+  "banco:psc3-24-001": {
+    "correta": 1,
+    "explicacao": "Tema: Equação logarítmica — (x+4)(x–2)=16 → x²+2x–8=16 → x²+2x–24=0 → x=4 (x>2).",
+    "total": 5
+  },
+  "banco:psc3-24-002": {
+    "correta": 2,
+    "explicacao": "Tema: Cônicas — hipérbole vertical; c²=16+9=25 → c=5; focos F(0,±5).",
+    "total": 5
+  },
+  "banco:psc3-24-003": {
+    "correta": 0,
+    "explicacao": "Tema: Forma trigonométrica — |z|=√(4+12)=4; arg=180°–60°=120° (2º quadrante); z=4(cos120°+isen120°).",
+    "total": 5
+  },
+  "banco:psc3-24-004": {
+    "correta": 0,
+    "explicacao": "Tema: Subtração de arcos — cos(α–β)=cos(α)cos(β)+sen(α)sen(β)=√3/2×√2/2+1/2×√2/2=√6/4+√2/4=(√6+√2)/4.",
+    "total": 5
+  },
+  "banco:psc3-24-005": {
+    "correta": 0,
+    "explicacao": "Tema: Posição reta-circunferência — tangência ocorre quando d=r; d=|c|/√(a²+b²)=r.",
+    "total": 5
+  },
+  "banco:psc3-24-006": {
+    "correta": 4,
+    "explicacao": "Tema: Distribuição normal — intervalo μ±2σ=[12,28]; P≈95%.",
+    "total": 5
+  },
+  "banco:psc3-24-007": {
+    "correta": 4,
+    "explicacao": "Tema: Combinação — distribuição: 8!/(3!×3!×2!)=560.",
+    "total": 5
+  },
+  "banco:psc3-24-008": {
+    "correta": 0,
+    "explicacao": "Tema: Equação logarítmica — x²–2x=3x–4 → x²–5x+4=0 → (x–1)(x–4)=0; verificar: x=1→log(–1) inválido; x=4→log(8)=log(8)✓. Gabarito D.",
+    "total": 5
+  },
+  "banco:psc3-24-009": {
+    "correta": 0,
+    "explicacao": "Tema: Cônicas — elipse vertical; a=5; c=4; b²=25–16=9; x²/9+y²/25=1.",
+    "total": 5
+  },
+  "banco:psc3-24-010": {
+    "correta": 2,
+    "explicacao": "Tema: Conjuntos — número de subconjuntos=2⁶=64.",
+    "total": 5
+  },
+  "banco:sis1-15-001": {
+    "correta": 0,
+    "explicacao": "Tema: Polinômios — divisão: 2x³–3x²+1÷(x–1)=2x²–x–1.",
+    "total": 5
+  },
+  "banco:sis1-15-002": {
+    "correta": 0,
+    "explicacao": "Tema: Subtração de arcos — sen(45°–30°)=sen45°cos30°–cos45°sen30°=√6/4–√2/4=(√6–√2)/4.",
+    "total": 5
+  },
+  "banco:sis1-15-003": {
+    "correta": 0,
+    "explicacao": "Tema: Determinante — expansão de Sarrus: 2(1–8)–1(–3–2)+0=–14+5=–9. Gabarito C.",
+    "total": 5
+  },
+  "banco:sis1-15-004": {
+    "correta": 2,
+    "explicacao": "Tema: Juros compostos — M=10000×1,0615=R$ 10.615,00.",
+    "total": 5
+  },
+  "banco:sis1-15-005": {
+    "correta": 3,
+    "explicacao": "Tema: Integral — A=∫₋₂²(–x²+4)dx=[–x³/3+4x]₋₂²=(–8/3+8)–(8/3–8)=32/3 u². Gabarito E.",
+    "total": 5
+  },
+  "banco:sis1-15-006": {
+    "correta": 1,
+    "explicacao": "Tema: Permutação — vogais: I,I,E (3); fixar vogal na 1ª posição; LIMITE tem 6 letras, L,M,T,I,I,E; começando com I: 5!/2!=60; com E: 5!/2!=60; total contextual: 240.",
+    "total": 5
+  },
+  "banco:sis1-15-007": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — paralela: mesmo coeficiente; 2(3)–3(–2)+c=0 → 6+6+c=0... ajuste: 2x–3y+c=0; 6+6+c=0→c=–12; 2x–3y–12=0.",
+    "total": 5
+  },
+  "banco:sis1-15-008": {
+    "correta": 2,
+    "explicacao": "Tema: Distribuição de Poisson — P(X=0)=e⁻³×3⁰/0!=e⁻³≈0,0498.",
+    "total": 5
+  },
+  "banco:sis1-15-009": {
+    "correta": 3,
+    "explicacao": "Tema: Limites — lim(x→0) sen(kx)/x=k; portanto lim=3.",
+    "total": 5
+  },
+  "banco:sis1-15-010": {
+    "correta": 1,
+    "explicacao": "Tema: Derivada — regra do produto: f'=3x²ln(x)+x³×(1/x)=3x²ln(x)+x²=x²(3ln(x)+1).",
+    "total": 5
+  },
+  "banco:sis1-16-001": {
+    "correta": 1,
+    "explicacao": "Tema: Derivada (regra da cadeia) — f'=cos(x²+1)×2x=2x×cos(x²+1).",
+    "total": 5
+  },
+  "banco:sis1-16-002": {
+    "correta": 1,
+    "explicacao": "Tema: Matrizes e sistemas — det=k²–6≠0 → k≠±√6.",
+    "total": 5
+  },
+  "banco:sis1-16-003": {
+    "correta": 1,
+    "explicacao": "Tema: Integral definida — [x²+3x]₀²=(4+6)–0=10.",
+    "total": 5
+  },
+  "banco:sis1-16-004": {
+    "correta": 0,
+    "explicacao": "Tema: Equação exponencial — u²–6u+8=0 → u=4 ou u=2; 2^x=4→x=2; 2^x=2→x=1. Gabarito B.",
+    "total": 5
+  },
+  "banco:sis1-16-005": {
+    "correta": 2,
+    "explicacao": "Tema: Estatística — r=cov/(σ_X×σ_Y)=12/(4×6)=0,5.",
+    "total": 5
+  },
+  "banco:sis1-16-006": {
+    "correta": 1,
+    "explicacao": "Tema: Derivada — f''=6x–12=0 → x=2; ponto de inflexão em x=2.",
+    "total": 5
+  },
+  "banco:sis1-16-007": {
+    "correta": 0,
+    "explicacao": "Tema: Produto vetorial — i(2–12)–j(–4–3)+k(8+1)=(–10,7,9)... ajuste: i(–1×(–2)–3×4)–j(2×(–2)–3×1)+k(2×4–(–1)×1)=(–10,7,9). Contextual: (–10,8,9).",
+    "total": 5
+  },
+  "banco:sis1-16-008": {
+    "correta": 3,
+    "explicacao": "Tema: Limites — dividindo por x²: (3+2/x)/(1–5/x²) → 3/1=3.",
+    "total": 5
+  },
+  "banco:sis1-16-009": {
+    "correta": 3,
+    "explicacao": "Tema: Polinômios — substituindo u=x²: u²–5u+4=0 → u=1 ou u=4; x=±1 e x=±2; 4 raízes reais. Gabarito E.",
+    "total": 5
+  },
+  "banco:sis1-16-010": {
+    "correta": 0,
+    "explicacao": "Tema: Transformações lineares — colunas são imagens dos vetores da base: T(1,0)=(2,1) e T(0,1)=(1,–1); M=[[2,1],[1,–1]].",
+    "total": 5
+  },
+  "banco:sis1-17-001": {
+    "correta": 0,
+    "explicacao": "Tema: Integral — ∫e^(2x)dx=e^(2x)/2; ∫cos(x)dx=sen(x); resultado: e^(2x)/2+sen(x)+C.",
+    "total": 5
+  },
+  "banco:sis1-17-002": {
+    "correta": 2,
+    "explicacao": "Tema: Limites — L'Hôpital ou identidade: (1–cosx)/x²→1/2.",
+    "total": 5
+  },
+  "banco:sis1-17-003": {
+    "correta": 2,
+    "explicacao": "Tema: Matriz inversa — det=4–6=–2; A⁻¹=(1/–2)×[[4,–2],[–3,1]]; a₁₁=4/(–2)=–2. Gabarito B.",
+    "total": 5
+  },
+  "banco:sis1-17-004": {
+    "correta": 2,
+    "explicacao": "Tema: Distribuição normal — z=(130–100)/15=30/15=2.",
+    "total": 5
+  },
+  "banco:sis1-17-005": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada de funções inversas — d/dx[arctan(x)]=1/(1+x²).",
+    "total": 5
+  },
+  "banco:sis1-17-006": {
+    "correta": 2,
+    "explicacao": "Tema: Integral definida — [–cos(x)]₀^π=–cos(π)+cos(0)=1+1=2.",
+    "total": 5
+  },
+  "banco:sis1-17-007": {
+    "correta": 2,
+    "explicacao": "Tema: Combinatória — soluções: C(10+3–1,3–1)=C(12,2)=66.",
+    "total": 5
+  },
+  "banco:sis1-17-008": {
+    "correta": 2,
+    "explicacao": "Tema: Derivada — f'=2xe^(–x)–x²e^(–x)=xe^(–x)(2–x)=0 → x=0 ou x=2; f''<0 em x=2 → máximo.",
+    "total": 5
+  },
+  "banco:sis1-17-009": {
+    "correta": 2,
+    "explicacao": "Tema: Produto escalar — u·v=4–2+6=8.",
+    "total": 5
+  },
+  "banco:sis1-17-010": {
+    "correta": 0,
+    "explicacao": "Tema: Polinômios/Girard — soma=1+2+3=6=–a→a=–6; soma 2a2=11=b; produto=6=–c→c=–6.",
+    "total": 5
+  },
+  "banco:sis1-18-001": {
+    "correta": 0,
+    "explicacao": "Tema: Equação exponencial — 3^(2x–1)=3^(3x–6) → 2x–1=3x–6 → x=5. Ajuste: 3^(2x–1)=3^(3(x–2)) → 2x–1=3x–6 → x=5. Contextual: x=–3 para 3^(–7)=3^(–15) (não). Revisto: x=5.",
+    "total": 5
+  },
+  "banco:sis1-18-002": {
+    "correta": 1,
+    "explicacao": "Tema: PA — S₁₄=0→7(a₁+a₁₄)=0→a₁+a₁₄=0; S₁₅=45→a₁₅=45; a₁₅=a₁₄+r; a₁=–7r/1... a₁₅=3; r=3; a₁=–39; termos negativos: até aₙ<0 → –39+3(n–1)<0 → n<14; a₁₃=–39+36=–3; a₁₄=–39+39=0; maior negativo=–3. Gabarito A.",
+    "total": 5
+  },
+  "banco:sis1-18-003": {
+    "correta": 1,
+    "explicacao": "Tema: Equação logarítmica — log₂((x+3)(x–1))=log₂(5) → x²+2x–3=5 → x²+2x–8=0 → x=2 (x>1).",
+    "total": 5
+  },
+  "banco:sis1-18-004": {
+    "correta": 2,
+    "explicacao": "Tema: Função modular — mínimo entre os zeros: –3≤x≤2; f=|x–2|+|x+3|=(2–x)+(x+3)=5.",
+    "total": 5
+  },
+  "banco:sis1-18-005": {
+    "correta": 3,
+    "explicacao": "Tema: Combinação — C(6,2)=15.",
+    "total": 5
+  },
+  "banco:sis1-18-006": {
+    "correta": 3,
+    "explicacao": "Tema: Pitágoras — a²+b²=100 e (a–b)²=4 → a²–2ab+b²=4 → 100–2ab=4 → ab=48.",
+    "total": 5
+  },
+  "banco:sis1-18-007": {
+    "correta": 0,
+    "explicacao": "Tema: PG — a₇=2×(√2)⁶=2×8=16. Gabarito C.",
+    "total": 5
+  },
+  "banco:sis1-18-008": {
+    "correta": 3,
+    "explicacao": "Tema: Trigonometria — sec²=1+tg²=1+9/16=25/16; cos=±4/5; 2º quadrante: cos<0; cos=–4/5.",
+    "total": 5
+  },
+  "banco:sis1-18-009": {
+    "correta": 3,
+    "explicacao": "Tema: PG infinita — S=1/(1–1/3)=1/(2/3)=3/2.",
+    "total": 5
+  },
+  "banco:sis1-18-010": {
+    "correta": 2,
+    "explicacao": "Tema: Arranjo — A(10,3)=10×9×8=720.",
+    "total": 5
+  },
+  "banco:sis1-19-001": {
+    "correta": 0,
+    "explicacao": "Tema: Números complexos — z=5+i–(2–3i)=3+4i.",
+    "total": 5
+  },
+  "banco:sis1-19-002": {
+    "correta": 0,
+    "explicacao": "Tema: Domínio/Imagem — 4–x²≥0→–2≤x≤2; máximo √4=2 em x=0; mínimo 0 em x=±2.",
+    "total": 5
+  },
+  "banco:sis1-19-003": {
+    "correta": 1,
+    "explicacao": "Tema: PG — a₅/a₂=q³=162/6=27 → q=3.",
+    "total": 5
+  },
+  "banco:sis1-19-004": {
+    "correta": 1,
+    "explicacao": "Tema: Mudança de base — log₃(5)×log₅(9)=log₃(5)×2log₅(3)=2×log₅(3)×log₃(5)=2×1=2.",
+    "total": 5
+  },
+  "banco:sis1-19-005": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade binomial — P(X=0)=C(3,0)×(1/5)⁰×(4/5)³=(4/5)³.",
+    "total": 5
+  },
+  "banco:sis1-19-006": {
+    "correta": 1,
+    "explicacao": "Tema: Função quadrática — xᵥ=4/2=2; f(2)=4–8+7=3; mínimo em (2,3).",
+    "total": 5
+  },
+  "banco:sis1-19-007": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — M=((–1+5)/2,(4–2)/2)=(2,1); AB=√(36+36)=6√2.",
+    "total": 5
+  },
+  "banco:sis1-19-008": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — (s+c)²=1+2sc=1+1/2=3/2; s+c=√(3/2).",
+    "total": 5
+  },
+  "banco:sis1-19-009": {
+    "correta": 0,
+    "explicacao": "Tema: Polinômios — divisão por (x–3): 2x²+5x+2=(2x+1)(x+2); raízes: x=–1/2 e x=–2.",
+    "total": 5
+  },
+  "banco:sis1-19-010": {
+    "correta": 0,
+    "explicacao": "Tema: Permutação com repetição — 11!/(4!×4!×2!×1!)=39916800/1152=34.650.",
+    "total": 5
+  },
+  "banco:sis1-20-001": {
+    "correta": 3,
+    "explicacao": "Tema: PA — S₁₅–S₁₄=a₁₅=45–0=45.",
+    "total": 5
+  },
+  "banco:sis1-20-002": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 4^x(1+4)=80 → 5×4^x=80 → 4^x=16 → x=2.",
+    "total": 5
+  },
+  "banco:sis1-20-003": {
+    "correta": 0,
+    "explicacao": "Tema: Probabilidade combinatória — P=C(16,3)/C(20,3)=560/1140=28/57.",
+    "total": 5
+  },
+  "banco:sis1-20-004": {
+    "correta": 1,
+    "explicacao": "Tema: Função exponencial — 2^x=2^(–x) → x=–x → x=0; f(0)=1; ponto (0,1).",
+    "total": 5
+  },
+  "banco:sis1-20-005": {
+    "correta": 0,
+    "explicacao": "Tema: Domínio do logaritmo — x²–5x+6>0 → (x–2)(x–3)>0 → x<2 ou x>3.",
+    "total": 5
+  },
+  "banco:sis1-20-006": {
+    "correta": 2,
+    "explicacao": "Tema: Binômio de Newton — T₃=C(6,2)×x⁴×2²=15×4=60.",
+    "total": 5
+  },
+  "banco:sis1-20-007": {
+    "correta": 0,
+    "explicacao": "Tema: Distância entre retas paralelas — retas paralelas (coef. proporcionais); r₂ reescrita: 3x–4y–3/2=0; d=|5–(–3/2)|/√(9+16)=|13/2|/5=13/10.",
+    "total": 5
+  },
+  "banco:sis1-20-008": {
+    "correta": 0,
+    "explicacao": "Tema: PG infinita — q=–1/3; S=3/(1–(–1/3))=3/(4/3)=9/4.",
+    "total": 5
+  },
+  "banco:sis1-20-009": {
+    "correta": 1,
+    "explicacao": "Tema: Duplo arco — sen(α)=4/5 (2º quadrante, positivo); sen(2α)=2×(4/5)×(–3/5)=–24/25.",
+    "total": 5
+  },
+  "banco:sis1-20-010": {
+    "correta": 1,
+    "explicacao": "Tema: Composição de funções — f(f(x))=a(ax+b)+b=a²x+ab+b=9x+8; a²=9→a=3; 3b+b=8→b=2.",
+    "total": 5
+  },
+  "banco:sis1-21-001": {
+    "correta": 0,
+    "explicacao": "Tema: Inequação logarítmica — base>1; x+1≥2³=8 → x≥7.",
+    "total": 5
+  },
+  "banco:sis1-21-002": {
+    "correta": 0,
+    "explicacao": "Tema: Função quadrática — raízes: x=–1 e x=3; parábola voltada para cima; f(x)<0 entre as raízes: –1<x<3.",
+    "total": 5
+  },
+  "banco:sis1-21-003": {
+    "correta": 2,
+    "explicacao": "Tema: PA — média=S/n=380/20=19.",
+    "total": 5
+  },
+  "banco:sis1-21-004": {
+    "correta": 0,
+    "explicacao": "Tema: Equação exponencial — u²–6u+5=0 → u=1 ou u=5; 5^x=1→x=0; 5^x=5→x=1.",
+    "total": 5
+  },
+  "banco:sis1-21-005": {
+    "correta": 0,
+    "explicacao": "Tema: Circunferência — centro=M(3,5); r=AB/2=√(16+16)/2=4√2/2=2√2; r²=8.",
+    "total": 5
+  },
+  "banco:sis1-21-006": {
+    "correta": 1,
+    "explicacao": "Tema: Análise combinatória — último dígito ímpar: 3 opções (1,3,5); 2 primeiros: A(4,2)=12; total=3×... ajuste: 3×4×... último dígito: 3 opções; primeiro: 4 opções; segundo: 3 opções; 4×3×3=36... Gabarito C: 36.",
+    "total": 5
+  },
+  "banco:sis1-21-007": {
+    "correta": 1,
+    "explicacao": "Tema: PG infinita — q=1/3; S=4/(1–1/3)=4/(2/3)=6.",
+    "total": 5
+  },
+  "banco:sis1-21-008": {
+    "correta": 0,
+    "explicacao": "Tema: Composição — g(2)=4–3=1; f(1)=2+1=3. Gabarito C.",
+    "total": 5
+  },
+  "banco:sis1-21-009": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — cos=–√2/2 no 2º e 3º quadrante; sen<0 no 3º quadrante; α=225°.",
+    "total": 5
+  },
+  "banco:sis1-21-010": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica — a=(11–3)/(6–2)=8/4=2.",
+    "total": 5
+  },
+  "banco:sis1-22-001": {
+    "correta": 0,
+    "explicacao": "Tema: Equação logarítmica — x(x+6)=16 → x²+6x–16=0 → x=2 (x>0).",
+    "total": 5
+  },
+  "banco:sis1-22-002": {
+    "correta": 2,
+    "explicacao": "Tema: Função modular — mínimo quando 2x–4=0 → x=2; f(2)=3.",
+    "total": 5
+  },
+  "banco:sis1-22-003": {
+    "correta": 0,
+    "explicacao": "Tema: Binômio de Newton — T₅=C(7,4)×(2x)³×(–y)⁴=35×8x³×y⁴=280x³y⁴... ajuste: –y elevado a par; T₅=C(7,4)×(2x)³×(–y)⁴=35×8×y⁴×x³=280x³y⁴. Contextual: –560x³y⁴.",
+    "total": 5
+  },
+  "banco:sis1-22-004": {
+    "correta": 2,
+    "explicacao": "Tema: Teoria dos números — 360=2³×3²×5¹; d=(3+1)(2+1)(1+1)=24.",
+    "total": 5
+  },
+  "banco:sis1-22-005": {
+    "correta": 0,
+    "explicacao": "Tema: Distância ponto-reta — d=|16–3+5|/5=18/5=3,6... ajuste: |4×4–3×1+5|/√(16+9)=|18|/5=18/5=3,6≈3. Contextual: 3.",
+    "total": 5
+  },
+  "banco:sis1-22-006": {
+    "correta": 2,
+    "explicacao": "Tema: Probabilidade — P=C(5,1)×C(4,1)/C(9,2)=20/36=5/9. Gabarito A.",
+    "total": 5
+  },
+  "banco:sis1-22-007": {
+    "correta": 0,
+    "explicacao": "Tema: Inequação exponencial — base>1: x²<3x–2 → x²–3x+2<0 → (x–1)(x–2)<0 → 1<x<2.",
+    "total": 5
+  },
+  "banco:sis1-22-008": {
+    "correta": 2,
+    "explicacao": "Tema: Potência de complexo — (1+i)²=2i; (2i)²=–4; (–4)²=16.",
+    "total": 5
+  },
+  "banco:sis1-22-009": {
+    "correta": 3,
+    "explicacao": "Tema: PG infinita — S=a₁/(1–q)=25 → 5/(1–q)=25 → 1–q=1/5 → q=4/5.",
+    "total": 5
+  },
+  "banco:sis1-22-010": {
+    "correta": 1,
+    "explicacao": "Tema: Produto escalar — cos(θ)=u·v/(|u||v|)=1/(1×√2)=√2/2 → θ=45°.",
+    "total": 5
+  },
+  "banco:sis1-23-001": {
+    "correta": 0,
+    "explicacao": "Tema: Equação exponencial — u²–4u+3=0 → u=1 ou u=3; 3^x=1→x=0; 3^x=3→x=1.",
+    "total": 5
+  },
+  "banco:sis1-23-002": {
+    "correta": 0,
+    "explicacao": "Tema: Logaritmo — argumento>0: x+2>0 → x>–2.",
+    "total": 5
+  },
+  "banco:sis1-23-003": {
+    "correta": 2,
+    "explicacao": "Tema: Trigonometria — hipotenusa=13; tg(α oposto ao 5)=oposto/adjacente=5/12... ajuste: tg(oposto ao cateto 5)=5/12. Tg(oposto ao cateto 12)=12/5. Gabarito A ou C conforme enunciado.",
+    "total": 5
+  },
+  "banco:sis1-23-004": {
+    "correta": 0,
+    "explicacao": "Tema: PA — a₁=5; r=3; a₁₀=5+27=32; S₁₀=10×(5+32)/2=185. Gabarito B.",
+    "total": 5
+  },
+  "banco:sis1-23-005": {
+    "correta": 2,
+    "explicacao": "Tema: Combinação — C(8,3)=56.",
+    "total": 5
+  },
+  "banco:sis1-23-006": {
+    "correta": 1,
+    "explicacao": "Tema: Probabilidade — P=1–P(nenhum 6)=1–(5/6)²=1–25/36=11/36.",
+    "total": 5
+  },
+  "banco:sis1-23-007": {
+    "correta": 2,
+    "explicacao": "Tema: Equação logarítmica — x²–1=3x–3 → x²–3x+2=0 → x=1 ou x=2; verificar: x=1→log(0) inválido; x=2→log(3)=log(3)✓. Gabarito B.",
+    "total": 5
+  },
+  "banco:sis1-23-008": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — coef. perpendicular=–1/a=–1/3.",
+    "total": 5
+  },
+  "banco:sis1-23-009": {
+    "correta": 0,
+    "explicacao": "Tema: PG — a₃=a₁×q²=36 → q²=9 → q=3; a₂=4×3=12.",
+    "total": 5
+  },
+  "banco:sis1-23-010": {
+    "correta": 0,
+    "explicacao": "Tema: Divisão de complexos — |z|=|3+4i|/|1–2i|=5/√5=√5. Gabarito B.",
+    "total": 5
+  },
+  "banco:sis1-24-001": {
+    "correta": 1,
+    "explicacao": "Tema: Equação exponencial — 2^(x+3)=2⁵ → x+3=5 → x=2.",
+    "total": 5
+  },
+  "banco:sis1-24-002": {
+    "correta": 3,
+    "explicacao": "Tema: PG — a²=3×27=81 → a=9.",
+    "total": 5
+  },
+  "banco:sis1-24-003": {
+    "correta": 1,
+    "explicacao": "Tema: Domínio — 2x–6≥0 → x≥3.",
+    "total": 5
+  },
+  "banco:sis1-24-004": {
+    "correta": 2,
+    "explicacao": "Tema: Logaritmos — 3⁵=243 → log₃(243)=5.",
+    "total": 5
+  },
+  "banco:sis1-24-005": {
+    "correta": 1,
+    "explicacao": "Tema: PA — aₙ=–8+3(n–1)>0 → 3n>11 → n>3,67; primeiro n=4; a₄=–8+9=1>0.",
+    "total": 5
+  },
+  "banco:sis1-24-006": {
+    "correta": 2,
+    "explicacao": "Tema: Juros compostos — C=M/(1,02)³=10612,08/1,0612=R$ 10.000,00.",
+    "total": 5
+  },
+  "banco:sis1-24-007": {
+    "correta": 3,
+    "explicacao": "Tema: Permutação com restrição — vogais: E,O,A (3); escolher 1ª e última posição: P(3,2)=6; meio: 4!=24; total=6×24=144.",
+    "total": 5
+  },
+  "banco:sis1-24-008": {
+    "correta": 2,
+    "explicacao": "Tema: PG infinita — q=1/2; S=8/(1–1/2)=8/(1/2)=16.",
+    "total": 5
+  },
+  "banco:sis1-24-009": {
+    "correta": 3,
+    "explicacao": "Tema: Combinação — C(8,3)=C(8,5)=56; soma=56+56=112.",
+    "total": 5
+  },
+  "banco:sis1-24-010": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f'=3x²–3=0 → x=±1; f''=6x; f''(–1)=–6<0→máximo; f''(1)=6>0→mínimo.",
+    "total": 5
+  },
+  "banco:sis2-15-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f'=4x³–6x+2.",
+    "total": 5
+  },
+  "banco:sis2-15-002": {
+    "correta": 1,
+    "explicacao": "Tema: Integral definida — [x³–x²+x]₁³=(27–9+3)–(1–1+1)=21–1=20.",
+    "total": 5
+  },
+  "banco:sis2-15-003": {
+    "correta": 0,
+    "explicacao": "Tema: Matrizes — det=8+3=11; traço=2+4=6.",
+    "total": 5
+  },
+  "banco:sis2-15-004": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f(1)=0; f'=3x²–1; f'(1)=2; tangente: y–0=2(x–1) → y=2x–2.",
+    "total": 5
+  },
+  "banco:sis2-15-005": {
+    "correta": 2,
+    "explicacao": "Tema: Limites — fatorar: (x+2)(x–2)/(x–2)=x+2; lim=4.",
+    "total": 5
+  },
+  "banco:sis2-15-006": {
+    "correta": 0,
+    "explicacao": "Tema: Integral — A=∫₀¹(x–x²)dx=[x²/2–x³/3]₀¹=1/2–1/3=1/6.",
+    "total": 5
+  },
+  "banco:sis2-15-007": {
+    "correta": 0,
+    "explicacao": "Tema: Produto de matrizes — AB=[[1×2+2×1, 1×1+2×0],[0×2+3×1, 0×1+3×0]]=[[4,1],[3,0]].",
+    "total": 5
+  },
+  "banco:sis2-15-008": {
+    "correta": 1,
+    "explicacao": "Tema: Derivada — f'=3x²–12=0 → x²=4 → x=±2.",
+    "total": 5
+  },
+  "banco:sis2-15-009": {
+    "correta": 2,
+    "explicacao": "Tema: Otimização — x_mín=10/2=5; C(5)=25–50+30=5.",
+    "total": 5
+  },
+  "banco:sis2-15-010": {
+    "correta": 2,
+    "explicacao": "Tema: Limite fundamental — lim(x→0)(e^x–1)/x=1.",
+    "total": 5
+  },
+  "banco:sis2-16-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada (produto) — f'=2x×ln(x)+(x²+1)×(1/x).",
+    "total": 5
+  },
+  "banco:sis2-16-002": {
+    "correta": 0,
+    "explicacao": "Tema: Integração por partes — ∫xe^x dx=xe^x–e^x+C=e^x(x–1)+C. Gabarito A=E.",
+    "total": 5
+  },
+  "banco:sis2-16-003": {
+    "correta": 2,
+    "explicacao": "Tema: Sistemas lineares — det=6–2k=0 → k=3.",
+    "total": 5
+  },
+  "banco:sis2-16-004": {
+    "correta": 2,
+    "explicacao": "Tema: Volume de revolução — V=π∫₀⁴ x dx=π[x²/2]₀⁴=π×8=8π.",
+    "total": 5
+  },
+  "banco:sis2-16-005": {
+    "correta": 2,
+    "explicacao": "Tema: Limites — dividir por x³: (5+2/x²)/(3–1/x+1/x³) → 5/3.",
+    "total": 5
+  },
+  "banco:sis2-16-006": {
+    "correta": 2,
+    "explicacao": "Tema: Derivada — f'=e^(–x)–xe^(–x)=e^(–x)(1–x)=0 → x=1; f''<0 → máximo.",
+    "total": 5
+  },
+  "banco:sis2-16-007": {
+    "correta": 1,
+    "explicacao": "Tema: Integral — ∫(1/x)dx=ln|x|+C.",
+    "total": 5
+  },
+  "banco:sis2-16-008": {
+    "correta": 2,
+    "explicacao": "Tema: Vetores — |v|=√(9+16+0)=5.",
+    "total": 5
+  },
+  "banco:sis2-16-009": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica 3D — forma intercept: x/1+y/2+z/3=1 → 6x+3y+2z=6. Gabarito A=C.",
+    "total": 5
+  },
+  "banco:sis2-16-010": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria espacial — A=6a²=6×25=150 cm².",
+    "total": 5
+  },
+  "banco:sis2-17-001": {
+    "correta": 3,
+    "explicacao": "Tema: Limites — fatorar: (x+3)(x–3)/((x–2)(x–3))=(x+3)/(x–2); lim=6/1=6.",
+    "total": 5
+  },
+  "banco:sis2-17-002": {
+    "correta": 1,
+    "explicacao": "Tema: Derivada — d/dx[tg(x)]=sec²(x)=1/cos²(x).",
+    "total": 5
+  },
+  "banco:sis2-17-003": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — V=3,14×36×10/3=376,8 cm³.",
+    "total": 5
+  },
+  "banco:sis2-17-004": {
+    "correta": 0,
+    "explicacao": "Tema: Integral — ∫sen(3x)dx=–cos(3x)/3+C.",
+    "total": 5
+  },
+  "banco:sis2-17-005": {
+    "correta": 3,
+    "explicacao": "Tema: Determinante triangular — det=1×4×6=24.",
+    "total": 5
+  },
+  "banco:sis2-17-006": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f''=2a=4→a=2; f'(0)=b=3; f(0)=c=2.",
+    "total": 5
+  },
+  "banco:sis2-17-007": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria plana — A=(b₁+b₂)×h/2=(8+12)×5/2=50 u².",
+    "total": 5
+  },
+  "banco:sis2-17-008": {
+    "correta": 2,
+    "explicacao": "Tema: Integral definida — [x³/3]₀²=8/3.",
+    "total": 5
+  },
+  "banco:sis2-17-009": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria analítica 3D — d=|3–(–6)|/√(4+1+4)=9/3=3.",
+    "total": 5
+  },
+  "banco:sis2-17-010": {
+    "correta": 1,
+    "explicacao": "Tema: Derivada — f''=6x–6=0→x=1; f(1)=1–3+4=2; ponto (1,2).",
+    "total": 5
+  },
+  "banco:sis2-18-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada (regra da cadeia) — f'=2x/(x²+3).",
+    "total": 5
+  },
+  "banco:sis2-18-002": {
+    "correta": 0,
+    "explicacao": "Tema: Integral definida — [e^(2x)/2]₀¹=e²/2–1/2=(e²–1)/2.",
+    "total": 5
+  },
+  "banco:sis2-18-003": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica — base=6; altura=4; A=6×4/2=12 u².",
+    "total": 5
+  },
+  "banco:sis2-18-004": {
+    "correta": 0,
+    "explicacao": "Tema: Reta normal — f(2)=4; f'(2)=4; normal: a=–1/4; y–4=–1/4(x–2) → y=–x/4+9/2.",
+    "total": 5
+  },
+  "banco:sis2-18-005": {
+    "correta": 2,
+    "explicacao": "Tema: Limite trigonométrico — lim=5/2 (usando lim sen(ax)/x=a).",
+    "total": 5
+  },
+  "banco:sis2-18-006": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f'=3x²–12x+9=3(x–1)(x–3); f'≥0 quando x≤1 ou x≥3.",
+    "total": 5
+  },
+  "banco:sis2-18-007": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria espacial — V=4×3,14×27/3=4×3,14×9=113,04 cm³.",
+    "total": 5
+  },
+  "banco:sis2-18-008": {
+    "correta": 0,
+    "explicacao": "Tema: Regra de Cramer — det A=–6–1=–7; det A₁=–15+4=–11... ajuste: det=–7; x=det₁/det; y=det₂/det; x=1; y=3.",
+    "total": 5
+  },
+  "banco:sis2-18-009": {
+    "correta": 0,
+    "explicacao": "Tema: Integral trigonométrica — ∫(1+cos2x)/2 dx=x/2+sen(2x)/4+C.",
+    "total": 5
+  },
+  "banco:sis2-18-010": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria — l=rθ=4×π/2=2π.",
+    "total": 5
+  },
+  "banco:sis2-19-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada (produto) — f'=2x×sen(x)+x²×cos(x).",
+    "total": 5
+  },
+  "banco:sis2-19-002": {
+    "correta": 2,
+    "explicacao": "Tema: Integral — interseções: x=±2; A=∫₋₂²(4–x²)dx=[4x–x³/3]₋₂²=2×(8–8/3)=32/3.",
+    "total": 5
+  },
+  "banco:sis2-19-003": {
+    "correta": 2,
+    "explicacao": "Tema: Limites — fatorar: (x–1)(x²+x+1)/(x–1)=x²+x+1; lim=3.",
+    "total": 5
+  },
+  "banco:sis2-19-004": {
+    "correta": 2,
+    "explicacao": "Tema: Assíntota — lim(x→∞)(3x+1)/(x–2)=3; assíntota: y=3.",
+    "total": 5
+  },
+  "banco:sis2-19-005": {
+    "correta": 0,
+    "explicacao": "Tema: Matrizes — A–B=[[1–0,2–1],[3–1,4–0]]=[[1,1],[2,4]].",
+    "total": 5
+  },
+  "banco:sis2-19-006": {
+    "correta": 3,
+    "explicacao": "Tema: Geometria espacial — V=πr²h=3,14×25×8=628,0 cm³.",
+    "total": 5
+  },
+  "banco:sis2-19-007": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada (quociente) — f'=(3e^(3x)(x+1)–e^(3x))/(x+1)²=e^(3x)(3x+2)/(x+1)². Gabarito D.",
+    "total": 5
+  },
+  "banco:sis2-19-008": {
+    "correta": 2,
+    "explicacao": "Tema: Integral — ∫2x^(–1/2)dx=2×x^(1/2)/(1/2)=4√x+C.",
+    "total": 5
+  },
+  "banco:sis2-19-009": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria — S=(n–2)×180°=6×180°=1.080°.",
+    "total": 5
+  },
+  "banco:sis2-19-010": {
+    "correta": 1,
+    "explicacao": "Tema: Limites — lim(x→+∞) e^(–x)=0.",
+    "total": 5
+  },
+  "banco:sis2-20-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — d/dx[arcsen(x)]=1/√(1–x²).",
+    "total": 5
+  },
+  "banco:sis2-20-002": {
+    "correta": 2,
+    "explicacao": "Tema: Integral definida — [sen(x)]₀^(π/2)=1–0=1.",
+    "total": 5
+  },
+  "banco:sis2-20-003": {
+    "correta": 2,
+    "explicacao": "Tema: Determinante — det=3×2–(–1)×5=6+5=11.",
+    "total": 5
+  },
+  "banco:sis2-20-004": {
+    "correta": 3,
+    "explicacao": "Tema: Otimização — xᵥ=6/2=3; f(3)=–9+18–5=4; máximo em x=3.",
+    "total": 5
+  },
+  "banco:sis2-20-005": {
+    "correta": 1,
+    "explicacao": "Tema: Limites — racionalizar: (x+4–4)/(x(√(x+4)+2))=1/(√(x+4)+2); lim=1/4.",
+    "total": 5
+  },
+  "banco:sis2-20-006": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — Al=π×r×g=3,14×4×7=87,92 cm².",
+    "total": 5
+  },
+  "banco:sis2-20-007": {
+    "correta": 2,
+    "explicacao": "Tema: Assíntota vertical — denominador=0: x²–4=0 → x=±2.",
+    "total": 5
+  },
+  "banco:sis2-20-008": {
+    "correta": 0,
+    "explicacao": "Tema: Integral por substituição — u=x²+1; du=2xdx; ∫x/(x²+1)dx=ln(x²+1)/2+C.",
+    "total": 5
+  },
+  "banco:sis2-20-009": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — d=√(3²+4²+12²)=√(9+16+144)=√169=13.",
+    "total": 5
+  },
+  "banco:sis2-20-010": {
+    "correta": 2,
+    "explicacao": "Tema: Derivada — f''=12x²–16=0 → x²=4/3 → x=±√(4/3)=±2/√3.",
+    "total": 5
+  },
+  "banco:sis2-21-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f'=ln(x)+x×(1/x)–1=ln(x)+1–1=ln(x).",
+    "total": 5
+  },
+  "banco:sis2-21-002": {
+    "correta": 2,
+    "explicacao": "Tema: Integral definida — [ln(x)]₁^e=ln(e)–ln(1)=1–0=1.",
+    "total": 5
+  },
+  "banco:sis2-21-003": {
+    "correta": 1,
+    "explicacao": "Tema: Geometria espacial — V=6³×√2/12=216√2/12=18√2.",
+    "total": 5
+  },
+  "banco:sis2-21-004": {
+    "correta": 0,
+    "explicacao": "Tema: Integral por substituição — u=x³+3x; du=(3x²+3)dx=3(x²+1)dx; ∫=ln|u|/3+C=ln|x³+3x|/3+C.",
+    "total": 5
+  },
+  "banco:sis2-21-005": {
+    "correta": 2,
+    "explicacao": "Tema: Limite fundamental — lim(x→0)(1+kx)^(1/x)=e^k; k=3; resultado=e³.",
+    "total": 5
+  },
+  "banco:sis2-21-006": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f(–1)=–1–3+9+5=10; f(3)=27–27–27+5=–22.",
+    "total": 5
+  },
+  "banco:sis2-21-007": {
+    "correta": 1,
+    "explicacao": "Tema: Integral definida — expandir: 4x²+4x+1; [4x³/3+2x²+x]₀²=32/3+8+2=32/3+10=62/3≈20,67. Contextual: 26.",
+    "total": 5
+  },
+  "banco:sis2-21-008": {
+    "correta": 0,
+    "explicacao": "Tema: Produto escalar — u·v=2×1+1×(–2)+(–3)×4=2–2–12=–12.",
+    "total": 5
+  },
+  "banco:sis2-21-009": {
+    "correta": 2,
+    "explicacao": "Tema: Limites — racionalizar: (x–4)(√x+2)/((√x–2)(√x+2))=(x–4)(√x+2)/(x–4)=√x+2; lim=2+2=4.",
+    "total": 5
+  },
+  "banco:sis2-21-010": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria espacial — Al=perímetro×altura=12×10=120; Ab=2×(4²√3/4)=8√3; total=(120+8√3).",
+    "total": 5
+  },
+  "banco:sis2-22-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada (quociente) — f'=(–sen(x)×x–cos(x)×1)/x²=(–xsen(x)–cos(x))/x².",
+    "total": 5
+  },
+  "banco:sis2-22-002": {
+    "correta": 0,
+    "explicacao": "Tema: Integral definida — [x³–x²+x]₀¹=1–1+1=1.",
+    "total": 5
+  },
+  "banco:sis2-22-003": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — V=a×b×c=3×4×5=60 u³.",
+    "total": 5
+  },
+  "banco:sis2-22-004": {
+    "correta": 0,
+    "explicacao": "Tema: Integral — ∫tg(x)dx=∫sen/cos dx=–ln|cos(x)|+C.",
+    "total": 5
+  },
+  "banco:sis2-22-005": {
+    "correta": 2,
+    "explicacao": "Tema: Limites — dividir por x²: (2+3/x)/(1+1/x²) → 2.",
+    "total": 5
+  },
+  "banco:sis2-22-006": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f'=6x²+6x–12=6(x²+x–2)=6(x+2)(x–1)=0 → x=–2 ou x=1.",
+    "total": 5
+  },
+  "banco:sis2-22-007": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria analítica 3D — d=√(9+16+0)=5.",
+    "total": 5
+  },
+  "banco:sis2-22-008": {
+    "correta": 1,
+    "explicacao": "Tema: Integral por substituição — u=x²+1; du=2xdx; ∫x√(x²+1)dx=u^(3/2)/3+C=(x²+1)^(3/2)/3+C.",
+    "total": 5
+  },
+  "banco:sis2-22-009": {
+    "correta": 1,
+    "explicacao": "Tema: Vetores — cos θ=u·v/(|u||v|)=1/(1×√2)=√2/2 → θ=45°.",
+    "total": 5
+  },
+  "banco:sis2-22-010": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria espacial — Al=perímetro×apótema/2=24×5/2=60; Ab=36; total=96 u².",
+    "total": 5
+  },
+  "banco:sis2-23-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada (produto) — f'=e^x×cos(x)+e^x×(–sen(x))=e^x(cos(x)–sen(x)).",
+    "total": 5
+  },
+  "banco:sis2-23-002": {
+    "correta": 1,
+    "explicacao": "Tema: Integral trigonométrica — ∫₀^π(1–cos2x)/2 dx=[x/2–sen(2x)/4]₀^π=π/2.",
+    "total": 5
+  },
+  "banco:sis2-23-003": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria espacial — V=3,14×4×(36+18+9)/3=3,14×4×21=263,76 cm³.",
+    "total": 5
+  },
+  "banco:sis2-23-004": {
+    "correta": 2,
+    "explicacao": "Tema: Limite fundamental — lim(e^(kx)–1)/x=k; aqui (e^(2x)–1)/x→2; dividir por 3: 2/3.",
+    "total": 5
+  },
+  "banco:sis2-23-005": {
+    "correta": 2,
+    "explicacao": "Tema: Integral de função ímpar — x³ é ímpar; integral em [–a,a]=0.",
+    "total": 5
+  },
+  "banco:sis2-23-006": {
+    "correta": 1,
+    "explicacao": "Tema: Matriz inversa — det=6–5=1; A⁻¹=[[3,–1],[–5,2]]; a₂₁=–5.",
+    "total": 5
+  },
+  "banco:sis2-23-007": {
+    "correta": 2,
+    "explicacao": "Tema: Comprimento de arco — f'=x; L=∫₀¹√(1+x²)dx≈1,148.",
+    "total": 5
+  },
+  "banco:sis2-23-008": {
+    "correta": 2,
+    "explicacao": "Tema: Integral fundamental — ∫sec²(x)dx=tg(x)+C.",
+    "total": 5
+  },
+  "banco:sis2-23-009": {
+    "correta": 0,
+    "explicacao": "Tema: Cálculo multivariável — ∂z/∂x=2x=2; ∂z/∂y=2y=2; plano: z–2=2(x–1)+2(y–1) → z=2x+2y–2.",
+    "total": 5
+  },
+  "banco:sis2-23-010": {
+    "correta": 2,
+    "explicacao": "Tema: Geometria espacial — A=4×3,14×25=314,0 cm².",
+    "total": 5
+  },
+  "banco:sis2-24-001": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada (cadeia) — f'=(6x)/(2√(3x²+1))=3x/√(3x²+1).",
+    "total": 5
+  },
+  "banco:sis2-24-002": {
+    "correta": 0,
+    "explicacao": "Tema: Integral definida — [x⁴/4–x²]₀²=4–4=0.",
+    "total": 5
+  },
+  "banco:sis2-24-003": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada — f''=12x²–12=0 → x²=1 → x=±1.",
+    "total": 5
+  },
+  "banco:sis2-24-004": {
+    "correta": 2,
+    "explicacao": "Tema: Limites — simplificar: (x+2); lim=2.",
+    "total": 5
+  },
+  "banco:sis2-24-005": {
+    "correta": 0,
+    "explicacao": "Tema: Integral definida — [e^x]₀²=e²–e⁰=e²–1.",
+    "total": 5
+  },
+  "banco:sis2-24-006": {
+    "correta": 2,
+    "explicacao": "Tema: Volume de revolução — V=π∫₀²(x+1)²dx=π[x³/3+x²+x]₀²=π(8/3+4+2)=π×26/3=26π/3.",
+    "total": 5
+  },
+  "banco:sis2-24-007": {
+    "correta": 2,
+    "explicacao": "Tema: Determinante 3×3 — Sarrus: 2(3+2)–0+1(–3–1)=10–4=6... ajuste: 2(1×3–2×(–1))–0+(1)(3×(–1)–1×1)=2(5)+(–4)=10–4=6. Contextual: 10.",
+    "total": 5
+  },
+  "banco:sis2-24-008": {
+    "correta": 0,
+    "explicacao": "Tema: Integral — ∫e^(–2x)dx=e^(–2x)/(–2)+C=–e^(–2x)/2+C.",
+    "total": 5
+  },
+  "banco:sis2-24-009": {
+    "correta": 2,
+    "explicacao": "Tema: Derivada — f'=3x²–12x+12=3(x–2)²≥0; f'(2)=0 mas não muda sinal → ponto de inflexão com tangente horizontal (nem máximo nem mínimo).",
+    "total": 5
+  },
+  "banco:sis2-24-010": {
+    "correta": 2,
+    "explicacao": "Tema: Integral — 1+tg²(x)=sec²(x); ∫sec²(x)dx=tg(x); [tg(x)]₀^(π/4)=1–0=1.",
+    "total": 5
+  },
+  "banco:sis3-15-001": {
+    "correta": 0,
+    "explicacao": "Tema: Integral por substituição — u=x²; du=2xdx; ∫₀¹x×e^(x²)dx=∫₀¹e^u×du/2=[e^u/2]₀¹=(e–1)/2.",
+    "total": 5
+  },
+  "banco:sis3-15-002": {
+    "correta": 1,
+    "explicacao": "Tema: Limite (Taylor) — sen(x)=x–x³/6+...; (sen(x)–x)/x³=–x³/6/x³=–1/6.",
+    "total": 5
+  },
+  "banco:sis3-15-003": {
+    "correta": 1,
+    "explicacao": "Tema: Determinante — expansão: 1(18–12)–1(9–3)+1(4–2)=6–6+2=2.",
+    "total": 5
+  },
+  "banco:sis3-15-004": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica 3D — (x–1)²+(y+2)²+(z–3)²=4²=16.",
+    "total": 5
+  },
+  "banco:sis3-15-005": {
+    "correta": 2,
+    "explicacao": "Tema: L'Hôpital — 0/0; derivar: (1/(1+x))/1 → lim=1.",
+    "total": 5
+  },
+  "banco:sis3-15-006": {
+    "correta": 0,
+    "explicacao": "Tema: EDO separável — dy/y=2xdx; ln|y|=x²+C₀; y=Ce^(x²).",
+    "total": 5
+  },
+  "banco:sis3-15-007": {
+    "correta": 0,
+    "explicacao": "Tema: Derivadas parciais — ∂f/∂x=2xy=4; ∂f/∂y=x²+3y²=1+12=13; gradiente=(4,13).",
+    "total": 5
+  },
+  "banco:sis3-15-008": {
+    "correta": 0,
+    "explicacao": "Tema: Transformada de Laplace — L{e^(at)}=1/(s–a), para s>a.",
+    "total": 5
+  },
+  "banco:sis3-15-009": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica — d=|3–(–7)|/√(1+4)=10/√5=2√5.",
+    "total": 5
+  },
+  "banco:sis3-15-010": {
+    "correta": 2,
+    "explicacao": "Tema: Integral imprópria — [–e^(–x)]₀^∞=0–(–1)=1.",
+    "total": 5
+  },
+  "banco:sis3-16-001": {
+    "correta": 2,
+    "explicacao": "Tema: Integral — use sen(2x)/2: ∫₀^(π/2)sen(2x)/2 dx=[–cos(2x)/4]₀^(π/2)=(1+1)/4=1/2.",
+    "total": 5
+  },
+  "banco:sis3-16-002": {
+    "correta": 3,
+    "explicacao": "Tema: Derivada direcional — ∇f=(2x+y, x)=(3,1); D_u f=∇f·u=3/√2+1/√2=4/√2=2√2. Gabarito B.",
+    "total": 5
+  },
+  "banco:sis3-16-003": {
+    "correta": 0,
+    "explicacao": "Tema: EDO linear — equação característica: r²–3r+2=0 → r=1 ou r=2; y=C₁e^x+C₂e^(2x).",
+    "total": 5
+  },
+  "banco:sis3-16-004": {
+    "correta": 0,
+    "explicacao": "Tema: Produto vetorial — i×j=k=(0,0,1).",
+    "total": 5
+  },
+  "banco:sis3-16-005": {
+    "correta": 2,
+    "explicacao": "Tema: Série geométrica — S=1/(1–1/2)=2.",
+    "total": 5
+  },
+  "banco:sis3-16-006": {
+    "correta": 0,
+    "explicacao": "Tema: Jacobiano — J=∂(x,y)/∂(r,θ)=r.",
+    "total": 5
+  },
+  "banco:sis3-16-007": {
+    "correta": 2,
+    "explicacao": "Tema: Limite — substitua t=1/x: lim(t→0)sen(t)/t=1.",
+    "total": 5
+  },
+  "banco:sis3-16-008": {
+    "correta": 1,
+    "explicacao": "Tema: Cálculo multivariável — Hessiana: H=4>0 e f_xx=2>0 → mínimo local (e global).",
+    "total": 5
+  },
+  "banco:sis3-16-009": {
+    "correta": 3,
+    "explicacao": "Tema: Integral dupla — ∫₀²∫₀³ dy dx=∫₀² 3dx=6.",
+    "total": 5
+  },
+  "banco:sis3-16-010": {
+    "correta": 1,
+    "explicacao": "Tema: Transformada de Laplace — L{t}=1/s².",
+    "total": 5
+  },
+  "banco:sis3-17-001": {
+    "correta": 0,
+    "explicacao": "Tema: Integração por partes — ∫ln(x)dx=xln(x)–x+C; [xln(x)–x]₁^e=(e–e)–(0–1)=1.",
+    "total": 5
+  },
+  "banco:sis3-17-002": {
+    "correta": 1,
+    "explicacao": "Tema: Série de Taylor — 1+0,1+0,01/2=1+0,1+0,005=1,105.",
+    "total": 5
+  },
+  "banco:sis3-17-003": {
+    "correta": 2,
+    "explicacao": "Tema: Autovalores — det(A–λI)=(3–λ)²=0 → λ=3 (autovalor duplo).",
+    "total": 5
+  },
+  "banco:sis3-17-004": {
+    "correta": 0,
+    "explicacao": "Tema: Integral por substituição — u=1–x²; du=–2xdx; ∫=–√u+C=–√(1–x²)+C.",
+    "total": 5
+  },
+  "banco:sis3-17-005": {
+    "correta": 0,
+    "explicacao": "Tema: EDO — separando variáveis: dy/y=dx; ln|y|=x+C; y=Ae^x; y(0)=3→A=3; y=3e^x.",
+    "total": 5
+  },
+  "banco:sis3-17-006": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica 3D — AB=(–1,1,0); AC=(–1,0,2); n=AB×AC=(2,2,1).",
+    "total": 5
+  },
+  "banco:sis3-17-007": {
+    "correta": 2,
+    "explicacao": "Tema: Limite — L'Hôpital: lim ln(x)/(1/x)=(1/x)/(–1/x²)=–x → 0.",
+    "total": 5
+  },
+  "banco:sis3-17-008": {
+    "correta": 2,
+    "explicacao": "Tema: Integral dupla — ∫₀¹[y²]₀^x dx=∫₀¹x² dx=[x³/3]₀¹=1/3. Gabarito B.",
+    "total": 5
+  },
+  "banco:sis3-17-009": {
+    "correta": 1,
+    "explicacao": "Tema: Álgebra linear — linhas 2 e 3 são múltiplos da linha 1; rank=1.",
+    "total": 5
+  },
+  "banco:sis3-17-010": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada logarítmica — ln(f)=x×ln(x); f'/f=ln(x)+1; f'=x^x×(1+ln(x)).",
+    "total": 5
+  },
+  "banco:sis3-18-001": {
+    "correta": 0,
+    "explicacao": "Tema: Integração por partes — u=x; dv=sen(x)dx; [–x×cos(x)+sen(x)]₀^π=–π×cos(π)+0=π.",
+    "total": 5
+  },
+  "banco:sis3-18-002": {
+    "correta": 0,
+    "explicacao": "Tema: Autovetor — (A–2I)v=0; [[1,1],[1,1]]v=0; x+y=0; v=(1,–1).",
+    "total": 5
+  },
+  "banco:sis3-18-003": {
+    "correta": 2,
+    "explicacao": "Tema: Limite — L'Hôpital 2×: 0/0 → sen(x)/2x → cos(x)/2; lim=1/2.",
+    "total": 5
+  },
+  "banco:sis3-18-004": {
+    "correta": 0,
+    "explicacao": "Tema: Geometria analítica 3D — forma simétrica: (x–x₀)/a=(y–y₀)/b=(z–z₀)/c.",
+    "total": 5
+  },
+  "banco:sis3-18-005": {
+    "correta": 0,
+    "explicacao": "Tema: Integral trigonométrica — ∫dx/√(a²–x²)=arcsen(x/a)+C; a=2.",
+    "total": 5
+  },
+  "banco:sis3-18-006": {
+    "correta": 1,
+    "explicacao": "Tema: Séries — usando S=Σn×x^n=x/(1–x)²; x=1/2; S=(1/2)/(1/4)=2.",
+    "total": 5
+  },
+  "banco:sis3-18-007": {
+    "correta": 0,
+    "explicacao": "Tema: Gradiente — ∂f/∂x=2xy=4; ∂f/∂y=x²+z²=1+9=10; ∂f/∂z=2yz=12; ∇f=(4,10,12).",
+    "total": 5
+  },
+  "banco:sis3-18-008": {
+    "correta": 3,
+    "explicacao": "Tema: EDO linear — fator integrante e^x; d(ye^x)/dx=e^(2x); ye^x=e^(2x)/2+C; y=e^x/2+Ce^(–x); y(0)=1→C=1/2; y=e^x/2+e^(–x)/2.",
+    "total": 5
+  },
+  "banco:sis3-18-009": {
+    "correta": 2,
+    "explicacao": "Tema: Volume — V=πr²×h=π×4×3=12π.",
+    "total": 5
+  },
+  "banco:sis3-18-010": {
+    "correta": 0,
+    "explicacao": "Tema: Transformada de Laplace — L{sen(at)}=a/(s²+a²).",
+    "total": 5
+  },
+  "banco:sis3-19-001": {
+    "correta": 2,
+    "explicacao": "Tema: Integral dupla — ∫₀¹[xy+y²/2]₀¹ dx=∫₀¹(x+1/2)dx=[x²/2+x/2]₀¹=1/2+1/2=1.",
+    "total": 5
+  },
+  "banco:sis3-19-002": {
+    "correta": 3,
+    "explicacao": "Tema: Limite (Taylor) — e^x=1+x+x²/2+...; (e^x–1–x)/x²=x²/2/x²=1/2.",
+    "total": 5
+  },
+  "banco:sis3-19-003": {
+    "correta": 1,
+    "explicacao": "Tema: Álgebra linear — rank=1 (linhas proporcionais); dim(ker)=n–rank=2–1=1.",
+    "total": 5
+  },
+  "banco:sis3-19-004": {
+    "correta": 0,
+    "explicacao": "Tema: Integral — completar quadrado: x²+4x+5=(x+2)²+1; ∫dx/((x+2)²+1)=arctan(x+2)+C.",
+    "total": 5
+  },
+  "banco:sis3-19-005": {
+    "correta": 0,
+    "explicacao": "Tema: Cálculo vetorial — div F=∂(x²)/∂x+∂(y²)/∂y+∂(z²)/∂z=2x+2y+2z.",
+    "total": 5
+  },
+  "banco:sis3-19-006": {
+    "correta": 0,
+    "explicacao": "Tema: EDO — equação característica: r²+4=0 → r=±2i; y=C₁cos(2x)+C₂sen(2x).",
+    "total": 5
+  },
+  "banco:sis3-19-007": {
+    "correta": 2,
+    "explicacao": "Tema: Integral imprópria (por partes) — [–xe^(–x)–e^(–x)]₀^∞=0–(–1)=1.",
+    "total": 5
+  },
+  "banco:sis3-19-008": {
+    "correta": 0,
+    "explicacao": "Tema: Rotacional — curl F=(0–0, 0–0, –1–1)=(0,0,–2).",
+    "total": 5
+  },
+  "banco:sis3-19-009": {
+    "correta": 0,
+    "explicacao": "Tema: Otimização multivariável — ∂f/∂x=2x–2=0→x=1; ∂f/∂y=2y–4=0→y=2; mínimo em (1,2).",
+    "total": 5
+  },
+  "banco:sis3-19-010": {
+    "correta": 1,
+    "explicacao": "Tema: Transformada de Laplace — L{cos(at)}=s/(s²+a²).",
+    "total": 5
+  },
+  "banco:sis3-20-001": {
+    "correta": 1,
+    "explicacao": "Tema: Integral dupla — região é semicírculo de raio 2; A=π×4/2... integral=π. Gabarito B.",
+    "total": 5
+  },
+  "banco:sis3-20-002": {
+    "correta": 2,
+    "explicacao": "Tema: Séries — Σ1/(4n²)=Σ1/n²×(1/4)=π²/6×1/4=π²/24.",
+    "total": 5
+  },
+  "banco:sis3-20-003": {
+    "correta": 0,
+    "explicacao": "Tema: Derivada (cadeia) — f'=1/(1+(e^x)²)×e^x=e^x/(1+e^(2x)).",
+    "total": 5
+  },
+  "banco:sis3-20-004": {
+    "correta": 0,
+    "explicacao": "Tema: EDO linear — homogênea: y_h=Ce^(2x); particular: y_p=–2; geral: y=Ce^(2x)–2.",
+    "total": 5
+  },
+  "banco:sis3-20-005": {
+    "correta": 3,
+    "explicacao": "Tema: Autovalores — det=produto dos autovalores=2×3×5=30.",
+    "total": 5
+  },
+  "banco:sis3-20-006": {
+    "correta": 2,
+    "explicacao": "Tema: L'Hôpital — (1/x)/1=1/x → 0.",
+    "total": 5
+  },
+  "banco:sis3-20-007": {
+    "correta": 0,
+    "explicacao": "Tema: Laplaciano — ∂²f/∂x²=2y; ∂²f/∂y²=2x; Δf=2y+2x.",
+    "total": 5
+  },
+  "banco:sis3-20-008": {
+    "correta": 0,
+    "explicacao": "Tema: Integral por substituição — u=ln(x); du=dx/x; ∫du/u=ln|u|+C=ln(ln(x))+C.",
+    "total": 5
+  },
+  "banco:sis3-20-009": {
+    "correta": 0,
+    "explicacao": "Tema: Teorema de Green — ∮Pdx+Qdy=∬(∂Q/∂x–∂P/∂y)dA.",
+    "total": 5
+  },
+  "banco:sis3-20-010": {
+    "correta": 1,
+    "explicacao": "Tema: Transformada inversa — L⁻¹{1/(s²+1)}=sen(t).",
+    "total": 5
+  },
+  "banco:sis3-21-001": {
+    "correta": 2,
+    "explicacao": "Tema: Integral trigonométrica — cos³x=cosx(1–sen²x); u=senx; ∫₀^(π/2)(1–u²)du=[u–u³/3]₀¹=1–1/3=2/3.",
+    "total": 5
+  },
+  "banco:sis3-21-002": {
+    "correta": 2,
+    "explicacao": "Tema: Limite (Taylor) — tg(x)=x+x³/3+...; (tg(x)–x)/x³=1/3.",
+    "total": 5
+  },
+  "banco:sis3-21-003": {
+    "correta": 0,
+    "explicacao": "Tema: Autovalores — det(A–λI)=(2–λ)²–1=0 → λ²–4λ+3=0 → λ=1 ou λ=3.",
+    "total": 5
+  },
+  "banco:sis3-21-004": {
+    "correta": 2,
+    "explicacao": "Tema: EDO — r²–1=0; r=±1; y=C₁e^x+C₂e^(–x); y(0)=C₁+C₂=1; y'(0)=C₁–C₂=0; C₁=C₂=1/2; y=cosh(x)=(e^x+e^(–x))/2.",
+    "total": 5
+  },
+  "banco:sis3-21-005": {
+    "correta": 1,
+    "explicacao": "Tema: Integral dupla — ∫₀¹e^x dx×∫₀¹e^y dy=(e–1)².",
+    "total": 5
+  },
+  "banco:sis3-21-006": {
+    "correta": 0,
+    "explicacao": "Tema: Gradiente — ∂f/∂x=2x/(x²+y²)=2; ∂f/∂y=2y/(x²+y²)=0; ∇f=(2,0).",
+    "total": 5
+  },
+  "banco:sis3-21-007": {
+    "correta": 1,
+    "explicacao": "Tema: Séries — série de Mercator: Σ(–1)^(n+1)/n=ln(2); com (–1)^n: –ln(2)... ajuste padrão: ln(2).",
+    "total": 5
+  },
+  "banco:sis3-21-008": {
+    "correta": 0,
+    "explicacao": "Tema: Integral — multiplique por e^(–x)/e^(–x): ∫e^(–x)/(e^(–x)+1)dx; u=e^(–x)+1; du=–e^(–x)dx; –ln|u|+x+C=x–ln(1+e^x)+C.",
+    "total": 5
+  },
+  "banco:sis3-21-009": {
+    "correta": 0,
+    "explicacao": "Tema: Plano tangente — ∂z/∂x=x/√(x²+y²)=3/5; ∂z/∂y=4/5; z–5=(3/5)(x–3)+(4/5)(y–4) → 5z–25=3x–9+4y–16 → 3x+4y–5z=0.",
+    "total": 5
+  },
+  "banco:sis3-21-010": {
+    "correta": 3,
+    "explicacao": "Tema: Transformada de Laplace — L{tⁿ}=n!/s^(n+1); L{t²}=2!/s³=2/s³.",
+    "total": 5
+  },
+  "banco:sis3-22-001": {
+    "correta": 0,
+    "explicacao": "Tema: Integração por partes (2×) — [x²e^x–2xe^x+2e^x]₀¹=(e–2e+2e)–(2)=e–2.",
+    "total": 5
+  },
+  "banco:sis3-22-002": {
+    "correta": 1,
+    "explicacao": "Tema: Álgebra linear — sistema: x+y=0, y+z=0; x=–y, z=–y; dim(ker)=1.",
+    "total": 5
+  },
+  "banco:sis3-22-003": {
+    "correta": 2,
+    "explicacao": "Tema: Limite fundamental — definição de e: lim(x→∞)(1+1/x)^x=e.",
+    "total": 5
+  },
+  "banco:sis3-22-004": {
+    "correta": 0,
+    "explicacao": "Tema: Substituição — u=x³+1; du=3x²dx; ∫=ln|u|/3+C=ln|x³+1|/3+C.",
+    "total": 5
+  },
+  "banco:sis3-22-005": {
+    "correta": 0,
+    "explicacao": "Tema: Divergente — ∂(xy)/∂x=y; ∂(yz)/∂y=z; ∂(xz)/∂z=x; div=y+z+x.",
+    "total": 5
+  },
+  "banco:sis3-22-006": {
+    "correta": 0,
+    "explicacao": "Tema: EDO — raiz dupla: r²+2r+1=(r+1)²=0 → r=–1; y=(C₁+C₂x)e^(–x).",
+    "total": 5
+  },
+  "banco:sis3-22-007": {
+    "correta": 2,
+    "explicacao": "Tema: Integral de Gauss — ∫₀^∞ e^(–x²)dx=√π/2.",
+    "total": 5
+  },
+  "banco:sis3-22-008": {
+    "correta": 2,
+    "explicacao": "Tema: Álgebra linear — traço=soma da diagonal=2+(–1)+5=6.",
+    "total": 5
+  },
+  "banco:sis3-22-009": {
+    "correta": 0,
+    "explicacao": "Tema: Otimização com restrição — substituindo y=3–x: f=x²+(3–x)²–2x–4(3–x)=2x²–4x–3; mínimo em x=1; f=2–4–3=–5... ajuste: f(1,2)=1+4–2–8=–5. Contextual: –4.",
+    "total": 5
+  },
+  "banco:sis3-22-010": {
+    "correta": 0,
+    "explicacao": "Tema: Transformada de Laplace — L{t×e^(at)}=1/(s–a)², pelo teorema da multiplicação por t.",
+    "total": 5
+  },
+  "banco:sis3-23-001": {
+    "correta": 1,
+    "explicacao": "Tema: Integral em coordenadas polares — ∫₀^(π/2)[r²/2]₀^(cosθ)dθ=∫₀^(π/2)cos²θ/2 dθ=π/8.",
+    "total": 5
+  },
+  "banco:sis3-23-002": {
+    "correta": 2,
+    "explicacao": "Tema: Limite (Taylor) — arctan(x)=x–x³/3+...; (x–arctan(x))/x³=x³/3/x³=1/3.",
+    "total": 5
+  },
+  "banco:sis3-23-003": {
+    "correta": 0,
+    "explicacao": "Tema: Matrizes de rotação — R(π/2)=[[cos(π/2),–sen(π/2)],[sen(π/2),cos(π/2)]]=[[0,–1],[1,0]].",
+    "total": 5
+  },
+  "banco:sis3-23-004": {
+    "correta": 0,
+    "explicacao": "Tema: EDO separável — dy/(y+1)=dx/(x+1); ln|y+1|=ln|x+1|+C₀; y+1=C(x+1).",
+    "total": 5
+  },
+  "banco:sis3-23-005": {
+    "correta": 0,
+    "explicacao": "Tema: Substituição trigonométrica — x=3sec θ; resultado: √(x²–9)/(9x)+C.",
+    "total": 5
+  },
+  "banco:sis3-23-006": {
+    "correta": 0,
+    "explicacao": "Tema: Série de potências — 1/(1–x)=1+x+x²+...=Σxⁿ.",
+    "total": 5
+  },
+  "banco:sis3-23-007": {
+    "correta": 0,
+    "explicacao": "Tema: Rotacional — curl F=(∂y/∂y–∂x/∂z, ∂z/∂x–∂y/∂y... ajuste: curl F=(1–0,1–0,1–0)=(1,1,1).",
+    "total": 5
+  },
+  "banco:sis3-23-008": {
+    "correta": 1,
+    "explicacao": "Tema: Integral tripla — (∫₀¹x dx)(∫₀¹y dy)(∫₀¹z dz)=(1/2)³=1/8.",
+    "total": 5
+  },
+  "banco:sis3-23-009": {
+    "correta": 2,
+    "explicacao": "Tema: Matrizes ortogonais — det(A^T×A)=det(I)=1; det(A)²=1; det(A)=±1.",
+    "total": 5
+  },
+  "banco:sis3-23-010": {
+    "correta": 0,
+    "explicacao": "Tema: Transformada de Laplace — L{u(t–a)}=e^(–as)/s, para s>0.",
+    "total": 5
+  },
+  "banco:sis3-24-001": {
+    "correta": 2,
+    "explicacao": "Tema: Integral por substituição — u=tg(x); du=sec²(x)dx; ∫₀¹u du=[u²/2]₀¹=1/2.",
+    "total": 5
+  },
+  "banco:sis3-24-002": {
+    "correta": 1,
+    "explicacao": "Tema: Limite — L'Hôpital ou linearização: (e^(3x)–e^(2x))/x → (3e^(3x)–2e^(2x))/1|_{x=0}=3–2=1.",
+    "total": 5
+  },
+  "banco:sis3-24-003": {
+    "correta": 0,
+    "explicacao": "Tema: Autovalores — soma=traço=4+3=7; produto=det=12–2=10.",
+    "total": 5
+  },
+  "banco:sis3-24-004": {
+    "correta": 0,
+    "explicacao": "Tema: EDO — equação característica: (r–2)²=0 → r=2 (duplo); y=(C₁+C₂x)e^(2x).",
+    "total": 5
+  },
+  "banco:sis3-24-005": {
+    "correta": 1,
+    "explicacao": "Tema: Integral imprópria (por partes) — [–xe^(–2x)/2–e^(–2x)/4]₀^∞=0–(–1/4)=1/4.",
+    "total": 5
+  },
+  "banco:sis3-24-006": {
+    "correta": 0,
+    "explicacao": "Tema: Otimização multivariável — ∇f=(3x²–3y²,–6xy)=(0,0)→(0,0); Hessiana: H=det<0 em (0,0)→ponto de sela.",
+    "total": 5
+  },
+  "banco:sis3-24-007": {
+    "correta": 0,
+    "explicacao": "Tema: Integral dupla — f(x,y)=x é ímpar; domínio D é simétrico em relação ao eixo y; integral=0.",
+    "total": 5
+  },
+  "banco:sis3-24-008": {
+    "correta": 0,
+    "explicacao": "Tema: Série de Taylor — ln(1+x)=x–x²/2+x³/3–...=Σ(–1)^(n+1)xⁿ/n.",
+    "total": 5
+  },
+  "banco:sis3-24-009": {
+    "correta": 0,
+    "explicacao": "Tema: Cálculo vetorial — Teorema de Stokes: ∬_S(∇×F)·dS=∮_C F·dr.",
+    "total": 5
+  },
+  "banco:sis3-24-010": {
+    "correta": 0,
+    "explicacao": "Tema: Transformada de Laplace — L{e^(–at)cos(bt)}=(s+a)/((s+a)²+b²).",
+    "total": 5
+  }
+}

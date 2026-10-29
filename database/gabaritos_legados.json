@@ -1,0 +1,937 @@
+{
+  "quiz:conjuntos:0": {
+    "correta": 2,
+    "explicacao": "√2 ≈ 1,41421... é não periódico e não pode ser escrito como fração p/q. Logo, é irracional.",
+    "total": 4
+  },
+  "quiz:conjuntos:1": {
+    "correta": 1,
+    "explicacao": "A interseção contém apenas os elementos comuns a ambos: {3, 4}.",
+    "total": 4
+  },
+  "quiz:conjuntos:2": {
+    "correta": 2,
+    "explicacao": "3/2 = 1,5 é um número racional, mas não inteiro, pois não pode ser escrito sem parte decimal.",
+    "total": 4
+  },
+  "quiz:conjuntos:3": {
+    "correta": 1,
+    "explicacao": "A = {0, 1, 2, 3, 4} — os naturais menores que 5, totalizando 5 elementos.",
+    "total": 4
+  },
+  "quiz:conjuntos:4": {
+    "correta": 2,
+    "explicacao": "0,333... = 1/3, que é uma fração p/q. Todo número que pode ser representado como fração é racional.",
+    "total": 4
+  },
+  "quiz:conjuntos:5": {
+    "correta": 1,
+    "explicacao": "A união reúne todos os elementos de A e B sem repetição: {1, 2, 3, 4, 6}.",
+    "total": 4
+  },
+  "quiz:funcao_afim:0": {
+    "correta": 1,
+    "explicacao": "3x − 6 = 0 → 3x = 6 → x = 2. Esse valor é a raiz ou zero da função.",
+    "total": 4
+  },
+  "quiz:funcao_afim:1": {
+    "correta": 1,
+    "explicacao": "Como o coeficiente angular a = −2 < 0, a função é decrescente.",
+    "total": 4
+  },
+  "quiz:funcao_afim:2": {
+    "correta": 1,
+    "explicacao": "f(3) = 4·3 + 2 = 12 + 2 = 14",
+    "total": 4
+  },
+  "quiz:funcao_afim:3": {
+    "correta": 1,
+    "explicacao": "Como passa por (0, −3), o coeficiente b = −3. Logo, f(x) = 5x − 3.",
+    "total": 4
+  },
+  "quiz:funcao_afim:4": {
+    "correta": 0,
+    "explicacao": "2x − 4 = 10 → 2x = 14 → x = 7",
+    "total": 4
+  },
+  "quiz:funcao_afim:5": {
+    "correta": 1,
+    "explicacao": "a = −1 < 0, logo é decrescente. Raiz: −x + 5 = 0 → x = 5.",
+    "total": 4
+  },
+  "quiz:funcao_afim:6": {
+    "correta": 1,
+    "explicacao": "A bandeirada é o coeficiente b = 4 (valor fixo) e o custo por km é a = 2,5. Logo f(x) = 2,5x + 4.",
+    "total": 4
+  },
+  "quiz:funcao_afim:7": {
+    "correta": 1,
+    "explicacao": "3x + 1 = x + 5 → 2x = 4 → x = 2",
+    "total": 4
+  },
+  "quiz:funcao_quad:0": {
+    "correta": 0,
+    "explicacao": "Usando fatoração: x² − 4x + 3 = (x−1)(x−3) = 0 → x = 1 ou x = 3",
+    "total": 4
+  },
+  "quiz:funcao_quad:1": {
+    "correta": 1,
+    "explicacao": "O vértice: x_v = −b/2a = −4/(2·(−1)) = 2. f(2) = −4 + 8 = 4",
+    "total": 4
+  },
+  "quiz:funcao_quad:2": {
+    "correta": 0,
+    "explicacao": "Δ = b² − 4ac = 36 − 4·1·9 = 36 − 36 = 0. A parábola toca o eixo x em apenas um ponto.",
+    "total": 4
+  },
+  "quiz:funcao_quad:3": {
+    "correta": 1,
+    "explicacao": "Quando a < 0 (a = −3), a parábola abre para baixo, tendo ponto de máximo.",
+    "total": 4
+  },
+  "quiz:funcao_quad:4": {
+    "correta": 1,
+    "explicacao": "Δ = 4 + 12 = 16. x = (−2 ± 4)/2 → x₁ = 1 e x₂ = −3",
+    "total": 4
+  },
+  "quiz:funcao_quad:5": {
+    "correta": 0,
+    "explicacao": "x_v = 4/2 = 2. y_v = 4 − 8 + 7 = 3. Vértice em (2, 3).",
+    "total": 4
+  },
+  "quiz:funcao_quad:6": {
+    "correta": 1,
+    "explicacao": "Máximo no vértice: t_v = −b/2a = −4/(2·(−1)) = 2 segundos.",
+    "total": 4
+  },
+  "quiz:funcao_quad:7": {
+    "correta": 1,
+    "explicacao": "As raízes são x = 2 e x = 3. Como a > 0, a função é negativa entre as raízes: 2 < x < 3.",
+    "total": 4
+  },
+  "quiz:pa:0": {
+    "correta": 1,
+    "explicacao": "r = a₂ − a₁ = 7 − 3 = 4. A razão é a diferença constante entre termos consecutivos.",
+    "total": 4
+  },
+  "quiz:pa:1": {
+    "correta": 1,
+    "explicacao": "a₁ = 2, r = 3. a₁₀ = 2 + (10−1)·3 = 2 + 27 = 29",
+    "total": 4
+  },
+  "quiz:pa:2": {
+    "correta": 1,
+    "explicacao": "a₁ = 1, r = 2. a₂₀ = 1 + 19·2 = 39. S₂₀ = 20·(1 + 39)/2 = 20·20 = 400",
+    "total": 4
+  },
+  "quiz:pa:3": {
+    "correta": 0,
+    "explicacao": "a₆ = 5 + (6−1)·(−3) = 5 − 15 = −10",
+    "total": 4
+  },
+  "quiz:pa:4": {
+    "correta": 0,
+    "explicacao": "Seja (a−r, a, a+r). Soma: 3a = 21 → a = 7. Menor = a − r = 5 → r = 2. PA: 5, 7, 9.",
+    "total": 4
+  },
+  "quiz:pa:5": {
+    "correta": 1,
+    "explicacao": "a₅ = 100 + (5−1)·15 = 100 + 60 = 160 ingressos.",
+    "total": 4
+  },
+  "quiz:pg:0": {
+    "correta": 1,
+    "explicacao": "q = a₂/a₁ = 6/2 = 3. A razão é a divisão entre termos consecutivos.",
+    "total": 4
+  },
+  "quiz:pg:1": {
+    "correta": 1,
+    "explicacao": "q = 2. a₆ = 5 · 2⁵ = 5 · 32 = 160",
+    "total": 4
+  },
+  "quiz:pg:2": {
+    "correta": 1,
+    "explicacao": "S₄ = 1·(2⁴ − 1)/(2 − 1) = (16 − 1)/1 = 15",
+    "total": 4
+  },
+  "quiz:pg:3": {
+    "correta": 0,
+    "explicacao": "a₆ = 100 · 2⁵ = 100 · 32 = 3200. (Após 5 horas é o 6º termo.)",
+    "total": 4
+  },
+  "quiz:pg:4": {
+    "correta": 1,
+    "explicacao": "a₄ = 81 · (1/3)³ = 81 · 1/27 = 3",
+    "total": 4
+  },
+  "quiz:pg:5": {
+    "correta": 1,
+    "explicacao": "Seja (a/q, a, aq). Produto: a³ = 27 → a = 3. Menor = a/q = 1 → q = 3.",
+    "total": 4
+  },
+  "quiz:trig:0": {
+    "correta": 1,
+    "explicacao": "sen = oposto/hipotenusa = 3/5",
+    "total": 4
+  },
+  "quiz:trig:1": {
+    "correta": 2,
+    "explicacao": "tg(45°) = sen(45°)/cos(45°) = (√2/2)/(√2/2) = 1",
+    "total": 4
+  },
+  "quiz:trig:2": {
+    "correta": 1,
+    "explicacao": "sen(30°) = 1/2 — valor notável a memorizar.",
+    "total": 4
+  },
+  "quiz:trig:3": {
+    "correta": 1,
+    "explicacao": "tg(45°) = altura/sombra → 1 = h/10 → h = 10 m",
+    "total": 4
+  },
+  "quiz:trig:4": {
+    "correta": 0,
+    "explicacao": "cos(60°) = 1/2. Adjacente = 8 · (1/2) = 4",
+    "total": 4
+  },
+  "quiz:trig:5": {
+    "correta": 2,
+    "explicacao": "A identidade fundamental: sen²(x) + cos²(x) = 1, válida para todo ângulo x.",
+    "total": 4
+  },
+  "quiz:trig:6": {
+    "correta": 2,
+    "explicacao": "cos(0°) = 1 — valor notável fundamental.",
+    "total": 4
+  },
+  "quiz:trig:7": {
+    "correta": 1,
+    "explicacao": "tg(30°) = 1000/d → (1/√3) = 1000/d → d = 1000√3 m",
+    "total": 4
+  },
+  "quiz:geo_plana:0": {
+    "correta": 1,
+    "explicacao": "Área = base × altura = 8 × 5 = 40 m²",
+    "total": 4
+  },
+  "quiz:geo_plana:1": {
+    "correta": 2,
+    "explicacao": "a² = 6² + 8² = 36 + 64 = 100 → a = 10",
+    "total": 4
+  },
+  "quiz:geo_plana:2": {
+    "correta": 1,
+    "explicacao": "A = πr² = 3,14 × 49 = 153,86 cm²",
+    "total": 4
+  },
+  "quiz:geo_plana:3": {
+    "correta": 1,
+    "explicacao": "A = (B + b)·h/2 = (10 + 6)·4/2 = 16·2 = 32 m²",
+    "total": 4
+  },
+  "quiz:geo_plana:4": {
+    "correta": 1,
+    "explicacao": "A = (lado² · √3)/4 = (36 · √3)/4 = 9√3",
+    "total": 4
+  },
+  "quiz:geo_plana:5": {
+    "correta": 1,
+    "explicacao": "C = 2πr = 2 · 3,14 · 5 = 31,4",
+    "total": 4
+  },
+  "quiz:trig2:0": {
+    "correta": 1,
+    "explicacao": "No 2º quadrante (90° a 180°), apenas o seno é positivo. Cos e tg são negativos.",
+    "total": 4
+  },
+  "quiz:trig2:1": {
+    "correta": 2,
+    "explicacao": "sen(120°) = sen(180° − 60°) = sen(60°) = √3/2",
+    "total": 4
+  },
+  "quiz:trig2:2": {
+    "correta": 1,
+    "explicacao": "As funções seno e cosseno têm período 2π ≈ 360°.",
+    "total": 4
+  },
+  "quiz:trig2:3": {
+    "correta": 1,
+    "explicacao": "cos(210°) = cos(180° + 30°) = −cos(30°) = −√3/2 (3º quadrante, cos negativo)",
+    "total": 4
+  },
+  "quiz:trig2:4": {
+    "correta": 1,
+    "explicacao": "cos²(x) = 1 − 1/4 = 3/4 → cos(x) = ±√3/2. No 2º quadrante, cos < 0 → cos(x) = −√3/2",
+    "total": 4
+  },
+  "quiz:trig2:5": {
+    "correta": 1,
+    "explicacao": "tg(135°) = tg(180° − 45°) = −tg(45°) = −1",
+    "total": 4
+  },
+  "quiz:trig2:6": {
+    "correta": 2,
+    "explicacao": "sen(x) = 0 ocorre quando x = 0°, 180° e 360° (no intervalo fechado [0°, 360°]).",
+    "total": 4
+  },
+  "quiz:trig2:7": {
+    "correta": 2,
+    "explicacao": "cos(360°) = cos(0°) = 1, pois 360° corresponde à volta completa no ciclo.",
+    "total": 4
+  },
+  "quiz:matrizes:0": {
+    "correta": 0,
+    "explicacao": "det = 3·4 − 2·1 = 12 − 2 = 10",
+    "total": 4
+  },
+  "quiz:matrizes:1": {
+    "correta": 2,
+    "explicacao": "Diagonal principal: {5, 7}. Soma = 5 + 7 = 12. (Esse valor é chamado de traço da matriz.)",
+    "total": 4
+  },
+  "quiz:matrizes:2": {
+    "correta": 0,
+    "explicacao": "A soma de matrizes é feita elemento a elemento: (1+5, 2+6, 3+7, 4+8) = [[6, 8], [10, 12]]",
+    "total": 4
+  },
+  "quiz:matrizes:3": {
+    "correta": 1,
+    "explicacao": "Elementos = linhas × colunas = 3 × 4 = 12",
+    "total": 4
+  },
+  "quiz:matrizes:4": {
+    "correta": 2,
+    "explicacao": "Se uma linha (ou coluna) é toda composta por zeros, o determinante é sempre 0.",
+    "total": 4
+  },
+  "quiz:matrizes:5": {
+    "correta": 0,
+    "explicacao": "Multiplica-se cada elemento pelo escalar: 4·[[2,0],[0,3]] = [[8,0],[0,12]]",
+    "total": 4
+  },
+  "quiz:sistemas:0": {
+    "correta": 1,
+    "explicacao": "Somando as equações: 2x = 6 → x = 3. Então y = 5 − 3 = 2.",
+    "total": 4
+  },
+  "quiz:sistemas:1": {
+    "correta": 2,
+    "explicacao": "Quando as retas são paralelas (mesma inclinação, origens diferentes), não há ponto de interseção: sistema impossível.",
+    "total": 4
+  },
+  "quiz:sistemas:2": {
+    "correta": 2,
+    "explicacao": "Somando: 3x = 9 → x = 3. Substituindo: 2(3) + y = 7 → y = 1. Resposta: y = 1.",
+    "total": 4
+  },
+  "quiz:sistemas:3": {
+    "correta": 0,
+    "explicacao": "Quando as equações representam retas coincidentes, há infinitos pontos em comum: sistema indeterminado.",
+    "total": 4
+  },
+  "quiz:sistemas:4": {
+    "correta": 1,
+    "explicacao": "x + y = 50 e x = y + 10 → (y+10) + y = 50 → 2y = 40 → y = R$20",
+    "total": 4
+  },
+  "quiz:sistemas:5": {
+    "correta": 1,
+    "explicacao": "Da 2ª equação: x = 3 − y. Substituindo: 3(3−y) − 2y = 4 → 9 − 5y = 4 → y = 1 → x = 2.",
+    "total": 4
+  },
+  "quiz:geo_esp:0": {
+    "correta": 2,
+    "explicacao": "V = a³ = 4³ = 64 cm³",
+    "total": 4
+  },
+  "quiz:geo_esp:1": {
+    "correta": 0,
+    "explicacao": "V = πr²h = 3,14 · 9 · 5 = 141,3",
+    "total": 4
+  },
+  "quiz:geo_esp:2": {
+    "correta": 2,
+    "explicacao": "V = 4πr³/3 = 4 · 3,14 · 27/3 = 113,04 cm³",
+    "total": 4
+  },
+  "quiz:geo_esp:3": {
+    "correta": 1,
+    "explicacao": "V = πr²h/3 = 3,14 · 16 · 9/3 = 150,72 cm³",
+    "total": 4
+  },
+  "quiz:geo_esp:4": {
+    "correta": 1,
+    "explicacao": "A_total = 2(ab + bc + ac) = 2(6 + 18 + 12) = 2·36 = 72",
+    "total": 4
+  },
+  "quiz:geo_esp:5": {
+    "correta": 0,
+    "explicacao": "V = A_base · h/3 = (6²) · 8/3 = 36 · 8/3 = 96",
+    "total": 4
+  },
+  "quiz:geo_esp:6": {
+    "correta": 1,
+    "explicacao": "A diagonal do cubo = a√3, obtida por Pitágoras em 3 dimensões.",
+    "total": 4
+  },
+  "quiz:geo_esp:7": {
+    "correta": 1,
+    "explicacao": "O dodecaedro regular possui 12 faces pentagonais, 30 arestas e 20 vértices.",
+    "total": 4
+  },
+  "quiz:geo_anal:0": {
+    "correta": 2,
+    "explicacao": "d = √[(4−1)² + (6−2)²] = √[9 + 16] = √25 = 5",
+    "total": 4
+  },
+  "quiz:geo_anal:1": {
+    "correta": 1,
+    "explicacao": "Na forma y = ax + b, o coeficiente angular (inclinação) é a = 3.",
+    "total": 4
+  },
+  "quiz:geo_anal:2": {
+    "correta": 1,
+    "explicacao": "M = ((2+6)/2, (4+8)/2) = (4, 6)",
+    "total": 4
+  },
+  "quiz:geo_anal:3": {
+    "correta": 0,
+    "explicacao": "O raio é √25 = 5. O centro é (2, −3).",
+    "total": 4
+  },
+  "quiz:geo_anal:4": {
+    "correta": 2,
+    "explicacao": "Usando y = ax + b com a = 2 e b = 4 (ponto (0, 4) indica que b = 4): y = 2x + 4",
+    "total": 4
+  },
+  "quiz:geo_anal:5": {
+    "correta": 0,
+    "explicacao": "Retas paralelas têm o mesmo coeficiente angular (mesma inclinação) e coeficientes lineares diferentes.",
+    "total": 4
+  },
+  "quiz:geo_anal:6": {
+    "correta": 0,
+    "explicacao": "Área = base × altura / 2 = 4 × 3 / 2 = 6",
+    "total": 4
+  },
+  "quiz:geo_anal:7": {
+    "correta": 1,
+    "explicacao": "a = (y₂ − y₁)/(x₂ − x₁) = (6 − 2)/(3 − 1) = 4/2 = 2",
+    "total": 4
+  },
+  "quiz:log:0": {
+    "correta": 1,
+    "explicacao": "log₂(8) = x → 2ˣ = 8 → 2ˣ = 2³ → x = 3",
+    "total": 4
+  },
+  "quiz:log:1": {
+    "correta": 1,
+    "explicacao": "log₁₀(1000) = log₁₀(10³) = 3",
+    "total": 4
+  },
+  "quiz:log:2": {
+    "correta": 1,
+    "explicacao": "log(8) = log(2³) = 3·log(2) = 3 · 0,301 = 0,903",
+    "total": 4
+  },
+  "quiz:log:3": {
+    "correta": 1,
+    "explicacao": "32 = 2⁵, logo x = 5",
+    "total": 4
+  },
+  "quiz:log:4": {
+    "correta": 1,
+    "explicacao": "O logaritmo é definido apenas para x > 0. Não existe logaritmo de número negativo ou zero.",
+    "total": 4
+  },
+  "quiz:log:5": {
+    "correta": 1,
+    "explicacao": "log(100) + log(10) = 2 + 1 = 3 (em base 10)",
+    "total": 4
+  },
+  "quiz:log:6": {
+    "correta": 1,
+    "explicacao": "1000 · 2ᵗ = 8000 → 2ᵗ = 8 = 2³ → t = 3 anos",
+    "total": 4
+  },
+  "quiz:log:7": {
+    "correta": 1,
+    "explicacao": "É a propriedade do quociente do logaritmo: log(A/B) = log A − log B.",
+    "total": 4
+  },
+  "quiz:comb:0": {
+    "correta": 2,
+    "explicacao": "AMOR tem 4 letras distintas. Permutações: 4! = 24",
+    "total": 4
+  },
+  "quiz:comb:1": {
+    "correta": 1,
+    "explicacao": "C(5,2) = 5! / (2! · 3!) = (5·4) / (2·1) = 10",
+    "total": 4
+  },
+  "quiz:comb:2": {
+    "correta": 2,
+    "explicacao": "Pelo princípio multiplicativo: 3 · 4 = 12 refeições.",
+    "total": 4
+  },
+  "quiz:comb:3": {
+    "correta": 0,
+    "explicacao": "A(5,3) = 5!/(5−3)! = 5·4·3 = 60",
+    "total": 4
+  },
+  "quiz:comb:4": {
+    "correta": 1,
+    "explicacao": "Diagonais = C(6,2) − 6 = 15 − 6 = 9",
+    "total": 4
+  },
+  "quiz:comb:5": {
+    "correta": 0,
+    "explicacao": "Como a ordem não importa (não há posições), usa-se combinação: C(15,11) = C(15,4) = 1365",
+    "total": 4
+  },
+  "quiz:prob:0": {
+    "correta": 1,
+    "explicacao": "Pares: {2, 4, 6} → 3 casos. Total: 6. P = 3/6 = 1/2",
+    "total": 4
+  },
+  "quiz:prob:1": {
+    "correta": 0,
+    "explicacao": "P = 4/(4+6) = 4/10 = 2/5",
+    "total": 4
+  },
+  "quiz:prob:2": {
+    "correta": 1,
+    "explicacao": "Para eventos mutuamente exclusivos: P(A∪B) = P(A) + P(B) = 0,3 + 0,5 = 0,8",
+    "total": 4
+  },
+  "quiz:prob:3": {
+    "correta": 0,
+    "explicacao": "Pares que somam 7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) → 6 casos. Total: 36. P = 6/36 = 1/6",
+    "total": 4
+  },
+  "quiz:prob:4": {
+    "correta": 1,
+    "explicacao": "P(complementar) = 1 − P(A) = 1 − 0,4 = 0,6",
+    "total": 4
+  },
+  "quiz:prob:5": {
+    "correta": 1,
+    "explicacao": "Para eventos independentes: P(A∩B) = P(A) · P(B) = 1/3 · 1/4 = 1/12",
+    "total": 4
+  },
+  "quiz:estat:0": {
+    "correta": 1,
+    "explicacao": "Média = (4+6+8+10+12)/5 = 40/5 = 8",
+    "total": 4
+  },
+  "quiz:estat:1": {
+    "correta": 1,
+    "explicacao": "Ordenando: {1, 3, 5, 7, 9}. O valor central (3º de 5) é 5.",
+    "total": 4
+  },
+  "quiz:estat:2": {
+    "correta": 2,
+    "explicacao": "A moda é o valor mais frequente: 8 aparece 3 vezes.",
+    "total": 4
+  },
+  "quiz:estat:3": {
+    "correta": 2,
+    "explicacao": "Soma atual = 35. Para média 7 com 6 notas: 6·7 = 42. Faltam 42 − 35 = 7... Nota = 7? Vamos calcular: (35+x)/6 = 7 → x = 7. Espere: média de 5 notas = 35/5 = 7. Para subir, precisa de nota > 7. Nota = 9: (35+9)/6 = 44/6 ≈ 7,3 ✓",
+    "total": 4
+  },
+  "quiz:estat:4": {
+    "correta": 1,
+    "explicacao": "O gráfico de setores (pizza) é ideal para mostrar proporções e percentuais de categorias.",
+    "total": 4
+  },
+  "quiz:estat:5": {
+    "correta": 0,
+    "explicacao": "Desvio padrão 0 significa que não há variação: todos os valores são iguais à média.",
+    "total": 4
+  },
+  "quiz:fin:0": {
+    "correta": 1,
+    "explicacao": "J = 2000 · 0,05 · 3 = 300. M = 2000 + 300 = R$2.300",
+    "total": 4
+  },
+  "quiz:fin:1": {
+    "correta": 1,
+    "explicacao": "M = 1000 · (1,10)² = 1000 · 1,21 = R$1.210",
+    "total": 4
+  },
+  "quiz:fin:2": {
+    "correta": 1,
+    "explicacao": "Em juros compostos (\"juros sobre juros\"), os juros de cada período são incorporados ao capital para o próximo.",
+    "total": 4
+  },
+  "quiz:fin:3": {
+    "correta": 1,
+    "explicacao": "D = 5000 · 0,02 · 2 = 200. VA = 5000 − 200 = R$4.800",
+    "total": 4
+  },
+  "quiz:fin:4": {
+    "correta": 0,
+    "explicacao": "(1 + i_m)¹² = 1,12 → i_m = (1,12)^(1/12) − 1 ≈ 0,00949 ≈ 1% ao mês",
+    "total": 4
+  },
+  "quiz:fin:5": {
+    "correta": 1,
+    "explicacao": "M = 2C → C(1 + 0,05t) = 2C → 1 + 0,05t = 2 → t = 1/0,05 = 20 meses",
+    "total": 4
+  },
+  "quiz:tipos:0": {
+    "correta": 2,
+    "explicacao": "O texto narrativo conta eventos que se desenvolvem no tempo, com personagens, espaço e enredo.",
+    "total": 4
+  },
+  "quiz:tipos:1": {
+    "correta": 3,
+    "explicacao": "O texto injuntivo instrui/orienta o leitor a fazer algo, usando verbos no imperativo.",
+    "total": 4
+  },
+  "quiz:tipos:2": {
+    "correta": 2,
+    "explicacao": "O artigo de opinião defende um ponto de vista com argumentos — típico texto dissertativo-argumentativo.",
+    "total": 4
+  },
+  "quiz:tipos:3": {
+    "correta": 1,
+    "explicacao": "Manuais instruem o leitor (verbo no imperativo/infinitivo), sendo textos injuntivos.",
+    "total": 4
+  },
+  "quiz:coerencia:0": {
+    "correta": 1,
+    "explicacao": "Coesão refere-se aos mecanismos formais (pronomes, conjunções, sinônimos) que conectam as partes do texto.",
+    "total": 4
+  },
+  "quiz:coerencia:1": {
+    "correta": 2,
+    "explicacao": "\"Embora\" é uma conjunção concessiva: indica uma ideia que contraria o esperado, mas não impede a principal.",
+    "total": 4
+  },
+  "quiz:coerencia:2": {
+    "correta": 1,
+    "explicacao": "Ter fome não justifica ir ao cinema. Há incoerência lógica entre causa e consequência.",
+    "total": 4
+  },
+  "quiz:coerencia:3": {
+    "correta": 1,
+    "explicacao": "Substituir um nome por uma expressão equivalente é coesão por substituição lexical, evitando repetição.",
+    "total": 4
+  },
+  "quiz:coerencia:4": {
+    "correta": 1,
+    "explicacao": "\"Portanto\" é conjunção conclusiva. \"Mas\" = adversativa; \"Embora\" = concessiva; \"Enquanto\" = temporal.",
+    "total": 4
+  },
+  "quiz:coerencia:5": {
+    "correta": 1,
+    "explicacao": "A elipse omite um termo que pode ser recuperado pelo contexto. Ex.: \"Fui ao mercado. [Fui] Depois para casa.\"",
+    "total": 4
+  },
+  "quiz:narr:0": {
+    "correta": 1,
+    "explicacao": "O protagonista é o personagem central, em torno do qual gira a história.",
+    "total": 4
+  },
+  "quiz:narr:1": {
+    "correta": 1,
+    "explicacao": "O uso de \"eu\" caracteriza o narrador em 1ª pessoa, que participa da história.",
+    "total": 4
+  },
+  "quiz:narr:2": {
+    "correta": 1,
+    "explicacao": "O conflito é o elemento de tensão que impulsiona a história e cria interesse no leitor.",
+    "total": 4
+  },
+  "quiz:narr:3": {
+    "correta": 1,
+    "explicacao": "O tempo psicológico é subjetivo: um minuto de angústia pode ocupar páginas; horas felizes, poucas linhas.",
+    "total": 4
+  },
+  "quiz:artigo:0": {
+    "correta": 1,
+    "explicacao": "A tese é a posição/opinião do autor, apresentada na introdução e defendida ao longo do texto.",
+    "total": 4
+  },
+  "quiz:artigo:1": {
+    "correta": 2,
+    "explicacao": "Gírias e linguagem coloquial são inadequadas em textos formais como o artigo de opinião.",
+    "total": 4
+  },
+  "quiz:artigo:2": {
+    "correta": 1,
+    "explicacao": "A notícia relata fatos com objetividade; o artigo de opinião defende explicitamente um ponto de vista.",
+    "total": 4
+  },
+  "quiz:artigo:3": {
+    "correta": 1,
+    "explicacao": "O desenvolvimento apresenta os argumentos que sustentam e provam a tese defendida na introdução.",
+    "total": 4
+  },
+  "quiz:artigo:4": {
+    "correta": 1,
+    "explicacao": "O contra-argumento reconhece a posição oposta e a refuta, fortalecendo a tese do autor.",
+    "total": 4
+  },
+  "quiz:artigo:5": {
+    "correta": 2,
+    "explicacao": "Essas conjunções introduzem concessões — reconhecimento de pontos contrários antes de refutá-los.",
+    "total": 4
+  },
+  "quiz:arg:0": {
+    "correta": 1,
+    "explicacao": "Citar uma organização reconhecida (OMS) é argumento de autoridade — reforça a tese com fonte confiável.",
+    "total": 4
+  },
+  "quiz:arg:1": {
+    "correta": 1,
+    "explicacao": "Um argumento só é válido se sustentar diretamente a tese. Argumentos sem relação são falácias ou desvios.",
+    "total": 4
+  },
+  "quiz:arg:2": {
+    "correta": 1,
+    "explicacao": "A progressão argumentativa garante que cada parágrafo avance na construção da tese, de forma lógica e coesa.",
+    "total": 4
+  },
+  "quiz:arg:3": {
+    "correta": 1,
+    "explicacao": "Comparar dois elementos para ilustrar um ponto é argumento por analogia ou comparação.",
+    "total": 4
+  },
+  "quiz:arg:4": {
+    "correta": 1,
+    "explicacao": "Dados numéricos conferem objetividade e credibilidade ao argumento, tornando-o mais difícil de refutar.",
+    "total": 4
+  },
+  "quiz:arg:5": {
+    "correta": 1,
+    "explicacao": "Atacar o caráter de quem argumenta em vez de refutar o argumento é a falácia ad hominem.",
+    "total": 4
+  },
+  "quiz:contra:0": {
+    "correta": 1,
+    "explicacao": "O contra-argumento reconhece uma objeção válida e a refuta, mostrando que a tese ainda se sustenta.",
+    "total": 4
+  },
+  "quiz:contra:1": {
+    "correta": 1,
+    "explicacao": "A parte concedida é o argumento favorável à tecnologia (facilita o acesso), que é depois relativizado.",
+    "total": 4
+  },
+  "quiz:contra:2": {
+    "correta": 2,
+    "explicacao": "\"Ainda que\" é concessivo. \"Portanto\" e \"Assim sendo\" são conclusivos; \"Visto que\" é causal.",
+    "total": 4
+  },
+  "quiz:contra:3": {
+    "correta": 1,
+    "explicacao": "Antecipar e refutar objeções mostra que o autor conhece o debate e tem posição sólida.",
+    "total": 4
+  },
+  "quiz:rep:0": {
+    "correta": 1,
+    "explicacao": "O repertório deve ser usado para reforçar argumentos, não apenas exibir conhecimento sem conexão com a tese.",
+    "total": 4
+  },
+  "quiz:rep:1": {
+    "correta": 1,
+    "explicacao": "Dados oficiais sobre desigualdade têm relação direta com o tema, tornando o argumento mais sólido.",
+    "total": 4
+  },
+  "quiz:rep:2": {
+    "correta": 1,
+    "explicacao": "No ENEM, o repertório é avaliado pela pertinência e pela forma como é articulado à tese — não pela simples menção.",
+    "total": 4
+  },
+  "quiz:rep:3": {
+    "correta": 1,
+    "explicacao": "Referenciar pensadores reconhecidos combina repertório sociocultural com argumento de autoridade.",
+    "total": 4
+  },
+  "quiz:rep:4": {
+    "correta": 1,
+    "explicacao": "A Competência 2 avalia a capacidade de fazer uso de conhecimentos de mundo para construir argumentos.",
+    "total": 4
+  },
+  "quiz:rep:5": {
+    "correta": 1,
+    "explicacao": "A produtividade do repertório está na sua relação com a argumentação — quantidade não significa qualidade.",
+    "total": 4
+  },
+  "quiz:diss:0": {
+    "correta": 2,
+    "explicacao": "A estrutura recomendada tem 4 parágrafos: introdução, dois de desenvolvimento e conclusão.",
+    "total": 4
+  },
+  "quiz:diss:1": {
+    "correta": 1,
+    "explicacao": "A introdução apresenta o tema e enuncia a tese (posição do autor) a ser desenvolvida.",
+    "total": 4
+  },
+  "quiz:diss:2": {
+    "correta": 1,
+    "explicacao": "Cada parágrafo de desenvolvimento deve apresentar um argumento sustentado por evidências (repertório, dados, exemplos).",
+    "total": 4
+  },
+  "quiz:diss:3": {
+    "correta": 1,
+    "explicacao": "A conclusão fecha o texto retomando a tese e, no ENEM, apresenta a proposta de intervenção (Competência 5).",
+    "total": 4
+  },
+  "quiz:diss:4": {
+    "correta": 2,
+    "explicacao": "Fugir do tema zera a redação automaticamente. É o erro mais grave e frequente.",
+    "total": 4
+  },
+  "quiz:diss:5": {
+    "correta": 1,
+    "explicacao": "O ENEM avalia o domínio da norma culta escrita. Linguagem informal ou gírias representam erros de competência.",
+    "total": 4
+  },
+  "quiz:diss:6": {
+    "correta": 1,
+    "explicacao": "Um parágrafo sem evidências ou embasamento é vago e não contribui efetivamente para a argumentação.",
+    "total": 4
+  },
+  "quiz:diss:7": {
+    "correta": 1,
+    "explicacao": "Contextualizar e apresentar a tese de forma clara e fundamentada é a introdução mais eficaz no ENEM.",
+    "total": 4
+  },
+  "quiz:comp:0": {
+    "correta": 2,
+    "explicacao": "São 5 competências, cada uma valendo 0 a 200 pontos, totalizando 1000 pontos.",
+    "total": 4
+  },
+  "quiz:comp:1": {
+    "correta": 1,
+    "explicacao": "A C1 avalia o domínio da gramática, ortografia, concordância, regência e pontuação.",
+    "total": 4
+  },
+  "quiz:comp:2": {
+    "correta": 2,
+    "explicacao": "Fuga total do tema resulta em nota ZERO em todas as competências — redação anulada.",
+    "total": 4
+  },
+  "quiz:comp:3": {
+    "correta": 1,
+    "explicacao": "A C5 avalia a qualidade da proposta: agente, ação, meio/modo, efeito e finalidade, sempre respeitando direitos humanos.",
+    "total": 4
+  },
+  "quiz:comp:4": {
+    "correta": 2,
+    "explicacao": "A C4 avalia o uso de conectivos, pronomes e outros mecanismos que dão fluência e coesão ao texto.",
+    "total": 4
+  },
+  "quiz:comp:5": {
+    "correta": 1,
+    "explicacao": "Propostas que desrespeitam direitos fundamentais (ex.: punições degradantes) zeram a C5 e podem anular a redação.",
+    "total": 4
+  },
+  "quiz:comp:6": {
+    "correta": 1,
+    "explicacao": "A C3 avalia a organização do texto, a seleção dos argumentos e a coerência do projeto de dizer (argumentação).",
+    "total": 4
+  },
+  "quiz:comp:7": {
+    "correta": 3,
+    "explicacao": "A C4 avalia especificamente o uso de conectivos e outros recursos de coesão entre as partes do texto.",
+    "total": 4
+  },
+  "quiz:comp:8": {
+    "correta": 1,
+    "explicacao": "Fuga total ao tema implica nota 0 em todas as competências, independente da qualidade gramatical.",
+    "total": 4
+  },
+  "quiz:comp:9": {
+    "correta": 3,
+    "explicacao": "São 5 competências × 200 pontos = 1000 pontos possíveis.",
+    "total": 4
+  },
+  "quiz:interv:0": {
+    "correta": 2,
+    "explicacao": "São 5 elementos: Agente, Ação, Meio/Modo, Efeito e Finalidade. Todos contribuem para a nota máxima na C5.",
+    "total": 4
+  },
+  "quiz:interv:1": {
+    "correta": 2,
+    "explicacao": "O agente é quem realiza a ação — nesse caso, o governo.",
+    "total": 4
+  },
+  "quiz:interv:2": {
+    "correta": 1,
+    "explicacao": "O ENEM é explícito: propostas que desrespeitam direitos fundamentais resultam em C5 = 0 e possível anulação.",
+    "total": 4
+  },
+  "quiz:interv:3": {
+    "correta": 2,
+    "explicacao": "\"Por meio de...\" especifica como a ação será realizada — o Meio/Modo da proposta.",
+    "total": 4
+  },
+  "quiz:interv:4": {
+    "correta": 2,
+    "explicacao": "A vagueza da proposta de intervenção impacta diretamente a C5, que exige detalhamento dos 5 elementos.",
+    "total": 4
+  },
+  "quiz:interv:5": {
+    "correta": 3,
+    "explicacao": "\"A fim de...\" e \"para que...\" introduzem a finalidade — o objetivo ou propósito da ação proposta.",
+    "total": 4
+  },
+  "quiz:nota1000:0": {
+    "correta": 1,
+    "explicacao": "A nota 1000 resulta do equilíbrio e excelência em todas as 5 competências, de forma integrada e articulada.",
+    "total": 4
+  },
+  "quiz:nota1000:1": {
+    "correta": 1,
+    "explicacao": "A produtividade está na pertinência e na forma como o repertório sustenta a argumentação, não na quantidade.",
+    "total": 4
+  },
+  "quiz:nota1000:2": {
+    "correta": 1,
+    "explicacao": "Introduções de redações excelentes contextualizam o tema de forma original e apresentam a tese com clareza.",
+    "total": 4
+  },
+  "quiz:nota1000:3": {
+    "correta": 1,
+    "explicacao": "O nível máximo da C4 exige variedade e uso preciso de conectivos, pronomes, elipses e outros recursos coesivos.",
+    "total": 4
+  },
+  "quiz:nota1000:4": {
+    "correta": 1,
+    "explicacao": "Analisar redações excelentes ajuda a internalizar os padrões de qualidade esperados, servindo como modelo concreto.",
+    "total": 4
+  },
+  "simulado:psc:0": {
+    "correta": 1,
+    "explicacao": "Taxa combinada = 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2 tanque/hora. Tempo = 1/(1/2) = 2 horas.",
+    "total": 4
+  },
+  "simulado:psc:1": {
+    "correta": 0,
+    "explicacao": "f(2) = 2·(4) − 3·(2) + 1 = 8 − 6 + 1 = 3",
+    "total": 4
+  },
+  "simulado:psc:2": {
+    "correta": 1,
+    "explicacao": "80 × 1,10 × 1,10 = 80 × 1,21 = R$ 96,80",
+    "total": 4
+  },
+  "simulado:enem:0": {
+    "correta": 0,
+    "explicacao": "3h30min = 3,5h. v = d/t = 42/3,5 = 12 km/h",
+    "total": 4
+  },
+  "simulado:enem:1": {
+    "correta": 1,
+    "explicacao": "P = 4/10 = 0,4 = 40%",
+    "total": 4
+  },
+  "simulado:red:0": {
+    "correta": 1,
+    "explicacao": "A banca espera os 5 elementos: agente, ação, modo/meio, finalidade e detalhamento.",
+    "total": 4
+  }
+}

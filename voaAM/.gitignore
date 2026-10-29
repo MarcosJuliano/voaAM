@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Segredos locais
+.env
+.env.*
+!.env.example
+
+# Dados locais do SQLite (não enviar contas de usuários ao GitHub)
+instance/*.db
+instance/*.sqlite
+instance/*.sqlite3
+!instance/.gitkeep
+
+# Dependências Node antigas (enquanto a migração é testada)
+backend/node_modules/
+backend/.env
+
+# Editores e sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Provas e gabaritos completos usam URLs dos portais oficiais; nunca versionar PDFs
+*.pdf
+instance/*.db-*
+instance/*.db-wal
+instance/*.db-shm
+
+# Chaves de correção: nunca publicar no GitHub (mesmo fora de public/).
+database/questoes_treino.json
+database/gabaritos_banco.json
+database/gabaritos_legados.json

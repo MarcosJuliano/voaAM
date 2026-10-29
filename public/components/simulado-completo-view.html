@@ -405,3 +405,15 @@
   <button id="sc-zoom-close" onclick="scZoomFechar()">✕</button>
   <img id="sc-zoom-img" src="" alt="Zoom" onclick="event.stopPropagation()">
 </div>
+
+<!-- Diálogo personalizado; não utiliza window.confirm() do navegador. -->
+<div class="sc-dialog-backdrop" id="sc-exit-modal" hidden>
+  <div class="sc-dialog" role="dialog" aria-modal="true" aria-labelledby="sc-exit-titulo" aria-describedby="sc-exit-msg">
+    <h2 id="sc-exit-titulo">Encerrar simulado?</h2>
+    <p id="sc-exit-msg">Seu progresso parcial será calculado.</p>
+    <div class="sc-dialog-actions">
+      <button type="button" onclick="scCancelarSaida()">Continuar prova</button>
+      <button type="button" class="sc-dialog-danger" onclick="scAceitarSaida()">Encerrar e ver resultado</button>
+    </div>
+  </div>
+</div>

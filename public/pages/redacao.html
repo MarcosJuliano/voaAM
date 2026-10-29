@@ -108,6 +108,18 @@
          PAINEL EDITOR
     ══════════════════════════════════ -->
     <div id="red-editor-panel" style="display:none">
+      <div class="red-editor-choose-theme">
+        <label for="red-seletor-tema">Tema da redação</label>
+        <select id="red-seletor-tema" onchange="redEditorTemaSelecionar(this.value)">
+          <option value="">Selecione um tema na lista</option>
+        </select>
+      </div>
+      <div class="red-editor-choose-theme">
+        <label for="red-modo-avaliacao">Tipo de análise</label>
+        <select id="red-modo-avaliacao">
+          <option value="gratis">Análise automática local (gratuita, sem nota)</option>
+        </select>
+      </div>
 
       <div style="padding:14px;border-radius:14px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);margin-bottom:16px">
         <div style="font-size:10px;font-weight:800;color:var(--accent2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px" id="red-editor-vest-badge">✍️ Escreva sua redação</div>
@@ -158,8 +170,8 @@
 
       <div style="display:flex;flex-direction:column;gap:8px">
         <button onclick="redCorrigir()" style="width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--accent),var(--violet,#7c3aed));color:#fff;font-family:var(--font);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
-          🤖 Corrigir com IA
-          <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px;background:rgba(255,255,255,0.2)">Em breve</span>
+          Analisar redação (opcional)
+          <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px;background:rgba(255,255,255,0.2)">Requer chave da API</span>
         </button>
         <div style="display:flex;gap:8px">
           <button onclick="redSalvarRascunho()" style="flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">

@@ -1,0 +1,30 @@
+<!-- Treino personalizado separado da tela de filtros. Layout baseado no simulado completo. -->
+<section id="treino-overlay" class="treino-overlay" hidden aria-label="Treino personalizado">
+  <header class="treino-overlay-header">
+    <button class="treino-back" type="button" onclick="treinoSair()" aria-label="Encerrar treino e voltar">←</button>
+    <strong>Treino personalizado</strong>
+    <span class="treino-overlay-progresso" id="treino-progresso-overlay" aria-live="polite">Questão 1</span>
+  </header>
+  <div class="treino-scroll">
+    <main class="treino-scroll-inner">
+      <div id="treino-questao-overlay" class="treino-card-sc"></div>
+      <div id="treino-feedback-overlay" class="treino-feedback" aria-live="polite"></div>
+    </main>
+  </div>
+  <footer class="treino-overlay-footer">
+    <div class="treino-footer-inner">
+      <button type="button" id="treino-pular-overlay" class="treino-btn-sec" onclick="treinoPular()">Pular</button>
+      <button type="button" id="treino-proxima-overlay" class="treino-btn-primary" onclick="treinoProxima()" disabled>Próxima questão</button>
+    </div>
+  </footer>
+  <div id="treino-confirmar-saida" class="sc-dialog-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="treino-dialog-titulo">
+    <div class="sc-dialog">
+      <h2 id="treino-dialog-titulo">Encerrar treino?</h2>
+      <p>As respostas já enviadas foram salvas. Deseja sair antes de terminar?</p>
+      <div class="sc-dialog-actions">
+        <button type="button" onclick="treinoCancelarSaida()">Continuar treinando</button>
+        <button type="button" class="sc-dialog-danger" onclick="treinoConfirmarSaida()">Encerrar</button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,3 +1,5 @@
+> **Atualização v4:** veja [README-INTEGRACAO-V4.md](README-INTEGRACAO-V4.md) para execução, migração e recursos novos.
+
 # Correção de status de tópicos do voaAM
 
 ## Problemas corrigidos
