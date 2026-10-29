@@ -1,29 +1,13 @@
-> **Atualização v4:** veja [README-INTEGRACAO-V4.md](README-INTEGRACAO-V4.md) para execução, migração e recursos novos.
+## Coisas a ser adicionadas
 
-# Correção de status de tópicos do voaAM
-
-## Problemas corrigidos
-
-1. `public/js/data/topics.js` tinha tópicos com `status: 'done'` e `status: 'partial'` fixos. Por isso eles apareciam concluídos sem o aluno fazer o quiz.
-2. `public/js/modules/aula.js` somava aula e dava XP ao abrir o quiz; não registrava a conclusão ao terminar.
-3. `public/js/modules/materia.js` renderizava somente o status estático e não consultava progresso salvo.
-4. O banco não tinha tabela para conclusões por tópico.
-
-## Arquivos alterados
-
-- `app.py`: adiciona GET/POST `/api/topicos-concluidos`, exigindo sessão Flask.
-- `database/schema.sql`: cria `topicos_concluidos` de forma não destrutiva (`CREATE TABLE IF NOT EXISTS`).
-- `public/js/data/topics.js`: remove os status iniciais fixos.
-- `public/js/modules/materia.js`: mostra o check apenas para tópicos concluídos e lê/salva o progresso pelo Flask, com cache local como fallback.
-- `public/js/modules/aula.js`: registra conclusão quando todas as perguntas do quiz forem respondidas; não conclui ao abrir nem ao fechar antes do fim. Bônus de 10 XP e contagem da aula só acontecem na primeira conclusão daquele tópico.
-- `public/js/modules/auth.js`: guarda o ID do usuário para isolar o cache local por conta.
-- `public/js/script.js`: remove os status fixos do script legado (não é carregado pelo roteador modular atual).
+- salvar a nota que a IA da a redação ao concluir avaliação, e adicionar indicador de analise da IA para evitar confusão (achar que o site travou).
+- arrumar o CSS dos treinos personalizados.
+- adicionar aleatorização de questões e respostas.
+- remover arquivos apagados e não utilizados do produto final.
 
 ## Aplicação
 
-Extraia o ZIP na raiz do projeto (a pasta que contém `app.py`, `database/` e `public/`), permitindo substituir os arquivos correspondentes.
-
-Depois execute:
+execute:
 
 ```bash
 docker compose up --build

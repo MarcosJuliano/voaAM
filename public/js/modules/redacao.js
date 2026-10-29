@@ -42,8 +42,10 @@ async function redCarregarTemas() {
       <p style="font-size:12px;color:var(--text2)">${esc(t.modalidade)}</p></div>
       <div class="red-motivadores" style="display:none;margin-top:12px">
         <p>Para ler a coletânea original, consulte a página da fonte. O voaAM não reproduz textos de apoio não fornecidos.</p>
-        <a href="${esc(t.fonte)}" target="_blank" rel="noopener noreferrer">Consultar fonte do tema</a>
-        <button class="red-escrever-tema" onclick="redEscreverTema(event,this)">Escrever sobre este tema</button>
+        <div class="red-tema-actions">
+          <a class="btn-secondary red-fonte-link" href="${esc(t.fonte)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Consultar fonte do tema</a>
+          <button type="button" class="btn-primary red-escrever-tema" onclick="redEscreverTema(event,this)">Escrever sobre este tema</button>
+        </div>
       </div>
       <button class="red-expand-btn" onclick="redExpandirTema(event,this)"><span>Ver proposta e fonte</span><span class="red-expand-icon">▾</span></button>
     </article>`).join('');
@@ -57,8 +59,10 @@ async function redConfigurarAvaliacao(){
   try{
     const r=await fetch('/api/config-publica');const c=await r.json();
     const sel=document.getElementById('red-modo-avaliacao');
-    if(sel && c.ia_configurada && !sel.querySelector('[value="gemini"]'))
-      sel.add(new Option('Gemini (IA opcional; confira limites e custos)','gemini'));
+    if(sel && c.ia_configurada && !sel.querySelector('[value="gemini"]')) {
+      sel.add(new Option('Correção detalhada por Gemini — 5 competências (estimativa)','gemini'));
+      sel.value='gemini';
+    }
   }catch(e){console.warn('Configuração do avaliador indisponível:',e);}
 }
 function redEditorTemaSelecionar(id){
@@ -268,67 +272,96 @@ function redLimpar() {
   redAtualizarContadores(textarea);
 }
 
-// ─── CORRIGIR COM IA (placeholder) ───────────────────────────
-async function redCorrigir() {
-  const textarea = document.getElementById('red-editor-textarea');
-  if (!textarea || !textarea.value.trim()) {
-    showXPToast('✍️ Escreva sua redação antes de solicitar a correção.');
-    return;
+// ─── CORREÇÃO PEDAGÓGICA (GEMINI OU MODO LOCAL) ───────────────────
+// Toda saída externa é renderizada por textContent para impedir HTML não confiável.
+function redAiNo(tag, classe, texto) {
+  const el=document.createElement(tag);
+  if(classe)el.className=classe;
+  if(texto!==undefined)el.textContent=texto;
+  return el;
+}
+function redRenderAvaliacaoGemini(painel, dados) {
+  const a=dados.avaliacao;
+  if(!a || !Array.isArray(a.competencias))throw new Error('A resposta da IA está incompleta.');
+  painel.replaceChildren();
+  painel.classList.add('red-ai-relatorio');
+  painel.append(redAiNo('h3','red-ai-titulo','Avaliação pedagógica por competências'));
+  painel.append(redAiNo('p','red-ai-disclaimer',a.aviso||'Estimativa pedagógica; não é nota oficial.'));
+  painel.append(redAiNo('p','red-ai-resumo',a.resumo||''));
+  painel.append(redAiNo('p','red-ai-adequacao','Adequação ao tema: '+(a.adequacao_tema||'Não informada.')));
+  if(Number.isFinite(a.nota_estimada)) {
+    painel.append(redAiNo('p','red-ai-nota','Nota estimada: '+a.nota_estimada+'/1000 (não oficial)'));
   }
-  if (textarea.value.trim().length < 100) {
-    showXPToast('📝 Redação muito curta. Mínimo recomendado: 100 caracteres.');
-    return;
-  }
-  const tema = textarea.getAttribute('data-titulo') || 'Tema não informado';
-  const vestibular=(textarea.getAttribute('data-badge')||'ENEM').split(' ')[0];
-  const texto = textarea.value;
-  // Desabilita botão durante a requisição para evitar cliques duplos
-  const btnCorrigir = document.querySelector('[onclick*="redCorrigir"]');
-  if (btnCorrigir) { btnCorrigir.disabled = true; btnCorrigir.textContent = 'Avaliando texto...'; }
-
-  let resultadoDiv = document.getElementById('red-resultado-ia');
-  if (!resultadoDiv) {
-    resultadoDiv = document.createElement('div');
-    resultadoDiv.id = 'red-resultado-ia';
-    resultadoDiv.style.cssText = [
-      'margin-top:16px', 'padding:16px', 'border-radius:14px',
-      'background:rgba(59,130,246,0.08)', 'border:1px solid rgba(59,130,246,0.2)',
-      'color:var(--text)', 'white-space:pre-wrap', 'line-height:1.7', 'font-size:13px'
-    ].join(';');
-    const editorPanel = document.getElementById('red-editor-panel');
-    if (editorPanel) editorPanel.appendChild(resultadoDiv);
-  }
-
-  resultadoDiv.textContent = 'Analisando estrutura, extensão e sinais de coesão. Esta avaliação local não atribui nota.';
-  resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-  try {
-    const usarGemini=document.getElementById('red-modo-avaliacao')?.value==='gemini';
-    const resposta = await fetch(usarGemini?'/api/corrigir-redacao':'/api/redacao/avaliar-gratis', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tema, texto, vestibular })
-    });
-    const dados = await resposta.json();
-    if (!resposta.ok) {
-      throw new Error(dados.resultado || 'Não foi possível corrigir a redação.');
+  for(const c of a.competencias){
+    const sec=redAiNo('section','red-ai-competencia');
+    sec.append(redAiNo('h4','',`Competência ${c.numero} — ${c.titulo||''} (${c.nota_estimada??'–'}/200)`));
+    sec.append(redAiNo('p','red-ai-justificativa',c.justificativa||''));
+    if(Array.isArray(c.pontos_fortes) && c.pontos_fortes.length){
+      sec.append(redAiNo('h5','','Pontos fortes'));
+      const lista=redAiNo('ul','');
+      for(const item of c.pontos_fortes)lista.append(redAiNo('li','',item));
+      sec.append(lista);
     }
-    // Formata o resultado: converte quebras de linha em HTML e aplica markdown básico
-    const textoFormatado = String(dados.resultado || 'A IA não retornou uma correção.')
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>');
-    resultadoDiv.innerHTML = textoFormatado;
-    resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } catch (erro) {
-    console.warn('Falha ao corrigir redação:', erro);
-    resultadoDiv.textContent =
-      'Aviso: ' + (erro.message || 'A correção por IA está indisponível no momento.') +
-      '\n\nVocê ainda pode salvar seu rascunho e revisá-lo manualmente.';
+    if(Array.isArray(c.ajustes) && c.ajustes.length){
+      sec.append(redAiNo('h5','','Pontos específicos para corrigir'));
+      for(const aj of c.ajustes){
+        const div=redAiNo('div','red-ai-ajuste');
+        div.append(redAiNo('small','','Parágrafo '+aj.paragrafo));
+        div.append(redAiNo('blockquote','',aj.trecho||''));
+        div.append(redAiNo('p','','Problema: '+(aj.diagnostico||'')));
+        div.append(redAiNo('p','','Como melhorar: '+(aj.sugestao||'')));
+        if(aj.exemplo)div.append(redAiNo('p','','Exemplo de reescrita: '+aj.exemplo));
+        sec.append(div);
+      }
+    }else sec.append(redAiNo('p','red-ai-sem-ajustes','Nenhum erro pontual com citação verificável identificado nesta competência.'));
+    painel.append(sec);
   }
-  finally {
-    if (btnCorrigir) { btnCorrigir.disabled = false; btnCorrigir.textContent = 'Analisar redação'; }
+  if(Array.isArray(a.prioridades)&&a.prioridades.length){
+    painel.append(redAiNo('h4','red-ai-prioridades-titulo','Prioridades de revisão'));
+    const lista=redAiNo('ol','red-ai-prioridades');
+    for(const item of a.prioridades)lista.append(redAiNo('li','',item));
+    painel.append(lista);
+  }
+}
+async function redCorrigir() {
+  const textarea=document.getElementById('red-editor-textarea');
+  if(!textarea||!textarea.value.trim()){
+    if(typeof showXPToast==='function')showXPToast('Escreva sua redação antes de solicitar a análise.');
+    return;
+  }
+  if(textarea.value.trim().length<100){
+    if(typeof showXPToast==='function')showXPToast('Escreva ao menos 100 caracteres para análise.');
+    return;
+  }
+  const tema=textarea.getAttribute('data-titulo')||'Tema não informado';
+  const vestibular=(textarea.getAttribute('data-badge')||'ENEM').split(' ')[0];
+  const texto=textarea.value;
+  const btn=document.querySelector('[onclick*="redCorrigir"]');
+  if(btn){btn.disabled=true;btn.dataset.originalText=btn.textContent;btn.textContent='Analisando redação...';}
+  let painel=document.getElementById('red-resultado-ia');
+  if(!painel){
+    painel=document.createElement('section');painel.id='red-resultado-ia';
+    painel.setAttribute('aria-live','polite');
+    document.getElementById('red-editor-panel')?.append(painel);
+  }
+  painel.className='red-ai-relatorio';
+  painel.replaceChildren(redAiNo('p','red-ai-status','Analisando o texto. A nota será apenas uma estimativa pedagógica.'));
+  try{
+    const gemini=document.getElementById('red-modo-avaliacao')?.value==='gemini';
+    const resposta=await fetch(gemini?'/api/corrigir-redacao':'/api/redacao/avaliar-gratis',{
+      method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({tema,texto,vestibular})
+    });
+    const dados=await resposta.json().catch(()=>({}));
+    if(!resposta.ok)throw new Error(dados.message||dados.resultado||'Falha na análise.');
+    if(gemini)redRenderAvaliacaoGemini(painel,dados);
+    else painel.replaceChildren(redAiNo('p','red-ai-texto-local',dados.resultado||'Análise indisponível.'));
+  }catch(e){
+    console.warn('[voaAM] Falha ao avaliar redação:',e);
+    painel.replaceChildren(redAiNo('p','red-ai-erro','Não foi possível avaliar: '+e.message));
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent=btn.dataset.originalText||'Analisar redação';}
+    painel.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
 }
 

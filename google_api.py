@@ -2,21 +2,41 @@
 
 Evita sequestro de conta: emails já cadastrados não são vinculados automaticamente.
 """
-import os, secrets, sqlite3
+import os, re, secrets, sqlite3
 from flask import Blueprint, jsonify, request, session
 from werkzeug.security import generate_password_hash
 from banco import conectar
 
 bp_google = Blueprint('google', __name__)
 
+# Um placeholder como "SEU_CLIENT_ID..." não é uma credencial válida.
+_CLIENT_RE = re.compile(r'^\d+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$')
+
+
+def google_client_id_configurado():
+    client_id = os.getenv('GOOGLE_CLIENT_ID', '').strip()
+    return client_id if _CLIENT_RE.fullmatch(client_id) else ''
+
+
 @bp_google.get('/api/config-publica')
 def config_publica():
-    return jsonify({'google_client_id':os.getenv('GOOGLE_CLIENT_ID','').strip(),
-                    'ia_configurada':bool(os.getenv('GEMINI_API_KEY','').strip()) and os.getenv('ATIVAR_GEMINI','false').lower()=='true'})
+    valor = os.getenv('GOOGLE_CLIENT_ID', '').strip()
+    valido = google_client_id_configurado()
+    return jsonify({
+        'google_client_id': valido,
+        'google_configurado': bool(valido),
+        'google_mensagem': (
+            '' if valido else
+            ('GOOGLE_CLIENT_ID inválido ou é um exemplo. Crie um OAuth Client ID do tipo Web application.'
+             if valor else 'GOOGLE_CLIENT_ID não configurado no ambiente do Flask.')
+        ),
+        'ia_configurada': bool(os.getenv('GEMINI_API_KEY', '').strip())
+                        and os.getenv('ATIVAR_GEMINI', 'false').lower() == 'true',
+    })
 
 @bp_google.post('/api/auth/google')
 def entrar_google():
-    client_id=os.getenv('GOOGLE_CLIENT_ID','').strip()
+    client_id=google_client_id_configurado()
     if not client_id:return jsonify({'message':'Google Login não configurado no servidor.'}),503
     dados=request.get_json(silent=True)
     token=dados.get('credential') if isinstance(dados,dict) else None
@@ -29,7 +49,9 @@ def entrar_google():
         if claims.get('email_verified') is not True or not email:
             return jsonify({'message':'A Conta Google precisa ter e-mail verificado.'}),403
     except (ValueError,KeyError,ImportError):
-        return jsonify({'message':'Não foi possível validar o login Google.'}),401
+        return jsonify({'message':'Token de identidade Google inválido ou expirado.'}),401
+    except Exception:
+        return jsonify({'message':'Google indisponível para verificação. Tente novamente.'}),503
     # Nunca aceitar associação só pelo email; exige vinculação autenticada.
     c=conectar()
     try:
@@ -59,7 +81,7 @@ def entrar_google():
 def vincular_google():
     uid=session.get('usuario_id')
     if not uid:return jsonify({'message':'Entre com e-mail e senha antes de vincular o Google.'}),401
-    client_id=os.getenv('GOOGLE_CLIENT_ID','').strip()
+    client_id=google_client_id_configurado()
     d=request.get_json(silent=True)
     token=d.get('credential') if isinstance(d,dict) else None
     if not client_id or not isinstance(token,str) or not 100<=len(token)<=10000:
@@ -72,7 +94,9 @@ def vincular_google():
             return jsonify({'message':'O e-mail do Google não está verificado.'}),403
         sub=claims['sub'];email=str(claims['email']).lower()
     except (ValueError,KeyError,ImportError):
-        return jsonify({'message':'Token Google inválido.'}),401
+        return jsonify({'message':'Token Google inválido ou expirado.'}),401
+    except Exception:
+        return jsonify({'message':'Google indisponível para verificação.'}),503
     c=conectar()
     try:
         usuario=c.execute('SELECT email FROM usuarios WHERE id=?',(uid,)).fetchone()

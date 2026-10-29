@@ -66,9 +66,7 @@
               <div class="red-motivador-item" style="border-left-color:#4ade80">"O idadismo — discriminação por faixa etária — é a forma de preconceito mais normalizada nas sociedades modernas, impactando o acesso de pessoas acima de 60 anos a emprego, saúde e espaços de participação social." — OMS, 2021</div>
               <div class="red-motivador-item" style="border-left-color:#4ade80">Charge: idoso em frente a caixa eletrônico com mensagem de erro "Acesso Digital Negado", enquanto ao fundo jovens usam celulares sem dificuldade. [Fonte: Folha de S.Paulo, 2024]</div>
             </div>
-            <button onclick="redEscreverTema(event,this)" style="width:100%;margin-top:12px;padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:14px;font-weight:800;cursor:pointer;transition:opacity 0.15s">
-              ✍️ Escrever sobre este tema →
-            </button>
+            <button type="button" class="btn-primary red-escrever-tema" onclick="redEscreverTema(event,this)">Escrever sobre este tema</button>
           </div>
 
           <button class="red-expand-btn" onclick="redExpandirTema(event,this)">
@@ -170,8 +168,8 @@
 
       <div style="display:flex;flex-direction:column;gap:8px">
         <button onclick="redCorrigir()" style="width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--accent),var(--violet,#7c3aed));color:#fff;font-family:var(--font);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
-          Analisar redação (opcional)
-          <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px;background:rgba(255,255,255,0.2)">Requer chave da API</span>
+          Analisar redação
+          
         </button>
         <div style="display:flex;gap:8px">
           <button onclick="redSalvarRascunho()" style="flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">

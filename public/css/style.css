@@ -1640,3 +1640,53 @@ body {
 .perfil-google-link h3{font-size:15px;margin:0 0 6px}
 .perfil-google-link p{font-size:12px;color:var(--text2);margin:0 0 12px}
 .google-login-slot,.google-vincular-slot{min-height:38px;color:var(--text2);font-size:12px;display:flex;justify-content:center;align-items:center}
+
+/* ══════════ voaAM v6: redação e treino no padrão do simulado ══════════ */
+.red-tema-actions {display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;margin-top:12px;}
+.red-tema-actions > * {flex:1 1 220px;min-width:0;}
+#red-temas-panel .red-tema-actions .red-escrever-tema,
+#red-temas-panel button.red-escrever-tema {
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:43px;padding:12px 16px;margin-top:12px;
+  border:0;border-radius:10px;background:var(--accent);color:#fff;
+  font:700 14px var(--font);text-align:center;cursor:pointer;
+  transition:opacity .2s,transform .2s;
+}
+#red-temas-panel .red-tema-actions .red-escrever-tema {margin-top:0;}
+#red-temas-panel .red-escrever-tema:hover {opacity:.9;transform:translateY(-1px);}
+#red-temas-panel .red-tema-actions .red-fonte-link {display:inline-flex;align-items:center;justify-content:center;
+  font-size:13px;text-decoration:none;min-height:43px;padding:10px;}
+#red-temas-panel .red-tema-card {min-width:0;overflow-wrap:anywhere;}
+.red-ai-relatorio {margin-top:18px;padding:20px;border-radius:14px;border:1px solid var(--border-accent);background:var(--surface);color:var(--text);line-height:1.65;}
+.red-ai-titulo {font-size:19px;margin:0 0 6px;font-family:var(--font-display);}
+.red-ai-resumo,.red-ai-adequacao,.red-ai-justificativa {font-size:13px;white-space:pre-wrap;margin:10px 0;}
+.red-ai-disclaimer,.red-ai-sem-ajustes {font-size:12px;color:var(--text2);}
+.red-ai-nota {padding:12px 15px;border-radius:10px;background:var(--surface2);font-weight:800;color:var(--accent2);}
+.red-ai-competencia {background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;}
+.red-ai-competencia h4 {font-size:14px;margin:0 0 8px;}
+.red-ai-competencia h5 {font-size:12px;margin:12px 0 6px;}
+.red-ai-competencia ul,.red-ai-prioridades {padding-left:20px;font-size:13px;}
+.red-ai-ajuste {background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;margin:10px 0;font-size:13px;}
+.red-ai-ajuste small {font-size:11px;color:var(--accent2);font-weight:700;}
+.red-ai-ajuste blockquote {margin:7px 0;padding:8px 12px;border-left:3px solid var(--accent);background:var(--card);font-style:italic;overflow-wrap:anywhere;}
+.red-ai-ajuste p {margin:7px 0;}
+.red-ai-prioridades-titulo {font-size:15px;margin-top:18px;}
+.red-ai-texto-local {white-space:pre-wrap;font-size:13px;}
+.red-ai-erro {color:var(--red);}
+/* Mesmo envelope, espaçamentos e componentes do sc-scroll/sc-nav. */
+.treino-overlay .treino-scroll {padding:24px 0 0;}
+.treino-overlay .treino-scroll-inner {max-width:700px;width:100%;margin:0 auto;padding:0 24px;box-sizing:border-box;}
+.treino-overlay .treino-card-sc {padding:0;background:transparent;border:0;box-shadow:none;border-radius:0;}
+.treino-overlay .treino-card-sc .question-card {background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin:0 0 12px;box-shadow:var(--shadow);}
+.treino-overlay .treino-card-sc .options-list {margin-bottom:16px;}
+.treino-overlay .treino-card-sc .option-btn {margin:0;line-height:1.5;padding:12px 14px;}
+.treino-overlay .treino-questao-meta {display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 10px;}
+.treino-overlay .treino-assunto {font-size:11px;color:var(--text2);}
+.treino-overlay .treino-enunciado {font-size:15px!important;font-weight:500;line-height:1.55;text-align:justify;margin:0;}
+.treino-overlay .treino-feedback:empty {display:none;}
+.treino-overlay .treino-feedback:not(:empty) {max-width:700px;padding:12px 14px;margin:12px auto;border-radius:10px;border:1px solid var(--border);background:var(--surface2);font-size:13px;}
+.treino-overlay .treino-overlay-footer {background:var(--card2);padding:10px 14px;}
+.treino-overlay .treino-footer-inner {max-width:700px;padding:0 24px;box-sizing:border-box;gap:8px;}
+.treino-overlay .treino-btn-primary {background:var(--accent);}
+@media(max-width:767px) {.treino-overlay .treino-scroll {padding:16px 0 0;}.treino-overlay .treino-scroll-inner,.treino-overlay .treino-footer-inner{padding:0 16px;}}
+@media(max-width:520px) {.red-tema-actions {flex-direction:column;}.red-ai-relatorio {padding:13px;}}

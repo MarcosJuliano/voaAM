@@ -68,10 +68,10 @@ function treinoRender(){
   img=`<figure class="sc-img-box"><img alt="Figura de apoio à questão" src="/${treinoEscape(q.imagem.replace(/^\//,''))}"></figure>`;
  }
  const r=treinoRespostas[q.id];
- treinoEl('treino-questao-overlay').innerHTML=`<p class="treino-meta">${treinoEscape(meta)}</p>
- <div class="question-card"><p class="question-text treino-enunciado">${treinoEscape(q.enunciado)}</p>${img}
+ treinoEl('treino-questao-overlay').innerHTML=`<div class="treino-questao-meta"><span class="quiz-badge">Treino personalizado</span><span class="treino-assunto">${treinoEscape(meta)}</span></div>
+ <div class="question-card"><p class="question-text treino-enunciado">${treinoEscape(q.enunciado)}</p>${img}</div>
  <div class="options-list">${q.alternativas.map((alt,i)=>`<button class="option-btn treino-alternativa" type="button" data-alt="${i}" ${r?'disabled':''}>
- <span class="option-letter">${'ABCDE'[i]||i+1}</span><span>${treinoEscape(alt)}</span></button>`).join('')}</div></div>`;
+ <span class="option-letter">${'ABCDE'[i]||i+1}</span><span>${treinoEscape(alt)}</span></button>`).join('')}</div>`;
  treinoEl('treino-feedback-overlay').textContent='';
  const proxima=treinoEl('treino-proxima-overlay');proxima.disabled=!r;
  proxima.textContent=treinoIndice===treinoAtual.questoes.length-1?'Ver resultado':'Próxima questão';

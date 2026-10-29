@@ -129,38 +129,66 @@ async function authCadastrar() {
   }
 }
 
-async function authGoogleInit(){
+async function authGoogleInit() {
   const slots=[...document.querySelectorAll('.google-login-slot, .google-vincular-slot')];
   if(!slots.length)return;
   try {
-    const r=await fetch('/api/config-publica');const c=await r.json();
-    if(!c.google_client_id){
-      slots.forEach(s=>s.textContent='Google Login disponível após configurar GOOGLE_CLIENT_ID.');
+    const resposta=await fetch('/api/config-publica',{credentials:'same-origin'});
+    if(!resposta.ok)throw new Error('Configuração do Google indisponível.');
+    const config=await resposta.json();
+    if(!config.google_configurado||!config.google_client_id){
+      slots.forEach(s=>s.textContent=config.google_mensagem||'Configure um Client ID real do Google Cloud.');
       return;
     }
     if(!window.google?.accounts?.id){
-      await new Promise((resolve,reject)=>{
-        const script=document.createElement('script');script.src='https://accounts.google.com/gsi/client';
-        script.async=true;script.onload=resolve;script.onerror=()=>reject(new Error('Biblioteca Google indisponível.'));
-        document.head.append(script);
-      });
+      if(!window.voaGsiCarregando){
+        window.voaGsiCarregando=new Promise((resolve,reject)=>{
+          const script=document.createElement('script');
+          script.src='https://accounts.google.com/gsi/client';
+          script.async=true;script.defer=true;
+          script.onload=resolve;
+          script.onerror=()=>reject(new Error('Não foi possível carregar a biblioteca Google.'));
+          document.head.appendChild(script);
+        });
+      }
+      await window.voaGsiCarregando;
     }
+    if(!window.google?.accounts?.id)throw new Error('SDK Google não está disponível.');
+    // O GSI envia um ID token no callback; só o Flask verifica assinatura, audience e issuer.
     window.google.accounts.id.initialize({
-      client_id:c.google_client_id,
-      callback:async ({credential})=>{
-        try {
-          const vinculando=document.getElementById('auth-wrapper')?.style.display==='none';
-          await authRequisicao(vinculando?'/api/auth/google/vincular':'/api/auth/google',
-            {method:'POST',body:JSON.stringify({credential})});
-          if(vinculando){if(typeof showXPToast==='function')showXPToast('Conta Google vinculada.');}
-          else location.reload();
-        }catch(e){
-          authMostrarErro(document.getElementById('auth-cadastro')?.classList.contains('auth-active')?'auth-cad-error':'auth-login-error',e.message);
+      client_id:config.google_client_id,
+      ux_mode:'popup',
+      callback:async respostaGoogle=>{
+        if(!respostaGoogle?.credential){
+          authMostrarErro('auth-login-error','O Google não retornou uma credencial.');
+          return;
+        }
+        const vinculando=document.getElementById('auth-wrapper')?.style.display==='none';
+        try{
+          await authRequisicao(vinculando?'/api/auth/google/vincular':'/api/auth/google',{
+            method:'POST',body:JSON.stringify({credential:respostaGoogle.credential})
+          });
+          if(vinculando){
+            if(typeof showXPToast==='function')showXPToast('Conta Google vinculada.');
+          }else location.reload();
+        }catch(erro){
+          const id=document.getElementById('auth-cadastro')?.classList.contains('auth-active')
+            ?'auth-cad-error':'auth-login-error';
+          authMostrarErro(id,erro.message||'Não foi possível validar o login Google.');
+          if(vinculando && typeof showXPToast==='function')showXPToast(erro.message);
         }
       }
     });
-    slots.forEach(s=>window.google.accounts.id.renderButton(s,{type:'standard',theme:'outline',size:'large',width:270,text:'signin_with'}));
-  }catch(e){slots.forEach(s=>s.textContent='Login Google indisponível. Continue com e-mail e senha.');}
+    for(const s of slots){
+      s.replaceChildren();
+      window.google.accounts.id.renderButton(s,{
+        type:'standard',theme:'outline',size:'large',width:270,text:'signin_with',locale:'pt-BR'
+      });
+    }
+  }catch(erro){
+    console.warn('[voaAM] Google Identity Services:',erro);
+    slots.forEach(s=>s.textContent='Não foi possível carregar o login Google. Use e-mail e senha.');
+  }
 }
 
 async function authLogout() {
@@ -168,6 +196,7 @@ async function authLogout() {
     await authRequisicao('/api/logout', { method: 'POST', body: '{}' });
     localStorage.removeItem('voaam_perfil');
     localStorage.removeItem('voaam_usuario_id');
+    window.google?.accounts?.id?.disableAutoSelect?.();
     location.reload();
   } catch (erro) {
     console.warn('[VoaAM] Logout não confirmado no servidor:', erro);
@@ -177,7 +206,6 @@ async function authLogout() {
 }
 
 async function authInit() {
-  authGoogleInit();
   const wrapper = document.getElementById('auth-wrapper');
   if (!wrapper) return;
 
@@ -209,6 +237,9 @@ async function authInit() {
     wrapper.style.display = window.innerWidth >= 768 ? 'flex' : 'block';
     authMostrarErro('auth-login-error', 'Não foi possível conectar ao servidor. Atualize a página ou verifique o Flask.');
     console.warn('[VoaAM] Falha ao consultar a sessão:', erro);
+  } finally {
+    // Renderiza após definir visibilidade da tela de autenticação.
+    await authGoogleInit();
   }
 }
 
