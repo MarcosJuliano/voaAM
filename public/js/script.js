@@ -7658,5 +7658,3 @@ if (perfil) {
   aplicarPerfil();
 }
 renderTopics();
-
-
