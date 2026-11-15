@@ -8,8 +8,12 @@ from __future__ import annotations
 import json
 import os
 import re
+import sqlite3
+from threading import Lock
 from typing import Any
 from flask import Blueprint, current_app, jsonify, request, session
+
+from redacoes_api import buscar_tema, salvar_redacao
 
 bp_redacao_ia = Blueprint('redacao_ia', __name__)
 
@@ -161,42 +165,128 @@ CONTEÚDO NÃO CONFIÁVEL DO ESTUDANTE:
 FIM DO TEXTO DO ESTUDANTE.'''
 
 
+def provedores_disponiveis():
+    modos = []
+    if os.getenv('ATIVAR_GEMINI', 'false').lower() == 'true' and os.getenv('GEMINI_API_KEY', '').strip():
+        modos.append('gemini')
+    if (os.getenv('ATIVAR_OLLAMA', 'false').lower() == 'true'
+            and os.getenv('OLLAMA_URL', '').strip() and os.getenv('OLLAMA_MODEL', '').strip()):
+        modos.append('ollama')
+    return modos
+
+
+def _limite_analises():
+    try:
+        return max(1, min(16, int(os.getenv('REDACAO_IA_CONCORRENCIA', '2'))))
+    except ValueError:
+        return 2
+
+
+_analises_ativas = set()
+_analises_lock = Lock()
+
+
+def _gerar_gemini(prompt):
+    from google import genai
+
+    with genai.Client(
+        api_key=os.getenv('GEMINI_API_KEY', '').strip(),
+        http_options={'timeout': 60000, 'retry_options': {'attempts': 1}},
+    ) as cliente:
+        resposta = cliente.models.generate_content(
+            model=os.getenv('GEMINI_MODEL', 'gemini-2.5-flash').strip(),
+            contents=prompt,
+            config={'response_mime_type': 'application/json', 'response_json_schema': SCHEMA,
+                    'temperature': 0.2},
+        )
+    return json.loads(resposta.text or '{}')
+
+
+def _gerar_ollama(prompt):
+    import requests
+
+    url = os.environ['OLLAMA_URL'].strip().rstrip('/') + '/api/generate'
+    resposta = requests.post(url, json={
+        'model': os.environ['OLLAMA_MODEL'].strip(), 'prompt': prompt,
+        'format': SCHEMA, 'stream': False, 'options': {'temperature': 0.2},
+    }, timeout=(5, 65))
+    resposta.raise_for_status()
+    envelope = resposta.json()
+    return json.loads(envelope.get('response') or '{}')
+
+
+def _erro_provedor(erro, modo):
+    rotulo = 'Gemini' if modo == 'gemini' else 'Ollama'
+    codigo = getattr(erro, 'code', None)
+    if codigo is None:
+        codigo = getattr(getattr(erro, 'response', None), 'status_code', None)
+    if codigo == 429:
+        return f'O {rotulo} atingiu o limite de uso. Tente mais tarde ou escolha outro modo.', 429
+    if codigo in (500, 502, 503, 504):
+        return f'O {rotulo} está temporariamente indisponível. Tente novamente em instantes.', 503
+    if codigo in (401, 403):
+        return f'O servidor precisa revisar as credenciais e permissões do {rotulo}.', 502
+    if codigo == 404:
+        return f'O modelo configurado para {rotulo} está indisponível. Contate o administrador.', 502
+    return f'Não foi possível consultar o {rotulo}. Tente novamente ou escolha outro modo.', 502
+
+
 @bp_redacao_ia.post('/api/corrigir-redacao')
 def corrigir_redacao_ia():
-    if not session.get('usuario_id'):
+    uid = session.get('usuario_id')
+    if not uid:
         return jsonify({'message': 'Faça login para avaliar sua redação.'}), 401
     dados = request.get_json(silent=True)
     if not isinstance(dados, dict):
         return jsonify({'message': 'Envie um JSON válido.'}), 400
-    tema, texto = dados.get('tema'), dados.get('texto')
+    texto = dados.get('texto')
+    tema_id = dados.get('tema_id')
+    tema_catalogo = buscar_tema(tema_id) if tema_id is not None else None
+    if tema_id is not None and not tema_catalogo:
+        return jsonify({'message': 'Selecione um tema do catálogo para avaliar.'}), 400
+    tema = tema_catalogo['tema'] if tema_catalogo else dados.get('tema')
     if not isinstance(tema, str) or not 5 <= len(tema.strip()) <= 400:
         return jsonify({'message': 'Informe um tema válido.'}), 400
     if not isinstance(texto, str) or not 100 <= len(texto.strip()) <= 10000:
         return jsonify({'message': 'Escreva entre 100 e 10.000 caracteres para análise.'}), 400
-    if os.getenv('ATIVAR_GEMINI', 'false').lower() != 'true':
-        return jsonify({'message': 'Gemini desativado. Ative explicitamente ATIVAR_GEMINI=true após verificar a modalidade de faturamento.'}), 503
-    chave = os.getenv('GEMINI_API_KEY', '').strip()
-    if not chave:
-        return jsonify({'message': 'GEMINI_API_KEY não configurada no servidor.'}), 503
-    vestibular = str(dados.get('vestibular') or 'ENEM').strip().upper()
+    modo = dados.get('provedor', 'gemini')
+    if modo not in ('gemini', 'ollama'):
+        return jsonify({'message': 'Selecione um provedor válido.'}), 400
+    if modo not in provedores_disponiveis():
+        rotulo = 'Gemini' if modo == 'gemini' else 'Ollama'
+        return jsonify({'message': f'{rotulo} desativado ou sem configuração no servidor.'}), 503
+    vestibular = tema_catalogo['vestibular'] if tema_catalogo else str(dados.get('vestibular') or 'ENEM').strip().upper()
     if vestibular not in {'ENEM', 'SIS', 'PSC', 'MACRO'}:
         vestibular = 'ENEM'
+    with _analises_lock:
+        if uid in _analises_ativas:
+            return jsonify({'message': 'Já há uma análise em andamento na sua conta.'}), 409
+        if len(_analises_ativas) >= _limite_analises():
+            return jsonify({'message': 'As vagas de correção estão ocupadas. Tente novamente em instantes.'}), 503, {'Retry-After': '10'}
+        _analises_ativas.add(uid)
     try:
-        from google import genai
-        with genai.Client(api_key=chave) as cliente:
-            resposta = cliente.models.generate_content(
-                model=os.getenv('GEMINI_MODEL', 'gemini-2.5-flash'),
-                contents=_prompt(tema.strip(), texto.strip(), vestibular),
-                config={'response_mime_type': 'application/json', 'response_json_schema': SCHEMA,
-                        'temperature': 0.2},
-            )
-        bruto = json.loads(resposta.text or '{}')
+        prompt = _prompt(tema.strip(), texto.strip(), vestibular)
+        bruto = _gerar_gemini(prompt) if modo == 'gemini' else _gerar_ollama(prompt)
         if not isinstance(bruto, dict):
             raise ValueError('Formato de resposta inesperado.')
-        return jsonify({'avaliacao': _normalizar(bruto, texto.strip(), vestibular)}), 200
-    except (ValueError, json.JSONDecodeError):
-        current_app.logger.warning('Formato Gemini incompleto', exc_info=True)
-        return jsonify({'message': 'A IA não retornou uma correção estruturada completa. Tente novamente.'}), 502
-    except Exception:
-        current_app.logger.exception('Falha ao consultar Gemini')
-        return jsonify({'message': 'Gemini indisponível. Confira a chave, os limites gratuitos e os logs.'}), 502
+        avaliacao = _normalizar(bruto, texto.strip(), vestibular)
+        avaliacao['modo'] = modo
+    except (ValueError, TypeError, AttributeError, OverflowError):
+        current_app.logger.warning('Formato de avaliação incompleto (%s)', modo)
+        return jsonify({'message': 'A resposta não trouxe as cinco competências em formato válido. Tente novamente.'}), 502
+    except Exception as erro:
+        current_app.logger.warning('Avaliação indisponível (%s, %s)', modo, type(erro).__name__)
+        mensagem, status = _erro_provedor(erro, modo)
+        return jsonify({'message': mensagem}), status
+    else:
+        resultado = {'avaliacao': avaliacao}
+        if tema_catalogo:
+            try:
+                redacao_id, _ = salvar_redacao(uid, tema_catalogo, texto.strip(), avaliacao)
+            except sqlite3.IntegrityError:
+                return jsonify({'message': 'A conta foi removida durante a avaliação.'}), 401
+            resultado['redacao_id'] = redacao_id
+        return jsonify(resultado)
+    finally:
+        with _analises_lock:
+            _analises_ativas.discard(uid)

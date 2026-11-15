@@ -1,6 +1,6 @@
 <!-- Perfil do estudante: somente dados reais, sem ranking demonstrativo -->
 <section class="screen" id="screen-perfil" aria-labelledby="perfil-titulo">
-  <div class="perfil-page">
+  <main class="page-content perfil-page">
     <header class="perfil-hero">
       <div class="perfil-avatar"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#graduation-cap"></use></svg></div>
       <div>
@@ -14,7 +14,7 @@
       <p id="nivel-descricao">Complete aulas, questões e temas de redação para avançar.</p>
     </section>
     <div class="perfil-stats-grid" aria-label="Resumo do desempenho">
-      <div class="perfil-metric"><small>Experiência</small><strong id="perfil-xp">0</strong><span>XP acumulado no navegador</span></div>
+      <div class="perfil-metric"><small>Experiência</small><strong id="perfil-xp">0</strong><span>XP acumulado na sua conta</span></div>
       <div class="perfil-metric"><small>Precisão</small><strong id="perfil-acertos">—</strong><span>Questões respondidas</span></div>
       <div class="perfil-metric"><small>Sequência</small><strong id="perfil-streak">0</strong><span>Dias de acesso consecutivos</span></div>
       <div class="perfil-metric"><small>Questões</small><strong id="perfil-respondidas">0</strong><span>Tentativas registradas</span></div>
@@ -37,13 +37,16 @@
       <svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#settings"></use></svg> Editar nome, série e vestibulares
     </button>
     <button type="button" class="perfil-edit-button perfil-logout" onclick="authLogout()">Sair da conta</button>
-  </div>
-  <section class="perfil-google-link" aria-label="Integração com conta Google">
- <h3>Conta Google</h3>
- <p>Entre normalmente com sua senha e vincule a conta Google com o mesmo e-mail.</p>
- <div class="google-vincular-slot" role="group" aria-label="Vincular Conta Google"></div>
+    <section class="perfil-section perfil-conta" aria-labelledby="perfil-conta-titulo">
+      <h2 id="perfil-conta-titulo"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#shield-check"></use></svg> Acesso à conta</h2>
+      <p id="perfil-google-status" role="status">Verificando conexão com o Google…</p>
+      <button id="perfil-google-conectar" type="button" class="perfil-edit-button" onclick="abrirAcaoConta('vincular')" hidden>Conectar Conta Google</button>
+      <button id="perfil-google-desconectar" type="button" class="perfil-edit-button" onclick="abrirAcaoConta('desvincular')" hidden>Desconectar Conta Google</button>
+      <button id="perfil-excluir" type="button" class="perfil-edit-button perfil-excluir" onclick="abrirAcaoConta('excluir')" disabled>Excluir minha conta voaAM</button>
+    </section>
+  </main>
 </section>
-  <div class="perfil-modal-backdrop" id="editar-perfil-modal" hidden>
+<div class="perfil-modal-backdrop" id="editar-perfil-modal" hidden>
     <form class="perfil-modal" onsubmit="salvarEdicaoPerfil(event)" aria-labelledby="editar-perfil-titulo">
       <h2 id="editar-perfil-titulo">Editar meus dados</h2>
       <label for="editar-nome">Nome</label><input id="editar-nome" maxlength="120" required autocomplete="name">
@@ -66,4 +69,26 @@
     </form>
 
 </div>
-</section>
+
+
+<dialog id="acao-conta" class="conta-dialog" aria-labelledby="acao-conta-titulo" aria-describedby="acao-conta-mensagem">
+  <form id="acao-conta-form">
+    <h2 id="acao-conta-titulo"></h2>
+    <p id="acao-conta-mensagem"></p>
+    <div id="acao-conta-senha-atual">
+      <label for="acao-conta-senha">Senha atual do voaAM</label>
+      <input id="acao-conta-senha" class="form-control" type="password" autocomplete="current-password" maxlength="256">
+    </div>
+    <div id="acao-conta-nova-senha" hidden>
+      <label for="acao-conta-nova">Nova senha do voaAM (mínimo de 8 caracteres)</label>
+      <input id="acao-conta-nova" class="form-control" type="password" autocomplete="new-password" minlength="8" maxlength="256">
+    </div>
+    <button id="acao-conta-alternar" type="button" class="btn-secondary" hidden></button>
+    <div id="acao-conta-google" hidden></div>
+    <p id="acao-conta-erro" class="conta-erro" role="alert"></p>
+    <div class="sc-dialog-actions">
+      <button type="button" id="acao-conta-cancelar">Cancelar</button>
+      <button type="submit" id="acao-conta-confirmar"></button>
+    </div>
+  </form>
+</dialog>

@@ -1,22 +1,26 @@
-<!-- Treino personalizado separado da tela de filtros. Layout baseado no simulado completo. -->
-<section id="treino-overlay" class="treino-overlay" hidden aria-label="Treino personalizado">
-  <header class="treino-overlay-header">
-    <button class="treino-back" type="button" onclick="treinoSair()" aria-label="Encerrar treino e voltar">←</button>
-    <strong>Treino personalizado</strong>
-    <span class="treino-overlay-progresso" id="treino-progresso-overlay" aria-live="polite">Questão 1</span>
-  </header>
-  <div class="treino-scroll">
-    <main class="treino-scroll-inner">
-      <div id="treino-questao-overlay" class="treino-card-sc"></div>
-      <div id="treino-feedback-overlay" class="treino-feedback" aria-live="polite"></div>
-    </main>
-  </div>
-  <footer class="treino-overlay-footer">
-    <div class="treino-footer-inner">
-      <button type="button" id="treino-pular-overlay" class="treino-btn-sec" onclick="treinoPular()">Pular</button>
-      <button type="button" id="treino-proxima-overlay" class="treino-btn-primary" onclick="treinoProxima()" disabled>Próxima questão</button>
+<section id="treino-overlay" class="assessment-overlay" hidden aria-label="Treino personalizado">
+  <header class="aula-header assessment-header">
+    <button class="back-btn" type="button" onclick="treinoSair()" aria-label="Sair do treino">←</button>
+    <div class="assessment-heading">
+      <h2 class="aula-title">Treino personalizado</h2>
+      <div class="assessment-progress-row" id="treino-progresso-overlay" aria-live="polite"></div>
+      <div class="assessment-progress" id="treino-barra" aria-hidden="true"><span id="treino-progresso-fill"></span></div>
     </div>
-  </footer>
+  </header>
+  <div class="assessment-column">
+    <div class="assessment-body" id="treino-scroll">
+      <div class="assessment-inner">
+        <div id="treino-questao-overlay"></div>
+        <p id="treino-feedback-overlay" class="treino-feedback" role="status"></p>
+      </div>
+    </div>
+    <footer class="assessment-footer" id="treino-rodape">
+      <div class="assessment-inner assessment-actions">
+        <button type="button" id="treino-pular-overlay" class="sc-btn-pular" onclick="treinoPular()">Pular</button>
+        <button type="button" id="treino-proxima-overlay" class="sc-btn-prox" onclick="treinoProxima()" disabled>Próxima questão</button>
+      </div>
+    </footer>
+  </div>
   <div id="treino-confirmar-saida" class="sc-dialog-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="treino-dialog-titulo">
     <div class="sc-dialog">
       <h2 id="treino-dialog-titulo">Encerrar treino?</h2>

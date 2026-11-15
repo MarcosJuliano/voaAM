@@ -1,232 +1,4 @@
-<!-- components/simulado-completo-view.html -->
-<style>
-/* ── Overlay principal ── */
-#sc-overlay {
-  position: fixed; inset: 0; z-index: 9000;
-  background: var(--bg);
-  display: none; flex-direction: column;
-  overflow: hidden;
-}
-
-/* ── Telas de seleção (absolutas sobre o overlay) ── */
-.sc-tela {
-  position: absolute; inset: 0; z-index: 10;
-  background: var(--bg); overflow-y: auto;
-  display: none;
-}
-.sc-tela.ativa { display: block; }
-.sc-tela-inner { max-width: 540px; margin: 0 auto; padding: 0 16px 32px; }
-
-/* ── Corpo da prova ── */
-#sc-body {
-  flex: 1; display: flex; overflow: hidden;
-  display: none;
-}
-#sc-body.ativo { display: flex; }
-
-/* ── Coluna da questão ── */
-#sc-questao-col {
-  flex: 1; min-width: 0;
-  display: flex; flex-direction: column; overflow: hidden;
-}
-#sc-scroll {
-  flex: 1; overflow-y: auto;
-  padding: 16px 16px 0;
-}
-
-/* Desktop: centraliza o conteúdo com margens laterais */
-@media (min-width: 768px) {
-  #sc-scroll {
-    padding: 24px 0 0;
-  }
-  #sc-scroll-inner {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-  #sc-nav {
-    padding: 12px 0;
-  }
-  #sc-nav-inner {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    gap: 8px;
-  }
-}
-
-/* ── Imagem da questão ── */
-.sc-img-box {
-  margin: 12px 0;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  background: var(--surface2);
-}
-.sc-img-box img {
-  width: 100%;
-  max-height: 260px;
-  object-fit: contain;
-  display: block;
-  padding: 8px;
-  box-sizing: border-box;
-  cursor: zoom-in;
-  transition: opacity 0.15s;
-}
-.sc-img-box img:hover { opacity: 0.88; }
-.sc-img-box figcaption {
-  font-size: 10px; color: var(--text2);
-  padding: 5px 10px;
-  border-top: 1px solid var(--border);
-  font-style: italic;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.sc-img-zoom-hint {
-  font-size: 10px; color: var(--accent2);
-  display: flex; align-items: center; gap: 3px;
-}
-
-/* ── Modal de zoom ── */
-#sc-zoom-overlay {
-  position: fixed; inset: 0; z-index: 99999;
-  background: rgba(0,0,0,0.88);
-  display: none; align-items: center; justify-content: center;
-  cursor: zoom-out;
-  padding: 16px;
-}
-#sc-zoom-overlay.aberto { display: flex; }
-#sc-zoom-overlay img {
-  max-width: 100%; max-height: 92vh;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
-  cursor: default;
-}
-#sc-zoom-close {
-  position: absolute; top: 16px; right: 16px;
-  width: 36px; height: 36px; border-radius: 50%;
-  background: rgba(255,255,255,0.12); border: none;
-  color: #fff; font-size: 18px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-
-/* ── Alternativa selecionada ── */
-.option-btn.sc-sel {
-  border-color: var(--accent);
-  background: rgba(59,130,246,0.09);
-}
-.option-btn.sc-sel .option-letter {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-
-/* ── Nav inferior ── */
-#sc-nav {
-  flex-shrink: 0; padding: 10px 14px;
-  border-top: 1px solid var(--border);
-  background: var(--card2);
-  display: flex; gap: 8px;
-}
-.sc-btn-pular {
-  flex: 1; padding: 11px; border-radius: 10px;
-  border: 1.5px solid rgba(245,158,11,0.35);
-  background: rgba(245,158,11,0.07); color: #f59e0b;
-  font-family: var(--font); font-size: 13px; font-weight: 700;
-  cursor: pointer; transition: background 0.15s;
-}
-.sc-btn-pular:hover { background: rgba(245,158,11,0.12); }
-.sc-btn-prox {
-  flex: 1.5; padding: 11px; border-radius: 10px;
-  border: none; background: var(--accent); color: #fff;
-  font-family: var(--font); font-size: 13px; font-weight: 800;
-  cursor: pointer;
-}
-
-/* ── Timer ── */
-.sc-timer {
-  font-size: 13px; font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  color: var(--accent2);
-  background: rgba(59,130,246,0.08);
-  border: 1px solid rgba(59,130,246,0.18);
-  padding: 4px 10px; border-radius: 20px;
-  white-space: nowrap; flex-shrink: 0;
-}
-.sc-timer.urgente {
-  color: #ef4444;
-  background: rgba(239,68,68,0.08);
-  border-color: rgba(239,68,68,0.25);
-}
-
-/* ── Log lateral ── */
-#sc-log {
-  width: 220px; flex-shrink: 0;
-  border-left: 1px solid var(--border);
-  background: var(--card);
-  display: none; flex-direction: column;
-  overflow: hidden;
-}
-@media (min-width: 768px) {
-  #sc-log { display: flex; }
-  #sc-log-toggle { display: none !important; }
-}
-#sc-log.aberto {
-  display: flex !important;
-  position: absolute; inset: 0;
-  width: 100%; border-left: none; z-index: 20;
-}
-#sc-log-grid {
-  flex: 1; overflow-y: auto; padding: 10px;
-  display: flex; flex-wrap: wrap;
-  gap: 4px; align-content: flex-start;
-}
-.sc-log-q {
-  width: 30px; height: 30px; border-radius: 7px;
-  border: 1.5px solid var(--border);
-  background: var(--surface2); color: var(--text2);
-  font-size: 9px; font-weight: 800; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.1s;
-}
-.sc-log-q.atual  { background: var(--accent); color: #fff; border-color: var(--accent); }
-.sc-log-q.resp   { background: rgba(59,130,246,0.15); color: var(--accent2); border-color: rgba(59,130,246,0.35); }
-.sc-log-q.pulada { background: rgba(245,158,11,0.15); color: #f59e0b; border-color: rgba(245,158,11,0.4); }
-
-/* ── Resultado ── */
-#sc-resultado {
-  flex: 1; overflow-y: auto;
-  padding: 20px; display: none;
-}
-.sc-res-wrap {
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  #sc-resultado { padding: 24px; }
-}
-
-/* Barra por assunto */
-.sc-ass-item { margin-bottom: 10px; }
-.sc-ass-row  { display: flex; justify-content: space-between; margin-bottom: 3px; }
-.sc-ass-bg   { height: 6px; border-radius: 3px; background: var(--surface2); overflow: hidden; }
-.sc-ass-fill { height: 100%; border-radius: 3px; transition: width 0.6s; }
-
-/* Gabarito row */
-.sc-gab-row {
-  display: flex; align-items: center; gap: 6px;
-  padding: 7px 10px;
-  border-radius: 8px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  font-size: 11px;
-  margin-bottom: 4px;
-}
-</style>
-
-<div id="sc-overlay">
+<section id="sc-overlay" class="assessment-overlay" aria-label="Simulado completo">
 
   <!-- ═══════════════════════════════════════
        TELA 1: SELETOR DE PROVA
@@ -300,15 +72,15 @@
   ═══════════════════════════════════════ -->
 
   <!-- Header da prova -->
-  <div class="aula-header" id="sc-header-prova" style="display:none">
+  <div class="aula-header assessment-header" id="sc-header-prova" style="display:none">
     <button class="back-btn" onclick="scConfirmarSaida()">←</button>
-    <div style="flex:1;min-width:0">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+    <div class="assessment-heading">
+      <div class="assessment-progress-row">
         <span id="sc-prog-txt" style="font-size:12px;font-weight:700;color:var(--text2)">Questão 1 de 45</span>
         <span id="sc-timer" class="sc-timer">05:00:00</span>
       </div>
-      <div style="height:4px;border-radius:2px;background:var(--surface2);overflow:hidden">
-        <div id="sc-prog-fill" style="height:100%;width:0%;border-radius:2px;background:var(--accent);transition:width 0.3s"></div>
+      <div class="assessment-progress" aria-hidden="true">
+        <span id="sc-prog-fill" style="width:0%"></span>
       </div>
     </div>
     <button id="sc-log-toggle" class="back-btn" onclick="scToggleLog()" title="Ver questões"
@@ -319,36 +91,36 @@
   <div id="sc-body">
 
     <!-- Coluna questão -->
-    <div id="sc-questao-col">
-      <div id="sc-scroll">
-       <div id="sc-scroll-inner">
+    <div id="sc-questao-col" class="assessment-column">
+      <div id="sc-scroll" class="assessment-body">
+       <div id="sc-scroll-inner" class="assessment-inner">
 
         <!-- Badge + assunto -->
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <div class="assessment-meta">
           <span id="sc-badge" class="quiz-badge"></span>
-          <span id="sc-assunto" style="font-size:11px;color:var(--text2)"></span>
+          <span id="sc-assunto"></span>
         </div>
 
         <!-- Card enunciado -->
         <div class="question-card">
-          <p id="sc-enunciado" class="question-text" style="margin:0;text-align:justify"></p>
+          <p id="sc-enunciado" class="question-text"></p>
           <div id="sc-img-block"></div>
         </div>
 
         <!-- Alternativas -->
-        <div id="sc-opts" class="options-list" style="margin-bottom:16px"></div>
+        <div id="sc-opts" class="options-list"></div>
 
        </div><!-- /sc-scroll-inner -->
       </div><!-- /scroll -->
 
       <!-- Nav -->
-      <div id="sc-nav">
-       <div id="sc-nav-inner">
+      <footer id="sc-nav" class="assessment-footer">
+       <div id="sc-nav-inner" class="assessment-inner assessment-actions">
         <button class="back-btn" onclick="scAnterior()" style="flex-shrink:0">←</button>
         <button id="sc-btn-pular" class="sc-btn-pular" onclick="scPular()">⏭ Pular</button>
         <button id="sc-btn-prox"  class="sc-btn-prox"  onclick="scProximo()">Próxima →</button>
        </div>
-      </div>
+      </footer>
     </div><!-- /questao-col -->
 
     <!-- Log lateral -->
@@ -398,7 +170,7 @@
   <!-- Resultado -->
   <div id="sc-resultado"></div>
 
-</div><!-- /sc-overlay -->
+</section><!-- /sc-overlay -->
 
 <!-- ── Modal zoom de imagem ── -->
 <div id="sc-zoom-overlay" onclick="scZoomFechar()">

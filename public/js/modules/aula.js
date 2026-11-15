@@ -11,6 +11,17 @@ let isSimulado = false;
 let currentQuizTopicContext = null;
 let quizResultadoRegistrado = false;
 
+function sortearQuiz(quiz) {
+  return {
+    ...quiz,
+    questions: embaralhar(quiz.questions.map((q, indice) => ({
+      ...q,
+      indiceOriginal: q.indiceOriginal ?? indice,
+      ordem: ordenarAlternativas(q.opts),
+    }))),
+  };
+}
+
 function openAula(quizId) {
   const overlay = document.getElementById('aula-view');
   const titleEl = document.getElementById('aula-title');
@@ -45,7 +56,7 @@ function openAula(quizId) {
     return;
   }
 
-  currentQuiz = quiz;
+  currentQuiz = sortearQuiz(quiz);
   currentQuizIdx = 0;
   quizCorrect = 0;
   quizXpGanho = 0;
@@ -146,9 +157,9 @@ function renderQuestion() {
     <div class="question-card">
       <div class="question-text">${q.q}</div>
       <div class="options-list" id="options-list">
-        ${q.opts.map((opt, i) => `
+        ${q.ordem.map((original, i) => `
           <button class="option-btn" onclick="selectOption(${i})" id="opt-${i}">
-            <span class="option-letter">${letters[i]}</span>${opt}
+            <span class="option-letter">${letters[i]}</span><span>${q.opts[original]}</span>
           </button>
         `).join('')}
       </div>
@@ -166,13 +177,14 @@ async function selectOption(idx) {
   const q = currentQuiz.questions[currentQuizIdx];
   const feedback = document.getElementById('feedback-box');
   const nextBtn = document.getElementById('next-btn');
-  const opts = document.querySelectorAll('.option-btn');
+  const opts = document.querySelectorAll('#options-list .option-btn');
   opts.forEach(b=>b.disabled=true);
   const qid = isSimulado ? (q.id?.startsWith('simulado:') ? q.id : 'banco:'+q.id)
-      : `quiz:${currentQuizTopicContext.quizId}:${currentQuizIdx}`;
+      : `quiz:${currentQuizTopicContext.quizId}:${q.indiceOriginal}`;
   try {
-    const r = await avaliarRespostaServidor(qid, idx);
-    const correct=r.correta;
+    const r = await avaliarRespostaServidor(qid, q.ordem[idx]);
+    if (currentQuiz?.questions[currentQuizIdx] !== q) return;
+    const correct = q.ordem.indexOf(r.correta);
     quizXpGanho += Number(r.xp_ganho)||0;
     opts[correct]?.classList.add('correct');
     if (r.acertou) {
@@ -259,6 +271,7 @@ function showQuizResult() {
 }
 
 function retryQuiz() {
+  currentQuiz = sortearQuiz(currentQuiz);
   currentQuizIdx = 0;
   quizCorrect = 0;
   quizXpGanho = 0;
@@ -287,7 +300,7 @@ function voaAMAbrirSimulado(quiz, tempoSegundos) {
     return false;
   }
 
-  currentQuiz = quiz;
+  currentQuiz = sortearQuiz(quiz);
   currentQuizIdx = 0;
   quizCorrect = 0;
   quizXpGanho = 0;

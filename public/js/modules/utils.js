@@ -46,3 +46,17 @@ function escapeHTML(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+// Retorna uma cópia para que o acervo preserve a ordem exigida pelo gabarito.
+function embaralhar(itens) {
+  const copia = [...itens];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
+function ordenarAlternativas(alternativas) {
+  return embaralhar(alternativas.map((_, indice) => indice));
+}

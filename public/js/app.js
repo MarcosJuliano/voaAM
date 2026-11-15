@@ -26,6 +26,7 @@
 // ─── INIT FINAL ───
 // Executado depois que todos os módulos foram carregados.
 (function initApp() {
+  document.getElementById("app-wrapper").inert = false;
   // Atualiza XP no header
   const xpEl = document.getElementById('xp-count');
   if (xpEl) xpEl.textContent = state.xp;
@@ -42,21 +43,6 @@
   const savedTheme = localStorage.getItem('voaam_theme');
   if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
 
-  // Inicializa visibilidade dos slots de página (grid desktop)
-  // Mostra apenas home; os demais ficam ocultos até goTo() ser chamado
-  const slotMap = {
-    home:              'slot-page-home',
-    vestibulares:      'slot-page-vestibulares',
-    materia:           'slot-page-materia',
-    praticar:          'slot-page-praticar',
-    redacao:           'slot-page-redacao',
-    perfil:            'slot-page-perfil',
-    'banco-de-provas': 'slot-page-banco-de-provas',
-  };
-  Object.entries(slotMap).forEach(([name, slotId]) => {
-    const slot = document.getElementById(slotId);
-    if (slot) slot.style.display = (name === 'home') ? 'block' : 'none';
-  });
   // Fecha aula-view com tecla Escape (acessibilidade teclado)
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {

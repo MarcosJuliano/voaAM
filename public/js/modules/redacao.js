@@ -10,14 +10,26 @@ const RED_RASCUNHO_KEY  = 'voaam_red_rascunho_';  // prefixo + tema-id
 
 // ID da redação aberta no modal (para excluir/retomar)
 let redModalId = null;
+let redHistorico = [];
+let redHistoricoVersao = 0;
+let redAvaliando = false;
+let redSalvando = false;
 
 // ─── HELPERS localStorage ────────────────────────────────────
-function redGetHistorico() {
-  try { return JSON.parse(localStorage.getItem(RED_HISTORICO_KEY + ':' + (localStorage.getItem('voaam_usuario_id') || 'local')) || '[]'); }
+function redGetHistoricoLegado() {
+  try {
+    const historico = JSON.parse(localStorage.getItem(RED_HISTORICO_KEY + ':' + (localStorage.getItem('voaam_usuario_id') || 'local')) || '[]');
+    return Array.isArray(historico) ? historico.filter(r => r && typeof r.texto === 'string') : [];
+  }
   catch { return []; }
 }
-function redSaveHistorico(lista) {
+function redSaveHistoricoLegado(lista) {
   localStorage.setItem(RED_HISTORICO_KEY + ':' + (localStorage.getItem('voaam_usuario_id') || 'local'), JSON.stringify(lista));
+}
+
+function chaveRascunho(temaId) {
+  const uid = localStorage.getItem('voaam_usuario_id') || 'local';
+  return RED_RASCUNHO_KEY + uid + ':' + temaId;
 }
 
 // Catálogo com referência da fonte. Sem inventar textos motivadores.
@@ -38,7 +50,7 @@ async function redCarregarTemas() {
     const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
     container.innerHTML=temas.map(t=>`<article class="red-tema-card" data-vest="${esc(t.vestibular)}" data-tema-id="${esc(t.id)}" onclick="redSelecionarTema(this)">
       <div class="red-tema-cab"><span class="red-vest-badge">${esc(t.vestibular)} ${t.ano}${t.etapa?' · Etapa '+t.etapa:''}</span>
-      <div style="font-weight:700;color:var(--text);font-size:15px;margin-top:7px">${esc(t.tema)}</div>
+      <h2 class="red-tema-titulo" style="font-weight:700;color:var(--text);font-size:15px;margin-top:7px">${esc(t.tema)}</h2>
       <p style="font-size:12px;color:var(--text2)">${esc(t.modalidade)}</p></div>
       <div class="red-motivadores" style="display:none;margin-top:12px">
         <p>Para ler a coletânea original, consulte a página da fonte. O voaAM não reproduz textos de apoio não fornecidos.</p>
@@ -47,7 +59,7 @@ async function redCarregarTemas() {
           <button type="button" class="btn-primary red-escrever-tema" onclick="redEscreverTema(event,this)">Escrever sobre este tema</button>
         </div>
       </div>
-      <button class="red-expand-btn" onclick="redExpandirTema(event,this)"><span>Ver proposta e fonte</span><span class="red-expand-icon">▾</span></button>
+      <button type="button" class="red-expand-btn" aria-expanded="false" onclick="redExpandirTema(event,this)"><span>Ver proposta e fonte</span><span class="red-expand-icon">▾</span></button>
     </article>`).join('');
   } catch(e) {
     console.warn('Temas indisponíveis:',e);
@@ -55,15 +67,17 @@ async function redCarregarTemas() {
   }
 }
 
-async function redConfigurarAvaliacao(){
-  try{
-    const r=await fetch('/api/config-publica');const c=await r.json();
-    const sel=document.getElementById('red-modo-avaliacao');
-    if(sel && c.ia_configurada && !sel.querySelector('[value="gemini"]')) {
-      sel.add(new Option('Correção detalhada por Gemini — 5 competências (estimativa)','gemini'));
-      sel.value='gemini';
-    }
-  }catch(e){console.warn('Configuração do avaliador indisponível:',e);}
+async function redConfigurarAvaliacao() {
+  try {
+    const config = await authRequisicao('/api/config-publica');
+    const seletor = document.getElementById('red-modo-avaliacao');
+    const rotulos = {gemini: 'IA Gemini — cinco competências', ollama: 'IA do servidor (Ollama) — cinco competências'};
+    const provedores = (config.provedores_redacao || []).filter(modo => Object.hasOwn(rotulos, modo));
+    for (const provedor of provedores) seletor.add(new Option(rotulos[provedor], provedor));
+    if (provedores.length) seletor.value = provedores[0];
+  } catch {
+    // A opção local continua disponível quando a configuração não carrega.
+  }
 }
 function redEditorTemaSelecionar(id){
   const card=[...document.querySelectorAll('.red-tema-card')].find(c=>c.dataset.temaId===id);
@@ -88,25 +102,16 @@ function redAba(aba) {
 
   if (!paineis.temas) return;
 
-  const estiloAtivo   = 'border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-weight:700';
-  const estiloInativo = 'border:1px solid var(--border);background:var(--surface);color:var(--text2);font-weight:600';
-
   Object.entries(paineis).forEach(([nome, el]) => {
-    if (!el) return;
-    el.style.display = nome === aba ? 'block' : 'none';
+    if (el) el.style.display = nome === aba ? 'block' : 'none';
   });
   Object.entries(btns).forEach(([nome, el]) => {
-    if (!el) return;
-    // Preserva os estilos base e sobrescreve apenas os de estado
-    const base = el.getAttribute('style')
-      .replace(/border:[^;]+;/g, '')
-      .replace(/background:[^;]+;/g, '')
-      .replace(/color:[^;]+;/g, '')
-      .replace(/font-weight:[^;]+;/g, '');
-    el.setAttribute('style', base + ';' + (nome === aba ? estiloAtivo : estiloInativo));
+    el?.classList.toggle('active', nome === aba);
+    el?.setAttribute('aria-pressed', String(nome === aba));
   });
 
-  if (aba === 'historico') redRenderHistorico();
+  document.getElementById('slot-page-redacao').scrollTop = 0;
+  if (aba === 'historico') redCarregarHistorico();
 }
 
 // ─── FILTROS POR VESTIBULAR ──────────────────────────────────
@@ -131,7 +136,8 @@ function redExpandirTema(event, btn) {
 
   motivadores.style.display = aberto ? 'none' : 'block';
   icon.textContent           = aberto ? '▾' : '▴';
-  label.textContent          = aberto ? 'Ver textos motivadores' : 'Ocultar motivadores';
+  label.textContent = aberto ? 'Ver proposta e fonte' : 'Ocultar proposta';
+  btn.setAttribute('aria-expanded', String(!aberto));
 }
 
 // ─── CLIQUE NO CARD (abre motivadores) ───────────────────────
@@ -142,7 +148,8 @@ function redSelecionarTema(card) {
     motivadores.style.display = 'block';
     if (btn) {
       btn.querySelector('.red-expand-icon').textContent = '▴';
-      btn.querySelector('span:first-child').textContent = 'Ocultar motivadores';
+      btn.querySelector('span:first-child').textContent = 'Ocultar proposta';
+      btn.setAttribute('aria-expanded', 'true');
     }
   }
 }
@@ -152,9 +159,7 @@ function redEscreverTema(event, btn) {
   event.stopPropagation();
   const card    = btn.closest('.red-tema-card');
   const temaId  = card.getAttribute('data-tema-id') || 'sem_tema';
-  const titulo  = card.querySelector('.red-motivadores')
-    ? card.querySelectorAll('[style*="font-weight:700"]')[0]?.textContent?.trim() || ''
-    : '';
+  const titulo = card.querySelector('.red-tema-titulo')?.textContent.trim() || '';
   const badge   = card.querySelector('.red-vest-badge')?.textContent?.trim() || '';
 
   // Preenche header do editor
@@ -171,8 +176,9 @@ function redEscreverTema(event, btn) {
     textarea.setAttribute('data-titulo',   titulo);
 
     // Restaura rascunho (se houver)
-    const rascunho = localStorage.getItem(RED_RASCUNHO_KEY + temaId) || '';
+    const rascunho = localStorage.getItem(chaveRascunho(temaId)) || '';
     textarea.value = rascunho;
+    redLimparAvaliacao();
     redAtualizarContadores(textarea);
   }
 
@@ -207,69 +213,58 @@ function redSalvarRascunho() {
   if (!textarea || !textarea.value.trim()) return;
 
   const temaId = textarea.getAttribute('data-tema-id') || 'sem_tema';
-  localStorage.setItem(RED_RASCUNHO_KEY + temaId, textarea.value);
+  localStorage.setItem(chaveRascunho(temaId), textarea.value);
 
   redMostrarFeedback('red-save-feedback');
 }
 
 // ─── CONCLUIR → ENVIA AO HISTÓRICO ───────────────────────────
 async function redEnviarHistorico() {
-  const textarea = document.getElementById('red-editor-textarea');
-  if (!textarea || !textarea.value.trim()) {
-    redMostrarFeedbackErro('Escreva sua redação antes de concluir.');
+  if (redSalvando || redAvaliando) return;
+  const editor = document.getElementById('red-editor-textarea');
+  const { temaId } = editor.dataset;
+  const texto = editor.value.trim();
+  if (!temaId || !texto) {
+    redMostrarFeedbackErro('Escolha um tema e escreva a redação.');
     return;
   }
 
-  const texto   = textarea.value;
-  const temaId  = textarea.getAttribute('data-tema-id')  || 'sem_tema';
-  const badge   = textarea.getAttribute('data-badge')    || '';
-  const titulo  = textarea.getAttribute('data-titulo')   || '';
-  const palavras = texto.trim().split(/\s+/).length;
-  const linhas   = texto.split('\n').reduce((acc, l) => acc + Math.max(1, Math.ceil((l.length || 1) / 68)), 0);
-
-  const entrada = {
-    id:        Date.now(),
-    temaId,
-    badge,
-    titulo,
-    texto,
-    palavras,
-    linhas,
-    status:    'concluida',
-    data:      new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' }),
-    hora:      new Date().toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }),
-  };
-
-  const lista = redGetHistorico();
-  // Substitui se já existe uma entrada com mesmo temaId
-  const idx = lista.findIndex(r => r.temaId === temaId && r.status === 'concluida');
-  if (idx > -1) lista[idx] = entrada;
-  else lista.unshift(entrada);
-  // Primeiro confirma o armazenamento do texto no SQLite por usuário.
+  redSalvando = true;
+  const botao = document.getElementById('red-concluir');
+  botao.disabled = true;
   try {
-    const resposta=await fetch('/api/redacoes', {method:'POST',credentials:'same-origin',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({tema_id:temaId,texto})});
-    const dados=await resposta.json().catch(()=>({}));
-    if(!resposta.ok)throw new Error(dados.message||'Falha ao salvar redação no servidor.');
-  }catch(e){redMostrarFeedbackErro(e.message);return;}
-  redSaveHistorico(lista);
-  if(typeof atualizarNivel==='function') atualizarNivel();
-
-  // Remove rascunho após concluir
-  localStorage.removeItem(RED_RASCUNHO_KEY + temaId);
-
-  redAtualizarBadge();
-  redMostrarFeedback('red-concluir-feedback');
+    await authRequisicao('/api/redacoes', {
+      method: 'POST', body: JSON.stringify({tema_id: temaId, texto}),
+    });
+    if (localStorage.getItem(chaveRascunho(temaId))?.trim() === texto) {
+      localStorage.removeItem(chaveRascunho(temaId));
+    }
+    redCarregarHistorico();
+    atualizarNivel();
+    redMostrarFeedback('red-concluir-feedback');
+  } catch (e) {
+    redMostrarFeedbackErro(e.message);
+  } finally {
+    redSalvando = false;
+    botao.disabled = redAvaliando;
+  }
 }
 
 // ─── LIMPAR EDITOR ───────────────────────────────────────────
 function redLimpar() {
   const textarea = document.getElementById('red-editor-textarea');
   if (!textarea) return;
-  if (textarea.value.trim() && !confirm('Deseja apagar o texto atual?')) return;
-  textarea.value = '';
-  redAtualizarContadores(textarea);
+  if (!textarea.value.trim()) return;
+  confirmarAcao({
+    titulo: 'Limpar texto?',
+    mensagem: 'O texto atual será removido do editor. Você ainda pode abrir redações salvas no Histórico.',
+    acao: 'Limpar texto',
+    executar: () => {
+      textarea.value = '';
+      redLimparAvaliacao();
+      redAtualizarContadores(textarea);
+    },
+  });
 }
 
 // ─── CORREÇÃO PEDAGÓGICA (GEMINI OU MODO LOCAL) ───────────────────
@@ -323,229 +318,238 @@ function redRenderAvaliacaoGemini(painel, dados) {
     painel.append(lista);
   }
 }
+function redSelecionarModoLocal() {
+  const modo = document.getElementById('red-modo-avaliacao');
+  modo.value = 'gratis';
+  modo.scrollIntoView({block: 'center'});
+  modo.focus();
+  redLimparAvaliacao();
+}
+
+function redLimparAvaliacao() {
+  if (redAvaliando) return;
+  document.getElementById('red-ai-status').hidden = true;
+  document.getElementById('red-ai-modo-local').hidden = true;
+  document.getElementById('red-resultado-ia').hidden = true;
+}
+
 async function redCorrigir() {
-  const textarea=document.getElementById('red-editor-textarea');
-  if(!textarea||!textarea.value.trim()){
-    if(typeof showXPToast==='function')showXPToast('Escreva sua redação antes de solicitar a análise.');
+  if (redAvaliando || redSalvando) return;
+  const editor = document.getElementById('red-editor-textarea');
+  const { temaId, titulo: tema, badge } = editor.dataset;
+  const texto = editor.value.trim();
+  if (!temaId || texto.length < 100 || texto.length > 10000) {
+    redMostrarFeedbackErro('Escolha um tema e escreva entre 100 e 10.000 caracteres.');
     return;
   }
-  if(textarea.value.trim().length<100){
-    if(typeof showXPToast==='function')showXPToast('Escreva ao menos 100 caracteres para análise.');
-    return;
-  }
-  const tema=textarea.getAttribute('data-titulo')||'Tema não informado';
-  const vestibular=(textarea.getAttribute('data-badge')||'ENEM').split(' ')[0];
-  const texto=textarea.value;
-  const btn=document.querySelector('[onclick*="redCorrigir"]');
-  if(btn){btn.disabled=true;btn.dataset.originalText=btn.textContent;btn.textContent='Analisando redação...';}
-  let painel=document.getElementById('red-resultado-ia');
-  if(!painel){
-    painel=document.createElement('section');painel.id='red-resultado-ia';
-    painel.setAttribute('aria-live','polite');
-    document.getElementById('red-editor-panel')?.append(painel);
-  }
-  painel.className='red-ai-relatorio';
-  painel.replaceChildren(redAiNo('p','red-ai-status','Analisando o texto. A nota será apenas uma estimativa pedagógica.'));
-  try{
-    const gemini=document.getElementById('red-modo-avaliacao')?.value==='gemini';
-    const resposta=await fetch(gemini?'/api/corrigir-redacao':'/api/redacao/avaliar-gratis',{
-      method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({tema,texto,vestibular})
+
+  const provedor = document.getElementById('red-modo-avaliacao').value;
+  const porIA = provedor !== 'gratis';
+  const btn = document.getElementById('red-analisar');
+  const concluir = document.getElementById('red-concluir');
+  const painel = document.getElementById('red-resultado-ia');
+  const status = document.getElementById('red-ai-status');
+  const mensagem = document.getElementById('red-ai-mensagem');
+  const spinner = document.getElementById('red-ai-spinner');
+  redAvaliando = true;
+  btn.disabled = concluir.disabled = true;
+  painel.hidden = true;
+  painel.setAttribute('aria-busy', 'true');
+  status.hidden = spinner.hidden = false;
+  status.classList.remove('red-ai-erro');
+  const modoLocal = document.getElementById('red-ai-modo-local');
+  modoLocal.hidden = true;
+  mensagem.textContent = porIA
+    ? 'A IA está analisando sua redação. Isso pode levar alguns segundos.'
+    : 'Analisando a estrutura da redação…';
+  let mostrarResultado = false;
+  try {
+    const resposta = await fetch(porIA ? '/api/corrigir-redacao' : '/api/redacao/avaliar-gratis', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({provedor, tema_id: temaId, tema, texto, vestibular: badge?.split(' ')[0]}),
+      signal: AbortSignal.timeout(90000),
     });
-    const dados=await resposta.json().catch(()=>({}));
-    if(!resposta.ok)throw new Error(dados.message||dados.resultado||'Falha na análise.');
-    if(gemini)redRenderAvaliacaoGemini(painel,dados);
-    else painel.replaceChildren(redAiNo('p','red-ai-texto-local',dados.resultado||'Análise indisponível.'));
-  }catch(e){
-    console.warn('[voaAM] Falha ao avaliar redação:',e);
-    painel.replaceChildren(redAiNo('p','red-ai-erro','Não foi possível avaliar: '+e.message));
-  }finally{
-    if(btn){btn.disabled=false;btn.textContent=btn.dataset.originalText||'Analisar redação';}
-    painel.scrollIntoView({behavior:'smooth',block:'nearest'});
+    const dados = await resposta.json().catch(() => ({}));
+    if (!resposta.ok) {
+      const erro = new Error(dados.message || 'Falha na análise.');
+      erro.status = resposta.status;
+      throw erro;
+    }
+
+    const mesmaVersao = editor.dataset.temaId === temaId && editor.value.trim() === texto;
+    if (porIA) {
+      redRenderAvaliacaoGemini(painel, dados);
+      mensagem.textContent = mesmaVersao
+        ? 'Análise concluída. A nota e o feedback foram salvos no Histórico.'
+        : 'Avaliação da versão enviada salva no Histórico.';
+      redCarregarHistorico();
+      atualizarNivel();
+    } else {
+      painel.replaceChildren(redAiNo('p', 'red-ai-texto-local', dados.resultado || 'Análise indisponível.'));
+      mensagem.textContent = mesmaVersao ? 'Análise local concluída.' : 'Análise local concluída para a versão enviada.';
+    }
+    mostrarResultado = mesmaVersao;
+  } catch (e) {
+    status.classList.add('red-ai-erro');
+    modoLocal.hidden = !porIA || !(e.status >= 500 || e.status === 429 || e.name === 'TimeoutError');
+    mensagem.textContent = e.name === 'TimeoutError'
+      ? 'A análise ultrapassou o tempo de espera. Confira o Histórico ou tente novamente.'
+      : 'Não foi possível avaliar. ' + e.message;
+  } finally {
+    redAvaliando = false;
+    btn.disabled = concluir.disabled = false;
+    spinner.hidden = true;
+    painel.setAttribute('aria-busy', 'false');
+    painel.hidden = !mostrarResultado;
   }
 }
 
-// ─── RENDERIZAR HISTÓRICO ────────────────────────────────────
+function redModeloHistorico(doc) {
+  const data = new Date(doc.atualizada_em.replace(' ', 'T') + 'Z');
+  let avaliacao = null;
+  try { avaliacao = JSON.parse(doc.resultado_ia); } catch { /* registros anteriores sem relatório JSON */ }
+  return {
+    chave: 'servidor:' + doc.id,
+    id: doc.id,
+    servidor: true,
+    temaId: doc.tema_id,
+    badge: doc.badge,
+    titulo: doc.tema,
+    texto: doc.texto,
+    palavras: doc.texto.trim().split(/\s+/).length,
+    linhas: doc.texto.split('\n').reduce((n, l) => n + Math.max(1, Math.ceil(l.length / 68)), 0),
+    nota: doc.nota,
+    avaliacao,
+    quando: data.toLocaleString('pt-BR', {dateStyle: 'short', timeStyle: 'short'}),
+  };
+}
+
+async function redCarregarHistorico() {
+  const versao = ++redHistoricoVersao;
+  const status = document.getElementById('red-hist-contador');
+  const legado = redGetHistoricoLegado().map(r => ({
+    ...r, chave: 'local:' + r.id, quando: r.data + ' · ' + r.hora,
+  }));
+  try {
+    const {redacoes} = await authRequisicao('/api/redacoes');
+    if (versao !== redHistoricoVersao) return;
+    const servidor = redacoes.map(redModeloHistorico);
+    const versoes = new Set(servidor.map(r => JSON.stringify([r.temaId, r.texto.trim()])));
+    redHistorico = servidor.concat(legado.filter(r => !versoes.has(JSON.stringify([r.temaId, r.texto.trim()]))));
+    redRenderHistorico();
+  } catch (e) {
+    if (versao !== redHistoricoVersao) return;
+    redHistorico = legado;
+    redRenderHistorico();
+    status.textContent = 'Não foi possível carregar o histórico da conta. Abra esta aba novamente para tentar.';
+    document.getElementById('red-limpar-historico').disabled = true;
+  }
+}
+
 function redRenderHistorico() {
-  const lista     = redGetHistorico();
   const container = document.getElementById('red-hist-lista');
-  const vazio     = document.getElementById('red-hist-vazio');
-  const contador  = document.getElementById('red-hist-contador');
-
-  if (!container) return;
-
-  const n = lista.length;
-  if (contador) contador.textContent = n === 0 ? 'Nenhuma redação salva ainda'
-    : n === 1 ? '1 redação no histórico' : `${n} redações no histórico`;
-
-  if (n === 0) {
-    if (vazio)     vazio.style.display     = 'block';
-    container.innerHTML = '';
-    return;
+  const n = redHistorico.length;
+  document.getElementById('red-hist-contador').textContent = n
+    ? `${n} redaç${n === 1 ? 'ão' : 'ões'} no histórico`
+    : 'Nenhuma redação salva ainda';
+  document.getElementById('red-hist-vazio').style.display = n ? 'none' : 'block';
+  document.getElementById('red-limpar-historico').disabled = n === 0;
+  const badge = document.getElementById('red-hist-badge');
+  badge.textContent = n;
+  badge.hidden = n === 0;
+  container.replaceChildren();
+  for (const r of redHistorico) {
+    const card = redAiNo('button', 'red-hist-card');
+    card.type = 'button';
+    const previa = r.texto.replace(/\s+/g, ' ').trim();
+    card.append(
+      redAiNo('p', '', [r.badge, r.quando].filter(Boolean).join(' · ')),
+      redAiNo('h3', '', r.titulo || 'Redação'),
+      redAiNo('p', '', previa.slice(0, 120) + (previa.length > 120 ? '…' : '')),
+    );
+    if (Number.isFinite(r.nota)) card.append(redAiNo('strong', 'red-hist-nota', `Nota estimada · ${r.nota}/1000`));
+    card.addEventListener('click', () => redAbrirModal(r.chave));
+    container.append(card);
   }
-
-  if (vazio) vazio.style.display = 'none';
-
-  container.innerHTML = lista.map(r => {
-    // Cor do badge por vestibular
-    const cor = r.badge.includes('ENEM')  ? { bg:'rgba(34,197,94,0.12)',  border:'rgba(34,197,94,0.25)',  text:'#4ade80' }
-              : r.badge.includes('PSC')   ? { bg:'rgba(59,130,246,0.12)', border:'rgba(59,130,246,0.25)', text:'#60a5fa' }
-              : r.badge.includes('SIS')   ? { bg:'rgba(168,85,247,0.12)', border:'rgba(168,85,247,0.25)', text:'#c084fc' }
-              : r.badge.includes('MACRO') ? { bg:'rgba(245,158,11,0.12)', border:'rgba(245,158,11,0.25)', text:'#fbbf24' }
-              :                             { bg:'var(--surface2)',        border:'var(--border)',          text:'var(--text2)' };
-
-    // Trecho de prévia (primeiras 120 chars)
-    const previa = r.texto.replace(/\n/g, ' ').trim().slice(0, 120) + (r.texto.length > 120 ? '…' : '');
-
-    // Cor da barra de linhas
-    const barCor  = r.linhas < 7 ? '#ef4444' : r.linhas < 25 ? '#f59e0b' : '#10b981';
-    const barPct  = Math.min(100, (r.linhas / 30) * 100);
-
-    return `
-    <div class="red-hist-card" onclick="redAbrirModal(${r.id})">
-      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:10px">
-        <div style="flex-shrink:0;width:38px;height:38px;border-radius:11px;background:${cor.bg};border:1px solid ${cor.border};display:flex;align-items:center;justify-content:center;font-size:17px">✍️</div>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:3px">
-            <span style="font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;background:${cor.bg};border:1px solid ${cor.border};color:${cor.text}">${r.badge}</span>
-            <span style="font-size:10px;color:var(--text2);white-space:nowrap">${r.data} · ${r.hora}</span>
-          </div>
-          <div style="font-size:13px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:4px">${r.titulo}</div>
-          <div style="font-size:11px;color:var(--text2);line-height:1.5">${previa}</div>
-        </div>
-      </div>
-
-      <!-- Stats compactos -->
-      <div style="display:flex;gap:10px;margin-bottom:8px">
-        <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2)">
-          📝 <span style="font-weight:700;color:var(--text)">${r.palavras}</span> palavras
-        </div>
-        <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2)">
-          ≡ <span style="font-weight:700;color:var(--text)">${r.linhas}</span>/30 linhas
-        </div>
-        <div style="display:flex;align-items:center;gap:4px;font-size:11px">
-          <span style="width:6px;height:6px;border-radius:50%;background:${r.status === 'concluida' ? '#10b981' : '#f59e0b'};display:inline-block"></span>
-          <span style="color:var(--text2)">${r.status === 'concluida' ? 'Concluída' : 'Rascunho'}</span>
-        </div>
-      </div>
-
-      <!-- Barra de progresso mini -->
-      <div style="height:3px;border-radius:2px;background:var(--surface2);overflow:hidden">
-        <div style="height:100%;width:${barPct}%;background:${barCor};border-radius:2px;transition:width 0.3s"></div>
-      </div>
-
-      <div style="margin-top:8px;font-size:11px;color:var(--accent2);font-weight:600">Ver redação completa →</div>
-    </div>`;
-  }).join('');
 }
 
-// ─── ABRIR MODAL ─────────────────────────────────────────────
-function redAbrirModal(id) {
-  const lista = redGetHistorico();
-  const r     = lista.find(x => x.id === id);
+function redAbrirModal(chave) {
+  const r = redHistorico.find(item => item.chave === chave);
   if (!r) return;
-
-  redModalId = id;
-
-  const cor = r.badge.includes('ENEM')  ? '#4ade80'
-            : r.badge.includes('PSC')   ? '#60a5fa'
-            : r.badge.includes('SIS')   ? '#c084fc'
-            : r.badge.includes('MACRO') ? '#fbbf24' : 'var(--text2)';
-
-  const barCor = r.linhas < 7 ? '#ef4444' : r.linhas < 25 ? '#f59e0b' : '#10b981';
-  const barPct = Math.min(100, (r.linhas / 30) * 100);
-
-  document.getElementById('modal-vest-badge').textContent  = '✍️ ' + r.badge;
-  document.getElementById('modal-vest-badge').style.color  = cor;
-  document.getElementById('modal-tema-titulo').textContent = r.titulo;
-  document.getElementById('modal-meta').textContent        = `Salva em ${r.data} às ${r.hora}`;
-  document.getElementById('modal-texto').textContent       = r.texto;
-
-  document.getElementById('modal-stats').innerHTML = `
-    <div style="flex:1;padding:12px 16px;border-right:1px solid var(--border);text-align:center">
-      <div style="font-size:18px;font-weight:900;color:var(--text)">${r.palavras}</div>
-      <div style="font-size:10px;color:var(--text2);margin-top:2px">Palavras</div>
-    </div>
-    <div style="flex:1;padding:12px 16px;border-right:1px solid var(--border);text-align:center">
-      <div style="font-size:18px;font-weight:900;color:var(--text)">${r.linhas}<span style="font-size:11px;color:var(--text2)">/30</span></div>
-      <div style="font-size:10px;color:var(--text2);margin-top:2px">Linhas</div>
-    </div>
-    <div style="flex:1;padding:12px 16px;text-align:center">
-      <div style="height:8px;border-radius:4px;background:var(--surface2);margin-bottom:6px;overflow:hidden">
-        <div style="height:100%;width:${barPct}%;background:${barCor};border-radius:4px"></div>
-      </div>
-      <div style="font-size:10px;color:var(--text2)">${r.linhas < 7 ? 'Abaixo do mínimo' : r.linhas < 25 ? 'Em andamento' : 'Extensão ideal ✅'}</div>
-    </div>
-  `;
-
+  redModalId = chave;
+  document.getElementById('modal-vest-badge').textContent = r.badge || '';
+  document.getElementById('modal-tema-titulo').textContent = r.titulo || 'Redação';
+  document.getElementById('modal-meta').textContent = r.quando;
+  document.getElementById('modal-texto').textContent = r.texto;
+  const stats = document.getElementById('modal-stats');
+  stats.replaceChildren(
+    redAiNo('span', '', `${r.palavras} palavras`),
+    redAiNo('span', '', `${r.linhas}/30 linhas estimadas`),
+  );
+  if (Number.isFinite(r.nota)) stats.append(redAiNo('strong', '', `Nota estimada · ${r.nota}/1000`));
+  const avaliacao = document.getElementById('modal-avaliacao');
+  avaliacao.hidden = !Array.isArray(r.avaliacao?.competencias);
+  if (!avaliacao.hidden) redRenderAvaliacaoGemini(avaliacao, {avaliacao: r.avaliacao});
   const modal = document.getElementById('red-modal');
-  if (modal) modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+  modal.showModal();
+  modal.scrollTop = 0;
 }
 
-// ─── FECHAR MODAL ────────────────────────────────────────────
 function redFecharModal() {
-  const modal = document.getElementById('red-modal');
-  if (modal) modal.style.display = 'none';
-  document.body.style.overflow = '';
+  document.getElementById('red-modal').close();
   redModalId = null;
 }
 
-// ─── RETOMAR DO MODAL ─────────────────────────────────────────
 function redRetomarDoModal() {
-  const lista = redGetHistorico();
-  const r     = lista.find(x => x.id === redModalId);
+  const r = redHistorico.find(item => item.chave === redModalId);
   if (!r) return;
-
   redFecharModal();
-
-  // Preenche o editor com os dados da redação
-  const badgeEl  = document.getElementById('red-editor-vest-badge');
-  const tituloEl = document.getElementById('red-editor-tema-titulo');
-  const textarea = document.getElementById('red-editor-textarea');
-
-  if (badgeEl)  badgeEl.textContent  = '✍️ ' + r.badge;
-  if (tituloEl) tituloEl.textContent = r.titulo;
-  if (textarea) {
-    textarea.value = r.texto;
-    textarea.setAttribute('data-tema-id', r.temaId);
-    textarea.setAttribute('data-badge',   r.badge);
-    textarea.setAttribute('data-titulo',  r.titulo);
-    redAtualizarContadores(textarea);
-  }
-
+  const editor = document.getElementById('red-editor-textarea');
+  editor.value = r.texto;
+  editor.dataset.temaId = r.temaId || '';
+  editor.dataset.badge = r.badge || '';
+  editor.dataset.titulo = r.titulo || '';
+  document.getElementById('red-seletor-tema').value = editor.dataset.temaId;
+  document.getElementById('red-editor-vest-badge').textContent = editor.dataset.badge;
+  document.getElementById('red-editor-tema-titulo').textContent = editor.dataset.titulo;
+  redAtualizarContadores(editor);
+  redLimparAvaliacao();
   redAba('editor');
 }
 
-// ─── EXCLUIR DO MODAL ────────────────────────────────────────
 function redExcluirDoModal() {
-  if (!confirm('Excluir esta redação do histórico?')) return;
-  const lista  = redGetHistorico().filter(r => r.id !== redModalId);
-  redSaveHistorico(lista);
-  redAtualizarBadge();
-  redFecharModal();
-  redRenderHistorico();
+  const r = redHistorico.find(item => item.chave === redModalId);
+  if (!r) return;
+  confirmarAcao({
+    titulo: 'Excluir redação?',
+    mensagem: 'O texto e a avaliação serão removidos do histórico.',
+    acao: 'Excluir redação',
+    executar: async () => {
+      if (r.servidor) await authRequisicao('/api/redacoes/' + r.id, {method: 'DELETE'});
+      redSaveHistoricoLegado(redGetHistoricoLegado().filter(x =>
+        r.servidor ? x.temaId !== r.temaId || x.texto.trim() !== r.texto.trim() : x.id !== r.id,
+      ));
+      redFecharModal();
+      await redCarregarHistorico();
+      atualizarNivel();
+    },
+  });
 }
 
-// ─── LIMPAR TODO O HISTÓRICO ──────────────────────────────────
 function redLimparHistorico() {
-  if (!confirm('Excluir todas as redações do histórico? Esta ação não pode ser desfeita.')) return;
-  redSaveHistorico([]);
-  redAtualizarBadge();
-  redRenderHistorico();
-}
-
-// ─── BADGE DE CONTADOR NA ABA ────────────────────────────────
-function redAtualizarBadge() {
-  const n     = redGetHistorico().length;
-  const badge = document.getElementById('red-hist-badge');
-  if (!badge) return;
-  if (n > 0) {
-    badge.textContent   = n;
-    badge.style.display = 'inline-block';
-  } else {
-    badge.style.display = 'none';
-  }
+  confirmarAcao({
+    titulo: 'Excluir todo o histórico?',
+    mensagem: 'Todas as redações e avaliações salvas serão excluídas permanentemente.',
+    acao: 'Excluir histórico',
+    executar: async () => {
+      await authRequisicao('/api/redacoes', {method: 'DELETE'});
+      redSaveHistoricoLegado([]);
+      await redCarregarHistorico();
+      atualizarNivel();
+    },
+  });
 }
 
 // ─── FEEDBACKS ───────────────────────────────────────────────
@@ -561,24 +565,8 @@ function redMostrarFeedbackErro(msg) {
   showXPToast('⚠️ ' + msg);
 }
 
-// ─── FECHAR MODAL AO CLICAR NO FUNDO ─────────────────────────
-document.addEventListener('click', function(e) {
-  const modal = document.getElementById('red-modal');
-  if (modal && e.target === modal) redFecharModal();
-});
-
-// ─── INIT ────────────────────────────────────────────────────
-// Atualiza o badge sempre que a página carrega
-(function redInit() {
-  // Aguarda o DOM dos fragmentos estar pronto
-  const check = setInterval(() => {
-    if (document.getElementById('red-hist-badge')) {
-      redAtualizarBadge();
-      redCarregarTemas();
-      clearInterval(check);
-    }
-  }, 200);
-})();
-
-// Avaliação local é o padrão. Gemini só é exposto quando habilitado explicitamente.
-setTimeout(redConfigurarAvaliacao,200);
+const redModal = document.getElementById('red-modal');
+redModal.addEventListener('click', e => { if (e.target === redModal) redFecharModal(); });
+document.getElementById('red-editor-textarea').addEventListener('input', redLimparAvaliacao);
+redCarregarTemas();
+redConfigurarAvaliacao();

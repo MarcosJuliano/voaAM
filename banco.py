@@ -31,10 +31,16 @@ def inicializar_banco() -> None:
     conexao = conectar()
     try:
         conexao.executescript(script)
-        # Compatibilidade com bancos criados antes da introdução do catálogo de temas.
-        colunas = {r['name'] for r in conexao.execute('PRAGMA table_info(redacoes)')}
-        if 'tema_id' not in colunas:
-            conexao.execute('ALTER TABLE redacoes ADD COLUMN tema_id TEXT')
+        conexao.execute('BEGIN IMMEDIATE')
+        migracoes = (
+            ('redacoes', 'tema_id', 'TEXT'),
+            ('usuarios', 'sessao_versao', 'INTEGER NOT NULL DEFAULT 0'),
+            ('google_identidades', 'email_google', 'TEXT'),
+        )
+        for tabela, coluna, tipo in migracoes:
+            campos = {r['name'] for r in conexao.execute(f'PRAGMA table_info({tabela})')}
+            if coluna not in campos:
+                conexao.execute(f'ALTER TABLE {tabela} ADD COLUMN {coluna} {tipo}')
         # URLs vêm de um catálogo auditado e permanecem editáveis no SQLite.
         catalogo = BASE_DIR / 'database' / 'provas_oficiais.json'
         if catalogo.is_file():

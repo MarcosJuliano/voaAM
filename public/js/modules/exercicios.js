@@ -72,10 +72,7 @@ function renderExercicios() {
   // Remove questões já usadas SE tiver outras disponíveis
   const usadas = questoesUsadas[exMateriaAtual] || [];
   const novas = pool.filter(q => !usadas.includes(q.id));
-  const finalPool = novas.length >= 3 ? novas : pool; // se ficou pouco, reutiliza
-
-  // Prioriza temas fracos
-  finalPool.sort((a,b) => (temasFragos[b.materia]||0) - (temasFragos[a.materia]||0) || String(a.id).localeCompare(String(b.id)));
+  const finalPool = embaralhar(novas.length >= 3 ? novas : pool);
 
   const total = finalPool.length;
   const count = document.getElementById('ex-count');
@@ -125,9 +122,9 @@ function abrirExercicio(id) {
       <div style="font-size:15px;font-weight:500;line-height:1.6;color:var(--text)">${escapeHTML(q.enunciado)}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">`;
-  q.opcoes.forEach((op, i) => {
-    html += `<button onclick="responderExercicio('${q.id}',${i})" id="exopt-${q.id}-${i}" style="padding:12px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;transition:all 0.15s">
-      <span style="width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">${letras[i]}</span>${op}</button>`;
+  ordenarAlternativas(q.opcoes).forEach((original, i) => {
+    html += `<button class="option-btn" onclick="responderExercicio('${q.id}',${original})" id="exopt-${q.id}-${original}">
+      <span class="option-letter">${letras[i]}</span><span>${q.opcoes[original]}</span></button>`;
   });
   html += `</div><div id="exfb-${q.id}"></div>
     <button onclick="closeAula()" style="margin-top:12px;padding:12px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;width:100%">← Voltar</button>`;
@@ -145,8 +142,9 @@ async function responderExercicio(qId, idx) {
   try {
     const r=await avaliarRespostaServidor('banco:'+qId,idx);
     const correto=document.getElementById(`exopt-${qId}-${r.correta}`);
-    if(correto){correto.style.borderColor='var(--green)';correto.style.background='rgba(45,201,138,0.1)';}
-    if(fb)fb.textContent=(r.acertou?'Resposta correta! ':'Resposta incorreta. ')+`Gabarito: ${'ABCDE'[r.correta]}. `+(r.explicacao||'');
+    correto?.classList.add('correct');
+    if (!r.acertou) document.getElementById(`exopt-${qId}-${idx}`)?.classList.add('wrong');
+    if(fb)fb.textContent=(r.acertou?'Resposta correta! ':'Resposta incorreta. ')+`Gabarito: ${correto?.querySelector('.option-letter').textContent || '—'}. `+(r.explicacao||'');
     if(r.acertou){marcarTemaAcerto(q.materia,q.id);spawnStars();}
     else {marcarTemaFraco(q.materia,q.id);perderCoracao();}
   } catch(e) {
@@ -233,9 +231,6 @@ function carregarProximaQuestao() {
     novas = pool;
   }
 
-  // Prioriza temas fracos
-  novas.sort((a,b) => (temasFragos[b.materia]||0) - (temasFragos[a.materia]||0) || String(a.id).localeCompare(String(b.id)));
-
   exTotal = pool.length;
   const bar = document.getElementById('ex-progress-bar');
   if (bar) bar.style.width = exTotal > 0 ? Math.min(100, (exFeitas/Math.min(exTotal,10))*100)+'%' : '0%';
@@ -250,7 +245,7 @@ function carregarProximaQuestao() {
     return;
   }
 
-  exQuestaoAtual = novas[0];
+  exQuestaoAtual = novas[Math.floor(Math.random() * novas.length)];
   renderQuestaoEx(exQuestaoAtual);
 }
 
@@ -276,16 +271,11 @@ function renderQuestaoEx(q) {
     </div>
     <div style="font-size:11px;color:var(--text2);margin-bottom:16px;line-height:1.5">${q.contexto||''}</div>
     <div style="font-size:16px;font-weight:600;color:var(--text);line-height:1.6;margin-bottom:24px">${q.enunciado}</div>
-    <div id="ex-opcoes" style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
-      ${q.opcoes.map((op,i) => `
-        <button onclick="responderEx(${i})" id="exo-${i}" style="
-          padding:14px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.1);
-          background:rgba(255,255,255,0.04);color:var(--text);font-family:var(--font);
-          font-size:14px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;
-          transition:all 0.15s;width:100%">
-          <span style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.07);
-            display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:var(--text2)">${letras[i]}</span>
-          <span>${op}</span>
+    <div id="ex-opcoes" class="options-list">
+      ${ordenarAlternativas(q.opcoes).map((original,i) => `
+        <button class="option-btn" onclick="responderEx(${original})" id="exo-${original}">
+          <span class="option-letter">${letras[i]}</span>
+          <span>${q.opcoes[original]}</span>
         </button>`).join('')}
     </div>
     <div id="ex-feedback" style="margin-bottom:12px"></div>
@@ -304,8 +294,9 @@ async function responderEx(idx) {
   try {
     const r=await avaliarRespostaServidor('banco:'+q.id,idx);
     const certo=document.getElementById('exo-'+r.correta);
-    if(certo)certo.style.borderColor='var(--green)';
-    if(fb)fb.textContent=(r.acertou?'Resposta correta! ':'Resposta incorreta. ')+`Gabarito: ${'ABCDE'[r.correta]}. `+(r.explicacao||'');
+    certo?.classList.add('correct');
+    if (!r.acertou) document.getElementById('exo-'+idx)?.classList.add('wrong');
+    if(fb)fb.textContent=(r.acertou?'Resposta correta! ':'Resposta incorreta. ')+`Gabarito: ${certo?.querySelector('.option-letter').textContent || '—'}. `+(r.explicacao||'');
     if(r.acertou){marcarTemaAcerto(q.materia,q.id);exFeitas++;spawnStars();}
     else{marcarTemaFraco(q.materia,q.id);perderCoracao();renderCoraoesEx(getCoracoes().qtd);}
     if(proximo)proximo.style.display='block';

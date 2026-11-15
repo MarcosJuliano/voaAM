@@ -44,31 +44,16 @@ function startSimuladoComEtapa(vest, etapaKey) {
   const qtdQuestoes = etapa.materias.length > 0
     ? Math.min(pool.length, Math.max(10, Math.round(etapa.minutos / 8)))
     : Math.min(pool.length, 15);
-  const embaralhadas = [...pool];
-  for (let i=embaralhadas.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [embaralhadas[i],embaralhadas[j]]=[embaralhadas[j],embaralhadas[i]];
-  }
-  embaralhadas.length=Math.min(embaralhadas.length,qtdQuestoes);
-  const qs = embaralhadas.map(q => ({
+  const qs = embaralhar(pool).slice(0, qtdQuestoes).map(q => ({
     q: q.enunciado, opts: q.opcoes, correct: null,
     explanation: "", materia: q.materia, id: q.id
   }));
   if (!qs.length) { showXPToast('⚠️ Sem questões para essa etapa'); return; }
-  currentQuiz = { title: `${vest} — ${etapa.label}`, desc: `Simulado cronometrado. ${etapa.minutos} minutos. Questões do banco oficial.`, video: null, questions: qs };
-  currentQuizIdx = 0; quizCorrect = 0; isSimulado = true;
-  document.getElementById('aula-title').textContent = currentQuiz.title;
-  document.getElementById('aula-content').innerHTML = `
-    <div class="topic-desc">${currentQuiz.desc}</div>
-    <div class="quiz-title-bar">
-      <span class="quiz-badge" style="background:rgba(0,180,216,0.15);color:var(--cyan)">🎯 Simulado</span>
-      <span class="quiz-progress-text">0 / ${qs.length} questões</span>
-    </div>
-    <div id="quiz-area"></div>
-  `;
-  document.getElementById('aula-view').classList.add('open');
-  iniciarCronometro(etapa.minutos * 60);
-  renderQuestion();
+  voaAMAbrirSimulado({
+    title: `${vest} — ${etapa.label}`,
+    desc: `Simulado cronometrado. ${etapa.minutos} minutos. Questões do banco oficial.`,
+    questions: qs,
+  }, etapa.minutos * 60);
 }
 
 function startSimulado(type) {
@@ -79,29 +64,17 @@ function startSimulado(type) {
   } else {
     pool = bancoDB.filter(q => q.vest === type.toUpperCase() && q.opcoes.length > 0);
   }
-  const embaralhadas=[...pool];
-  for(let i=embaralhadas.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [embaralhadas[i],embaralhadas[j]]=[embaralhadas[j],embaralhadas[i]];
-  }
-  const qs = embaralhadas.slice(0,10).map(q => ({
+  const qs = embaralhar(pool).slice(0, 10).map(q => ({
     q: q.enunciado, opts: q.opcoes, correct: null,
     explanation: "", materia: q.materia, id: q.id
   }));
   if (!qs.length) { showXPToast('⚠️ Sem questões no banco ainda'); return; }
   const titulos = {'mat-sis':'Simulado Matemática SIS', psc:'Simulado PSC', sis:'Simulado SIS'};
-  currentQuiz = { title: titulos[type]||'Simulado', desc:'Questões reais do banco. Cronometrado.', video:null, questions:qs };
-  currentQuizIdx = 0; quizCorrect = 0; isSimulado = true;
-  document.getElementById('aula-title').textContent = currentQuiz.title;
-  document.getElementById('aula-content').innerHTML = `
-    <div class="topic-desc">${currentQuiz.desc}</div>
-    <div class="quiz-title-bar">
-      <span class="quiz-badge" style="background:rgba(21,101,192,0.2);color:var(--cyan)">📐 Matemática</span>
-      <span class="quiz-progress-text">0 / ${qs.length} questões</span>
-    </div><div id="quiz-area"></div>`;
-  document.getElementById('aula-view').classList.add('open');
-  iniciarCronometro(30 * 60);
-  renderQuestion();
+  voaAMAbrirSimulado({
+    title: titulos[type] || 'Simulado',
+    desc: 'Questões reais do banco. Cronometrado.',
+    questions: qs,
+  }, 30 * 60);
 }
 
 function iniciarCronometro(segundos) {

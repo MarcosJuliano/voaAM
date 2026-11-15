@@ -48,12 +48,30 @@ from redacoes_api import bp_redacoes
 app.register_blueprint(bp_redacoes)
 from progresso_api import bp_progresso
 app.register_blueprint(bp_progresso)
-from google_api import bp_google
+from google_api import bp_google, iniciar_sessao
 app.register_blueprint(bp_google)
 from redacao_gratis_api import bp_redacao_gratis
 app.register_blueprint(bp_redacao_gratis)
 from redacao_ia_api import bp_redacao_ia
 app.register_blueprint(bp_redacao_ia)
+
+@app.before_request
+def validar_sessao():
+    uid = session.get('usuario_id')
+    if not uid or not request.path.startswith('/api/'):
+        return
+    c = conectar()
+    try:
+        conta = c.execute('SELECT ativo,sessao_versao FROM usuarios WHERE id=?', (uid,)).fetchone()
+    finally:
+        c.close()
+    if conta and conta['ativo'] and conta['sessao_versao'] == session.get('sessao_versao', 0):
+        return
+    session.clear()
+    if request.endpoint not in ('sessao_atual', 'realizar_cadastro', 'realizar_login',
+                                 'google.entrar_google', 'google.desafio_google', 'google.config_publica'):
+        return jsonify({'message': 'Sessão encerrada. Entre novamente.'}), 401
+
 
 VESTIBULARES_VALIDOS = {"SIS", "PSC", "ENEM", "MACRO"}
 DIFICULDADES_VALIDAS = {"ambos", "facil", "medio", "dificil", "basica", "intermediaria", "avancada"}
@@ -87,9 +105,10 @@ def _carregar_conta(usuario_id: int) -> dict[str, Any] | None:
         linha = conexao.execute(
             """
             SELECT u.id, u.nome, u.email, u.tipo, u.ativo,
-                   p.serie, p.vestibulares_json, p.dificuldade
+                   p.serie, p.vestibulares_json, p.dificuldade, g.google_sub, g.email_google
               FROM usuarios AS u
               LEFT JOIN perfis AS p ON p.usuario_id = u.id
+              LEFT JOIN google_identidades AS g ON g.usuario_id = u.id
              WHERE u.id = ?
             """,
             (usuario_id,),
@@ -102,6 +121,7 @@ def _carregar_conta(usuario_id: int) -> dict[str, Any] | None:
                 "nome": linha["nome"],
                 "email": linha["email"],
                 "tipo": linha["tipo"],
+                "google": {"conectado": bool(linha["google_sub"]), "email": linha["email_google"]},
             },
             "perfil": _perfil_publico(linha),
         }
@@ -223,9 +243,7 @@ def realizar_cadastro():
     finally:
         conexao.close()
 
-    session.clear()
-    session["usuario_id"] = usuario_id
-    session.permanent = True
+    iniciar_sessao(usuario_id, 0)
     conta = _carregar_conta(usuario_id)
     return jsonify({"message": "Cadastro realizado com sucesso!", "autenticado": True, **conta}), 201
 
@@ -244,7 +262,7 @@ def realizar_login():
     conexao = conectar()
     try:
         usuario = conexao.execute(
-            "SELECT id, senha_hash, ativo FROM usuarios WHERE email = ?", (email,)
+            "SELECT id, senha_hash, ativo, sessao_versao FROM usuarios WHERE email = ?", (email,)
         ).fetchone()
     finally:
         conexao.close()
@@ -254,9 +272,7 @@ def realizar_login():
     if usuario["ativo"] != 1:
         return jsonify({"message": "Esta conta está desativada."}), 403
 
-    session.clear()
-    session["usuario_id"] = usuario["id"]
-    session.permanent = True
+    iniciar_sessao(usuario["id"], usuario["sessao_versao"])
     conta = _carregar_conta(usuario["id"])
     return jsonify({"message": "Login realizado com sucesso!", "autenticado": True, **conta}), 200
 
@@ -272,7 +288,9 @@ def sessao_atual():
         session.clear()
         return jsonify({"autenticado": False}), 200
 
-    return jsonify({"autenticado": True, **conta}), 200
+    resposta = jsonify({"autenticado": True, **conta})
+    resposta.headers["Cache-Control"] = "private, no-store"
+    return resposta, 200
 
 
 @app.post("/api/logout")

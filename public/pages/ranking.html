@@ -1,0 +1,19 @@
+<div class="screen" id="screen-ranking">
+  <main class="page-content">
+    <header class="page-heading">
+      <h1><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#trophy"></use></svg> Ranking</h1>
+      <p>Classificação pelo XP acumulado no voaAM.</p>
+    </header>
+    <div id="ranking-posicao" class="ranking-posicao" hidden></div>
+    <section class="question-card ranking-card" aria-labelledby="ranking-titulo">
+      <h2 id="ranking-titulo">Classificação geral</h2>
+      <p id="ranking-status" class="ranking-status" role="status"></p>
+      <ol id="ranking-lista" class="ranking-lista" aria-label="Estudantes classificados"></ol>
+      <div id="ranking-paginacao" class="ranking-paginacao" hidden>
+        <button id="ranking-anterior" type="button" class="btn-secondary">Anterior</button>
+        <button id="ranking-proxima" type="button" class="btn-secondary">Próxima</button>
+      </div>
+      <button id="ranking-tentar" type="button" class="btn-secondary" hidden>Tentar novamente</button>
+    </section>
+  </main>
+</div>

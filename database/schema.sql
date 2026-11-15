@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     senha_hash TEXT NOT NULL,
     tipo TEXT NOT NULL DEFAULT 'ALUNO',
     ativo INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1)),
+    sessao_versao INTEGER NOT NULL DEFAULT 0,
     data_cadastro TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -126,6 +127,7 @@ CREATE TABLE IF NOT EXISTS recompensas_questoes (
 -- Contas Google vinculadas pelo identificador estável "sub", nunca só pelo e-mail.
 CREATE TABLE IF NOT EXISTS google_identidades (
  google_sub TEXT PRIMARY KEY,
+ email_google TEXT,
  usuario_id INTEGER NOT NULL UNIQUE,
  criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
  FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE

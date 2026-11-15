@@ -315,12 +315,7 @@ function iniciarSimuladoNovo(vestKey, modo) {
     // O gabarito não é mais publicado: filtra apenas conteúdo acessível.
     pool = pool.filter(q => String(q.enunciado || '').trim().length > 0 && q.opcoes.every(o=>String(o||'').trim()));
 
-    // Embaralhamento Fisher–Yates, evitando o comparador aleatório de sort().
-    for (let i = pool.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
-    }
-    const selecionadas = pool.slice(0, quantidadeSolicitada);
+    const selecionadas = embaralhar(pool).slice(0, quantidadeSolicitada);
     if (!selecionadas.length) {
       console.warn('[VoaAM] Nenhuma questão disponível para o simulado:', { vestKey, vestNome, etapa, banco: banco.length });
       if (typeof showXPToast === 'function') showXPToast('Não há questões cadastradas para este simulado.');
@@ -368,13 +363,10 @@ function pratAba(aba) {
   const isSim = aba === 'sim';
   const isCustom = aba === 'personalizado';
   if (panelCustom) panelCustom.style.display = isCustom ? 'block' : 'none';
-  if (btnCustom) btnCustom.classList.toggle('active', isCustom);
-  btnSim.style.borderColor = isSim ? 'var(--border-accent)' : 'var(--border)';
-  btnSim.style.background  = isSim ? 'rgba(59,130,246,0.1)' : 'var(--surface)';
-  btnSim.style.color        = isSim ? 'var(--accent2)'       : 'var(--text2)';
-  btnEx.style.borderColor  = aba === 'ex' ? 'rgba(245,158,11,0.4)' : 'var(--border)';
-  btnEx.style.background   = aba === 'ex' ? 'rgba(245,158,11,0.08)' : 'var(--surface)';
-  btnEx.style.color         = !isSim ? 'var(--gold)'          : 'var(--text2)';
+  [[btnSim, isSim], [btnCustom, isCustom], [btnEx, aba === 'ex']].forEach(([botao, ativo]) => {
+    botao?.classList.toggle('active', ativo);
+    botao?.setAttribute('aria-pressed', String(ativo));
+  });
   if (panelSim) panelSim.style.display = isSim ? 'block' : 'none';
   if (panelEx)  panelEx.style.display  = aba === 'ex' ? 'block' : 'none';
 
@@ -460,27 +452,17 @@ function iniciarSimuladoCatalogo(id) {
   const vest = simVestAtual;
   const sim = (catalogoSimulados[vest]||[]).find(s => s.id === id);
   if (!sim) return;
-  let pool = bancoDB.filter(sim.filtro);
+  const pool = bancoDB.filter(sim.filtro);
   if (pool.length < 1) { showXPToast('⚠️ Sem questões disponíveis'); return; }
-  // Embaralha e pega até sim.qs
-  pool = pool.sort(() => Math.random()-0.5).slice(0, sim.qs);
-  const qs = pool.map(q => ({
+  const qs = embaralhar(pool).slice(0, sim.qs).map(q => ({
     q: q.enunciado, opts: q.opcoes, correct: null,
     explanation: "", materia: q.materia, id: q.id
   }));
-  currentQuiz = { title: `${vest} — ${sim.titulo}`, desc: `Simulado cronometrado. ${sim.tempo} minutos. ${sim.sub}.`, video: null, questions: qs };
-  currentQuizIdx = 0; quizCorrect = 0; isSimulado = true;
-  document.getElementById('aula-title').textContent = currentQuiz.title;
-  document.getElementById('aula-content').innerHTML = `
-    <div class="topic-desc">${currentQuiz.desc}</div>
-    <div class="quiz-title-bar">
-      <span class="quiz-badge" style="background:${sim.cor};color:${sim.corNum}">🎯 Simulado</span>
-      <span class="quiz-progress-text">0 / ${qs.length} questões</span>
-    </div>
-    <div id="quiz-area"></div>`;
-  document.getElementById('aula-view').classList.add('open');
-  iniciarCronometro(sim.tempo * 60);
-  renderQuestion();
+  voaAMAbrirSimulado({
+    title: `${vest} — ${sim.titulo}`,
+    desc: `Simulado cronometrado. ${sim.tempo} minutos. ${sim.sub}.`,
+    questions: qs,
+  }, sim.tempo * 60);
 }
 
 // Manter compatibilidade com chamadas antigas

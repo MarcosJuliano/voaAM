@@ -57,11 +57,22 @@ async function authRequisicao(url, opcoes) {
 
 function authGuardarPerfil(perfilRecebido, usuarioRecebido) {
   if (!perfilRecebido) return;
+  if (usuarioRecebido) authConta = usuarioRecebido;
   perfil = perfilRecebido;
   localStorage.setItem('voaam_perfil', JSON.stringify(perfilRecebido));
   if (usuarioRecebido && usuarioRecebido.id != null) {
     const anterior=localStorage.getItem('voaam_usuario_id');
     const novo=String(usuarioRecebido.id);
+    if (anterior === novo) {
+      // Migra rascunhos antigos somente para a mesma conta confirmada na sessão.
+      const prefixo = 'voaam_red_rascunho_';
+      for (const chave of Object.keys(localStorage)) {
+        if (!chave.startsWith(prefixo) || chave.includes(':')) continue;
+        const destino = prefixo + novo + ':' + chave.slice(prefixo.length);
+        if (localStorage.getItem(destino) === null) localStorage.setItem(destino, localStorage.getItem(chave));
+        localStorage.removeItem(chave);
+      }
+    }
     localStorage.setItem('voaam_usuario_id', novo);
     if(anterior !== novo && typeof trocarStateUsuario === 'function') trocarStateUsuario();
   }
@@ -129,74 +140,88 @@ async function authCadastrar() {
   }
 }
 
+let authConta = null;
+let authGoogleConfig = null;
+let authGoogleSDK = null;
+
+async function authPrepararGoogle(finalidade, callback) {
+  if (!authGoogleConfig?.google_configurado) throw new Error('Conexão com o Google indisponível no servidor.');
+  if (!window.google?.accounts?.id) {
+    authGoogleSDK ??= new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = () => {
+        script.remove();
+        reject(new Error('Não foi possível carregar a conexão com o Google.'));
+      };
+      document.head.append(script);
+    }).catch(erro => { authGoogleSDK = null; throw erro; });
+    await authGoogleSDK;
+  }
+  const {nonce} = await authRequisicao('/api/auth/google/desafio', {
+    method: 'POST', body: JSON.stringify({finalidade}),
+  });
+  const google = window.google.accounts.id;
+  google.initialize({
+    client_id: authGoogleConfig.google_client_id,
+    ux_mode: 'popup',
+    nonce,
+    callback,
+  });
+  return google;
+}
+
 async function authGoogleInit() {
-  const slots=[...document.querySelectorAll('.google-login-slot, .google-vincular-slot')];
-  if(!slots.length)return;
+  const slots = [...document.querySelectorAll('.google-login-slot')];
   try {
-    const resposta=await fetch('/api/config-publica',{credentials:'same-origin'});
-    if(!resposta.ok)throw new Error('Configuração do Google indisponível.');
-    const config=await resposta.json();
-    if(!config.google_configurado||!config.google_client_id){
-      slots.forEach(s=>s.textContent=config.google_mensagem||'Configure um Client ID real do Google Cloud.');
+    authGoogleConfig = await authRequisicao('/api/config-publica');
+    if (authConta) return;
+    if (!authGoogleConfig.google_configurado) {
+      slots.forEach(s => { s.textContent = 'Acesso com Google indisponível.'; });
       return;
     }
-    if(!window.google?.accounts?.id){
-      if(!window.voaGsiCarregando){
-        window.voaGsiCarregando=new Promise((resolve,reject)=>{
-          const script=document.createElement('script');
-          script.src='https://accounts.google.com/gsi/client';
-          script.async=true;script.defer=true;
-          script.onload=resolve;
-          script.onerror=()=>reject(new Error('Não foi possível carregar a biblioteca Google.'));
-          document.head.appendChild(script);
+    const google = await authPrepararGoogle('acesso', async resposta => {
+      const cadastrar = resposta?.state === 'cadastro';
+      const erroId = cadastrar ? 'auth-cad-error' : 'auth-login-error';
+      try {
+        await authRequisicao('/api/auth/google', {
+          method: 'POST',
+          body: JSON.stringify({credential: resposta?.credential, cadastrar}),
         });
-      }
-      await window.voaGsiCarregando;
-    }
-    if(!window.google?.accounts?.id)throw new Error('SDK Google não está disponível.');
-    // O GSI envia um ID token no callback; só o Flask verifica assinatura, audience e issuer.
-    window.google.accounts.id.initialize({
-      client_id:config.google_client_id,
-      ux_mode:'popup',
-      callback:async respostaGoogle=>{
-        if(!respostaGoogle?.credential){
-          authMostrarErro('auth-login-error','O Google não retornou uma credencial.');
-          return;
-        }
-        const vinculando=document.getElementById('auth-wrapper')?.style.display==='none';
-        try{
-          await authRequisicao(vinculando?'/api/auth/google/vincular':'/api/auth/google',{
-            method:'POST',body:JSON.stringify({credential:respostaGoogle.credential})
-          });
-          if(vinculando){
-            if(typeof showXPToast==='function')showXPToast('Conta Google vinculada.');
-          }else location.reload();
-        }catch(erro){
-          const id=document.getElementById('auth-cadastro')?.classList.contains('auth-active')
-            ?'auth-cad-error':'auth-login-error';
-          authMostrarErro(id,erro.message||'Não foi possível validar o login Google.');
-          if(vinculando && typeof showXPToast==='function')showXPToast(erro.message);
-        }
+        location.reload();
+      } catch (erro) {
+        authMostrarErro(erroId, erro.message);
+        authGoogleInit();
       }
     });
-    for(const s of slots){
-      s.replaceChildren();
-      window.google.accounts.id.renderButton(s,{
-        type:'standard',theme:'outline',size:'large',width:270,text:'signin_with',locale:'pt-BR'
+    for (const slot of slots) {
+      const cadastro = Boolean(slot.closest('#auth-cadastro'));
+      slot.replaceChildren();
+      google.renderButton(slot, {
+        size: 'large', width: Math.min(270, innerWidth - 56), locale: 'pt-BR',
+        text: cadastro ? 'signup_with' : 'signin_with', state: cadastro ? 'cadastro' : 'login',
       });
     }
-  }catch(erro){
-    console.warn('[voaAM] Google Identity Services:',erro);
-    slots.forEach(s=>s.textContent='Não foi possível carregar o login Google. Use e-mail e senha.');
+  } catch {
+    slots.forEach(s => { s.textContent = 'Não foi possível carregar a conexão com o Google.'; });
+  } finally {
+    if (typeof renderContaPerfil === 'function') renderContaPerfil();
   }
+}
+
+function authLimparSessaoLocal() {
+  localStorage.removeItem('voaam_perfil');
+  localStorage.removeItem('voaam_usuario_id');
+  localStorage.removeItem('voaam_ultima_atividade');
+  window.google?.accounts?.id?.disableAutoSelect?.();
 }
 
 async function authLogout() {
   try {
     await authRequisicao('/api/logout', { method: 'POST', body: '{}' });
-    localStorage.removeItem('voaam_perfil');
-    localStorage.removeItem('voaam_usuario_id');
-    window.google?.accounts?.id?.disableAutoSelect?.();
+    authLimparSessaoLocal();
     location.reload();
   } catch (erro) {
     console.warn('[VoaAM] Logout não confirmado no servidor:', erro);
@@ -225,8 +250,7 @@ async function authInit() {
         reiniciarProgressoTopicos().catch(e => console.warn('[VoaAM] Não foi possível recarregar o progresso:', e));
       }
     } else {
-      localStorage.removeItem('voaam_perfil');
-      localStorage.removeItem('voaam_usuario_id');
+      authLimparSessaoLocal();
       perfil = null;
       if (typeof reiniciarProgressoTopicos === 'function') {
         reiniciarProgressoTopicos().catch(e => console.warn('[VoaAM] Progresso:', e));

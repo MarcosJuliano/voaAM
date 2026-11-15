@@ -8,6 +8,7 @@ const SLOT_MAP = {
   praticar:          'slot-page-praticar',
   redacao:           'slot-page-redacao',
   perfil:            'slot-page-perfil',
+  ranking:           'slot-page-ranking',
   'banco-de-provas': 'slot-page-banco-de-provas',
 };
 
@@ -21,16 +22,14 @@ function goTo(screen) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('screen-' + screen)?.classList.add('active');
   document.getElementById('nav-' + screen)?.classList.add('active');
-  // Esconde todos os slots de página e mostra apenas o ativo (grid desktop)
-  const activeSlotId = SLOT_MAP[screen] || null;
-  Object.entries(SLOT_MAP).forEach(([name, slotId]) => {
-    const slot = document.getElementById(slotId);
-    if (slot) slot.style.display = (slotId === activeSlotId) ? 'block' : 'none';
-  });
+  if (document.getElementById('vidas-toggle')?.getAttribute('aria-expanded') === 'true') abrirInfoVidas();
+  const slot = document.getElementById(SLOT_MAP[screen]);
+  if (slot) slot.scrollTop = 0;
+  if (screen === 'ranking') carregarRanking();
   if (screen === 'materia')       renderTopics();
   if (screen === 'perfil')        renderPerfil();
   if (screen === 'praticar')      pratAba('sim');
-  if (screen === 'redacao')       redAba('temas');
+  if (screen === 'redacao') { redAba('temas'); redCarregarHistorico(); }
   if (screen === 'banco-de-provas') { if (typeof initBancoProvas === 'function') initBancoProvas(); }
 }
 
@@ -40,6 +39,7 @@ function goTo(screen) {
 // ─── PERFIL ───
 function renderPerfil() {
   if (!perfil) return;
+  renderContaPerfil();
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
   const serie = ['','1º ano','2º ano','3º ano','Ensino Médio completo'];
   set('perfil-nome', perfil.nome);

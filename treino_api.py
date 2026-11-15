@@ -5,7 +5,7 @@ acervo JS do voaAM e dos quatro JSONs do protótipo .NET.
 O gabarito permanece no servidor e não é incluído no JSON dos enunciados.
 """
 import json
-import secrets
+from random import SystemRandom
 from collections import Counter
 from pathlib import Path
 from flask import Blueprint, jsonify, request, session
@@ -19,9 +19,11 @@ def catalogo():
     return json.loads(CAMINHO.read_text(encoding='utf-8'))
 
 
-def apresentar(q):
-    return {k: q.get(k) for k in ('id', 'vestibular', 'ano', 'etapa', 'disciplina',
-                                   'assunto', 'enunciado', 'alternativas', 'imagem', 'fonte')}
+def apresentar(q, ordem):
+    dados = {k: q.get(k) for k in ('id', 'vestibular', 'ano', 'etapa', 'disciplina',
+                                   'assunto', 'enunciado', 'imagem', 'fonte')}
+    dados['alternativas'] = [q['alternativas'][i] for i in ordem]
+    return dados
 
 
 def autenticar():
@@ -70,24 +72,23 @@ def iniciar_treino():
             qs = [q for q in qs if str(q.get(campo)) == valor]
     if not qs:
         return jsonify({'message': 'Não existem questões para essa combinação de filtros.'}), 422
-    # Fisher–Yates sem o erro de sort(() => Math.random() - .5).
-    indices = list(range(len(qs)))
-    for i in range(len(indices) - 1, 0, -1):
-        j = secrets.randbelow(i + 1)
-        indices[i], indices[j] = indices[j], indices[i]
-    sorteadas = [qs[i] for i in indices[:quantidade]]
-    ids = [q['id'] for q in sorteadas]
+    rng = SystemRandom()
+    sorteadas = rng.sample(qs, min(quantidade, len(qs)))
+    ordens = {
+        q['id']: rng.sample(range(len(q['alternativas'])), len(q['alternativas']))
+        for q in sorteadas
+    }
     c = conectar()
     try:
         cur = c.execute('''INSERT INTO treinos_personalizados(usuario_id, filtros_json, questoes_json)
                            VALUES (?, ?, ?)''',
-                        (uid, json.dumps(filtros, ensure_ascii=False), json.dumps(ids)))
+                        (uid, json.dumps(filtros, ensure_ascii=False), json.dumps(ordens)))
         c.commit()
         treino_id = cur.lastrowid
     finally:
         c.close()
     return jsonify({'treino_id': treino_id, 'quantidade': len(sorteadas),
-                    'questoes': [apresentar(q) for q in sorteadas]}), 201
+                    'questoes': [apresentar(q, ordens[q['id']]) for q in sorteadas]}), 201
 
 
 @bp_treino.post('/api/treino/<int:treino_id>/responder')
@@ -104,30 +105,35 @@ def responder_treino(treino_id):
         return jsonify({'message': 'Questão ou alternativa inválida.'}), 400
     c = conectar()
     try:
+        c.execute('BEGIN IMMEDIATE')
         treino = c.execute('SELECT * FROM treinos_personalizados WHERE id=? AND usuario_id=?', (treino_id, uid)).fetchone()
         if treino is None:
             return jsonify({'message': 'Treino não encontrado.'}), 404
         if treino['encerrado_em']:
             return jsonify({'message': 'Este treino já foi encerrado.'}), 409
-        ids = json.loads(treino['questoes_json'])
+        questoes = json.loads(treino['questoes_json'])
         respostas = json.loads(treino['respostas_json'])
-        if qid not in ids:
+        if qid not in questoes:
             return jsonify({'message': 'Questão não pertence a este treino.'}), 400
         if qid in respostas:
             return jsonify({'message': 'Esta questão já foi respondida.'}), 409
         q = next((x for x in catalogo() if x['id'] == qid), None)
         if not q or not 0 <= indice < len(q['alternativas']):
             return jsonify({'message': 'Alternativa fora do intervalo.'}), 400
-        acertou = indice == q['correta']
-        respostas[qid] = {'alternativa': indice, 'acertou': acertou}
+        # Tentativas antigas guardam uma lista de IDs com a ordem original.
+        ordem = questoes[qid] if isinstance(questoes, dict) else list(range(len(q['alternativas'])))
+        alternativa_original = ordem[indice]
+        correta_exibida = ordem.index(q['correta'])
+        acertou = alternativa_original == q['correta']
+        respostas[qid] = {'alternativa': alternativa_original, 'acertou': acertou}
         c.execute('UPDATE treinos_personalizados SET respostas_json=? WHERE id=?',
                   (json.dumps(respostas), treino_id))
         from progresso_api import pontuar
-        ganho = pontuar(c, uid, qid, indice, q['correta'], q['vestibular'])
+        ganho = pontuar(c, uid, qid, alternativa_original, q['correta'], q['vestibular'])
         c.commit()
-        return jsonify({'ok': True, 'acertou': acertou, 'correta': q['correta'],
+        return jsonify({'ok': True, 'acertou': acertou, 'correta': correta_exibida,
                         'xp_ganho': ganho, 'explicacao': q.get('explicacao', ''),
-                        'respondidas': len(respostas), 'total': len(ids)})
+                        'respondidas': len(respostas), 'total': len(questoes)})
     finally:
         c.close()
 
@@ -139,15 +145,16 @@ def encerrar_treino(treino_id):
         return jsonify({'message': 'Faça login.'}), 401
     c = conectar()
     try:
+        c.execute('BEGIN IMMEDIATE')
         treino = c.execute('SELECT * FROM treinos_personalizados WHERE id=? AND usuario_id=?', (treino_id, uid)).fetchone()
         if treino is None:
             return jsonify({'message': 'Treino não encontrado.'}), 404
         respostas = json.loads(treino['respostas_json'])
-        ids = json.loads(treino['questoes_json'])
-        c.execute('UPDATE treinos_personalizados SET encerrado_em=CURRENT_TIMESTAMP WHERE id=?', (treino_id,))
+        questoes = json.loads(treino['questoes_json'])
+        c.execute('UPDATE treinos_personalizados SET encerrado_em=CURRENT_TIMESTAMP WHERE id=? AND encerrado_em IS NULL', (treino_id,))
         c.commit()
         return jsonify({'ok': True, 'respondidas': len(respostas),
-                        'acertos': sum(bool(v['acertou']) for v in respostas.values()), 'total': len(ids)})
+                        'acertos': sum(bool(v['acertou']) for v in respostas.values()), 'total': len(questoes)})
     finally:
         c.close()
 

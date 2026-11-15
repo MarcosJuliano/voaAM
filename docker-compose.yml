@@ -16,6 +16,10 @@ services:
       GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       ATIVAR_GEMINI: ${ATIVAR_GEMINI:-false}
+      ATIVAR_OLLAMA: ${ATIVAR_OLLAMA:-false}
+      OLLAMA_URL: ${OLLAMA_URL:-}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-}
+      REDACAO_IA_CONCORRENCIA: ${REDACAO_IA_CONCORRENCIA:-2}
     command:
       - python
       - -m

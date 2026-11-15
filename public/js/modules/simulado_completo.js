@@ -144,7 +144,6 @@ function scGetQuestoes(provaKey) {
     // PSC / SIS: concatenar questões de 2023, 2024 e 2025
     // renumera para evitar colisão de num entre anos
     let result = [];
-    let offset = 0;
     for (const ano of (p.anos || [])) {
       const lista = (d.questoes && d.questoes[ano]) || [];
       const filtrada = lista.filter(q => q.enunciado && q.enunciado.trim() !== '' && q.alt && Object.values(q.alt).every(a => String(a || '').trim()));
@@ -152,11 +151,10 @@ function scGetQuestoes(provaKey) {
         result.push({
           ...q,
           _numOriginal: q.num,
-          num: offset + q.num,   // num único para o simulado
+          num: result.length + 1, // identificador único dentro da prova
           _ano: ano,
         });
       });
-      if (filtrada.length > 0) offset += filtrada.length;
     }
     return result;
   }
@@ -322,7 +320,10 @@ function scIniciarDireto(key) {
   const d        = p.data;
   if (!d) { alert('Dados da prova não carregados.'); return; }
 
-  SC.questoes    = scGetQuestoes(key);
+  SC.questoes = embaralhar(scGetQuestoes(key)).map(q => ({
+    ...q,
+    ordem: embaralhar(Object.keys(q.alt)),
+  }));
   if (SC.questoes.length === 0) { alert('Sem questões cadastradas para esta prova.'); return; }
 
   SC.atual       = 0;
@@ -333,6 +334,7 @@ function scIniciarDireto(key) {
   const overlay = _el('sc-overlay');
   if (!overlay) return;
   overlay.style.display = 'flex';
+  document.getElementById('app-wrapper').inert = true;
 
   document.querySelectorAll('.sc-tela').forEach(t => t.classList.remove('ativa'));
   _el('sc-header-prova').style.display = 'flex';
@@ -383,7 +385,7 @@ function scRenderQ() {
   const assunto = scGetAssunto(SC.provaKey, q.num, q._ano, q._numOriginal);
   _txt('sc-assunto', assunto);
 
-  _el('sc-enunciado').innerHTML = q.enunciado.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+  _el('sc-enunciado').innerHTML = q.enunciado;
 
   // Imagem
   const imgBlock = _el('sc-img-block');
@@ -407,11 +409,11 @@ function scRenderQ() {
   }
 
   const resp = SC.respostas[q.num];
-  _el('sc-opts').innerHTML = Object.entries(q.alt).map(([letra, txt]) => `
+  _el('sc-opts').innerHTML = q.ordem.map((letra, indice) => `
     <button onclick="scSelectAlt('${letra}')"
       class="option-btn${resp === letra ? ' sc-sel' : ''}">
-      <span class="option-letter">${letra}</span>
-      <span>${txt}</span>
+      <span class="option-letter">${"ABCDE"[indice]}</span>
+      <span>${q.alt[letra]}</span>
     </button>`).join('');
 
   _txt('sc-btn-pular', resp === 'pulada' ? '↩ Desfazer pulo' : '⏭ Pular');
@@ -449,6 +451,7 @@ function scAnterior() {
 }
 function scIrPara(idx) {
   SC.atual = idx; scRenderQ();
+  scRenderLog();
   if (window.innerWidth < 768) _el('sc-log').classList.remove('aberto');
 }
 
@@ -459,7 +462,7 @@ function scRenderLog() {
   grid.innerHTML = SC.questoes.map((q, i) => {
     const r   = SC.respostas[q.num];
     const cls = i === SC.atual ? 'atual' : r === 'pulada' ? 'pulada' : r ? 'resp' : '';
-    return `<button class="sc-log-q ${cls}" onclick="scIrPara(${i})" title="Q${q._numOriginal || q.num}${q._ano ? ' ('+q._ano+')' : ''}">${q._numOriginal || q.num}</button>`;
+    return `<button class="sc-log-q ${cls}" onclick="scIrPara(${i})" title="Q${q._numOriginal || q.num}${q._ano ? ' ('+q._ano+')' : ''}">${i + 1}</button>`;
   }).join('');
 
   const resp = Object.values(SC.respostas).filter(r => r !== 'pulada').length;
@@ -550,6 +553,8 @@ async function scMostrarResultado() {
     const r = SC.respostas[q.num];
     const g = scGetGabarito(SC.provaKey, q.num, q._ano, q._numOriginal);
     const [ico, cor] = (!r || r==='pulada') ? ['—','#f59e0b'] : r===g ? ['✓','#10b981'] : ['✗','#ef4444'];
+    const letraEscolhida = 'ABCDE'[q.ordem.indexOf(r)] || '–';
+    const letraCorreta = 'ABCDE'[q.ordem.indexOf(g)] || '?';
     const anoTag = q._ano ? `<span style="font-size:9px;color:var(--text2);margin-left:4px">(${q._ano})</span>` : '';
     return `
       <div class="sc-gab-row">
@@ -558,9 +563,9 @@ async function scMostrarResultado() {
         <span style="flex:1;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
           ${scGetAssunto(SC.provaKey, q.num, q._ano, q._numOriginal)}
         </span>
-        <span style="font-weight:700;color:var(--text);width:16px;text-align:center">${r&&r!=='pulada'?r:'–'}</span>
+        <span style="font-weight:700;color:var(--text);width:16px;text-align:center">${letraEscolhida}</span>
         <span style="color:var(--border)">→</span>
-        <span style="font-weight:800;color:var(--text);width:16px;text-align:center">${g || '?'}</span>
+        <span style="font-weight:800;color:var(--text);width:16px;text-align:center">${letraCorreta}</span>
         <span style="font-weight:900;color:${cor};width:16px;text-align:center">${ico}</span>
       </div>`;
   }).join('');
@@ -632,7 +637,7 @@ async function scMostrarResultado() {
       <div class="question-card" style="margin-bottom:16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
           <div style="font-size:11px;font-weight:700;color:var(--text2);
-            text-transform:uppercase;letter-spacing:0.06em">📋 Gabarito completo</div>
+            text-transform:uppercase;letter-spacing:0.06em">Revisão de respostas</div>
           <div style="font-size:10px;color:var(--text2)">Sua resp. → Gabarito</div>
         </div>
         ${gabHtml}
@@ -660,6 +665,7 @@ function scFechar() {
   clearInterval(SC.timer);
   const overlay = _el('sc-overlay');
   if (overlay) overlay.style.display = 'none';
+  document.getElementById('app-wrapper').inert = false;
 
   _el('sc-header-prova').style.display = 'none';
   _el('sc-body').style.display         = 'none';

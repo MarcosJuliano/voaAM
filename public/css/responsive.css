@@ -6,7 +6,7 @@
 @media (min-width: 768px) {
   #auth-wrapper {
     display: none;
-    align-items: center;
+    align-items: safe center;
     justify-content: center;
     background: var(--bg) !important;
     padding: 40px 20px;
@@ -18,6 +18,7 @@
   .auth-screen {
     min-height: unset !important;
     width: 100%;
+    flex: 0 0 auto;
     max-width: 480px;
     background: var(--card);
     border: 1px solid var(--border);
@@ -34,375 +35,147 @@
   .auth-bottom-link { padding: 20px 36px 32px !important; }
 }
 
-/* ── App: layout desktop com sidebar ── */
-@media (min-width: 768px) {
+/* O aplicativo tem uma área de rolagem, entre cabeçalho e navegação. */
+#app-wrapper {
+  position: relative;
+  display: grid;
+  grid-template: auto minmax(0, 1fr) auto / minmax(0, 1fr);
+  height: 100vh;
+  height: 100dvh;
+  max-width: 1280px;
+  margin-inline: auto;
+}
 
-  /* Body com padding para o wrapper flutuar */
-  /* Impede rolagem do body – o scroll será interno */
-    body {
-    overflow: hidden;
-    margin: 0;          /* ← remove margens do navegador */
-    padding: 0;
-    background: var(--bg);
-  }
+#slot-header { grid-area: 1 / 1 / 2 / -1; }
+#slot-navbar { grid-area: 3 / 1; min-height: 0; }
+[id^="slot-page-"] {
+  grid-area: 2 / 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+[id^="slot-page-"]:not(:has(.screen.active)) { display: none; }
+.screen { overflow-wrap: anywhere; }
+.screen img, .question-card img { max-width: 100%; }
+.nav-btn { min-width: 0; overflow-wrap: normal; }
+.header > .logo { flex: 0 0 auto; }
+.header-right { flex: 1; justify-content: flex-start; flex-wrap: nowrap; }
+.header-right > .theme-toggle { margin-inline-start: auto; }
+.header-xp { white-space: nowrap; }
+.vidas-pill { min-height: 30px; white-space: nowrap; }
+.back-btn { flex-shrink: 0; }
 
-  /* Wrapper ocupa a tela toda (com margem opcional) */
-  #app-wrapper {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    grid-template-rows: auto 1fr;
-    height: 100vh;       /* ← altura total da tela, sem descontos */
-    max-width: 1280px;
-    margin: 0 auto;      /* ← sem margens verticais, centralizado horizontalmente */
-    border-radius: 24px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
-  }
-
-  /* Header ocupa largura toda no topo */
+@media (max-width: 550px) {
   .header {
-    grid-column: 1 / -1;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 0 28px;
-    height: 60px;
-    border-bottom: 1px solid var(--border);
-    border-radius: 24px 24px 0 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 12px;
+    padding: 8px 12px;
   }
+  .header-right { display: contents; }
+  .header-right > .theme-toggle { grid-area: 1 / 2; height: 32px; }
+  .header-right > .theme-toggle::before { top: 3px; }
+  .header-stats { grid-column: 1 / -1; }
+  .header-xp { padding-inline: 7px; }
+  .header-level, .header-logout { padding: 6px 8px; }
+  .nav-btn { font-size: clamp(8px, 2.6vw, 10px); padding-inline: 2px; }
+  .nav-btn.active::after { max-width: 60%; }
+  .perfil-modal-actions { flex-wrap: wrap; }
+}
 
-  /* Bottom nav vira sidebar esquerda */
+@media (min-width: 768px) {
+  #app-wrapper {
+    grid-template: auto minmax(0, 1fr) / 76px minmax(0, 1fr);
+    border-inline: 1px solid var(--border);
+  }
+  .header { padding: 10px 28px; min-height: 60px; }
+  #slot-navbar { grid-area: 2 / 1; }
+  [id^="slot-page-"] { grid-area: 2 / 2; }
   .bottom-nav {
-    grid-column: 1;
-    grid-row: 2;
-    /* Reset completo do mobile (position:fixed, left, bottom, transform) */
-    position: relative !important;
-    left: auto !important;
-    bottom: auto !important;
-    transform: none !important;
-    max-width: none !important;
     height: 100%;
-    width: 220px;
     flex-direction: column;
-    justify-content: flex-start; /* botões agrupados no topo — sem espaço vazio entre eles */
-    align-items: stretch;
-    border-top: none;
-    border-right: 1px solid var(--border);
-    padding: 16px 12px;
-    overflow-y: auto;
+    justify-content: flex-start;
     gap: 4px;
-    z-index: 10;
+    padding: 12px 8px;
+    border-top: 0;
+    border-right: 1px solid var(--border);
+    overflow: auto;
   }
-
   .nav-btn {
-    flex-direction: row !important;
-    justify-content: flex-start !important;
-    gap: 12px;
-    padding: 12px 14px !important;
-    border-radius: 12px !important;
-    font-size: 14px !important;
-    font-weight: 600;
-    text-align: left;
-    width: 100%;
+    flex: 0 0 auto;
+    border-radius: 12px;
   }
-
-  .nav-btn .nav-icon {
-    font-size: 20px;
-    min-width: 24px;
-    text-align: center;
-  }
-
-  .nav-btn.active {
-    background: rgba(59,130,246,0.12);
-    color: var(--accent2);
-  }
-
-  /* Indicador ativo: barra vertical à esquerda (sidebar), não embaixo */
+  .nav-btn.active { background: rgba(59,130,246,.12); }
   .nav-btn.active::after {
-    top: 50%;
-    left: 0;
-    bottom: auto;
+    inset: 50% auto auto 0;
     transform: translateY(-50%);
     width: 3px;
     height: 20px;
     border-radius: 0 2px 2px 0;
   }
-
-  /* Área de conteúdo (screens) fica à direita */
-  .screen,
-  .screen.active {
-    grid-column: 2;
-    grid-row: 2;
-    width: 100%;
-    margin: 0 auto;
-    padding-bottom: 40px;
-    border-radius: 0 0 24px 0;
-    overflow-y: auto;      /* rolagem apenas aqui */
-    height: 100%;          /* respeita a altura da célula */
-  }
-
-  /* Aula view e exercícios view — sobreposição */
-  .aula-view {
-    position: fixed;
-    top: 60px;
-    left: 220px;
-    right: 0;
-    bottom: 0;
-    width: auto;
-    height: auto;
-  }
-
-  /* Home hero mais espaçoso */
-  .home-hero {
-    padding: 36px 32px 20px !important;
-  }
-  .home-greeting { font-size: 16px !important; }
-  .home-title { font-size: 28px !important; }
-
-  /* Cards de vestibular em grid */
-  .vest-cards-row {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
-  }
-
-  /* Progress card mais largo */
-  .progress-card {
-    margin: 0 32px 24px !important;
-  }
-
-  /* Seções com padding lateral maior */
-  .screen > div,
-  .screen > section {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  /* Quick actions grid */
-  .quick-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-
-  /* Perfil: coluna única centralizada (igual ao mobile) */
-  #screen-perfil > div {
-    padding: 32px 24px !important;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  /* Toast e achievement não saem da área */
-  .xp-toast {
-    left: 50%;
-    transform: translateX(-50%);
-    top: 72px;
-  }
-  .achievement-popup {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  /* Aula content padding */
-  .aula-content {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 32px !important;
-  }
-
-  /* Bloqueado view */
-  #bloqueado-view {
-    left: 220px;
-    top: 60px;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: auto;
-    height: auto;
-  }
-  #bloqueado-view > div {
-    max-width: 440px;
-    margin: 0 auto;
-  }
-
-  /* Screens de matéria e praticar */
-  #screen-materia > div,
-  #screen-praticar > div,
-  #screen-vestibulares > div {
-    padding: 28px 32px !important;
-  }
-
-  /* Scrollbar elegante */
-  .bottom-nav::-webkit-scrollbar { width: 4px; }
-  .bottom-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .home-hero { padding: 32px 32px 20px; }
+  .home-title { font-size: 32px; }
+  .vestibulares-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .action-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .action-cards .action-card:last-child { grid-column: 1 / -1; }
+  .screen > .page-content:not(.home-content) { padding-inline: 32px; }
+  .aula-content { max-width: 720px; margin-inline: auto; width: 100%; }
 }
 
-/* ── Breakpoint médio: tablet ── */
-@media (min-width: 768px) and (max-width: 1023px) {
-  #app-wrapper {
-    grid-template-columns: 64px 1fr;
-    margin: 16px auto;
-  }
-  .bottom-nav {
-    width: 64px;
-    padding: 16px 8px;
-    align-items: center;
-  }
+@media (min-width: 1024px) {
+  #app-wrapper { grid-template-columns: 214px minmax(0, 1fr); }
+  .bottom-nav { padding: 14px 12px; }
   .nav-btn {
-    flex-direction: column !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    padding: 10px 8px !important;
-    font-size: 10px !important;
-    text-align: center;
+    flex-direction: row;
+    gap: 12px;
+    font-size: 14px;
+    padding: 12px;
   }
-  .nav-btn .nav-icon { font-size: 22px; min-width: unset; }
-  .aula-view { left: 64px; }
-  #bloqueado-view { left: 64px; }
 }
 
-/* ── Slots: participam diretamente do grid do #app-wrapper ─────────────────
-   Em vez de display:contents (que quebra overflow:hidden), os slots recebem
-   grid-area explícito. O conteúdo fica contido dentro do wrapper.           */
-@media (min-width: 768px) {
+@media (max-width: 360px) {
+  .header-stats { gap: 4px; }
+  .perfil-stats-grid, .perfil-vests { grid-template-columns: minmax(0, 1fr); }
+}
 
-  /* Header slot → linha 1, colunas todas */
-  #slot-header {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    display: block;
-    overflow: hidden;
-  }
+@media (pointer: coarse) {
+  input:is([type="text"], [type="number"], [type="password"], [type="email"]),
+  select, textarea { font-size: 16px !important; }
+}
 
-  /* Navbar slot → linha 2, coluna 1 (sidebar) */
-  #slot-navbar {
-    grid-column: 1;
-    grid-row: 2;
-    display: block;
-    overflow: hidden;
-    height: 100%;
-    background: var(--card); /* garante que área vazia abaixo dos botões não apareça */
-  }
+@media (max-height: 450px) and (max-width: 767px) {
+  .header { padding-block: 5px; }
+  .nav-btn { padding-block: 5px; }
+}
 
-  /* Páginas slot → linha 2, coluna 2 (conteúdo principal) */
-  #slot-page-home,
-  #slot-page-vestibulares,
-  #slot-page-materia,
-  #slot-page-praticar,
-  #slot-page-redacao,
-  #slot-page-banco-de-provas,
-  #slot-page-perfil {
-    grid-column: 2;
-    grid-row: 2;
-    display: block;
-    overflow-y: auto;
-    height: 100%;
-    min-width: 0; /* evita overflow horizontal */
-  }
+.sc-dialog {
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+}
+.aula-content, .result-card { min-width: 0; overflow-wrap: anywhere; }
 
-  /* Apenas 1 página ativa por vez — as inativas ficam display:none */
-  #slot-page-home:not(:has(.screen.active)),
-  #slot-page-vestibulares:not(:has(.screen.active)),
-  #slot-page-materia:not(:has(.screen.active)),
-  #slot-page-praticar:not(:has(.screen.active)),
-  #slot-page-redacao:not(:has(.screen.active)),
-  #slot-page-banco-de-provas:not(:has(.screen.active)),
-  #slot-page-perfil:not(:has(.screen.active)) {
-    display: none;
-  }
-
-  /* Slots de overlay — fora do grid, position fixed */
-  #slot-toasts,
-  #slot-aula-view,
-  #slot-exercicios-view,
-  #slot-bloqueado-view {
-    display: block;
-    grid-column: unset;
-    grid-row: unset;
-  }
-
-  /* .screen não precisa mais de grid-area próprio pois o slot já posiciona */
-  .screen, .screen.active {
-    grid-column: unset;
-    grid-row: unset;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    padding-bottom: 40px;
-  }
-
-  /* .header não precisa mais de grid-area pois o slot já posiciona */
-  .header {
-    grid-column: unset;
-    grid-row: unset;
-    width: 100%;
-  }
-
-  /* .bottom-nav não precisa mais de grid-area pois o slot já posiciona */
+/* Em telas deitadas e baixas, a navegação ocupa o rodapé. */
+@media (orientation: landscape) and (max-height: 600px) {
+  #app-wrapper { grid-template: auto minmax(0, 1fr) auto / minmax(0, 1fr); }
+  #slot-navbar { grid-area: 3 / 1; }
+  [id^="slot-page-"] { grid-area: 2 / 1; }
+  .header { min-height: 44px; padding-block: 5px; }
   .bottom-nav {
-    grid-column: unset;
-    grid-row: unset;
-    width: 100%;
-    height: 100%;
-    justify-content: flex-start; /* itens agrupados no topo, sem espaçamento automático */
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0;
+    padding: 0 4px env(safe-area-inset-bottom);
+    border-top: 1px solid var(--border);
+    border-right: 0;
+  }
+  .nav-btn { flex: 1; flex-direction: column; gap: 2px; padding: 4px 2px; font-size: 10px; border-radius: 0; }
+  .nav-btn.active::after {
+    inset: auto auto 0 50%;
+    width: min(60%, 28px);
+    height: 2px;
+    transform: translateX(-50%);
+    border-radius: 2px 2px 0 0;
   }
 }
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  #slot-navbar { width: 64px; }
-  #slot-page-home,
-  #slot-page-vestibulares,
-  #slot-page-materia,
-  #slot-page-praticar,
-  #slot-page-redacao,
-  #slot-page-banco-de-provas,
-  #slot-page-perfil {
-    grid-column: 2;
-  }
-}
-
-/* ── Overlays contidos no #app-wrapper (desktop) ────────────────────────────
-   Em mobile: position:fixed cobre a tela toda (correto).
-   Em desktop: position:absolute relativo ao #app-wrapper (position:relative),
-   cobrindo desde o topo do header (top:0) até o fundo, em toda a largura.
-   z-index alto garante que cubra sidebar e conteúdo.                         */
-@media (min-width: 768px) {
-  /* O wrapper precisa ser o contexto de posicionamento dos overlays */
-  #app-wrapper {
-    position: relative;
-  }
-
-  .aula-view,
-  #exercicios-view,
-  #bloqueado-view {
-    position: absolute !important;
-    top: 0 !important;        /* cobre desde o topo (inclui header) */
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none !important;
-    transform: none !important;
-    z-index: 500 !important;  /* acima de sidebar (10) e header (100) */
-    border-radius: 24px;      /* respeita as bordas do wrapper */
-    overflow-y: auto;
-  }
-
-  #modal-simulado,
-  #modal-etapa {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    max-width: 480px;
-    width: 90%;
-    z-index: 600 !important;
-  }
-}
-
-/* ── Simulado Completo: log lateral já controlado pelo próprio componente ── */

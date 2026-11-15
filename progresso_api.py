@@ -104,3 +104,56 @@ def avaliar_lote():
     except Exception:
         c.rollback();raise
     finally:c.close()
+
+
+@bp_progresso.get('/api/ranking')
+def ranking():
+    uid = session.get('usuario_id')
+    if not uid:
+        return jsonify({'message': 'Faça login para ver o ranking.'}), 401
+    pagina = request.args.get('pagina', 1, type=int)
+    if not 1 <= pagina <= 1_000_000:
+        return jsonify({'message': 'Página inválida.'}), 400
+
+    por_pagina = 25
+    c = conectar()
+    try:
+        # Uma consulta mantém a posição individual e as linhas da página no mesmo retrato do banco.
+        linhas = c.execute(
+            """WITH alunos AS (
+                   SELECT u.id, u.nome, COALESCE(p.xp,0) AS xp
+                   FROM usuarios u LEFT JOIN progresso p ON p.usuario_id=u.id
+                   WHERE u.ativo=1 AND u.tipo='ALUNO'
+               ), classificados AS (
+                   SELECT id, nome, xp, RANK() OVER (ORDER BY xp DESC) AS posicao,
+                          ROW_NUMBER() OVER (ORDER BY xp DESC, id) AS linha,
+                          COUNT(*) OVER () AS total
+                   FROM alunos
+               )
+               SELECT * FROM classificados
+               WHERE id=? OR linha BETWEEN ? AND ?
+               ORDER BY linha""",
+            (uid, (pagina - 1) * por_pagina + 1, pagina * por_pagina),
+        ).fetchall()
+        if not linhas:
+            total = c.execute("SELECT COUNT(*) FROM usuarios WHERE ativo=1 AND tipo='ALUNO'").fetchone()[0]
+        else:
+            total = linhas[0]['total']
+        alunos = []
+        minha_posicao = None
+        for linha in linhas:
+            partes = linha['nome'].split()
+            nome = partes[0] if partes else 'Estudante'
+            if len(partes) > 1:
+                nome += ' ' + partes[-1][0] + '.'
+            aluno = {'nome': nome, 'xp': linha['xp'], 'posicao': linha['posicao'], 'voce': linha['id'] == uid}
+            if aluno['voce']:
+                minha_posicao = aluno
+            if (pagina - 1) * por_pagina < linha['linha'] <= pagina * por_pagina:
+                alunos.append(aluno)
+        resposta = jsonify({'alunos': alunos, 'minha_posicao': minha_posicao, 'total': total,
+                            'pagina': pagina, 'por_pagina': por_pagina})
+        resposta.headers['Cache-Control'] = 'private, no-store'
+        return resposta
+    finally:
+        c.close()

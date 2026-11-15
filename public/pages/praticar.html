@@ -2,15 +2,16 @@
 <!-- ========== TREINO ========== -->
 <!-- ========== PRATICAR ========== -->
 <div class="screen" id="screen-praticar">
-  <div style="padding:20px 20px 10px">
-    <div style="font-family:var(--font-display);font-size:22px;font-weight:900;margin-bottom:2px;letter-spacing:-0.5px">⚡ Praticar</div>
-    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Questões reais dos vestibulares do Amazonas</div>
+  <main class="page-content">
+    <header class="page-heading">
+      <h1><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#zap"></use></svg> Praticar</h1>
+      <p>Questões reais dos vestibulares do Amazonas</p>
+    </header>
 
-    <!-- Tabs Simulados / Exercícios -->
-    <div style="display:flex;gap:6px;margin-bottom:16px">
-      <button id="pratab-sim" onclick="pratAba('sim')" style="flex:1;padding:10px 8px;border-radius:12px;border:1.5px solid var(--border-accent);background:rgba(59,130,246,0.1);color:var(--accent2);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer">🎯 Simulados</button>
-      <button id="pratab-custom" onclick="pratAba('personalizado')" class="prat-custom-tab" type="button">Treino personalizado</button>
-      <button id="pratab-ex" onclick="pratAba('ex')" style="flex:1;padding:10px 8px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">⚡ Exercícios</button>
+    <div class="page-tabs">
+      <button id="pratab-sim" class="page-tab active" type="button" onclick="pratAba('sim')">Simulados</button>
+      <button id="pratab-custom" class="page-tab" type="button" onclick="pratAba('personalizado')">Treino personalizado</button>
+      <button id="pratab-ex" class="page-tab" type="button" onclick="pratAba('ex')">Exercícios</button>
     </div>
 
     <!-- Painel Simulados -->
@@ -51,28 +52,21 @@
     </div>
 
     <!-- Treino personalizado: questão sorteada e corrigida no servidor Python -->
-    <section id="prat-custom-panel" class="treino-panel" style="display:none" aria-labelledby="treino-titulo">
+    <section id="prat-custom-panel" class="question-card treino-panel" style="display:none" aria-labelledby="treino-titulo">
       <h2 id="treino-titulo">Monte seu treino</h2>
       <p>Escolha uma prova, uma disciplina, um assunto ou misture todo o acervo. A seleção é aleatória e as respostas são corrigidas no servidor.</p>
       <form id="treino-form" onsubmit="treinoIniciar(event)">
         <div class="treino-filtros">
-          <label>Vestibular <select id="treino-vestibular"></select></label>
-          <label>Ano <select id="treino-ano"></select></label>
-          <label>Disciplina <select id="treino-disciplina"></select></label>
-          <label>Assunto <select id="treino-assunto"></select></label>
-          <label>Origem das questões <select id="treino-fonte"></select></label>
-          <label>Quantidade <input id="treino-quantidade" type="number" min="1" max="60" value="10" required></label>
+          <label>Vestibular <select class="form-control" id="treino-vestibular"></select></label>
+          <label>Ano <select class="form-control" id="treino-ano"></select></label>
+          <label>Disciplina <select class="form-control" id="treino-disciplina"></select></label>
+          <label>Assunto <select class="form-control" id="treino-assunto"></select></label>
+          <label>Origem das questões <select class="form-control" id="treino-fonte"></select></label>
+          <label>Quantidade <input class="form-control" id="treino-quantidade" type="number" min="1" max="60" value="10" required></label>
         </div>
         <p id="treino-status" role="status">Carregando catálogo...</p>
-        <button type="submit" id="treino-iniciar" class="treino-primario">Iniciar treino</button>
+        <button type="submit" id="treino-iniciar" class="btn-primary" disabled>Iniciar treino</button>
       </form>
-      <div id="treino-play" hidden>
-        <div class="treino-topo"><strong id="treino-andamento"></strong><button type="button" onclick="treinoFinalizar()">Encerrar treino</button></div>
-        <div id="treino-questao"></div>
-        <button id="treino-proxima" type="button" class="treino-primario" onclick="treinoProxima()" hidden>Próxima questão</button>
-      </div>
-      <div id="treino-resultado" role="status" hidden></div>
-      <button type="button" class="treino-novo" onclick="treinoNovo()">Novo treino</button>
     </section>
 
     <!-- Painel Exercícios -->
@@ -116,5 +110,5 @@
       </div>
 
     </div>
-  </div>
+  </main>
 </div>

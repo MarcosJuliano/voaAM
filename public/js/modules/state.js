@@ -137,8 +137,6 @@ function abrirInfoVidas() {
   const dialog = document.getElementById('vidas-ajuda');
   const botao = document.getElementById('vidas-toggle');
   if (!dialog || !botao) return;
-  // Coloca o popover em body para escapar dos contextos de empilhamento do header/grid.
-  if (dialog.parentElement !== document.body) document.body.appendChild(dialog);
   const estavaAberto = !dialog.hidden;
   dialog.hidden = estavaAberto;
   botao.setAttribute('aria-expanded', String(!estavaAberto));
@@ -146,7 +144,8 @@ function abrirInfoVidas() {
     const rect = botao.getBoundingClientRect();
     const largura = Math.min(320, innerWidth - 24);
     dialog.style.left = `${Math.max(12, Math.min(innerWidth - largura - 12, rect.left))}px`;
-    dialog.style.top = `${Math.min(innerHeight - 190, rect.bottom + 8)}px`;
+    const cabeAbaixo = rect.bottom + 8 + dialog.offsetHeight <= innerHeight - 12;
+    dialog.style.top = `${cabeAbaixo ? rect.bottom + 8 : Math.max(12, rect.top - 8 - dialog.offsetHeight)}px`;
   }
 }
 document.addEventListener('click', ev => {
