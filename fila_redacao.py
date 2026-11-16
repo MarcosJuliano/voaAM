@@ -1,0 +1,200 @@
+"""Fila persistente compartilhada entre o Flask e os processos de correção."""
+import json
+import os
+import sqlite3
+import time
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import closing
+from uuid import uuid4
+
+from flask import Blueprint, jsonify, request, session
+
+from banco import conectar, inicializar_banco
+from redacoes_api import buscar_tema, obter_redacao
+from redacao_ia_api import ErroAvaliacao, avaliar_texto, gemini_motivo_indisponivel, provedores_disponiveis
+
+bp_fila_redacao = Blueprint('fila_redacao', __name__)
+
+
+@bp_fila_redacao.post('/api/redacao/avaliacoes')
+def enfileirar_redacao():
+    uid = session.get('usuario_id')
+    if not uid:
+        return jsonify({'message': 'Faça login para avaliar sua redação.'}), 401
+    dados = request.get_json(silent=True)
+    if not isinstance(dados, dict):
+        return jsonify({'message': 'Envie os dados em JSON.'}), 400
+    texto = dados.get('texto')
+    tema = buscar_tema(dados.get('tema_id'))
+    provedor = dados.get('provedor')
+    detalhe = dados.get('detalhe', 'resumido' if provedor == 'ollama' else 'detalhado')
+    if not tema or not isinstance(texto, str) or not 100 <= len(texto.strip()) <= 10000:
+        return jsonify({'message': 'Escolha um tema e escreva entre 100 e 10.000 caracteres.'}), 400
+    if provedor not in ('ollama', 'gemini') or detalhe not in ('resumido', 'detalhado'):
+        return jsonify({'message': 'Escolha um provedor e um nível de detalhe válidos.'}), 400
+    if provedor not in provedores_disponiveis():
+        mensagem = gemini_motivo_indisponivel() if provedor == 'gemini' else 'O Ollama está desativado ou sem configuração no servidor.'
+        return jsonify({'message': mensagem}), 503
+    if provedor == 'gemini':
+        detalhe = 'detalhado'
+
+    with closing(conectar()) as c, c:
+        c.execute('BEGIN IMMEDIATE')
+        redacao_id, _ = obter_redacao(c, uid, tema, texto.strip())
+        existente = c.execute(
+            """SELECT id, estado FROM avaliacoes_redacao
+               WHERE redacao_id=? AND provedor=? AND detalhe=? AND estado IN ('fila', 'processando')""",
+            (redacao_id, provedor, detalhe),
+        ).fetchone()
+        if existente:
+            return jsonify({**dict(existente), 'redacao_id': redacao_id, 'reutilizada': True}), 202
+        cursor = c.execute(
+            'INSERT INTO avaliacoes_redacao (redacao_id, provedor, detalhe) VALUES (?, ?, ?)',
+            (redacao_id, provedor, detalhe),
+        )
+        return jsonify({'id': cursor.lastrowid, 'redacao_id': redacao_id, 'estado': 'fila'}), 202
+
+
+@bp_fila_redacao.get('/api/redacao/avaliacoes/<int:avaliacao_id>')
+def consultar_avaliacao(avaliacao_id):
+    uid = session.get('usuario_id')
+    if not uid:
+        return jsonify({'message': 'Faça login para ver a avaliação.'}), 401
+    with closing(conectar()) as c:
+        resultado = c.execute(
+            """SELECT a.id, a.estado, a.erro, a.resultado_ia FROM avaliacoes_redacao a
+               JOIN redacoes r ON r.id=a.redacao_id WHERE a.id=? AND r.usuario_id=?""",
+            (avaliacao_id, uid),
+        ).fetchone()
+    if not resultado:
+        return jsonify({'message': 'Avaliação não encontrada.'}), 404
+    resposta = jsonify(dict(resultado))
+    resposta.headers['Cache-Control'] = 'private, no-store'
+    return resposta
+
+
+def limites():
+    resultado = {}
+    for provedor, variavel, padrao in (
+        ('ollama', 'REDACAO_IA_CONCORRENCIA', 1),
+        ('gemini', 'REDACAO_GEMINI_CONCORRENCIA', 2),
+    ):
+        try:
+            resultado[provedor] = max(1, min(16, int(os.getenv(variavel, padrao))))
+        except ValueError:
+            resultado[provedor] = padrao
+    return resultado
+
+
+def reservar(vagas, agora=None):
+    agora = int(time.time()) if agora is None else agora
+    try:
+        with closing(conectar()) as c, c:
+            pendente = c.execute(
+                "SELECT 1 FROM avaliacoes_redacao WHERE estado IN ('fila', 'processando') LIMIT 1",
+            ).fetchone()
+            if not pendente:
+                return None
+            c.execute('BEGIN IMMEDIATE')
+            # Um worker interrompido pode perder a reserva. Apenas o dono atual grava o resultado.
+            c.execute(
+                """UPDATE avaliacoes_redacao
+                   SET estado=CASE WHEN tentativas < 2 THEN 'fila' ELSE 'falhou' END,
+                       erro=CASE WHEN tentativas < 2 THEN NULL ELSE 'O processamento foi interrompido. Envie novamente.' END,
+                       reserva=NULL, reservada_ate=NULL
+                   WHERE estado='processando' AND reservada_ate<=?""",
+                (agora,),
+            )
+            ativos = {
+                linha['provedor']: linha['total'] for linha in c.execute(
+                    "SELECT provedor, COUNT(*) AS total FROM avaliacoes_redacao WHERE estado='processando' GROUP BY provedor"
+                )
+            }
+            desativados = set(vagas) - set(provedores_disponiveis())
+            disponiveis = [p for p, limite in vagas.items() if p not in desativados and ativos.get(p, 0) < limite]
+            for provedor in desativados:
+                c.execute(
+                    "UPDATE avaliacoes_redacao SET estado='falhou', erro=? WHERE estado='fila' AND provedor=?",
+                    ('O provedor foi desativado. Selecione outro e envie novamente.', provedor),
+                )
+            if not disponiveis:
+                return None
+            marcadores = ','.join('?' for _ in disponiveis)
+            trabalho = c.execute(
+                f"""SELECT a.id, a.redacao_id, a.provedor, a.detalhe, r.tema_id, r.tema, r.texto
+                    FROM avaliacoes_redacao a JOIN redacoes r ON r.id=a.redacao_id
+                    WHERE a.estado='fila' AND a.provedor IN ({marcadores}) ORDER BY a.id LIMIT 1""",
+                disponiveis,
+            ).fetchone()
+            if not trabalho:
+                return None
+            token = uuid4().hex
+            c.execute(
+                """UPDATE avaliacoes_redacao
+                   SET estado='processando', reserva=?, reservada_ate=?, tentativas=tentativas+1 WHERE id=?""",
+                (token, agora + 600, trabalho['id']),
+            )
+            return {**dict(trabalho), 'reserva': token}
+    except sqlite3.OperationalError as erro:
+        if 'locked' not in str(erro):
+            raise
+        return None
+
+
+def finalizar(trabalho, avaliacao=None, erro=None):
+    resposta = json.dumps(avaliacao, ensure_ascii=False) if avaliacao else None
+    nota = avaliacao['nota_estimada'] if avaliacao else None
+    with closing(conectar()) as c, c:
+        c.execute('BEGIN IMMEDIATE')
+        cursor = c.execute(
+            """UPDATE avaliacoes_redacao SET estado=?, resultado_ia=?, nota=?, erro=?,
+                     reserva=NULL, reservada_ate=NULL WHERE id=? AND reserva=? AND estado='processando'""",
+            ('concluida' if avaliacao else 'falhou', resposta, nota, erro, trabalho['id'], trabalho['reserva']),
+        )
+        if cursor.rowcount and avaliacao:
+            c.execute(
+                """UPDATE redacoes SET nota=?, resultado_ia=?, atualizada_em=CURRENT_TIMESTAMP WHERE id=?
+                   AND NOT EXISTS (SELECT 1 FROM avaliacoes_redacao
+                                   WHERE redacao_id=? AND estado='concluida' AND id>?)""",
+                (nota, resposta, trabalho['redacao_id'], trabalho['redacao_id'], trabalho['id']),
+            )
+
+
+def processar(trabalho):
+    tema = buscar_tema(trabalho['tema_id'])
+    try:
+        resultado = avaliar_texto(
+            trabalho['provedor'], trabalho['tema'], trabalho['texto'],
+            tema['vestibular'] if tema else 'ENEM', trabalho['detalhe'],
+        )
+    except ErroAvaliacao as erro:
+        print(f"Avaliação {trabalho['id']} ({trabalho['provedor']}): {erro}", flush=True)
+        finalizar(trabalho, erro=str(erro))
+    else:
+        finalizar(trabalho, resultado)
+
+
+def executar():
+    inicializar_banco()
+    vagas = limites()
+    print('Worker de redação pronto.', flush=True)
+    with ThreadPoolExecutor(max_workers=sum(vagas.values())) as executor:
+        ativos = set()
+        while True:
+            concluidos = {futuro for futuro in ativos if futuro.done()}
+            for futuro in concluidos:
+                try:
+                    futuro.result()
+                except Exception as erro:
+                    print(f'Falha no worker de redação: {type(erro).__name__}', flush=True)
+            ativos -= concluidos
+            if len(ativos) < sum(vagas.values()):
+                trabalho = reservar(vagas)
+                if trabalho:
+                    ativos.add(executor.submit(processar, trabalho))
+                    continue
+            time.sleep(1)
+
+
+if __name__ == '__main__':
+    executar()

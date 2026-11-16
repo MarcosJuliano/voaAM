@@ -41,7 +41,7 @@
 <!-- APP ──────────────────────────────────────────────────────
      Layout principal: header + sidebar/nav + conteúdo
 ──────────────────────────────────────────────────────────── -->
-<div id="app-wrapper" inert>
+<div id="app-wrapper" hidden inert>
 
   <!-- components/header.html -->
   <div id="slot-header"></div>
@@ -162,6 +162,7 @@ const Router = {
     'js/modules/ranking.js',
     'js/modules/conta.js',
     'js/modules/nav.js',          // goTo, perfil, tema
+    'js/modules/iluminacao.js',   // luz sob o ponteiro
     'js/app.js',                  // init final
   ],
 

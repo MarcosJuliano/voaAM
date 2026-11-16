@@ -90,10 +90,10 @@ function exMostrarAssuntos() {
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;grid-column:1/-1">`;
     }
 
-    html += `<button onclick="exSelecionarAssunto('${a.id}')" style="
+    html += `<button type="button" class="pratica-opcao" onclick="exSelecionarAssunto('${a.id}')" style="
       padding:14px 12px;border-radius:14px;border:1.5px solid ${borda};
-      background:${cor};color:var(--text);font-family:var(--font);
-      cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:5px;transition:all 0.15s;
+      --fundo-cartao:${cor};color:var(--text);font-family:var(--font);
+      cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:5px;
       position:relative;overflow:hidden">
       <div style="position:absolute;top:8px;right:8px;font-size:10px;font-weight:700;color:${num};
         background:rgba(0,0,0,0.18);padding:2px 6px;border-radius:5px">${icon} ${label}</div>
@@ -206,18 +206,18 @@ function exRenderQuestoesFiltradas() {
   container.innerHTML = filtrado.map((q, i) => {
     const dif  = q._dif || 1;
     const tema = q.contexto ? q.contexto.split('—')[0].replace('Tema:','').trim() : a.titulo;
-    return `<div class="ex-lista-item" onclick="abrirExercicio('${q.id}')">
-      <div class="ex-dif-badge" style="background:${difColors[dif]};color:${difTxtColors[dif]}">${difIcons[dif]}</div>
-      <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap">
+    return `<button type="button" class="ex-lista-item" onclick="abrirExercicio('${q.id}')">
+      <span class="ex-dif-badge" style="background:${difColors[dif]};color:${difTxtColors[dif]}">${difIcons[dif]}</span>
+      <span style="flex:1;min-width:0">
+        <span style="display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap">
           <span style="font-size:10px;font-weight:700;color:${difTxtColors[dif]}">${difLabels[dif]}</span>
           <span style="font-size:10px;color:var(--text2);background:var(--surface2);padding:2px 6px;border-radius:4px">${q.vest}${q.etapa?' E'+q.etapa:''} ${q.ano||''}</span>
           <span style="font-size:10px;color:var(--text2)">${tema.slice(0,28)}</span>
-        </div>
-        <div style="font-size:13px;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${q.enunciado}</div>
-      </div>
-      <div style="color:var(--text2);font-size:18px;flex-shrink:0">›</div>
-    </div>`;
+        </span>
+        <span style="font-size:13px;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${q.enunciado}</span>
+      </span>
+      <span style="color:var(--text2);font-size:18px;flex-shrink:0">›</span>
+    </button>`;
   }).join('');
 }
 

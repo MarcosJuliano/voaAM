@@ -26,7 +26,6 @@
 // ─── INIT FINAL ───
 // Executado depois que todos os módulos foram carregados.
 (function initApp() {
-  document.getElementById("app-wrapper").inert = false;
   // Atualiza XP no header
   const xpEl = document.getElementById('xp-count');
   if (xpEl) xpEl.textContent = state.xp;
@@ -52,4 +51,5 @@
       }
     }
   });
+  authInit();
 })();

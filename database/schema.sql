@@ -132,3 +132,27 @@ CREATE TABLE IF NOT EXISTS google_identidades (
  criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
  FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS avaliacoes_redacao (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    redacao_id INTEGER NOT NULL REFERENCES redacoes(id) ON DELETE CASCADE,
+    provedor TEXT NOT NULL CHECK (provedor IN ('gemini', 'ollama', 'anterior')),
+    detalhe TEXT NOT NULL CHECK (detalhe IN ('resumido', 'detalhado', 'anterior')),
+    estado TEXT NOT NULL DEFAULT 'fila' CHECK (estado IN ('fila', 'processando', 'concluida', 'falhou')),
+    nota INTEGER CHECK (nota BETWEEN 0 AND 1000),
+    resultado_ia TEXT,
+    erro TEXT,
+    reserva TEXT,
+    reservada_ate INTEGER,
+    tentativas INTEGER NOT NULL DEFAULT 0,
+    enviada_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_avaliacoes_fila ON avaliacoes_redacao(estado, provedor, id);
+CREATE INDEX IF NOT EXISTS idx_avaliacoes_redacao ON avaliacoes_redacao(redacao_id, id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_avaliacao_ativa_unica
+    ON avaliacoes_redacao(redacao_id, provedor, detalhe) WHERE estado IN ('fila', 'processando');
+
+CREATE TABLE IF NOT EXISTS fotos_perfil (
+    usuario_id INTEGER PRIMARY KEY REFERENCES usuarios(id) ON DELETE CASCADE,
+    imagem BLOB NOT NULL
+);

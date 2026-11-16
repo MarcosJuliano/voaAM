@@ -4,8 +4,8 @@
       <h1><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#trophy"></use></svg> Ranking</h1>
       <p>Classificação pelo XP acumulado no voaAM.</p>
     </header>
-    <div id="ranking-posicao" class="ranking-posicao" hidden></div>
-    <section class="question-card ranking-card" aria-labelledby="ranking-titulo">
+    <div id="ranking-posicao" class="ranking-posicao liquid-glass" hidden></div>
+    <section class="question-card ranking-card liquid-glass" aria-labelledby="ranking-titulo">
       <h2 id="ranking-titulo">Classificação geral</h2>
       <p id="ranking-status" class="ranking-status" role="status"></p>
       <ol id="ranking-lista" class="ranking-lista" aria-label="Estudantes classificados"></ol>
@@ -14,6 +14,65 @@
         <button id="ranking-proxima" type="button" class="btn-secondary">Próxima</button>
       </div>
       <button id="ranking-tentar" type="button" class="btn-secondary" hidden>Tentar novamente</button>
+    </section>
+    <section class="ranking-desempenho" aria-labelledby="ranking-desempenho-titulo">
+      <h2 id="ranking-desempenho-titulo">Meu desempenho</h2>
+      <p id="ranking-desempenho-status" class="ranking-status" role="status"></p>
+      <section class="perfil-section perfil-level-card liquid-glass" aria-label="Progresso de nível">
+        <h2>Nível <span id="perfil-nivel">1</span> de 50</h2>
+        <div class="nivel-progresso"><div id="nivel-barra"></div></div>
+        <p id="nivel-descricao">Complete aulas, questões e temas de redação para avançar.</p>
+      </section>
+      <div class="perfil-stats-grid" aria-label="Resumo do desempenho">
+        <div class="perfil-metric"><small>Experiência</small><strong id="perfil-xp">0</strong><span>XP acumulado na sua conta</span></div>
+        <div class="perfil-metric"><small>Precisão</small><strong id="perfil-acertos">—</strong><span>Questões respondidas</span></div>
+        <div class="perfil-metric"><small>Sequência</small><strong id="perfil-streak">0</strong><span>Dias de acesso consecutivos</span></div>
+        <div class="perfil-metric"><small>Questões</small><strong id="perfil-respondidas">0</strong><span>Tentativas registradas</span></div>
+        <div class="perfil-metric"><small>Acertos</small><strong id="perfil-corretas">0</strong><span>Respostas corretas</span></div>
+        <div class="perfil-metric"><small>Conteúdos</small><strong id="perfil-aulas">0</strong><span>Primeiras conclusões</span></div>
+      </div>
+      <section class="perfil-section liquid-glass" aria-labelledby="ranking-redacoes-titulo">
+        <h2 id="ranking-redacoes-titulo"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#pencil"></use></svg> Redações</h2>
+        <dl class="ranking-redacao-grid">
+          <div><dt>Versões salvas</dt><dd id="ranking-redacao-salvas">—</dd></div>
+          <div><dt>Correções válidas</dt><dd id="ranking-redacao-correcoes">—</dd></div>
+          <div><dt>Média das notas</dt><dd id="ranking-redacao-media">—</dd></div>
+          <div><dt>Maior nota</dt><dd id="ranking-redacao-maior">—</dd></div>
+          <div><dt>Menor nota</dt><dd id="ranking-redacao-menor">—</dd></div>
+        </dl>
+      </section>
+      <section class="perfil-section liquid-glass">
+        <h2><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#target"></use></svg> Assuntos para revisar</h2>
+        <div id="perfil-dificuldades" class="perfil-dificuldades">Ainda não há recomendações.</div>
+      </section>
+      <section class="perfil-section liquid-glass">
+        <h2><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#calendar-days"></use></svg> Atividade e recursos</h2>
+        <div class="perfil-info-grid">
+          <div><span>Última visita registrada</span><strong id="perfil-ultima-atividade">Aguardando sincronização</strong></div>
+          <div><span>Vidas disponíveis</span><strong id="perfil-vidas">3/3</strong></div>
+        </div>
+        <p class="perfil-disclaimer">Uma vida retorna a cada 4 horas. A primeira conclusão de um novo tópico concede uma vida extra, até o máximo de 3. A sequência de dias é salva na sua conta. O XP e os totais de questões são calculados pelo servidor e armazenados no SQLite.</p>
+      </section>
+      <div class="ranking-graficos">
+        <section class="perfil-section liquid-glass" aria-labelledby="ranking-afinidade-titulo">
+          <h3 id="ranking-afinidade-titulo">Afinidade por matéria</h3>
+          <p>Percentual de acertos na última resposta de cada questão. Confira o número de questões avaliadas.</p>
+          <ul id="ranking-afinidade" class="ranking-barras"></ul>
+        </section>
+        <section class="perfil-section liquid-glass" aria-labelledby="ranking-estudar-titulo">
+          <h3 id="ranking-estudar-titulo">O que estudar</h3>
+          <p>Questões para revisar e questões ainda sem resposta, por matéria.</p>
+          <ul id="ranking-estudar" class="ranking-barras"></ul>
+        </section>
+        <section class="perfil-section liquid-glass" aria-labelledby="ranking-conhecimentos-titulo">
+          <h3 id="ranking-conhecimentos-titulo">Visão geral de conhecimentos</h3>
+          <p>Acertos, erros e questões que você ainda não respondeu no acervo.</p>
+          <div id="ranking-conhecimentos" class="ranking-conhecimentos" hidden>
+            <div id="ranking-anel" class="ranking-anel" aria-hidden="true"><strong id="ranking-percentual"></strong></div>
+            <ul id="ranking-legenda" class="ranking-legenda"></ul>
+          </div>
+        </section>
+      </div>
     </section>
   </main>
 </div>

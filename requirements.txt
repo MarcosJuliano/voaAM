@@ -3,3 +3,4 @@ google-genai>=1.0,<2
 google-auth>=2.30,<3
 requests>=2.31,<3
 python-dotenv>=1,<2
+Pillow>=12.2,<14

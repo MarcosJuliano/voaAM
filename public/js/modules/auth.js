@@ -50,7 +50,9 @@ async function authRequisicao(url, opcoes) {
   let dados = {};
   try { dados = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
   if (!resposta.ok) {
-    throw new Error(dados.message || dados.resultado || 'Não foi possível concluir a operação.');
+    const erro = new Error(dados.message || dados.resultado || 'Não foi possível concluir a operação.');
+    erro.status = resposta.status;
+    throw erro;
   }
   return dados;
 }
@@ -87,8 +89,6 @@ function authGuardarPerfil(perfilRecebido, usuarioRecebido) {
 
 function authFinalizarLogin(dados) {
   authGuardarPerfil(dados.perfil, dados.usuario);
-  const wrapper = document.getElementById('auth-wrapper');
-  if (wrapper) wrapper.style.display = 'none';
   location.reload();
 }
 
@@ -221,6 +221,7 @@ function authLimparSessaoLocal() {
 async function authLogout() {
   try {
     await authRequisicao('/api/logout', { method: 'POST', body: '{}' });
+    authDefinirVista(false);
     authLimparSessaoLocal();
     location.reload();
   } catch (erro) {
@@ -230,10 +231,15 @@ async function authLogout() {
   }
 }
 
-async function authInit() {
-  const wrapper = document.getElementById('auth-wrapper');
-  if (!wrapper) return;
+function authDefinirVista(autenticado) {
+  const app = document.getElementById('app-wrapper');
+  const login = document.getElementById('auth-wrapper');
+  app.hidden = !autenticado;
+  app.inert = !autenticado;
+  login.hidden = autenticado;
+}
 
+async function authInit() {
   try {
     const resposta = await fetch('/api/me', { credentials: 'same-origin' });
     if (!resposta.ok) throw new Error('Servidor indisponível.');
@@ -241,7 +247,7 @@ async function authInit() {
 
     if (dados.autenticado && dados.perfil) {
       authGuardarPerfil(dados.perfil, dados.usuario);
-      wrapper.style.display = 'none';
+      authDefinirVista(true);
       if (typeof registrarVisita === 'function') await registrarVisita();
       if (typeof atualizarProgresso === 'function') await atualizarProgresso();
       if (typeof atualizarNivel === 'function') atualizarNivel();
@@ -255,10 +261,10 @@ async function authInit() {
       if (typeof reiniciarProgressoTopicos === 'function') {
         reiniciarProgressoTopicos().catch(e => console.warn('[VoaAM] Progresso:', e));
       }
-      wrapper.style.display = window.innerWidth >= 768 ? 'flex' : 'block';
+      authDefinirVista(false);
     }
   } catch (erro) {
-    wrapper.style.display = window.innerWidth >= 768 ? 'flex' : 'block';
+    authDefinirVista(false);
     authMostrarErro('auth-login-error', 'Não foi possível conectar ao servidor. Atualize a página ou verifique o Flask.');
     console.warn('[VoaAM] Falha ao consultar a sessão:', erro);
   } finally {
@@ -266,5 +272,3 @@ async function authInit() {
     await authGoogleInit();
   }
 }
-
-authInit();

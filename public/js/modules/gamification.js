@@ -68,10 +68,12 @@ function showXPToast(msg) {
 }
 
 function spawnStars() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   for(let i = 0; i < 3; i++) {
     setTimeout(() => {
       const star = document.createElement('div');
       star.className = 'float-star';
+      star.setAttribute('aria-hidden', 'true');
       star.textContent = ['⭐','🌟','✨'][Math.floor(Math.random()*3)];
       star.style.left = (30 + Math.random()*60) + 'vw';
       star.style.top = (40 + Math.random()*20) + 'vh';

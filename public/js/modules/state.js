@@ -221,12 +221,12 @@ function aplicarPerfil() {
   if (container && perfil.vests) {
     container.innerHTML = perfil.vests.map(v => {
       const info = vestInfo[v] || {};
-      return `<div class="vest-card ${info.cls||''}" onclick="abrirVestibularDoInicio('${v}')">
-        <div class="vest-tag">${info.tag||''}</div>
-        <div class="vest-name">${v}</div>
-        <div class="vest-inst">${info.inst||''}</div>
-        <div class="vest-date">📅 ${info.date||''}</div>
-      </div>`;
+      return `<button type="button" class="vest-card ${info.cls||''}" onclick="abrirVestibularDoInicio('${v}')">
+        <span class="vest-tag">${info.tag||''}</span>
+        <span class="vest-name">${v}</span>
+        <span class="vest-inst">${info.inst||''}</span>
+        <span class="vest-date">📅 ${info.date||''}</span>
+      </button>`;
     }).join('');
   }
 

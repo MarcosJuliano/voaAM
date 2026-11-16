@@ -7,6 +7,7 @@ let contaAbertura = 0;
 let contaConfirmacaoGoogle = null;
 
 const contaTextos = {
+  senha: ['Alterar ou definir senha', 'Confirme sua identidade. As outras sessões serão encerradas quando você salvar a nova senha.', 'Salvar senha'],
   vincular: ['Conectar Conta Google', 'Confirme a senha do voaAM e escolha a Conta Google que você quer usar para entrar.', 'Conectar'],
   desvincular: ['Desconectar Conta Google?', 'Você passará a entrar com o e-mail e a senha do voaAM. As outras sessões serão encerradas.', 'Desconectar'],
   excluir: ['Excluir conta voaAM?', 'A exclusão remove permanentemente seu perfil, progresso, notas, redações e posição no ranking.', 'Excluir minha conta'],
@@ -36,7 +37,9 @@ function abrirAcaoConta(acao) {
   contaEl('mensagem').textContent = acao === 'desvincular'
     ? mensagem + ' E-mail de acesso: ' + authConta.email
     : mensagem;
-  contaEl('confirmar').classList.toggle('sc-dialog-danger', acao !== 'vincular');
+  const destrutiva = acao === 'desvincular' || acao === 'excluir';
+  contaEl('confirmar').classList.toggle('sc-dialog-danger', destrutiva);
+  contaEl('confirmar').classList.toggle('sc-dialog-primary', !destrutiva);
   contaEl('form').reset();
   contaEl('erro').textContent = '';
   renderContaMetodo();
@@ -48,11 +51,12 @@ function renderContaMetodo() {
   contaConfirmacaoGoogle = null;
   const vincular = contaAcao === 'vincular';
   const desconectar = contaAcao === 'desvincular';
+  const novaSenha = contaAcao === 'senha' || (desconectar && contaMetodoGoogle);
   const pedirSenha = vincular || !contaMetodoGoogle;
   contaEl('senha-atual').hidden = !pedirSenha;
   contaEl('senha').required = pedirSenha;
-  contaEl('nova-senha').hidden = !desconectar || !contaMetodoGoogle;
-  contaEl('nova').required = desconectar && contaMetodoGoogle;
+  contaEl('nova-senha').hidden = !novaSenha;
+  contaEl('nova').required = novaSenha;
   contaEl('google').hidden = true;
   contaEl('google').replaceChildren();
   contaEl('confirmar').hidden = false;
@@ -77,6 +81,12 @@ async function executarAcaoConta(dados) {
   try {
     const excluir = contaAcao === 'excluir';
     const vincular = contaAcao === 'vincular';
+    if (contaAcao === 'senha') {
+      await authRequisicao('/api/perfil/senha', {method: 'PUT', body: JSON.stringify(dados)});
+      contaDialogo.close();
+      document.getElementById('perfil-senha-status').textContent = 'Senha atualizada.';
+      return;
+    }
     const resultado = await authRequisicao(excluir ? '/api/perfil' : '/api/auth/google/vincular', {
       method: vincular ? 'POST' : 'DELETE',
       body: JSON.stringify(dados),
@@ -109,12 +119,14 @@ contaEl('form').addEventListener('submit', async e => {
   }
   contaEl('erro').textContent = '';
   const dados = {senha: contaEl('senha').value};
+  if (contaAcao === 'senha' || (contaAcao === 'desvincular' && contaMetodoGoogle)) {
+    dados.nova_senha = contaEl('nova').value;
+  }
   if (!contaMetodoGoogle) {
     await executarAcaoConta(dados);
     return;
   }
 
-  if (contaAcao === 'desvincular') dados.nova_senha = contaEl('nova').value;
   const abertura = ++contaAbertura;
   contaEl('confirmar').disabled = contaEl('alternar').disabled = true;
   try {
@@ -171,3 +183,53 @@ contaDialogo.addEventListener('close', () => {
   contaEl('google').replaceChildren();
 });
 renderContaPerfil();
+
+function renderFotoPerfil() {
+  const imagem = document.getElementById('perfil-foto');
+  const temFoto = Boolean(authConta?.tem_foto);
+  imagem.hidden = !temFoto;
+  if (temFoto && !imagem.hasAttribute('src')) imagem.src = '/api/perfil/foto';
+  if (!temFoto) imagem.removeAttribute('src');
+  document.getElementById('perfil-foto-padrao').toggleAttribute('hidden', temFoto);
+  document.getElementById('perfil-foto-remover').hidden = !temFoto;
+}
+
+const perfilFotoArquivo = document.getElementById('perfil-foto-arquivo');
+const perfilFotoRemover = document.getElementById('perfil-foto-remover');
+async function atualizarFotoPerfil(arquivo) {
+  if (!authConta) return;
+  const status = document.getElementById('perfil-foto-status');
+  if (arquivo && arquivo.size > 950_000) {
+    status.textContent = 'Escolha uma imagem de até 950 KB.';
+    perfilFotoArquivo.value = '';
+    return;
+  }
+  const corpo = new FormData();
+  if (arquivo) corpo.append('foto', arquivo);
+  perfilFotoArquivo.disabled = perfilFotoRemover.disabled = true;
+  try {
+    const resposta = await fetch('/api/perfil/foto', {
+      method: arquivo ? 'PUT' : 'DELETE',
+      body: arquivo ? corpo : undefined,
+      credentials: 'same-origin',
+    });
+    if (!resposta.ok) {
+      const dados = await resposta.json().catch(() => ({}));
+      throw new Error(dados.message || 'Não foi possível atualizar sua foto.');
+    }
+    authConta.tem_foto = Boolean(arquivo);
+    document.getElementById('perfil-foto').removeAttribute('src');
+    renderFotoPerfil();
+    status.textContent = arquivo ? 'Foto atualizada.' : 'Foto removida.';
+  } catch (erro) {
+    status.textContent = erro.message;
+  } finally {
+    perfilFotoArquivo.value = '';
+    perfilFotoArquivo.disabled = perfilFotoRemover.disabled = false;
+  }
+}
+perfilFotoArquivo.addEventListener('change', () => {
+  const arquivo = perfilFotoArquivo.files[0];
+  if (arquivo) atualizarFotoPerfil(arquivo);
+});
+perfilFotoRemover.addEventListener('click', () => atualizarFotoPerfil(null));

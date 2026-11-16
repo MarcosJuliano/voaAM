@@ -6,12 +6,12 @@
       <h1><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#book-open"></use></svg> Estudar</h1>
     </header>
     <div class="subject-tabs">
-      <div class="subject-tab active" id="tab-mat" onclick="selectSubject('mat')">
+      <button type="button" class="subject-tab active" id="tab-mat" aria-pressed="true" onclick="selectSubject('mat')">
         <span>📐</span>Matemática
-      </div>
-      <div class="subject-tab" id="tab-red" onclick="selectSubject('red')">
+      </button>
+      <button type="button" class="subject-tab" id="tab-red" aria-pressed="false" onclick="selectSubject('red')">
         <span>✏️</span>Redação
-      </div>
+      </button>
     </div>
 
     <div class="serie-selector" id="serie-selector-mat">

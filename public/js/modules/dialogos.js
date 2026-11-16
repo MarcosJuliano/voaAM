@@ -1,5 +1,5 @@
 // Usa a camada modal nativa para funcionar também sobre o leitor de redações.
-function confirmarAcao({titulo, mensagem, acao, executar}) {
+function confirmarAcao({titulo, mensagem, acao, executar, cancelarTexto = 'Cancelar', destrutiva = true}) {
   const dialogo = document.getElementById('confirmar-acao');
   if (dialogo.open) return;
   const form = dialogo.querySelector('form');
@@ -10,6 +10,9 @@ function confirmarAcao({titulo, mensagem, acao, executar}) {
   dialogo.querySelector('h2').textContent = titulo;
   dialogo.querySelector('#confirmar-mensagem').textContent = mensagem;
   confirmar.textContent = acao;
+  confirmar.classList.toggle('sc-dialog-danger', destrutiva);
+  confirmar.classList.toggle('sc-dialog-primary', !destrutiva);
+  cancelar.textContent = cancelarTexto;
   erro.textContent = '';
   dialogo.addEventListener('cancel', impedirSaida);
   dialogo.addEventListener('close', () => {

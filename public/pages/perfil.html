@@ -1,77 +1,64 @@
-<!-- Perfil do estudante: somente dados reais, sem ranking demonstrativo -->
 <section class="screen" id="screen-perfil" aria-labelledby="perfil-titulo">
   <main class="page-content perfil-page">
-    <header class="perfil-hero">
-      <div class="perfil-avatar"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#graduation-cap"></use></svg></div>
-      <div>
-        <h1 id="perfil-titulo"><span id="perfil-nome">Estudante</span></h1>
-        <p id="perfil-info">Sua jornada de estudos</p>
-      </div>
+    <header class="page-heading">
+      <h1 id="perfil-titulo"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#settings"></use></svg> Perfil</h1>
+      <p>Gerencie seus dados e o acesso à conta.</p>
     </header>
-    <section class="perfil-section perfil-level-card" aria-label="Progresso de nível">
-      <h2>Nível <span id="perfil-nivel">1</span> de 50</h2>
-      <div class="nivel-progresso"><div id="nivel-barra"></div></div>
-      <p id="nivel-descricao">Complete aulas, questões e temas de redação para avançar.</p>
-    </section>
-    <div class="perfil-stats-grid" aria-label="Resumo do desempenho">
-      <div class="perfil-metric"><small>Experiência</small><strong id="perfil-xp">0</strong><span>XP acumulado na sua conta</span></div>
-      <div class="perfil-metric"><small>Precisão</small><strong id="perfil-acertos">—</strong><span>Questões respondidas</span></div>
-      <div class="perfil-metric"><small>Sequência</small><strong id="perfil-streak">0</strong><span>Dias de acesso consecutivos</span></div>
-      <div class="perfil-metric"><small>Questões</small><strong id="perfil-respondidas">0</strong><span>Tentativas registradas</span></div>
-      <div class="perfil-metric"><small>Acertos</small><strong id="perfil-corretas">0</strong><span>Respostas corretas</span></div>
-      <div class="perfil-metric"><small>Conteúdos</small><strong id="perfil-aulas">0</strong><span>Primeiras conclusões</span></div>
-    </div>
-    <section class="perfil-section">
-      <h2><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#target"></use></svg> Assuntos para revisar</h2>
-      <div id="perfil-dificuldades" class="perfil-dificuldades">Ainda não há recomendações.</div>
-    </section>
-    <section class="perfil-section">
-      <h2><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#calendar-days"></use></svg> Atividade e recursos</h2>
-      <div class="perfil-info-grid">
-        <div><span>Última visita registrada</span><strong id="perfil-ultima-atividade">Aguardando sincronização</strong></div>
-        <div><span>Vidas disponíveis</span><strong id="perfil-vidas">3/3</strong></div>
+
+    <section class="perfil-section liquid-glass" aria-labelledby="perfil-dados-titulo">
+      <h2 id="perfil-dados-titulo">Dados pessoais e vestibulares</h2>
+      <div class="perfil-foto-linha">
+        <div class="perfil-avatar">
+          <svg id="perfil-foto-padrao" class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#graduation-cap"></use></svg>
+          <img id="perfil-foto" alt="Sua foto de perfil" width="72" height="72" hidden>
+        </div>
+        <div>
+          <label for="perfil-foto-arquivo">Foto do perfil</label>
+          <input id="perfil-foto-arquivo" class="form-control" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="perfil-foto-ajuda">
+          <p id="perfil-foto-ajuda" class="perfil-ajuda">JPEG, PNG ou WebP de até 950 KB. A foto aparece no Perfil e no Ranking para usuários conectados.</p>
+          <button id="perfil-foto-remover" class="btn-secondary" type="button" hidden>Remover foto</button>
+          <p id="perfil-foto-status" class="perfil-ajuda" role="status"></p>
+        </div>
       </div>
-      <p class="perfil-disclaimer">Uma vida retorna a cada 4 horas. A primeira conclusão de um novo tópico concede uma vida extra, até o máximo de 3. A sequência de dias é salva na sua conta. O XP e os totais de questões são calculados pelo servidor e armazenados no SQLite.</p>
+      <form id="perfil-form" class="perfil-form" onsubmit="salvarEdicaoPerfil(event)">
+        <label for="editar-nome">Nome</label>
+        <input id="editar-nome" class="form-control" maxlength="120" required autocomplete="name">
+        <label for="editar-serie">Etapa de estudo</label>
+        <select id="editar-serie" class="form-control" required>
+          <option value="1">1º ano</option><option value="2">2º ano</option>
+          <option value="3">3º ano</option><option value="4">Ensino Médio completo</option>
+        </select>
+        <fieldset class="perfil-vests"><legend>Vestibulares de interesse</legend>
+          <label><input type="checkbox" name="editar-vest" value="ENEM"> ENEM</label>
+          <label><input type="checkbox" name="editar-vest" value="PSC"> PSC</label>
+          <label><input type="checkbox" name="editar-vest" value="SIS"> SIS</label>
+          <label><input type="checkbox" name="editar-vest" value="MACRO"> MACRO</label>
+        </fieldset>
+        <p id="editar-erro" class="perfil-form-error" role="alert"></p>
+        <div id="editar-acoes" hidden><button type="submit" class="btn-primary" id="editar-salvar">Salvar alterações</button></div>
+      </form>
     </section>
-    <button type="button" class="perfil-edit-button" onclick="editarPerfil()">
-      <svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#settings"></use></svg> Editar nome, série e vestibulares
-    </button>
-    <button type="button" class="perfil-edit-button perfil-logout" onclick="authLogout()">Sair da conta</button>
-    <section class="perfil-section perfil-conta" aria-labelledby="perfil-conta-titulo">
+
+    <section class="perfil-section perfil-conta liquid-glass" aria-labelledby="perfil-conta-titulo">
       <h2 id="perfil-conta-titulo"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#shield-check"></use></svg> Acesso à conta</h2>
-      <p id="perfil-google-status" role="status">Verificando conexão com o Google…</p>
-      <button id="perfil-google-conectar" type="button" class="perfil-edit-button" onclick="abrirAcaoConta('vincular')" hidden>Conectar Conta Google</button>
-      <button id="perfil-google-desconectar" type="button" class="perfil-edit-button" onclick="abrirAcaoConta('desvincular')" hidden>Desconectar Conta Google</button>
-      <button id="perfil-excluir" type="button" class="perfil-edit-button perfil-excluir" onclick="abrirAcaoConta('excluir')" disabled>Excluir minha conta voaAM</button>
+      <dl class="perfil-email"><dt>E-mail de acesso</dt><dd id="perfil-email">—</dd></dl>
+      <button type="button" class="btn-secondary" onclick="abrirAcaoConta('senha')">Alterar ou definir senha</button>
+      <p id="perfil-senha-status" role="status"></p>
+      <div class="perfil-google">
+        <h3>Login com Google</h3>
+        <p id="perfil-google-status" role="status">Verificando conexão com o Google…</p>
+        <button id="perfil-google-conectar" type="button" class="btn-secondary" onclick="abrirAcaoConta('vincular')" hidden>Conectar Conta Google</button>
+        <button id="perfil-google-desconectar" type="button" class="btn-secondary" onclick="abrirAcaoConta('desvincular')" hidden>Desconectar Conta Google</button>
+      </div>
+      <div class="perfil-sessao">
+        <button type="button" class="btn-secondary" onclick="authLogout()">Sair da conta</button>
+        <button id="perfil-excluir" type="button" class="btn-secondary perfil-excluir" onclick="abrirAcaoConta('excluir')" disabled>Excluir minha conta voaAM</button>
+      </div>
     </section>
   </main>
 </section>
-<div class="perfil-modal-backdrop" id="editar-perfil-modal" hidden>
-    <form class="perfil-modal" onsubmit="salvarEdicaoPerfil(event)" aria-labelledby="editar-perfil-titulo">
-      <h2 id="editar-perfil-titulo">Editar meus dados</h2>
-      <label for="editar-nome">Nome</label><input id="editar-nome" maxlength="120" required autocomplete="name">
-      <label for="editar-serie">Etapa de estudo</label>
-      <select id="editar-serie" required>
-        <option value="1">1º ano</option><option value="2">2º ano</option>
-        <option value="3">3º ano</option><option value="4">Ensino Médio completo</option>
-      </select>
-      <fieldset class="perfil-vests"><legend>Vestibulares de interesse</legend>
-        <label><input type="checkbox" name="editar-vest" value="ENEM"> ENEM</label>
-        <label><input type="checkbox" name="editar-vest" value="PSC"> PSC</label>
-        <label><input type="checkbox" name="editar-vest" value="SIS"> SIS</label>
-        <label><input type="checkbox" name="editar-vest" value="MACRO"> MACRO</label>
-      </fieldset>
-      <p class="perfil-form-error" id="editar-erro" role="alert"></p>
-      <div class="perfil-modal-actions">
-        <button type="button" onclick="fecharEdicaoPerfil()">Cancelar</button>
-        <button type="submit" id="editar-salvar">Salvar alterações</button>
-      </div>
-    </form>
 
-</div>
-
-
-<dialog id="acao-conta" class="conta-dialog" aria-labelledby="acao-conta-titulo" aria-describedby="acao-conta-mensagem">
+<dialog id="acao-conta" class="conta-dialog liquid-glass" aria-labelledby="acao-conta-titulo" aria-describedby="acao-conta-mensagem">
   <form id="acao-conta-form">
     <h2 id="acao-conta-titulo"></h2>
     <p id="acao-conta-mensagem"></p>
@@ -80,7 +67,7 @@
       <input id="acao-conta-senha" class="form-control" type="password" autocomplete="current-password" maxlength="256">
     </div>
     <div id="acao-conta-nova-senha" hidden>
-      <label for="acao-conta-nova">Nova senha do voaAM (mínimo de 8 caracteres)</label>
+      <label for="acao-conta-nova">Nova senha (mínimo de 8 caracteres)</label>
       <input id="acao-conta-nova" class="form-control" type="password" autocomplete="new-password" minlength="8" maxlength="256">
     </div>
     <button id="acao-conta-alternar" type="button" class="btn-secondary" hidden></button>

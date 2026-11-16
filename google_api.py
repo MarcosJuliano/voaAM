@@ -21,7 +21,7 @@ def google_client_id_configurado():
 
 @bp_google.get('/api/config-publica')
 def config_publica():
-    from redacao_ia_api import provedores_disponiveis
+    from redacao_ia_api import gemini_motivo_indisponivel, provedores_disponiveis
 
     valor = os.getenv('GOOGLE_CLIENT_ID', '').strip()
     valido = google_client_id_configurado()
@@ -35,6 +35,7 @@ def config_publica():
              if valor else 'GOOGLE_CLIENT_ID não configurado no ambiente do Flask.')
         ),
         'ia_configurada': 'gemini' in provedores,
+        'gemini_redacao_mensagem': gemini_motivo_indisponivel(),
         'provedores_redacao': provedores,
     })
 

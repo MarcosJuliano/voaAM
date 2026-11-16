@@ -47,17 +47,8 @@ const provasOficiaisCatalogo = {
 
 function simModoAba(modo) {
   simModoAtual = modo;
-  const btnSimples  = document.getElementById('simtab-simples');
-  const btnCompleto = document.getElementById('simtab-completo');
-  if (btnSimples && btnCompleto) {
-    const isSimples = modo === 'simples';
-    btnSimples.style.borderColor  = isSimples ? 'var(--border-accent)' : 'var(--border)';
-    btnSimples.style.background   = isSimples ? 'rgba(59,130,246,0.12)' : 'var(--surface)';
-    btnSimples.style.color        = isSimples ? 'var(--accent2)' : 'var(--text2)';
-    btnCompleto.style.borderColor = !isSimples ? 'rgba(244,168,51,0.5)' : 'var(--border)';
-    btnCompleto.style.background  = !isSimples ? 'rgba(244,168,51,0.1)' : 'var(--surface)';
-    btnCompleto.style.color       = !isSimples ? 'var(--gold)' : 'var(--text2)';
-  }
+  document.getElementById('simtab-simples')?.setAttribute('aria-pressed', String(modo === 'simples'));
+  document.getElementById('simtab-completo')?.setAttribute('aria-pressed', String(modo === 'completo'));
 
   const picker       = document.getElementById('sim-vest-picker');
   const label        = document.getElementById('sim-vest-picker-label');
@@ -84,10 +75,10 @@ function simModoAba(modo) {
             ? `${nProvas} ano${nProvas > 1 ? 's' : ''} disponível${nProvas > 1 ? 'veis' : ''}`
             : `${scGetQuestoes(chaves[0]).length} questões`;
       }
-      return `<button onclick="scMostrarAnos('${key}')" style="
+      return `<button type="button" class="pratica-opcao" onclick="scMostrarAnos('${key}')" style="
         padding:14px 12px;border-radius:14px;border:1px solid ${cfg.corBorda};
-        background:${cfg.cor};color:var(--text);font-family:var(--font);
-        cursor:pointer;text-align:left;transition:all 0.15s;display:flex;flex-direction:column;gap:4px">
+        --fundo-cartao:${cfg.cor};color:var(--text);font-family:var(--font);
+        cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:20px">${cfg.emoji}</div>
         <div style="font-size:13px;font-weight:700;color:${cfg.corNum}">${cfg.label}</div>
         <div style="font-size:10px;color:var(--text2)">${sub}</div>
@@ -105,10 +96,10 @@ function simModoAba(modo) {
     const qs      = Math.ceil(cfg.qs / 2);
     const mins    = Math.ceil(cfg.horas * 60 / 2);
     const horasStr = mins >= 60 ? (mins/60).toFixed(1).replace('.0','')+'h' : mins+'min';
-    return `<button onclick="simSelecionarVestibular('${key}')" style="
+    return `<button type="button" class="pratica-opcao" onclick="simSelecionarVestibular('${key}')" style="
       padding:14px 12px;border-radius:14px;border:1px solid ${cfg.corBorda};
-      background:${cfg.cor};color:var(--text);font-family:var(--font);
-      cursor:pointer;text-align:left;transition:all 0.15s;display:flex;flex-direction:column;gap:4px">
+      --fundo-cartao:${cfg.cor};color:var(--text);font-family:var(--font);
+      cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px">
       <div style="font-size:20px">${cfg.emoji}</div>
       <div style="font-size:13px;font-weight:700;color:${cfg.corNum}">${cfg.label}</div>
       <div style="font-size:10px;color:var(--text2)">${qs} questões • ${horasStr}</div>
@@ -127,7 +118,7 @@ function scSelecionarVestibularCompleto(vestKey) {
 
   container.innerHTML = `
     <div style="margin-bottom:12px;display:flex;align-items:center;gap:8px">
-      <button onclick="voltarParaModos()" style="
+      <button type="button" class="pratica-acao" onclick="voltarParaModos()" style="
         padding:7px 12px;border-radius:8px;border:1px solid var(--border);
         background:transparent;color:var(--text2);font-family:var(--font);font-size:12px;cursor:pointer">
         ← Voltar
@@ -138,10 +129,10 @@ function scSelecionarVestibularCompleto(vestKey) {
       ${v.anos.map(p => {
         const disponivel = p.getData() !== null;
         return `
-        <button onclick="${disponivel ? `scSelecionarAnoCompleto('${vestKey}','${p.key}')` : ''}" style="
+        <button type="button" class="pratica-opcao" ${disponivel ? '' : 'disabled'} onclick="${disponivel ? `scSelecionarAnoCompleto('${vestKey}','${p.key}')` : ''}" style="
           padding:16px;border-radius:14px;border:1px solid ${disponivel ? v.corBorda : 'var(--border)'};
-          background:${disponivel ? v.cor : 'var(--surface)'};color:var(--text);font-family:var(--font);
-          cursor:${disponivel ? 'pointer' : 'not-allowed'};text-align:left;transition:all 0.15s;
+          --fundo-cartao:${disponivel ? v.cor : 'var(--vidro-base)'};color:var(--text);font-family:var(--font);
+          cursor:${disponivel ? 'pointer' : 'not-allowed'};text-align:left;
           opacity:${disponivel ? '1' : '0.5'};display:flex;align-items:center;justify-content:space-between">
           <div>
             <div style="font-size:15px;font-weight:800;color:${disponivel ? v.corNum : 'var(--text2)'}">${v.label} ${p.ano}</div>
@@ -162,7 +153,7 @@ function scSelecionarAnoCompleto(vestKey, provaKey) {
   if (!container) return;
 
   container.innerHTML = `
-    <div style="background:${v.cor};border:1px solid ${v.corBorda};border-radius:16px;padding:18px;margin-bottom:16px">
+    <div class="pratica-cartao" style="--fundo-cartao:${v.cor};border-color:${v.corBorda}">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
         <div style="font-size:32px">${v.emoji}</div>
         <div>
@@ -188,13 +179,13 @@ function scSelecionarAnoCompleto(vestKey, provaKey) {
       <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px">
         ${p.temas.map(t => `<span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.08);color:var(--text2);font-weight:600">${t}</span>`).join('')}
       </div>
-      <button onclick="scIniciarDireto('${provaKey}')" style="
+      <button type="button" class="pratica-acao" onclick="scIniciarDireto('${provaKey}')" style="
         width:100%;padding:15px;border-radius:12px;border:none;
         background:${v.corNum};color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
         display:flex;align-items:center;justify-content:center;gap:8px">
         🏆 Iniciar Simulado Completo
       </button>
-      <button onclick="scSelecionarVestibularCompleto('${vestKey}')" style="
+      <button type="button" class="pratica-acao" onclick="scSelecionarVestibularCompleto('${vestKey}')" style="
         width:100%;padding:11px;margin-top:8px;border-radius:12px;border:1px solid var(--border);
         background:transparent;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer">
         ← Trocar ano
@@ -241,7 +232,7 @@ function renderSimCardsNovo(vestKey, modo) {
     : 'var(--red)';
 
   container.innerHTML = `
-    <div style="background:${cfg.cor};border:1px solid ${cfg.corBorda};border-radius:16px;padding:18px;margin-bottom:16px">
+    <div class="pratica-cartao" style="--fundo-cartao:${cfg.cor};border-color:${cfg.corBorda}">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
         <div style="font-size:32px">${cfg.emoji}</div>
         <div>
@@ -267,13 +258,13 @@ function renderSimCardsNovo(vestKey, modo) {
       <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px">
         ${temasSel.map(t => `<span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.08);color:var(--text2);font-weight:600">${t}</span>`).join('')}
       </div>
-      <button onclick="iniciarSimuladoNovo('${vestKey}','${modo}')" style="
+      <button type="button" class="pratica-acao" onclick="iniciarSimuladoNovo('${vestKey}','${modo}')" style="
         width:100%;padding:15px;border-radius:12px;border:none;
         background:${btnBg};color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
         display:flex;align-items:center;justify-content:center;gap:8px">
         ${modeIcon} Iniciar Simulado ${modoLabel}
       </button>
-      <button onclick="voltarParaModos()" style="
+      <button type="button" class="pratica-acao" onclick="voltarParaModos()" style="
         width:100%;padding:11px;margin-top:8px;border-radius:12px;border:1px solid var(--border);
         background:transparent;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer">
         ← Trocar vestibular
@@ -375,24 +366,6 @@ function pratAba(aba) {
     return;
   }
   if (isSim) {
-    // Reset sim state: hide vest picker and cards, go back to mode selection
-    const picker = document.getElementById('sim-vest-picker');
-    const cards  = document.getElementById('sim-cards-container');
-    if (picker) picker.style.display = 'none';
-    if (cards)  cards.innerHTML = '';
-    simModoAtual = 'simples';
-    const btnSimples  = document.getElementById('simtab-simples');
-    const btnCompleto = document.getElementById('simtab-completo');
-    if (btnSimples) {
-      btnSimples.style.borderColor = 'var(--border-accent)';
-      btnSimples.style.background  = 'rgba(59,130,246,0.12)';
-      btnSimples.style.color       = 'var(--accent2)';
-    }
-    if (btnCompleto) {
-      btnCompleto.style.borderColor = 'var(--border)';
-      btnCompleto.style.background  = 'var(--surface)';
-      btnCompleto.style.color       = 'var(--text2)';
-    }
     simModoAba('simples');
     // Já apresenta o simulado do vestibular principal ao chegar em Praticar.
     const padrao=(typeof perfil!=='undefined' && perfil?.vests?.[0]) || 'ENEM';

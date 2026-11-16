@@ -105,6 +105,7 @@ async function treinoResponder(indice){
    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({questao_id:q.id,alternativa:indice})
   });
   treinoRespostas[q.id]={...r,selecionada:indice};treinoExibirFeedback(treinoRespostas[q.id]);
+  if (r.acertou) spawnStars();
   treinoEl('treino-proxima-overlay').disabled=false;treinoEl('treino-pular-overlay').disabled=true;
   if(r.xp_ganho)if(typeof showXPToast==='function')showXPToast('+'+r.xp_ganho+' XP');
   if(typeof atualizarProgresso==='function')await atualizarProgresso();

@@ -67,6 +67,17 @@ class TestV6(unittest.TestCase):
             aj = c['ajustes'][0]
             self.assertIn(aj['trecho'], _paragrafos(TEXTO)[aj['paragrafo'] - 1])
 
+    def test_adequacao_invalida_nao_descarta_as_notas(self):
+        bruto = dados_ficticios()
+        for invalido in (':{{', '   ', {'tema': 'objeto inesperado'}):
+            with self.subTest(invalido=invalido):
+                bruto['adequacao_tema'] = invalido
+                avaliacao = _normalizar(bruto, TEXTO, 'ENEM')
+                self.assertEqual(avaliacao['adequacao_tema'], '')
+                self.assertEqual(avaliacao['nota_estimada'], 800)
+        bruto['adequacao_tema'] = '  O texto aborda a educação pública.  '
+        self.assertEqual(_normalizar(bruto, TEXTO, 'ENEM')['adequacao_tema'], 'O texto aborda a educação pública.')
+
     def test_google_placeholder_nao_e_valido(self):
         with patch.dict(os.environ, {'GOOGLE_CLIENT_ID': 'SEU_CLIENT_ID.apps.googleusercontent.com'}):
             config = self.cliente.get('/api/config-publica').get_json()

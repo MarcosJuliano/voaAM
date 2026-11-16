@@ -5,9 +5,12 @@ Cada questão pode premiar no máximo uma vez por conta (mesmo após repetir).
 """
 import json
 from pathlib import Path
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, jsonify, request, session, url_for
+from contextlib import closing
 from banco import conectar
 from treino_api import catalogo
+from perfil_api import responder_foto
+from redacoes_api import resumo_redacoes
 
 bp_progresso = Blueprint('progresso', __name__)
 BASE = Path(__file__).resolve().parent / 'database'
@@ -130,8 +133,9 @@ def ranking():
                           COUNT(*) OVER () AS total
                    FROM alunos
                )
-               SELECT * FROM classificados
-               WHERE id=? OR linha BETWEEN ? AND ?
+               SELECT classificados.*, f.usuario_id IS NOT NULL AS tem_foto
+               FROM classificados LEFT JOIN fotos_perfil f ON f.usuario_id=classificados.id
+               WHERE classificados.id=? OR linha BETWEEN ? AND ?
                ORDER BY linha""",
             (uid, (pagina - 1) * por_pagina + 1, pagina * por_pagina),
         ).fetchall()
@@ -147,6 +151,8 @@ def ranking():
             if len(partes) > 1:
                 nome += ' ' + partes[-1][0] + '.'
             aluno = {'nome': nome, 'xp': linha['xp'], 'posicao': linha['posicao'], 'voce': linha['id'] == uid}
+            if linha['tem_foto']:
+                aluno['foto_url'] = url_for('progresso.foto_ranking', aluno_id=linha['id'])
             if aluno['voce']:
                 minha_posicao = aluno
             if (pagina - 1) * por_pagina < linha['linha'] <= pagina * por_pagina:
@@ -157,3 +163,76 @@ def ranking():
         return resposta
     finally:
         c.close()
+
+
+@bp_progresso.get('/api/ranking/foto/<int:aluno_id>')
+def foto_ranking(aluno_id):
+    if not session.get('usuario_id'):
+        return '', 401
+    with closing(conectar()) as c:
+        foto = c.execute(
+            """SELECT f.imagem FROM fotos_perfil f JOIN usuarios u ON u.id=f.usuario_id
+               WHERE u.id=? AND u.ativo=1 AND u.tipo='ALUNO'""", (aluno_id,),
+        ).fetchone()
+    return responder_foto(foto['imagem']) if foto else ('', 404)
+
+
+@bp_progresso.get('/api/progresso/disciplinas')
+def desempenho_disciplinas():
+    uid = session.get('usuario_id')
+    if not uid:
+        return jsonify({'message': 'Faça login.'}), 401
+
+    disciplinas = {}
+    questoes = {}
+
+    def incluir(qid, disciplina, assunto):
+        questoes[qid] = (disciplina, assunto)
+        metricas = disciplinas.setdefault(disciplina, {'total': 0, 'respondidas': 0, 'acertos': 0})
+        metricas['total'] += 1
+
+    for questao in catalogo():
+        materia = questao.get('disciplina') or 'Outras'
+        incluir(questao['id'], materia, questao.get('assunto') or materia)
+
+    topicos = {
+        item.split(':')[2]: 'Redação' if item.startswith('red:') else 'Matemática'
+        for item in _ler('topicos_catalogo.json')
+    }
+    for qid in _ler('gabaritos_legados.json'):
+        tipo, origem, _ = qid.split(':')
+        materia = topicos.get(origem) if tipo == 'quiz' else ('Redação' if origem == 'red' else 'Matemática')
+        if materia and qid not in questoes:
+            incluir(qid, materia, materia)
+
+    c = conectar()
+    try:
+        respostas = c.execute(
+            """SELECT h.questao_id, h.acertou FROM historico_questoes h
+               JOIN (SELECT MAX(id) AS id FROM historico_questoes
+                     WHERE usuario_id=? GROUP BY questao_id) ultimas ON ultimas.id=h.id""", (uid,),
+        ).fetchall()
+        atividade = c.execute('SELECT ultima_atividade FROM progresso WHERE usuario_id=?', (uid,)).fetchone()
+        redacoes = resumo_redacoes(c, uid)
+    finally:
+        c.close()
+
+    dificuldades = {}
+    for resposta in respostas:
+        contexto = questoes.get(resposta['questao_id'])
+        if not contexto:
+            continue
+        materia, assunto = contexto
+        disciplinas[materia]['respondidas'] += 1
+        disciplinas[materia]['acertos'] += resposta['acertou']
+        if not resposta['acertou']:
+            dificuldades[assunto] = dificuldades.get(assunto, 0) + 1
+    assunto_erros = sorted(dificuldades.items(), key=lambda item: (-item[1], item[0]))[:5]
+    resposta = jsonify({
+        'disciplinas': [{'nome': nome, **valores} for nome, valores in sorted(disciplinas.items())],
+        'revisao': [{'nome': nome, 'erros': erros} for nome, erros in assunto_erros],
+        'ultima_atividade': atividade['ultima_atividade'] if atividade else None,
+        'redacoes': redacoes,
+    })
+    resposta.headers['Cache-Control'] = 'private, no-store'
+    return resposta

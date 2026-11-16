@@ -19,19 +19,46 @@ function goTo(screen) {
     return;
   }
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.remove('active');
+    b.removeAttribute('aria-current');
+  });
   document.getElementById('screen-' + screen)?.classList.add('active');
-  document.getElementById('nav-' + screen)?.classList.add('active');
+  const nav = document.getElementById('nav-' + screen);
+  nav?.classList.add('active');
+  nav?.setAttribute('aria-current', 'page');
+  atualizarLuzNavegacao();
   if (document.getElementById('vidas-toggle')?.getAttribute('aria-expanded') === 'true') abrirInfoVidas();
   const slot = document.getElementById(SLOT_MAP[screen]);
   if (slot) slot.scrollTop = 0;
-  if (screen === 'ranking') carregarRanking();
+  if (screen === 'ranking') { carregarRanking(); carregarDesempenhoRanking(); }
   if (screen === 'materia')       renderTopics();
   if (screen === 'perfil')        renderPerfil();
   if (screen === 'praticar')      pratAba('sim');
   if (screen === 'redacao') { redAba('temas'); redCarregarHistorico(); }
   if (screen === 'banco-de-provas') { if (typeof initBancoProvas === 'function') initBancoProvas(); }
 }
+
+const barraNavegacao = document.querySelector('.bottom-nav');
+const luzNavegacao = barraNavegacao.querySelector('.nav-luz');
+
+function atualizarLuzNavegacao() {
+  const item = barraNavegacao.querySelector('.nav-btn.active');
+  if (!item?.offsetWidth) {
+    luzNavegacao.classList.remove('nav-luz-visivel');
+    return;
+  }
+  luzNavegacao.style.setProperty('--nav-x', item.offsetLeft + 'px');
+  luzNavegacao.style.setProperty('--nav-y', item.offsetTop + 'px');
+  luzNavegacao.style.width = item.offsetWidth + 'px';
+  luzNavegacao.style.height = item.offsetHeight + 'px';
+  luzNavegacao.classList.add('nav-luz-visivel');
+}
+
+const observarNavegacao = new ResizeObserver(atualizarLuzNavegacao);
+observarNavegacao.observe(barraNavegacao);
+for (const item of barraNavegacao.querySelectorAll('.nav-btn')) observarNavegacao.observe(item);
+atualizarLuzNavegacao();
 
 // ─── MODAL SIMULADO (compatibilidade) ───
 // já redefinido acima no bloco PRATICAR — ABAS
@@ -40,72 +67,70 @@ function goTo(screen) {
 function renderPerfil() {
   if (!perfil) return;
   renderContaPerfil();
-  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-  const serie = ['','1º ano','2º ano','3º ano','Ensino Médio completo'];
-  set('perfil-nome', perfil.nome);
-  set('perfil-info', `${serie[perfil.serie] || 'Não informada'} · ${(perfil.vests || []).join(', ')}`);
-  set('perfil-xp', state.xp);
-  if (typeof atualizarNivel === 'function') atualizarNivel();
-  set('perfil-acertos', state.quizDone ? Math.round(100*state.quizCorrect/state.quizDone)+'%' : '—');
-  set('perfil-streak', state.streak);
-  set('perfil-respondidas', state.quizDone);
-  set('perfil-aulas', state.aulas);
-  set('perfil-corretas', state.quizCorrect);
-  const c = typeof getCoracoes === 'function' ? getCoracoes() : {qtd:3};
-  set('perfil-vidas', `${c.qtd}/3`);
-  const ultima = localStorage.getItem('voaam_ultima_atividade');
-  set('perfil-ultima-atividade', ultima ? ultima.split('-').reverse().join('/') : 'Aguardando sincronização');
-  const difEl = document.getElementById('perfil-dificuldades');
-  if (difEl) {
-    const temas = Object.entries(temasFragos || {}).filter(([,n]) => n > 0).sort((a,b) => b[1]-a[1]);
-    difEl.replaceChildren();
-    if (!temas.length) {
-      difEl.textContent = 'Nenhum assunto identificado. Pratique para receber recomendações.';
-    } else {
-      temas.slice(0,5).forEach(([nome,n]) => {
-        const linha = document.createElement('div');
-        linha.className = 'perfil-recomendacao';
-        const titulo = document.createElement('span'); titulo.textContent = nome;
-        const quantidade = document.createElement('strong'); quantidade.textContent = `${n} erro${n === 1 ? '' : 's'}`;
-        linha.append(titulo, quantidade); difEl.appendChild(linha);
-      });
-    }
-  }
-}
-
-function editarPerfil() {
-  if (!perfil) return;
   document.getElementById('editar-nome').value = perfil.nome || '';
   document.getElementById('editar-serie').value = String(perfil.serie || 1);
-  document.querySelectorAll('input[name="editar-vest"]').forEach(c => {
-    c.checked = (perfil.vests || []).includes(c.value);
-  });
+  for (const item of document.querySelectorAll('input[name="editar-vest"]')) {
+    item.checked = (perfil.vests || []).includes(item.value);
+  }
   document.getElementById('editar-erro').textContent = '';
-  document.getElementById('editar-perfil-modal').hidden = false;
-  document.getElementById('editar-nome').focus();
+  document.getElementById('perfil-email').textContent = authConta?.email || '—';
+  renderFotoPerfil();
+  atualizarSalvarPerfil();
 }
-function fecharEdicaoPerfil() {
-  document.getElementById('editar-perfil-modal').hidden = true;
+
+const formularioPerfil = document.getElementById('perfil-form');
+
+function dadosEditadosPerfil() {
+  const selecionados = new Set([...formularioPerfil.querySelectorAll('input[name="editar-vest"]:checked')].map(el => el.value));
+  const ordem = [...(perfil?.vests || []), ...selecionados];
+  return {
+    nome: document.getElementById('editar-nome').value.trim(),
+    serie: Number(document.getElementById('editar-serie').value),
+    vests: [...new Set(ordem)].filter(vest => selecionados.has(vest)),
+  };
 }
+
+function perfilFoiAlterado(dados) {
+  return Boolean(perfil && (
+    dados.nome !== (perfil.nome || '').trim() ||
+    dados.serie !== Number(perfil.serie || 1) ||
+    dados.vests.join(',') !== (perfil.vests || []).join(',')
+  ));
+}
+
+function atualizarSalvarPerfil() {
+  document.getElementById('editar-acoes').hidden = !perfilFoiAlterado(dadosEditadosPerfil());
+}
+
+formularioPerfil.addEventListener('input', atualizarSalvarPerfil);
+formularioPerfil.addEventListener('change', atualizarSalvarPerfil);
+
 async function salvarEdicaoPerfil(event) {
   event.preventDefault();
   const botao = document.getElementById('editar-salvar');
   const erro = document.getElementById('editar-erro');
-  const nome = document.getElementById('editar-nome').value.trim();
-  const serie = Number(document.getElementById('editar-serie').value);
-  const vests = [...document.querySelectorAll('input[name="editar-vest"]:checked')].map(el => el.value);
-  if (!nome || !vests.length) { erro.textContent = 'Informe seu nome e selecione pelo menos um vestibular.'; return; }
+  const dados = dadosEditadosPerfil();
+  if (botao.disabled || !perfilFoiAlterado(dados)) return;
+  if (!dados.nome || !dados.vests.length) {
+    erro.textContent = 'Informe seu nome e selecione pelo menos um vestibular.';
+    return;
+  }
   botao.disabled = true;
+  erro.textContent = '';
   try {
-    const res = await fetch('/api/perfil', {method:'PUT',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome, serie, vests})});
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Não foi possível salvar.');
+    const data = await authRequisicao('/api/perfil', {
+      method: 'PUT', body: JSON.stringify(dados),
+    });
     authGuardarPerfil(data.perfil, data.usuario);
-    fecharEdicaoPerfil();
-    renderPerfil();
     if (typeof showXPToast === 'function') showXPToast('Perfil atualizado com sucesso.');
   } catch(e) { erro.textContent = e.message; }
-  finally { botao.disabled = false; }
+  finally {
+    if (!perfilFoiAlterado(dadosEditadosPerfil()) && document.activeElement === botao) {
+      document.getElementById('editar-nome').focus({preventScroll: true});
+    }
+    atualizarSalvarPerfil();
+    botao.disabled = false;
+  }
 }
 // authLogout() definido em auth.js
 

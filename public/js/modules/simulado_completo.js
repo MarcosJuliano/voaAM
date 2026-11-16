@@ -209,7 +209,7 @@ function scMostrarAnos(grupoId) {
   // ENEM / MACRO: mostra lista de anos
   container.innerHTML = `
     <div style="margin-bottom:14px;display:flex;align-items:center;gap:8px">
-      <button onclick="voltarParaModos()" style="
+      <button type="button" class="pratica-acao" onclick="voltarParaModos()" style="
         padding:7px 12px;border-radius:8px;border:1px solid var(--border);
         background:transparent;color:var(--text2);font-family:var(--font);font-size:12px;cursor:pointer">
         ← Voltar
@@ -224,26 +224,26 @@ function scMostrarAnos(grupoId) {
         const questoes = scGetQuestoes(key);
         const temDados = questoes.length > 0;
         return `
-          <div onclick="${temDados ? `scMostrarConfirmacao('${key}','${grupoId}')` : ''}" style="
+          <button type="button" class="pratica-opcao" ${temDados ? '' : 'disabled'} onclick="${temDados ? `scMostrarConfirmacao('${key}','${grupoId}')` : ''}" style="
             padding:16px;border-radius:14px;cursor:${temDados ? 'pointer' : 'default'};
             border:1px solid ${temDados ? p.corBorda : 'var(--border)'};
-            background:${temDados ? p.corBg : 'var(--surface)'};
-            transition:all 0.15s;opacity:${temDados ? '1' : '0.45'};
+            --fundo-cartao:${temDados ? p.corBg : 'var(--vidro-base)'};
+            text-align:left;font:inherit;opacity:${temDados ? '1' : '0.45'};
             display:flex;align-items:center;justify-content:space-between">
-            <div>
-              <div style="font-size:15px;font-weight:800;color:${temDados ? p.cor : 'var(--text2)'}">
+            <span>
+              <span style="display:block;font-size:15px;font-weight:800;color:${temDados ? p.cor : 'var(--text2)'}">
                 ${p.label}
-              </div>
-              <div style="font-size:11px;color:var(--text2);margin-top:3px">
+              </span>
+              <span style="display:block;font-size:11px;color:var(--text2);margin-top:3px">
                 ${temDados
                   ? `${questoes.length} questões · ${p.tempoMinutos} min · Gabarito cadastrado`
                   : 'Sem questões cadastradas'}
-              </div>
-            </div>
-            <div style="font-size:20px;color:${temDados ? p.cor : 'var(--text2)'}">
+              </span>
+            </span>
+            <span style="font-size:20px;color:${temDados ? p.cor : 'var(--text2)'}">
               ${temDados ? '›' : '🔒'}
-            </div>
-          </div>`;
+            </span>
+          </button>`;
       }).join('')}
     </div>`;
 }
@@ -270,7 +270,7 @@ function scMostrarConfirmacao(key, grupoId) {
     : `${questoes.length} questões`;
 
   container.innerHTML = `
-    <div style="background:${p.corBg};border:1px solid ${p.corBorda};border-radius:16px;padding:18px;margin-bottom:16px">
+    <div class="pratica-cartao" style="--fundo-cartao:${p.corBg};border-color:${p.corBorda}">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
         <div style="font-size:32px">${p.emoji}</div>
         <div>
@@ -293,7 +293,7 @@ function scMostrarConfirmacao(key, grupoId) {
         </div>
       </div>
       ${temDados ? `
-      <button onclick="scIniciarDireto('${key}')" style="
+      <button type="button" class="pratica-acao" onclick="scIniciarDireto('${key}')" style="
         width:100%;padding:15px;border-radius:12px;border:none;
         background:${p.cor};color:#fff;font-family:var(--font);
         font-size:15px;font-weight:700;cursor:pointer;
@@ -303,7 +303,7 @@ function scMostrarConfirmacao(key, grupoId) {
       <div style="text-align:center;color:var(--text2);font-size:13px;padding:12px">
         Sem questões cadastradas para esta prova
       </div>`}
-      <button onclick="${voltarOnClick}" style="
+      <button type="button" class="pratica-acao" onclick="${voltarOnClick}" style="
         width:100%;padding:11px;margin-top:8px;border-radius:12px;
         border:1px solid var(--border);background:transparent;
         color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer">
@@ -536,6 +536,7 @@ async function scMostrarResultado() {
     else                   { er++; assE[ass]++; }
   });
 
+  if (ac > 0 && _el('sc-resultado').getClientRects().length) spawnStars();
   const pct    = total > 0 ? Math.round((ac / total) * 100) : 0;
   const corPct = pct >= 70 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#ef4444';
   const emoji  = pct >= 70 ? '🎉' : pct >= 50 ? '📈' : '💪';

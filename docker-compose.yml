@@ -1,5 +1,6 @@
 services:
   web:
+    image: voaam-web
     build:
       context: .
       dockerfile: Dockerfile
@@ -7,19 +8,20 @@ services:
       - "5000:5000"
     volumes:
       - .:/app
-    environment:
+    environment: &ambiente_voaam
       PYTHONUNBUFFERED: "1"
       FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:-dev-only-change-this-key}
       DATABASE_PATH: /app/instance/voaam.db
       SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
-      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.5-flash-lite}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       ATIVAR_GEMINI: ${ATIVAR_GEMINI:-false}
       ATIVAR_OLLAMA: ${ATIVAR_OLLAMA:-false}
       OLLAMA_URL: ${OLLAMA_URL:-}
       OLLAMA_MODEL: ${OLLAMA_MODEL:-}
-      REDACAO_IA_CONCORRENCIA: ${REDACAO_IA_CONCORRENCIA:-2}
+      REDACAO_IA_CONCORRENCIA: ${REDACAO_IA_CONCORRENCIA:-1}
+      REDACAO_GEMINI_CONCORRENCIA: ${REDACAO_GEMINI_CONCORRENCIA:-2}
     command:
       - python
       - -m
@@ -30,3 +32,27 @@ services:
       - --host=0.0.0.0
       - --port=5000
       - --debug
+
+  corretor:
+    image: voaam-web
+    pull_policy: never
+    depends_on:
+      web:
+        condition: service_started
+    restart: unless-stopped
+    environment: *ambiente_voaam
+    volumes:
+      - .:/app
+    command: ["python", "-m", "fila_redacao"]
+    stop_grace_period: 15s
+
+  ollama:
+    image: ollama/ollama:latest
+    environment:
+      OLLAMA_NUM_PARALLEL: "${REDACAO_IA_CONCORRENCIA:-1}"
+      OLLAMA_NO_CLOUD: "1"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data:

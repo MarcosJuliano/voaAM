@@ -132,8 +132,11 @@ function toggleVest(id) {
 // ─── MATÉRIA ───
 function selectSubject(subj) {
   state.currentSubject = subj;
-  document.getElementById('tab-mat')?.classList.toggle('active', subj === 'mat');
-  document.getElementById('tab-red')?.classList.toggle('active', subj === 'red');
+  for (const id of ['mat', 'red']) {
+    const tab = document.getElementById('tab-' + id);
+    tab?.classList.toggle('active', subj === id);
+    tab?.setAttribute('aria-pressed', String(subj === id));
+  }
   const matSelector = document.getElementById('serie-selector-mat');
   const redSelector = document.getElementById('serie-selector-red');
   if (matSelector) matSelector.style.display = subj === 'mat' ? 'flex' : 'none';

@@ -5,9 +5,10 @@
       <h1><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#pencil"></use></svg> Redação</h1>
       <p>Pratique sua redação com temas reais dos vestibulares</p>
     </header>
-    <div class="page-tabs">
+    <div class="page-tabs red-page-tabs">
       <button class="page-tab active" id="redtab-temas" type="button" onclick="redAba('temas')">Temas</button>
       <button class="page-tab" id="redtab-editor" type="button" onclick="redAba('editor')">Escrever</button>
+      <button class="page-tab" id="redtab-rascunhos" type="button" onclick="redAba('rascunhos')">Rascunhos</button>
       <button class="page-tab" id="redtab-historico" type="button" onclick="redAba('historico')">
         Histórico <span id="red-hist-badge" class="red-hist-badge" hidden></span>
       </button>
@@ -44,10 +45,24 @@
         </select>
       </div>
       <div class="red-editor-choose-theme">
-        <label for="red-modo-avaliacao">Tipo de análise</label>
-        <select class="form-control" id="red-modo-avaliacao">
-          <option value="gratis">Análise automática local (gratuita, sem nota)</option>
+        <label for="red-modo-avaliacao">Provedor da avaliação</label>
+        <select class="form-control" id="red-modo-avaliacao" aria-describedby="red-provedores-info" onchange="redAtualizarProvedor()">
+          <option value="gratis">Análise local por regras (sem nota)</option>
+          <option value="ollama" disabled>Ollama (indisponível)</option>
+          <option value="gemini" disabled>Gemini (indisponível)</option>
         </select>
+        <div id="red-provedores-info" class="red-provedores-info">
+          <p><strong>Ollama</strong> · Processa no servidor do voaAM quando usa um modelo local, sem tarifa por chamada. A velocidade depende do servidor e modelos pequenos podem dar feedback menos preciso.</p>
+          <p><strong>Gemini</strong> · Pode oferecer feedback mais detalhado. Envia a redação ao Google e depende da internet, do modelo e da cota do projeto. O plano configurado pode gerar custos para quem administra o site. Os termos da API Gemini restringem seu uso em sites acessados por menores de 18 anos.</p>
+          <p id="red-gemini-config" hidden></p>
+        </div>
+        <div id="red-detalhe-ollama" hidden>
+          <label for="red-detalhe-avaliacao">Detalhe da avaliação</label>
+          <select class="form-control" id="red-detalhe-avaliacao" onchange="redLimparAvaliacao()">
+            <option value="resumido">Resumida · notas e orientações curtas</option>
+            <option value="detalhado">Detalhada · pontos fortes, trechos e reescritas</option>
+          </select>
+        </div>
       </div>
 
       <div style="padding:14px;border-radius:14px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);margin-bottom:16px">
@@ -98,22 +113,19 @@
       </div>
 
       <div class="red-editor-actions">
-        <button type="button" id="red-analisar" class="btn-primary" onclick="redCorrigir()">Analisar redação</button>
-        <div id="red-ai-status" class="red-ai-status" role="status" hidden>
-          <span id="red-ai-spinner" class="red-ai-spinner" aria-hidden="true"></span>
-          <span id="red-ai-mensagem"></span>
-        </div>
-        <button type="button" id="red-ai-modo-local" class="btn-secondary" onclick="redSelecionarModoLocal()" hidden>Selecionar análise local sem nota</button>
-        <section id="red-resultado-ia" class="red-ai-relatorio" aria-label="Resultado da análise" hidden></section>
+        <button type="button" id="red-analisar" class="btn-primary" onclick="redCorrigir()">
+          <span id="red-ai-spinner" class="red-ai-spinner" aria-hidden="true" hidden></span>
+          <span id="red-analisar-texto">Enviar para correção</span>
+        </button>
+        <p id="red-ai-progresso" class="red-leitor-status" role="status"></p>
+        <p id="red-ai-erro" class="red-ai-erro" role="alert" hidden></p>
         <div class="red-editor-secondary-actions">
-          <button type="button" class="btn-secondary" onclick="redSalvarRascunho()">Salvar rascunho</button>
-          <button type="button" id="red-concluir" class="btn-secondary" onclick="redEnviarHistorico()">Concluir redação</button>
+          <button type="button" id="red-salvar-rascunho" class="btn-secondary" onclick="redSalvarRascunho()">Salvar rascunho</button>
+          <button type="button" id="red-limpar" class="btn-secondary" onclick="redLimpar()">Limpar texto</button>
         </div>
-        <button type="button" id="red-limpar" class="btn-secondary" onclick="redLimpar()">Limpar texto</button>
+        <section id="red-resultado-ia" class="red-ai-relatorio" aria-label="Resultado da análise" hidden></section>
       </div>
 
-      <div id="red-save-feedback" style="display:none;margin-top:10px;padding:10px 14px;border-radius:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);color:#4ade80;font-size:13px;font-weight:600;text-align:center">✅ Rascunho salvo!</div>
-      <div id="red-concluir-feedback" style="display:none;margin-top:10px;padding:10px 14px;border-radius:10px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:var(--accent2);font-size:13px;font-weight:600;text-align:center">🎉 Redação salva no histórico!</div>
     </div>
     <!-- /painel editor -->
 
@@ -121,8 +133,23 @@
     <!-- ══════════════════════════════════
          PAINEL HISTÓRICO
     ══════════════════════════════════ -->
-    <div id="red-historico-panel" style="display:none">
+    <section id="red-rascunhos-panel" style="display:none" aria-labelledby="red-rascunhos-titulo">
+      <h2 id="red-rascunhos-titulo" tabindex="-1">Rascunhos salvos</h2>
+      <p class="red-provedores-info">Guardados neste navegador, na sua conta.</p>
+      <p id="red-rascunhos-vazio" hidden>Nenhum rascunho salvo.</p>
+      <div id="red-rascunhos-lista" class="red-lista"></div>
+      <section id="red-rascunho-revisao" class="red-rascunho-revisao" aria-labelledby="red-rascunho-tema" hidden>
+        <p id="red-rascunho-badge" class="red-vest-badge"></p>
+        <h3 id="red-rascunho-tema" tabindex="-1"></h3>
+        <div id="red-rascunho-texto" class="red-texto-salvo" tabindex="0" role="region" aria-label="Texto do rascunho"></div>
+        <div class="red-editor-secondary-actions red-rascunho-acoes">
+          <button type="button" id="red-rascunho-editar" class="btn-primary">Modificar redação</button>
+          <button type="button" id="red-rascunho-voltar" class="btn-secondary">Voltar aos rascunhos</button>
+        </div>
+      </section>
+    </section>
 
+    <div id="red-historico-panel" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
         <div>
           <div style="font-size:13px;font-weight:700;color:var(--text)">Suas redações salvas</div>
@@ -137,7 +164,7 @@
       <div id="red-hist-vazio" style="padding:44px 20px;text-align:center">
         <div style="font-size:44px;margin-bottom:12px">📂</div>
         <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px">Nenhuma redação ainda</div>
-        <div style="font-size:13px;color:var(--text2);line-height:1.7">Escreva e clique em<br><strong style="color:var(--accent2)">✅ Concluir redação</strong><br>para salvar aqui.</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7">As redações enviadas para correção por IA aparecem aqui com as notas e os relatórios.</div>
       </div>
 
       <!-- Cards do histórico (renderizados por JS) -->
@@ -149,7 +176,7 @@
   </main>
 </div>
 
-<dialog id="red-modal" aria-labelledby="modal-tema-titulo" onclose="redModalId = null">
+<dialog id="red-modal" class="red-dialog" aria-labelledby="modal-tema-titulo" onclose="redModalId = null">
   <header class="red-modal-header">
     <div>
       <p id="modal-vest-badge" class="red-vest-badge"></p>
@@ -158,14 +185,33 @@
     </div>
     <button type="button" class="back-btn" onclick="redFecharModal()" aria-label="Fechar redação">×</button>
   </header>
-  <div class="red-modal-body">
+  <div class="red-modal-body" tabindex="0" aria-label="Redação salva e última correção">
+    <div id="modal-versoes" class="red-versoes" hidden>
+      <label for="modal-versao">Versão da redação</label>
+      <select id="modal-versao" class="form-control"></select>
+    </div>
     <div id="modal-stats" class="red-modal-stats"></div>
     <h3>Redação</h3>
-    <div id="modal-texto"></div>
+    <div id="modal-texto" class="red-texto-salvo"></div>
+    <p id="modal-avaliacao-status"></p>
     <section id="modal-avaliacao" class="red-ai-relatorio" aria-label="Avaliação da redação" hidden></section>
-    <div class="red-tema-actions">
-      <button type="button" class="btn-primary" onclick="redRetomarDoModal()">Continuar editando</button>
-      <button type="button" class="btn-secondary" onclick="redExcluirDoModal()">Excluir</button>
+  </div>
+  <footer class="red-modal-acoes">
+    <button type="button" class="btn-primary" onclick="redRetomarDoModal()">Continuar editando</button>
+    <button type="button" class="btn-secondary" onclick="redExcluirDoModal()">Excluir</button>
+  </footer>
+</dialog>
+
+<dialog id="red-avaliacao-modal" class="red-dialog" aria-labelledby="red-avaliacao-titulo">
+  <header class="red-modal-header">
+    <div>
+      <h2 id="red-avaliacao-titulo"></h2>
+      <p id="red-avaliacao-meta"></p>
     </div>
+    <button type="button" class="back-btn" onclick="this.closest('dialog').close()" aria-label="Fechar avaliação">×</button>
+  </header>
+  <div class="red-modal-body" tabindex="0" aria-label="Relatório da avaliação">
+    <p id="red-avaliacao-status" role="status"></p>
+    <section id="red-avaliacao-relatorio" class="red-ai-relatorio" aria-label="Avaliação selecionada" hidden></section>
   </div>
 </dialog>

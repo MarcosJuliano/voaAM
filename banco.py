@@ -41,6 +41,15 @@ def inicializar_banco() -> None:
             campos = {r['name'] for r in conexao.execute(f'PRAGMA table_info({tabela})')}
             if coluna not in campos:
                 conexao.execute(f'ALTER TABLE {tabela} ADD COLUMN {coluna} {tipo}')
+        # Conserva a última nota de instalações que ainda não registravam cada envio.
+        conexao.execute(
+            """INSERT INTO avaliacoes_redacao
+               (redacao_id, provedor, detalhe, estado, nota, resultado_ia, enviada_em)
+               SELECT r.id, 'anterior', 'anterior', 'concluida', r.nota, r.resultado_ia, r.atualizada_em
+               FROM redacoes r
+               WHERE r.nota IS NOT NULL
+                 AND NOT EXISTS (SELECT 1 FROM avaliacoes_redacao a WHERE a.redacao_id=r.id)"""
+        )
         # URLs vêm de um catálogo auditado e permanecem editáveis no SQLite.
         catalogo = BASE_DIR / 'database' / 'provas_oficiais.json'
         if catalogo.is_file():

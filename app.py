@@ -50,10 +50,14 @@ from progresso_api import bp_progresso
 app.register_blueprint(bp_progresso)
 from google_api import bp_google, iniciar_sessao
 app.register_blueprint(bp_google)
+from perfil_api import bp_perfil
+app.register_blueprint(bp_perfil)
 from redacao_gratis_api import bp_redacao_gratis
 app.register_blueprint(bp_redacao_gratis)
 from redacao_ia_api import bp_redacao_ia
 app.register_blueprint(bp_redacao_ia)
+from fila_redacao import bp_fila_redacao
+app.register_blueprint(bp_fila_redacao)
 
 @app.before_request
 def validar_sessao():
@@ -105,7 +109,8 @@ def _carregar_conta(usuario_id: int) -> dict[str, Any] | None:
         linha = conexao.execute(
             """
             SELECT u.id, u.nome, u.email, u.tipo, u.ativo,
-                   p.serie, p.vestibulares_json, p.dificuldade, g.google_sub, g.email_google
+                   p.serie, p.vestibulares_json, p.dificuldade, g.google_sub, g.email_google,
+                   EXISTS(SELECT 1 FROM fotos_perfil f WHERE f.usuario_id=u.id) AS tem_foto
               FROM usuarios AS u
               LEFT JOIN perfis AS p ON p.usuario_id = u.id
               LEFT JOIN google_identidades AS g ON g.usuario_id = u.id
@@ -121,6 +126,7 @@ def _carregar_conta(usuario_id: int) -> dict[str, Any] | None:
                 "nome": linha["nome"],
                 "email": linha["email"],
                 "tipo": linha["tipo"],
+                "tem_foto": bool(linha["tem_foto"]),
                 "google": {"conectado": bool(linha["google_sub"]), "email": linha["email_google"]},
             },
             "perfil": _perfil_publico(linha),
