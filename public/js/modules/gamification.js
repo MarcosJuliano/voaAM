@@ -28,19 +28,23 @@ async function registrarVisita() {
 }
 
 // ─── GAMIFICATION ───
+function aplicarXpTotal(xp) {
+  if (typeof xp !== 'number' || !Number.isFinite(xp) || xp < 0) return;
+  state.xp = xp;
+  if (typeof renderNivel === 'function') renderNivel();
+}
+
 async function atualizarProgresso() {
   try {
-    const r=await fetch('/api/progresso',{credentials:'same-origin'});
+    const r=await fetch('/api/progresso',{credentials:'same-origin',cache:'no-store'});
     if(!r.ok) return;
     const p=await r.json();
-    state.xp=Number(p.xp)||0;
+    aplicarXpTotal(p.xp);
     state.quizDone=Number(p.questoes_respondidas)||0;
     state.quizCorrect=Number(p.acertos)||0;
     state.aulas=Number(p.aulas_concluidas)||0;
     state.streak=Number(p.sequencia_dias)||0;
-    const xpCount=document.getElementById('xp-count');if(xpCount)xpCount.textContent=state.xp;
     updateStats();verificarStreak();
-    if(typeof renderNivel==='function')renderNivel();
   }catch(e){console.warn('Progresso no servidor indisponível:',e);}
 }
 async function avaliarRespostaServidor(questao_id,alternativa) {

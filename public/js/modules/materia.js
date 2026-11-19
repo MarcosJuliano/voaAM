@@ -108,7 +108,13 @@ async function registrarConclusaoTopico(contexto, total, acertos) {
 
   const resultado = await resposta.json();
   const jaConcluidoNoServidor = Boolean(resultado.ja_concluido);
-  topicosConcluidos.set(topicoId, registro);
+  const percentualSalvo = resultado.percentual ?? percentual;
+  topicosConcluidos.set(topicoId, {
+    ...registro,
+    acertos: resultado.acertos ?? acertos,
+    questoes_total: resultado.questoes_total ?? total,
+    percentual: percentualSalvo,
+  });
   salvarTopicosLocais();
   if (!jaConcluidoLocalmente && !jaConcluidoNoServidor) {
     state.aulas++;
@@ -120,7 +126,7 @@ async function registrarConclusaoTopico(contexto, total, acertos) {
   }
 
   renderTopics();
-  return { topicoId, salvo: true, jaConcluido: jaConcluidoLocalmente || jaConcluidoNoServidor, percentual };
+  return { topicoId, salvo: true, jaConcluido: jaConcluidoLocalmente || jaConcluidoNoServidor, percentual: percentualSalvo };
 }
 
 // ─── NAVIGATION ───
@@ -176,22 +182,27 @@ function renderTopics() {
   list.innerHTML = (topics || []).map(t => {
     const id = montarTopicoId(state.currentSubject, serie, t.quizId);
     const registro = topicosConcluidos.get(id);
-    const concluido = Boolean(registro);
-    const status = concluido ? 'done' : '';
-    const emoji = concluido ? '✓' : '';
-    const resumo = concluido && Number.isFinite(Number(registro.percentual))
-      ? `${t.sub} · ${registro.percentual}% de acertos`
-      : t.sub;
+    const percentual = Number(registro?.percentual ?? NaN);
+    const total = Number(registro?.questoes_total);
+    const acertos = Number(registro?.acertos ?? NaN);
+    const temContagem = total > 0 && Number.isInteger(acertos) && acertos >= 0 && acertos <= total;
+    const perfeito = temContagem ? acertos === total : percentual === 100;
+    const todosErrados = temContagem ? acertos === 0 : percentual === 0;
+    let status = '';
+    if (registro) status = perfeito ? 'done' : todosErrados ? 'incorrect' : 'partial';
+    const marcador = registro ? todosErrados ? '×' : '✓' : '';
+    const resumo = Number.isFinite(percentual) ? `${t.sub} · ${percentual}% de acertos` : t.sub;
+    const descricao = registro ? `, concluído${Number.isFinite(percentual) ? ` com ${percentual}% de acertos` : ''}` : '';
 
     return `
-      <div class="topic-card" data-quiz-id="${t.quizId}" role="button" tabindex="0" aria-label="Abrir quiz: ${t.name}">
+      <div class="topic-card" data-quiz-id="${t.quizId}" role="button" tabindex="0" aria-label="Abrir quiz: ${t.name}${descricao}">
         <div class="topic-icon">${t.icon}</div>
         <div class="topic-info">
           <div class="topic-name">${t.name}</div>
           <div class="topic-meta">${resumo}</div>
         </div>
         <div class="topic-status">
-          <div class="topic-check ${status}" aria-label="${concluido ? 'Tópico concluído' : 'Tópico não concluído'}">${emoji}</div>
+          <div class="topic-check ${status}" aria-hidden="true">${marcador}</div>
         </div>
       </div>
     `;

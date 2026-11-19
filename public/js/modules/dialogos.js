@@ -1,3 +1,25 @@
+function dialogoForaDaJanela(evento) {
+  const dialogo = evento.target;
+  if (!(dialogo instanceof HTMLDialogElement) || !dialogo.open || evento.button !== 0) return null;
+  const {left, right, top, bottom} = dialogo.getBoundingClientRect();
+  const fora = evento.clientX < left || evento.clientX > right || evento.clientY < top || evento.clientY > bottom;
+  return fora ? dialogo : null;
+}
+
+let dialogoPressionadoFora = null;
+document.addEventListener('pointerdown', evento => {
+  dialogoPressionadoFora = dialogoForaDaJanela(evento);
+});
+document.addEventListener('pointercancel', () => { dialogoPressionadoFora = null; });
+document.addEventListener('click', evento => {
+  const dialogo = dialogoForaDaJanela(evento);
+  const pressionadoFora = dialogoPressionadoFora;
+  dialogoPressionadoFora = null;
+  if (!dialogo || dialogo !== pressionadoFora) return;
+  if (typeof dialogo.requestClose === 'function') dialogo.requestClose();
+  else if (dialogo.dispatchEvent(new Event('cancel', {cancelable: true}))) dialogo.close();
+});
+
 // Usa a camada modal nativa para funcionar também sobre o leitor de redações.
 function confirmarAcao({titulo, mensagem, acao, executar, cancelarTexto = 'Cancelar', destrutiva = true}) {
   const dialogo = document.getElementById('confirmar-acao');
@@ -36,4 +58,24 @@ function confirmarAcao({titulo, mensagem, acao, executar, cancelarTexto = 'Cance
   };
   dialogo.showModal();
   cancelar.focus();
+}
+
+function ampliarImagemPerfil(titulo, imagem, tema, alterar) {
+  const dialogo = document.getElementById('perfil-imagem-dialogo');
+  const ampliada = document.getElementById('perfil-imagem-ampliada');
+  const fundo = document.getElementById('perfil-imagem-tema');
+  document.getElementById('perfil-imagem-titulo').textContent = titulo;
+  ampliada.alt = titulo;
+  ampliada.hidden = !imagem;
+  if (imagem) ampliada.src = imagem;
+  else ampliada.removeAttribute('src');
+  fundo.hidden = Boolean(imagem);
+  fundo.className = 'ranking-publico-banner banner-' + (tema || 'oceano');
+  const botao = document.getElementById('perfil-imagem-alterar');
+  botao.hidden = !alterar;
+  botao.onclick = alterar ? () => {
+    dialogo.close();
+    alterar();
+  } : null;
+  dialogo.showModal();
 }

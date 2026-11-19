@@ -3,8 +3,6 @@
   <div class="logo" aria-label="voaAM"><div class="logo-text">Voa<span>AM</span></div></div>
   <div class="header-right">
     <div class="header-stats">
-      <div class="header-level" id="header-nivel" title="Seu nível atual">Nível 1/50</div>
-      <div class="header-xp" id="xp-display" aria-label="Experiência acumulada"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#star"></use></svg><span id="xp-count">0</span> XP</div>
       <div class="vidas-area">
         <button class="vidas-pill" id="vidas-toggle" type="button" aria-expanded="false" aria-controls="vidas-ajuda" onclick="abrirInfoVidas()" aria-label="Mostrar vidas e informações de recarga">
           <svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#heart"></use></svg>
@@ -16,11 +14,22 @@
           <button type="button" onclick="abrirInfoVidas()">Entendi</button>
         </div>
       </div>
-      <button class="header-logout" type="button" onclick="authLogout()" title="Sair da conta">Sair</button>
     </div>
     <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema claro e escuro" type="button">
       <span class="theme-toggle-label theme-toggle-label-light">Claro</span>
       <span class="theme-toggle-label theme-toggle-label-dark">Escuro</span>
     </button>
   </div>
+  <section class="xp-faixa" id="xp-faixa" aria-label="Progresso de nível">
+    <button id="xp-display" class="xp-faixa-controle" type="button" aria-label="Mostrar detalhes de XP" aria-expanded="false" aria-controls="xp-detalhes">
+      <span id="xp-barra" class="xp-trilho" role="progressbar" aria-label="Progresso para o próximo nível" aria-valuemin="0" aria-valuenow="0" aria-valuemax="200">
+        <span id="xp-preenchimento" class="xp-preenchimento"></span>
+      </span>
+    </button>
+    <div id="xp-detalhes" class="xp-faixa-detalhes" hidden>
+      <strong id="xp-nivel">Nível 1</strong>
+      <strong><span id="xp-count">0</span> XP acumulados</strong>
+      <span id="xp-proximo">Faltam 200 XP para o nível 2.</span>
+    </div>
+  </section>
 </header>

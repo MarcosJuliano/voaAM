@@ -143,6 +143,7 @@ def entrar_google():
         # Atualiza o endereço exibido também para vínculos anteriores à migração.
         c.execute('UPDATE google_identidades SET email_google=? WHERE google_sub=?', (email, sub))
     iniciar_sessao(uid, versao)
+    session['boas_vindas_google'] = 'Bem-vindo ao voaAM!' if dados.get('cadastrar') else 'Bem-vindo de volta ao voaAM!'
     return jsonify({'autenticado': True})
 
 

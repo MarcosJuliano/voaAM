@@ -8,10 +8,16 @@
     <section class="question-card ranking-card liquid-glass" aria-labelledby="ranking-titulo">
       <h2 id="ranking-titulo">Classificação geral</h2>
       <p id="ranking-status" class="ranking-status" role="status"></p>
-      <ol id="ranking-lista" class="ranking-lista" aria-label="Estudantes classificados"></ol>
+      <ol id="ranking-lista" class="ranking-lista" aria-label="Estudantes classificados" tabindex="0"></ol>
       <div id="ranking-paginacao" class="ranking-paginacao" hidden>
         <button id="ranking-anterior" type="button" class="btn-secondary">Anterior</button>
         <button id="ranking-proxima" type="button" class="btn-secondary">Próxima</button>
+      </div>
+      <div class="ranking-acoes">
+        <button id="ranking-ir-minha-posicao" class="btn-secondary ranking-ir-minha-posicao" type="button" hidden>
+          <svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#target"></use></svg>
+          Ir para minha colocação
+        </button>
       </div>
       <button id="ranking-tentar" type="button" class="btn-secondary" hidden>Tentar novamente</button>
     </section>
@@ -76,3 +82,46 @@
     </section>
   </main>
 </div>
+
+<dialog id="ranking-perfil-publico" class="conta-dialog liquid-glass" aria-labelledby="ranking-publico-nome">
+  <button id="ranking-publico-banner" class="ranking-publico-banner banner-oceano perfil-imagem-preview" type="button" aria-label="Ampliar banner deste perfil">
+    <img id="ranking-publico-banner-imagem" alt="" hidden>
+  </button>
+  <p id="ranking-publico-banner-status" class="perfil-ajuda" role="status" hidden></p>
+  <div id="ranking-publico-banner-moderacao" class="ranking-publico-moderacao" hidden>
+    <button id="ranking-publico-banner-aprovar" class="btn-primary" type="button">Aprovar banner</button>
+    <button id="ranking-publico-banner-rejeitar" class="btn-secondary" type="button">Rejeitar banner</button>
+  </div>
+  <header class="ranking-publico-identidade">
+    <button id="ranking-publico-foto-preview" class="ranking-foto perfil-imagem-preview" type="button" aria-label="Ampliar foto deste perfil" disabled>
+      <svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#user-round"></use></svg>
+      <img id="ranking-publico-foto" alt="" width="72" height="72" hidden>
+    </button>
+    <h2 id="ranking-publico-nome">Perfil do estudante</h2>
+  </header>
+  <p id="ranking-publico-foto-status" class="perfil-ajuda" role="status" hidden></p>
+  <div id="ranking-publico-foto-moderacao" class="ranking-publico-moderacao" hidden>
+    <button id="ranking-publico-foto-aprovar" class="btn-primary" type="button">Aprovar foto</button>
+    <button id="ranking-publico-foto-rejeitar" class="btn-secondary" type="button">Rejeitar foto</button>
+  </div>
+  <dl id="ranking-publico-dados" class="ranking-publico-stats">
+    <div><dt>Experiência</dt><dd id="ranking-publico-xp"></dd></div>
+    <div><dt>Tentativas</dt><dd id="ranking-publico-tentativas"></dd></div>
+    <div><dt>Acertos</dt><dd id="ranking-publico-acertos"></dd></div>
+    <div><dt>Precisão</dt><dd id="ranking-publico-precisao"></dd></div>
+  </dl>
+  <dl class="ranking-publico-estudo destaque-publico">
+    <div id="ranking-publico-destaque-linha" hidden>
+      <dt>Matéria em destaque</dt>
+      <dd id="ranking-publico-destaque"></dd>
+      <small id="ranking-publico-destaque-dados"></small>
+    </div>
+    <div id="ranking-publico-praticada-linha" hidden><dt>Matéria mais praticada</dt><dd id="ranking-publico-praticada"></dd></div>
+    <div><dt>Questões diferentes respondidas</dt><dd id="ranking-publico-distintas"></dd></div>
+  </dl>
+  <dl id="ranking-publico-estudo" class="ranking-publico-estudo" hidden>
+    <div id="ranking-publico-etapa-linha" hidden><dt>Etapa de estudo</dt><dd id="ranking-publico-etapa"></dd></div>
+    <div id="ranking-publico-vests-linha" hidden><dt>Vestibulares de interesse</dt><dd id="ranking-publico-vests"></dd></div>
+  </dl>
+  <button id="ranking-publico-fechar" class="btn-secondary" type="button">Fechar</button>
+</dialog>

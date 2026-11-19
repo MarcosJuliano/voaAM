@@ -7,6 +7,44 @@ let simVestAtual = 'ENEM';
 let exVestAtual = 'ENEM';
 let simModoAtual = null; // 'simples' or 'completo'
 
+function novaTentativaSimulado() {
+  return Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function simCartaoNotas(modo, chave) {
+  return `<section class="pratica-notas sim-notas" data-modo="${modo}" data-chave="${chave}" aria-label="Notas do simulado">
+    <div class="sim-notas-grade">
+      <div>Última nota <strong data-nota="ultima">—</strong></div>
+      <div>Maior nota <strong data-nota="maxima">—</strong></div>
+      <div>Menor nota <strong data-nota="minima">—</strong></div>
+    </div>
+    <p role="status">Carregando notas…</p>
+  </section>`;
+}
+
+async function simAtualizarNotas() {
+  const cartao = document.querySelector('#sim-cards-container .sim-notas');
+  if (!cartao) return;
+  const contaId = authConta?.id;
+  const pedido = Symbol();
+  cartao.pedido = pedido;
+  const status = cartao.querySelector('[role="status"]');
+  const params = new URLSearchParams({modo: cartao.dataset.modo, chave: cartao.dataset.chave});
+  try {
+    const {notas} = await authRequisicao('/api/praticar/simulados/notas?' + params);
+    if (!cartao.isConnected || cartao.pedido !== pedido || contaId !== authConta?.id) return;
+    for (const campo of cartao.querySelectorAll('[data-nota]')) {
+      const valor = notas?.[campo.dataset.nota];
+      campo.textContent = valor == null ? '—' : valor + '%';
+    }
+    status.textContent = notas ? '' : 'Nenhuma tentativa registrada para este simulado.';
+  } catch {
+    if (cartao.isConnected && cartao.pedido === pedido && contaId === authConta?.id) {
+      status.textContent = 'Não foi possível carregar as notas.';
+    }
+  }
+}
+
 // Config dos vestibulares: questões e tempo completos
 const simConfig = {
   ENEM:  { label:'ENEM',         emoji:'🌿', qs:45, horas:5, cor:'rgba(34,197,94,0.12)',  corBorda:'rgba(34,197,94,0.3)',  corNum:'#22c55e' },
@@ -179,7 +217,8 @@ function scSelecionarAnoCompleto(vestKey, provaKey) {
       <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px">
         ${p.temas.map(t => `<span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.08);color:var(--text2);font-weight:600">${t}</span>`).join('')}
       </div>
-      <button type="button" class="pratica-acao" onclick="scIniciarDireto('${provaKey}')" style="
+      ${simCartaoNotas('completo', provaKey.replace('_MAT', ''))}
+      <button type="button" class="pratica-acao" onclick="scIniciarDireto('${provaKey.replace('_MAT', '')}')" style="
         width:100%;padding:15px;border-radius:12px;border:none;
         background:${v.corNum};color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
         display:flex;align-items:center;justify-content:center;gap:8px">
@@ -191,6 +230,7 @@ function scSelecionarAnoCompleto(vestKey, provaKey) {
         ← Trocar ano
       </button>
     </div>`;
+  simAtualizarNotas();
 }
 
 function simSelecionarVestibular(vestKey) {
@@ -258,6 +298,7 @@ function renderSimCardsNovo(vestKey, modo) {
       <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px">
         ${temasSel.map(t => `<span style="font-size:10px;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.08);color:var(--text2);font-weight:600">${t}</span>`).join('')}
       </div>
+      ${simCartaoNotas('simples', vestKey)}
       <button type="button" class="pratica-acao" onclick="iniciarSimuladoNovo('${vestKey}','${modo}')" style="
         width:100%;padding:15px;border-radius:12px;border:none;
         background:${btnBg};color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
@@ -270,6 +311,7 @@ function renderSimCardsNovo(vestKey, modo) {
         ← Trocar vestibular
       </button>
     </div>`;
+  simAtualizarNotas();
 }
 
 function voltarParaModos() {
@@ -333,6 +375,7 @@ function iniciarSimuladoNovo(vestKey, modo) {
       title: `${cfg.label} — Simulado ${modoLabel}`,
       desc: descricao,
       video: null,
+      chaveSimulado: vestKey,
       questions: questoes
     }, minutos * 60);
   } catch (erro) {
@@ -341,7 +384,7 @@ function iniciarSimuladoNovo(vestKey, modo) {
   }
 }
 
-function pratAba(aba) {
+function pratAba(aba, filtrosTreino) {
   pratAbaAtual = aba;
   const btnSim = document.getElementById('pratab-sim');
   const btnEx = document.getElementById('pratab-ex');
@@ -362,14 +405,10 @@ function pratAba(aba) {
   if (panelEx)  panelEx.style.display  = aba === 'ex' ? 'block' : 'none';
 
   if (isCustom) {
-    if (typeof treinoCarregarFiltros === 'function') treinoCarregarFiltros();
-    return;
+    return treinoCarregarFiltros(filtrosTreino);
   }
   if (isSim) {
     simModoAba('simples');
-    // Já apresenta o simulado do vestibular principal ao chegar em Praticar.
-    const padrao=(typeof perfil!=='undefined' && perfil?.vests?.[0]) || 'ENEM';
-    simSelecionarVestibular(({SIS:'SIS1',PSC:'PSC1'})[padrao] || padrao);
   } else {
     // Reset exercise sub-panels — always show Assuntos first
     exAssuntoAtual = null;

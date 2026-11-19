@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     tipo TEXT NOT NULL DEFAULT 'ALUNO',
     ativo INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1)),
     sessao_versao INTEGER NOT NULL DEFAULT 0,
+    modera_imagens INTEGER NOT NULL DEFAULT 0 CHECK (modera_imagens IN (0, 1)),
     data_cadastro TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -59,6 +60,21 @@ CREATE TABLE IF NOT EXISTS historico_questoes (
 
 CREATE INDEX IF NOT EXISTS idx_redacoes_usuario ON redacoes(usuario_id, atualizada_em);
 CREATE INDEX IF NOT EXISTS idx_historico_usuario ON historico_questoes(usuario_id, respondida_em);
+CREATE INDEX IF NOT EXISTS idx_historico_questao ON historico_questoes(usuario_id, questao_id, id DESC);
+
+CREATE TABLE IF NOT EXISTS notas_simulados (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    tentativa TEXT NOT NULL,
+    modo TEXT NOT NULL CHECK (modo IN ('simples', 'completo')),
+    chave TEXT NOT NULL,
+    acertos INTEGER NOT NULL CHECK (acertos >= 0 AND acertos <= total),
+    total INTEGER NOT NULL CHECK (total > 0),
+    resultados_json TEXT NOT NULL DEFAULT '{}',
+    UNIQUE (usuario_id, tentativa)
+);
+
+CREATE INDEX IF NOT EXISTS idx_notas_simulados_prova ON notas_simulados(usuario_id, modo, chave, id DESC);
 
 
 -- Conclusões dos tópicos de aula/quiz por estudante.
@@ -154,5 +170,43 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_avaliacao_ativa_unica
 
 CREATE TABLE IF NOT EXISTS fotos_perfil (
     usuario_id INTEGER PRIMARY KEY REFERENCES usuarios(id) ON DELETE CASCADE,
-    imagem BLOB NOT NULL
+    imagem BLOB NOT NULL,
+    moderacao TEXT NOT NULL DEFAULT 'aprovada',
+    versao TEXT
+);
+
+CREATE TABLE IF NOT EXISTS banners_perfil (
+    usuario_id INTEGER PRIMARY KEY REFERENCES usuarios(id) ON DELETE CASCADE,
+    imagem BLOB NOT NULL,
+    moderacao TEXT NOT NULL DEFAULT 'pendente' CHECK (moderacao IN ('pendente', 'aprovada')),
+    versao TEXT
+);
+
+-- Uma recompensa por versão de redação validamente avaliada (sem XP para erros de IA).
+CREATE TABLE IF NOT EXISTS recompensas_redacoes (
+    redacao_id INTEGER PRIMARY KEY REFERENCES redacoes(id) ON DELETE CASCADE,
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    xp INTEGER NOT NULL CHECK (xp BETWEEN 0 AND 40),
+    criada_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+-- Preferência de estudo, banners pré-definidos e pedido de suporte.
+CREATE TABLE IF NOT EXISTS preferencias_inicio (
+    usuario_id INTEGER PRIMARY KEY REFERENCES usuarios(id) ON DELETE CASCADE,
+    disciplina TEXT NOT NULL DEFAULT 'Todas',
+    configurada_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS pedidos_suporte (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    assunto TEXT NOT NULL,
+    mensagem TEXT NOT NULL,
+    criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Ledger anti-farming: a mesma redação exata não rende XP de novo após exclusão.
+CREATE TABLE IF NOT EXISTS recompensas_redacoes_assinaturas (
+    usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    assinatura TEXT NOT NULL,
+    xp INTEGER NOT NULL CHECK (xp BETWEEN 0 AND 40),
+    PRIMARY KEY(usuario_id, assinatura)
 );

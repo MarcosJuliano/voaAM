@@ -1,5 +1,6 @@
 """Fila persistente compartilhada entre o Flask e os processos de correção."""
 import json
+import hashlib
 import os
 import sqlite3
 import time
@@ -152,6 +153,23 @@ def finalizar(trabalho, avaliacao=None, erro=None):
             ('concluida' if avaliacao else 'falhou', resposta, nota, erro, trabalho['id'], trabalho['reserva']),
         )
         if cursor.rowcount and avaliacao:
+            # XP concedido apenas na primeira avaliação válida desta versão.
+            # Nota estimada de 0 a 1000 -> de 0 a 40 XP, sem duplicação por provedor.
+            uid_linha = c.execute('SELECT usuario_id, tema_id, texto FROM redacoes WHERE id=?',
+                                  (trabalho['redacao_id'],)).fetchone()
+            if uid_linha is not None:
+                recompensa = max(0, min(40, int(nota) // 25))
+                assinatura = hashlib.sha256(
+                    ((uid_linha['tema_id'] or '') + '\0' + uid_linha['texto'].strip()).encode('utf-8')
+                ).hexdigest()
+                novo = c.execute('''INSERT OR IGNORE INTO recompensas_redacoes_assinaturas(usuario_id,assinatura,xp)
+                                    VALUES(?,?,?)''', (uid_linha['usuario_id'], assinatura, recompensa))
+                if novo.rowcount:
+                    c.execute('INSERT OR IGNORE INTO recompensas_redacoes(redacao_id,usuario_id,xp) VALUES(?,?,?)',
+                              (trabalho['redacao_id'], uid_linha['usuario_id'], recompensa))
+                    c.execute('INSERT OR IGNORE INTO progresso(usuario_id) VALUES(?)', (uid_linha['usuario_id'],))
+                    c.execute('UPDATE progresso SET xp=xp+? WHERE usuario_id=?',
+                              (recompensa, uid_linha['usuario_id']))
             c.execute(
                 """UPDATE redacoes SET nota=?, resultado_ia=?, atualizada_em=CURRENT_TIMESTAMP WHERE id=?
                    AND NOT EXISTS (SELECT 1 FROM avaliacoes_redacao

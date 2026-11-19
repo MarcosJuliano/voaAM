@@ -8,45 +8,42 @@ const EX_DIF_COR     = ['','rgba(34,197,94,0.13)','rgba(245,158,11,0.13)','rgba(
 const EX_DIF_BORDA   = ['','rgba(34,197,94,0.35)','rgba(245,158,11,0.4)','rgba(239,68,68,0.35)'];
 const EX_DIF_NUM     = ['','#22c55e','var(--amber)','var(--red)'];
 const EX_DIF_LABEL   = ['','Fácil','Médio','Difícil'];
-const EX_DIF_ICON    = ['','🟢','🟡','🔴'];
 
 const exAssuntos = [
   // ── FÁCIL ──────────────────────────────────────────────────────────────────
-  { id:'financ',    emoji:'💰', titulo:'Mat. Financeira',    sub:'Juros simples, compostos, porcentagem',
+  { id:'financ',    icone:'wallet', titulo:'Mat. Financeira',    sub:'Juros simples, compostos, porcentagem',
     dif:1,
     keywords:['juro','financ','porcentagem','desconto','prestação','montante','taxa'] },
-  { id:'estat',     emoji:'📊', titulo:'Estatística',        sub:'Média, moda, mediana, desvio, gráficos',
+  { id:'estat',     icone:'chart-column', titulo:'Estatística',        sub:'Média, moda, mediana, desvio, gráficos',
     dif:1,
     keywords:['estatística','média','moda','mediana','desvio','variância','gráfico','frequência'] },
-  { id:'funcoes',   emoji:'📈', titulo:'Funções',            sub:'Afim, quadrática, exponencial, logarítmica',
+  { id:'funcoes',   icone:'chart-column', titulo:'Funções',            sub:'Afim, quadrática, exponencial, logarítmica',
     dif:1,
     keywords:['função','afim','quadrática','exponencial','logarit','inversa','composta'] },
   // ── MÉDIO ──────────────────────────────────────────────────────────────────
-  { id:'algebra',   emoji:'🔡', titulo:'Álgebra',            sub:'Equações, sistemas, matrizes, PA e PG',
+  { id:'algebra',   icone:'book-open', titulo:'Álgebra',            sub:'Equações, sistemas, matrizes, PA e PG',
     dif:2,
     keywords:['equação','sistema','matrize','determinante','pa','pg','progressão','produto notável','polinôm'] },
-  { id:'geometria', emoji:'📐', titulo:'Geometria',          sub:'Plana, espacial e analítica',
+  { id:'geometria', icone:'ruler', titulo:'Geometria',          sub:'Plana, espacial e analítica',
     dif:2,
     keywords:['geometr','área','volume','perímetro','pitágoras','triângl','polígon','cilindro','cone','esfera','pirâmide'] },
-  { id:'log',       emoji:'🔢', titulo:'Logaritmos & Exp.',  sub:'Propriedades, equações logarítmicas',
+  { id:'log',       icone:'calculator', titulo:'Logaritmos & Exp.',  sub:'Propriedades, equações logarítmicas',
     dif:2,
     keywords:['logarit','exponencial','potência','base natural'] },
   // ── DIFÍCIL ────────────────────────────────────────────────────────────────
-  { id:'trigon',    emoji:'📏', titulo:'Trigonometria',      sub:'Seno, cosseno, tangente, identidades',
+  { id:'trigon',    icone:'ruler', titulo:'Trigonometria',      sub:'Seno, cosseno, tangente, identidades',
     dif:3,
     keywords:['trigonometr','seno','cosseno','tangente','radianos','identidade trigon'] },
-  { id:'prob',      emoji:'🎲', titulo:'Probabilidade',      sub:'Eventos, combinatória, análise combinatória',
+  { id:'prob',      icone:'dice-five', titulo:'Probabilidade',      sub:'Eventos, combinatória, análise combinatória',
     dif:3,
     keywords:['probabilidade','combinação','permutação','arranjo','fatorial','evento'] },
-  { id:'comb',      emoji:'🧩', titulo:'Combinatória',       sub:'Princípio multiplicativo, combinações',
+  { id:'comb',      icone:'shapes', titulo:'Combinatória',       sub:'Princípio multiplicativo, combinações',
     dif:3,
     keywords:['combinatória','princípio multiplicativo','binômio de newton','combinação','arranjo','permutação'] },
-  { id:'geoAnal',   emoji:'🔷', titulo:'Geo. Analítica',     sub:'Pontos, retas, cônicas, circunferências',
+  { id:'geoAnal',   icone:'sparkles', titulo:'Geo. Analítica',     sub:'Pontos, retas, cônicas, circunferências',
     dif:3,
     keywords:['analítica','ponto médio','distância','reta','cônica','parábola','elipse','hipérbole','circunferência'] },
 ];
-// Garante ordem crescente de dificuldade (já definida acima, mas sort para segurança)
-exAssuntos.sort((a,b) => a.dif - b.dif);
 
 // Níveis: 1=Fácil, 2=Médio, 3=Difícil
 // A dificuldade é mapeada de _dif (1-4) para o nível escolhido:
@@ -56,60 +53,102 @@ exAssuntos.sort((a,b) => a.dif - b.dif);
 
 let exAssuntoAtual = null;
 let exNivelAtual   = null;
+let exListaAtual = [];
+let exPedidoNotas = 0;
+
+async function exAtualizarNotas() {
+  const pedido = ++exPedidoNotas;
+  const contaId = authConta?.id;
+  const cartao = document.getElementById('ex-notas');
+  cartao.hidden = !exListaAtual.length;
+  if (cartao.hidden) return;
+
+  const status = document.getElementById('ex-notas-status');
+  const recentes = document.getElementById('ex-notas-recentes');
+  const posicao = new Map(exListaAtual.map((q, indice) => ['banco:' + q.id, indice + 1]));
+  const params = new URLSearchParams([...posicao.keys()].map(id => ['id', id]));
+  try {
+    const {ultimas, por_questao} = await authRequisicao('/api/praticar/exercicios/notas?' + params);
+    if (pedido !== exPedidoNotas || contaId !== authConta?.id) return;
+    status.textContent = ultimas.length ? '' : 'Responda a uma questão desta lista para ver sua nota.';
+    recentes.replaceChildren(...ultimas.map(({questao_id, nota}) => {
+      const item = document.createElement('li');
+      item.className = 'ex-nota';
+      item.dataset.resultado = nota === 100 ? 'acerto' : 'erro';
+      const numero = document.createElement('span');
+      numero.textContent = 'Questão ' + posicao.get(questao_id);
+      const valor = document.createElement('strong');
+      valor.textContent = nota + '%';
+      item.append(numero, valor);
+      return item;
+    }));
+    for (const item of document.querySelectorAll('#ex-lista-10 [data-exercicio-nota]')) {
+      const nota = por_questao['banco:' + item.dataset.exercicioNota];
+      item.hidden = nota === undefined;
+      item.textContent = item.hidden ? '' : `Última tentativa · ${nota}%`;
+      item.dataset.resultado = nota === 100 ? 'acerto' : 'erro';
+    }
+  } catch {
+    if (pedido === exPedidoNotas && contaId === authConta?.id) status.textContent = 'Não foi possível carregar as notas.';
+  }
+}
+
+function exQuestoesDoAssunto(assunto) {
+  return bancoDB.filter(q => q.opcoes?.length &&
+    assunto.keywords.some(k => (q.contexto || '').toLowerCase().includes(k) ||
+      (q.enunciado || '').toLowerCase().includes(k)));
+}
+
+function exCartaoAssunto({titulo, sub, icone, quantidade, dif}, abrir) {
+  const botao = document.createElement('button');
+  botao.type = 'button';
+  botao.className = 'pratica-opcao ex-cartao-assunto';
+  botao.addEventListener('click', abrir);
+  botao.append(voaIcon(icone));
+  const nome = document.createElement('strong');
+  nome.textContent = titulo;
+  const descricao = document.createElement('span');
+  descricao.className = 'ex-cartao-descricao';
+  descricao.textContent = sub;
+  const contagem = document.createElement('span');
+  contagem.textContent = `${quantidade} ${quantidade === 1 ? 'questão' : 'questões'}`;
+  botao.append(nome, descricao, contagem);
+  if (dif) {
+    const selo = document.createElement('span');
+    selo.className = 'ex-cartao-nivel';
+    selo.append(voaIcon('circle-dot'), EX_DIF_LABEL[dif]);
+    botao.append(selo);
+  }
+  return botao;
+}
+
+function exRenderAssuntos(alvo, abrirAssunto, limite = Infinity) {
+  alvo.replaceChildren();
+  for (let dif = 1; dif <= 3; dif++) {
+    const grupo = document.createElement('div');
+    grupo.className = 'ex-assunto-grupo';
+    grupo.dataset.dificuldade = dif;
+    grupo.style.setProperty('--ex-fundo', EX_DIF_COR[dif]);
+    grupo.style.setProperty('--ex-borda', EX_DIF_BORDA[dif]);
+    grupo.style.setProperty('--ex-cor', EX_DIF_NUM[dif]);
+    const titulo = document.createElement('h3');
+    titulo.className = 'ex-assunto-dificuldade';
+    titulo.append(voaIcon('circle-dot'), EX_DIF_LABEL[dif]);
+    const grade = document.createElement('div');
+    grade.className = 'ex-assunto-grade';
+    const assuntos = exAssuntos.filter(a => a.dif === dif).slice(0, limite);
+    for (const assunto of assuntos) {
+      const cartao = {...assunto, quantidade: exQuestoesDoAssunto(assunto).length};
+      grade.append(exCartaoAssunto(cartao, () => abrirAssunto(assunto.id)));
+    }
+    grupo.append(titulo, grade);
+    alvo.append(grupo);
+  }
+}
 
 function exMostrarAssuntos() {
   const grid = document.getElementById('ex-assuntos-grid');
-  if (!grid) return;
-
-  // Agrupa por dificuldade para inserir cabeçalhos de seção
-  let html = '';
-  let difAtual = 0;
-
-  exAssuntos.forEach(a => {
-    const n = bancoDB.filter(q => q.opcoes && q.opcoes.length > 0 &&
-      a.keywords.some(k => (q.contexto||'').toLowerCase().includes(k) || (q.enunciado||'').toLowerCase().includes(k))
-    ).length;
-
-    const cor     = EX_DIF_COR[a.dif];
-    const borda   = EX_DIF_BORDA[a.dif];
-    const num     = EX_DIF_NUM[a.dif];
-    const icon    = EX_DIF_ICON[a.dif];
-    const label   = EX_DIF_LABEL[a.dif];
-
-    // Cabeçalho de seção ao mudar de nível
-    if (a.dif !== difAtual) {
-      difAtual = a.dif;
-      // Fechar grid anterior se não for o primeiro
-      if (difAtual > 1) html += '</div>';
-      html += `
-        <div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;margin-top:${difAtual>1?'10px':'0'};margin-bottom:4px">
-          <span style="font-size:14px">${icon}</span>
-          <span style="font-size:11px;font-weight:800;color:${num};text-transform:uppercase;letter-spacing:0.08em">${label}</span>
-          <div style="flex:1;height:1px;background:${borda}"></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;grid-column:1/-1">`;
-    }
-
-    html += `<button type="button" class="pratica-opcao" onclick="exSelecionarAssunto('${a.id}')" style="
-      padding:14px 12px;border-radius:14px;border:1.5px solid ${borda};
-      --fundo-cartao:${cor};color:var(--text);font-family:var(--font);
-      cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:5px;
-      position:relative;overflow:hidden">
-      <div style="position:absolute;top:8px;right:8px;font-size:10px;font-weight:700;color:${num};
-        background:rgba(0,0,0,0.18);padding:2px 6px;border-radius:5px">${icon} ${label}</div>
-      <div style="font-size:22px">${a.emoji}</div>
-      <div style="font-size:12px;font-weight:700;color:${num};line-height:1.2">${a.titulo}</div>
-      <div style="font-size:10px;color:var(--text2);line-height:1.3">${a.sub}</div>
-      <div style="font-size:10px;color:${num};margin-top:2px;font-weight:600">${n} questões</div>
-    </button>`;
-  });
-
-  // Fechar último grupo
-  if (difAtual > 0) html += '</div>';
-
-  // O grid pai não precisa mais de grid-template-columns pois cada grupo tem o seu
-  grid.style.display = 'block';
-  grid.innerHTML = html;
+  if (grid) exRenderAssuntos(grid, exSelecionarAssunto);
 }
 
 function exSelecionarAssunto(id) {
@@ -123,11 +162,11 @@ function exSelecionarAssunto(id) {
   // Header do assunto selecionado
   const header = document.getElementById('ex-nivel-header');
   if (header) header.innerHTML = `
-    <div style="font-size:28px">${exAssuntoAtual.emoji}</div>
     <div>
-      <div style="font-size:14px;font-weight:800;color:${exAssuntoAtual.corNum}">${exAssuntoAtual.titulo}</div>
+      <div style="font-size:14px;font-weight:800;color:${EX_DIF_NUM[exAssuntoAtual.dif]}">${exAssuntoAtual.titulo}</div>
       <div style="font-size:11px;color:var(--text2);margin-top:2px">${exAssuntoAtual.sub}</div>
     </div>`;
+  header?.prepend(voaIcon(exAssuntoAtual.icone));
 }
 
 function exVoltarAssuntos() {
@@ -165,14 +204,7 @@ function exRenderQuestoesFiltradas() {
   if (!container || !exAssuntoAtual) return;
 
   const a = exAssuntoAtual;
-  // Filtra banco por keywords do assunto
-  let pool = bancoDB.filter(q =>
-    q.opcoes && q.opcoes.length > 0 &&
-    a.keywords.some(k => (q.contexto||'').toLowerCase().includes(k) || (q.enunciado||'').toLowerCase().includes(k))
-  );
-
-  // Aplica função de dificuldade
-  pool = pool.map(q => ({ ...q, _dif: getDificuldade(q) }));
+  const pool = exQuestoesDoAssunto(a).map(q => ({ ...q, _dif: getDificuldade(q) }));
 
   // Mapeia nível escolhido → faixas de _dif (1=fácil, 2=médio, 3=difícil, 4=avançado)
   let difMin, difMax;
@@ -185,6 +217,10 @@ function exRenderQuestoesFiltradas() {
   if (filtrado.length < 3) filtrado = pool;
 
   filtrado = embaralhar(filtrado).slice(0, 10);
+  exListaAtual = filtrado;
+  document.getElementById('ex-notas-recentes').replaceChildren();
+  document.getElementById('ex-notas-status').textContent = 'Carregando notas…';
+  exAtualizarNotas();
 
   const nivelLabels = ['','Fácil','Médio','Difícil'];
   const nivelIcons  = ['','🟢','🟡','🔴'];
@@ -203,7 +239,7 @@ function exRenderQuestoesFiltradas() {
     return;
   }
 
-  container.innerHTML = filtrado.map((q, i) => {
+  container.innerHTML = filtrado.map(q => {
     const dif  = q._dif || 1;
     const tema = q.contexto ? q.contexto.split('—')[0].replace('Tema:','').trim() : a.titulo;
     return `<button type="button" class="ex-lista-item" onclick="abrirExercicio('${q.id}')">
@@ -215,6 +251,7 @@ function exRenderQuestoesFiltradas() {
           <span style="font-size:10px;color:var(--text2)">${tema.slice(0,28)}</span>
         </span>
         <span style="font-size:13px;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${q.enunciado}</span>
+        <span class="ex-nota-questao" data-exercicio-nota="${q.id}" hidden></span>
       </span>
       <span style="color:var(--text2);font-size:18px;flex-shrink:0">›</span>
     </button>`;

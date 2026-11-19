@@ -1,0 +1,82 @@
+name: voaam-prod
+
+x-ambiente-voaam: &ambiente-voaam
+  FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:?Gere uma chave para as sessoes no servidor}
+  SESSION_COOKIE_SECURE: "true"
+  MODERAR_IMAGENS_PERFIL: ${MODERAR_IMAGENS_PERFIL:-false}
+  DATABASE_PATH: /app/instance/voaam.db
+  GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+  ATIVAR_GEMINI: ${ATIVAR_GEMINI:-false}
+  GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+  GEMINI_MODEL: ${GEMINI_MODEL:-}
+  ATIVAR_OLLAMA: ${ATIVAR_OLLAMA:-false}
+  OLLAMA_URL: http://ollama:11434
+  OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:0.6b}
+  REDACAO_IA_CONCORRENCIA: ${REDACAO_IA_CONCORRENCIA:-1}
+  REDACAO_GEMINI_CONCORRENCIA: ${REDACAO_GEMINI_CONCORRENCIA:-2}
+
+services:
+  web:
+    image: voaam-web-production:local
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    restart: unless-stopped
+    environment: *ambiente-voaam
+    volumes:
+      - dados_voaam:/app/instance
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "from urllib.request import urlopen; urlopen('http://127.0.0.1:5000/api/health', timeout=3).close()"
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+
+  corretor:
+    image: voaam-web-production:local
+    pull_policy: never
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+    environment: *ambiente-voaam
+    volumes:
+      - dados_voaam:/app/instance
+    command: ["python", "-m", "fila_redacao"]
+    stop_grace_period: 20s
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+    environment:
+      VOAAM_DOMINIO: ${VOAAM_DOMINIO:?Informe um nome de dominio valido apontado para a VPS}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - certificados:/data
+      - caddy_config:/config
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["ia-local"]
+    restart: unless-stopped
+    environment:
+      OLLAMA_NO_CLOUD: "1"
+      OLLAMA_NUM_PARALLEL: ${REDACAO_IA_CONCORRENCIA:-1}
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  dados_voaam:
+  certificados:
+  caddy_config:
+  ollama_data:

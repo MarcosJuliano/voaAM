@@ -34,6 +34,13 @@
       <!-- preenchido dinamicamente -->
     </div>
 
+    <section class="home-recomendacoes liquid-glass" aria-labelledby="home-recomendacoes-titulo">
+      <div class="home-recomendacoes-cabecalho"><h2 id="home-recomendacoes-titulo">Exercícios indicados para você</h2>
+        <button type="button" class="btn-secondary" onclick="abrirPreferenciasInicio()">Alterar preferência</button></div>
+      <p id="home-preferencia-desc">Questões disponíveis no acervo do voaAM.</p>
+      <div id="home-recomendacoes-lista"></div>
+    </section>
+
     <div class="section-title">Estudar agora</div>
     <div class="action-cards">
       <button type="button" class="action-card" onclick="goTo('materia')">
@@ -56,7 +63,7 @@
         <span class="action-icon sim">🎯</span>
         <span class="action-info">
           <span class="action-name">Simulado</span>
-          <span class="action-sub" id="home-sim-sub">Questões reais do seu vestibular</span>
+          <span class="action-sub">Escolha o vestibular e o tipo de simulado</span>
         </span>
         <span class="action-arrow">›</span>
       </button>
@@ -72,3 +79,17 @@
   </main>
 </div>
 
+
+<dialog id="preferencias-inicio" class="conta-dialog liquid-glass" aria-labelledby="preferencias-inicio-titulo">
+  <form id="preferencias-inicio-form">
+    <h2 id="preferencias-inicio-titulo">O que você prefere estudar?</h2>
+    <p>Escolha uma disciplina. O voaAM vai sugerir exercícios desse assunto na página inicial.</p>
+    <label for="preferencias-inicio-disciplina">Disciplina</label>
+    <select class="form-control" id="preferencias-inicio-disciplina" required></select>
+    <p id="preferencias-inicio-erro" role="alert" class="perfil-form-error"></p>
+    <div class="sc-dialog-actions">
+      <button id="preferencias-inicio-agora-nao" type="button" class="btn-secondary">Agora não</button>
+      <button type="submit" class="btn-primary">Salvar preferência</button>
+    </div>
+  </form>
+</dialog>

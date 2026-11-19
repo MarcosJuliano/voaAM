@@ -26,10 +26,6 @@
 // ─── INIT FINAL ───
 // Executado depois que todos os módulos foram carregados.
 (function initApp() {
-  // Atualiza XP no header
-  const xpEl = document.getElementById('xp-count');
-  if (xpEl) xpEl.textContent = state.xp;
-
   // Aplica o perfil salvo (se existir)
   if (typeof perfil !== 'undefined' && perfil) {
     aplicarPerfil();

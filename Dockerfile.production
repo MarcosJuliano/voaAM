@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt "gunicorn>=23,<27" "tzdata>=2025.2"
+
+COPY *.py ./
+COPY public/ public/
+COPY database/ database/
+RUN mkdir -p /app/instance && chown 10001:10001 /app/instance
+USER 10001:10001
+
+EXPOSE 5000
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--worker-class", "gthread", "--workers", "1", "--threads", "4", "app:app"]

@@ -141,6 +141,9 @@ async function responderExercicio(qId, idx) {
   const fb=document.getElementById(`exfb-${qId}`);
   try {
     const r=await avaliarRespostaServidor('banco:'+qId,idx);
+    if (exListaAtual.some(item => item.id === qId) && document.getElementById('ex-questoes-panel').style.display === 'block') {
+      exAtualizarNotas();
+    }
     const correto=document.getElementById(`exopt-${qId}-${r.correta}`);
     correto?.classList.add('correct');
     if (!r.acertou) document.getElementById(`exopt-${qId}-${idx}`)?.classList.add('wrong');

@@ -43,7 +43,7 @@
 
     <!-- Treino personalizado: questão sorteada e corrigida no servidor Python -->
     <section id="prat-custom-panel" class="question-card treino-panel" style="display:none" aria-labelledby="treino-titulo">
-      <h2 id="treino-titulo">Monte seu treino</h2>
+      <h2 id="treino-titulo" tabindex="-1">Monte seu treino</h2>
       <p>Escolha uma prova, uma disciplina, um assunto ou misture todo o acervo. A seleção é aleatória e as respostas são corrigidas no servidor.</p>
       <form id="treino-form" onsubmit="treinoIniciar(event)">
         <div class="treino-filtros">
@@ -65,7 +65,7 @@
       <!-- ETAPA 1: Grade de assuntos -->
       <div id="ex-assuntos-panel">
         <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">📚 Escolha um assunto</div>
-        <div id="ex-assuntos-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+        <div id="ex-assuntos-grid"></div>
       </div>
 
       <!-- ETAPA 2: Seletor de nível -->
@@ -96,6 +96,11 @@
           <div style="font-size:12px;color:var(--text2)" id="ex-lista-info"></div>
           <button onclick="exAtualizarQuestoes()" style="display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);font-size:11px;font-weight:700;cursor:pointer">🔄 Atualizar</button>
         </div>
+        <section id="ex-notas" class="pratica-notas" aria-labelledby="ex-notas-titulo">
+          <h2 id="ex-notas-titulo">Últimas notas desta lista</h2>
+          <p id="ex-notas-status" role="status"></p>
+          <ol id="ex-notas-recentes" class="ex-notas-recentes" aria-label="Da resposta mais recente à mais antiga"></ol>
+        </section>
         <div id="ex-lista-10"></div>
       </div>
 

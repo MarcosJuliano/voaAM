@@ -43,7 +43,7 @@
   margin-inline: auto;
 }
 
-#slot-header { grid-area: 1 / 1 / 2 / -1; }
+#slot-header { grid-area: 1 / 1 / 2 / -1; position: relative; z-index: 101; }
 #slot-navbar { grid-area: 3 / 1; min-height: 0; }
 [id^="slot-page-"] {
   grid-area: 2 / 1;
@@ -59,7 +59,6 @@
 .header > .logo { flex: 0 0 auto; }
 .header-right { flex: 1; justify-content: flex-start; flex-wrap: nowrap; }
 .header-right > .theme-toggle { margin-inline-start: auto; }
-.header-xp { white-space: nowrap; }
 .vidas-pill { min-height: 30px; white-space: nowrap; }
 .back-btn { flex-shrink: 0; }
 
@@ -74,8 +73,6 @@
   .header-right > .theme-toggle { grid-area: 1 / 2; height: 32px; }
   .header-right > .theme-toggle::before { top: 3px; }
   .header-stats { grid-column: 1 / -1; }
-  .header-xp { padding-inline: 7px; }
-  .header-level, .header-logout { padding: 6px 8px; }
   .nav-btn { font-size: clamp(8px, 2.6vw, 10px); padding-inline: 2px; }
 }
 
@@ -158,4 +155,53 @@
     border-right: 0;
   }
   .nav-btn { flex: 1; flex-direction: column; gap: 2px; padding: 4px 2px; font-size: 10px; border-radius: 0; }
+}
+
+/* Ações de conta na lateral; o Perfil oferece os atalhos no layout de rodapé. */
+#menu-lateral-toggle, .nav-conta { display: none; }
+@media (min-width: 768px) and (min-height: 601px), (min-width: 768px) and (orientation: portrait) {
+  #menu-lateral-toggle { display: grid; margin-top: auto; margin-bottom: 8px; }
+  .bottom-nav {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .bottom-nav .nav-btn {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 12px;
+    text-align: start;
+  }
+  .nav-rotulo {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .nav-conta {
+    display: grid;
+    gap: 4px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .perfil-atalho-mobile { display: none; }
+  #app-wrapper.menu-minimizado { grid-template-columns: 76px minmax(0,1fr); }
+  #app-wrapper.menu-minimizado .bottom-nav { padding-inline: 8px; }
+  #app-wrapper.menu-minimizado .nav-btn { padding-inline: 18px 6px; }
+  #app-wrapper.menu-minimizado .nav-rotulo { opacity: 0; }
+  #app-wrapper.menu-minimizado #menu-lateral-toggle .voa-svg-icon { transform: scaleX(-1); }
+}
+@media (min-width: 768px) and (max-width: 1023px) and (min-height: 601px),
+       (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+  #app-wrapper:not(.menu-minimizado) { grid-template-columns: 176px minmax(0,1fr); }
+  #app-wrapper:not(.menu-minimizado) .nav-btn { font-size: 13px; }
+}
+
+@media (min-width: 768px) and (min-height: 601px) and (prefers-reduced-motion: no-preference),
+       (min-width: 768px) and (orientation: portrait) and (prefers-reduced-motion: no-preference) {
+  #app-wrapper.menu-animado { transition: grid-template-columns 260ms ease-in-out; }
+  .menu-animado .bottom-nav { transition: padding-inline 260ms ease-in-out; }
+  .menu-animado .bottom-nav .nav-btn {
+    transition: color var(--transition), padding-inline 260ms ease-in-out;
+  }
+  .menu-animado .nav-rotulo { transition: opacity 150ms ease-in-out; }
 }

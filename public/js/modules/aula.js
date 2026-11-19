@@ -11,6 +11,10 @@ let isSimulado = false;
 let currentQuizTopicContext = null;
 let quizResultadoRegistrado = false;
 
+function idQuestaoSimulado(q) {
+  return q.id?.startsWith('simulado:') ? q.id : 'banco:' + q.id;
+}
+
 function sortearQuiz(quiz) {
   return {
     ...quiz,
@@ -97,12 +101,14 @@ function renderAulaContent() {
   if(currentQuizIdx === 0) {
     // Show lesson intro first
     document.getElementById('aula-content').innerHTML = `
-      <div class="video-area" onclick="openPlaylist('${quiz.playlistUrl || '#'}')">
+      <div class="video-area" role="group" aria-label="Videoaula">
+        <button type="button" class="video-play-inline" onclick="openPlaylist('${quiz.playlistUrl || '#'}', this)">
         <div class="video-thumb-bg">
           <div class="play-btn">▶</div>
           <div class="video-label">${quiz.video}</div>
         </div>
-        <div class="video-redirect-hint">Toque para assistir a playlist ↗</div>
+        <div class="video-redirect-hint">Assistir nesta página</div>
+        </button>
       </div>
       <div class="topic-desc">${quiz.desc}</div>
       <div class="quiz-title-bar">
@@ -129,13 +135,40 @@ function renderAulaContent() {
  *     ...
  *   }
  */
-function openPlaylist(url) {
-  if(!url || url === '#' || url.includes('SUBSTITUA_AQUI')) {
-    // Playlist ainda não configurada — exibe aviso amigável
-    showXPToast('📺 Playlist em breve! Configure a URL no arquivo quizzes.js.');
+function openPlaylist(url, botao) {
+  if (!url || url === '#' || url.includes('SUBSTITUA_AQUI')) {
+    showXPToast('Videoaula ainda não configurada.');
     return;
   }
-  window.open(url, '_blank', 'noopener,noreferrer');
+  let fonte;
+  try {
+    const u = new URL(url);
+    if (u.protocol !== 'https:' || !['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtu.be'].includes(u.hostname))
+      throw new Error('Fonte não incorporável');
+    const video = u.hostname === 'youtu.be' ? u.pathname.slice(1) :
+      (u.pathname.startsWith('/embed/') ? u.pathname.split('/')[2] : u.searchParams.get('v'));
+    const lista = u.searchParams.get('list');
+    if (!video || !/^[a-zA-Z0-9_-]{11}$/.test(video)) throw new Error('Vídeo inválido');
+    fonte = `https://www.youtube-nocookie.com/embed/${video}?rel=0` +
+      (lista && /^[a-zA-Z0-9_-]+$/.test(lista) ? '&list=' + encodeURIComponent(lista) : '');
+  } catch (e) {
+    showXPToast('Esta videoaula não pode ser reproduzida dentro do site.');
+    return;
+  }
+  const area = botao?.closest('.video-area') || document.querySelector('.video-area');
+  if (!area) return;
+  const player = document.createElement('iframe');
+  player.className = 'video-iframe';
+  player.title = 'Videoaula do assunto';
+  player.src = fonte;
+  player.loading = 'lazy';
+  player.referrerPolicy = 'strict-origin-when-cross-origin';
+  player.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  player.setAttribute('allowfullscreen', '');
+  const aviso = document.createElement('p');
+  aviso.className = 'video-redirect-hint';
+  aviso.textContent = 'Vídeo do YouTube incorporado. Se o proprietário bloquear a reprodução externa, não será possível reproduzir aqui.';
+  area.replaceChildren(player, aviso);
 }
 
 function renderQuestion() {
@@ -174,16 +207,20 @@ function renderQuestion() {
 async function selectOption(idx) {
   if(answered) return;
   answered = true;
-  const q = currentQuiz.questions[currentQuizIdx];
+  const quiz = currentQuiz;
+  const q = quiz.questions[currentQuizIdx];
   const feedback = document.getElementById('feedback-box');
   const nextBtn = document.getElementById('next-btn');
   const opts = document.querySelectorAll('#options-list .option-btn');
   opts.forEach(b=>b.disabled=true);
-  const qid = isSimulado ? (q.id?.startsWith('simulado:') ? q.id : 'banco:'+q.id)
+  const qid = isSimulado ? idQuestaoSimulado(q)
       : `quiz:${currentQuizTopicContext.quizId}:${q.indiceOriginal}`;
+  const consulta = avaliarRespostaServidor(qid, q.ordem[idx]);
+  quiz.respostaPendente = consulta;
   try {
-    const r = await avaliarRespostaServidor(qid, q.ordem[idx]);
+    const r = await consulta;
     if (currentQuiz?.questions[currentQuizIdx] !== q) return;
+    if (quiz.tentativa) quiz.tentativa.respostas.push(r.resposta_id);
     const correct = q.ordem.indexOf(r.correta);
     quizXpGanho += Number(r.xp_ganho)||0;
     opts[correct]?.classList.add('correct');
@@ -199,10 +236,13 @@ async function selectOption(idx) {
     }
     nextBtn.classList.add('show');
   } catch(e) {
+    if (currentQuiz?.questions[currentQuizIdx] !== q) return;
     answered=false;
     opts.forEach(b=>b.disabled=false);
     feedback.className='feedback-box wrong show';
     feedback.textContent='Não foi possível corrigir no servidor: '+e.message;
+  } finally {
+    if (quiz.respostaPendente === consulta) quiz.respostaPendente = null;
   }
 }
 
@@ -211,8 +251,17 @@ function nextQuestion() {
   renderQuestion();
 }
 
-function showQuizResult() {
+async function showQuizResult() {
   const quiz = currentQuiz;
+  if (isSimulado) {
+    if (quizResultadoRegistrado) return;
+    quizResultadoRegistrado = true;
+    pararCronometro();
+    if (quiz.respostaPendente) {
+      await quiz.respostaPendente.catch(() => {});
+      if (currentQuiz !== quiz || !document.getElementById('aula-view').classList.contains('open')) return;
+    }
+  }
   const total = quiz.questions.length;
   const pct = Math.round((quizCorrect/total)*100);
   let emoji, title, insight;
@@ -249,6 +298,8 @@ function showQuizResult() {
         </div>
       </div>
       <div class="result-insight">💡 <strong>Insight:</strong> ${insight}</div>
+      ${quiz.tentativa ? `<p id="sim-salvar-nota-status" class="sim-salvar-nota-status" role="status"></p>
+        <button type="button" id="sim-salvar-nota" class="btn-secondary" hidden>Tentar salvar nota novamente</button>` : ''}
       <div class="result-btns">
         <button class="btn-primary" onclick="retryQuiz()">🔄 Tentar novamente</button>
         <button class="btn-secondary" onclick="closeAula()">← Voltar à lista</button>
@@ -257,6 +308,30 @@ function showQuizResult() {
   `;
   if (pct >= 80) {
     setTimeout(() => showAchievement('🎓', 'Quiz Concluído!'), 500);
+  }
+
+  if (quiz.tentativa) {
+    const status = document.getElementById('sim-salvar-nota-status');
+    const tentar = document.getElementById('sim-salvar-nota');
+    const salvar = async () => {
+      if (quiz.contaId !== authConta?.id) return;
+      tentar.hidden = true;
+      status.textContent = 'Salvando nota…';
+      try {
+        await authRequisicao('/api/praticar/simulados/notas', {
+          method: 'POST',
+          body: JSON.stringify(quiz.tentativa),
+          signal: AbortSignal.timeout(15000),
+        });
+        status.textContent = 'Nota salva.';
+        simAtualizarNotas();
+      } catch {
+        status.textContent = 'Não foi possível salvar a nota.';
+        tentar.hidden = false;
+      }
+    };
+    tentar.onclick = salvar;
+    salvar();
   }
 
   // O tópico só é marcado como concluído depois de responder a todas as questões.
@@ -271,6 +346,10 @@ function showQuizResult() {
 }
 
 function retryQuiz() {
+  if (isSimulado) {
+    voaAMAbrirSimulado(currentQuiz, currentQuiz.tempoSegundos);
+    return;
+  }
   currentQuiz = sortearQuiz(currentQuiz);
   currentQuizIdx = 0;
   quizCorrect = 0;
@@ -301,6 +380,15 @@ function voaAMAbrirSimulado(quiz, tempoSegundos) {
   }
 
   currentQuiz = sortearQuiz(quiz);
+  currentQuiz.tempoSegundos = tempoSegundos;
+  currentQuiz.respostaPendente = null;
+  if (quiz.chaveSimulado) {
+    currentQuiz.contaId = authConta?.id;
+    currentQuiz.tentativa = {
+      tentativa: novaTentativaSimulado(), modo: 'simples', chave: quiz.chaveSimulado,
+      questoes: currentQuiz.questions.map(idQuestaoSimulado), respostas: [],
+    };
+  }
   currentQuizIdx = 0;
   quizCorrect = 0;
   quizXpGanho = 0;

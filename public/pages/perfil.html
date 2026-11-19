@@ -7,20 +7,20 @@
 
     <section class="perfil-section liquid-glass" aria-labelledby="perfil-dados-titulo">
       <h2 id="perfil-dados-titulo">Dados pessoais e vestibulares</h2>
-      <div class="perfil-foto-linha">
-        <div class="perfil-avatar">
-          <svg id="perfil-foto-padrao" class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#graduation-cap"></use></svg>
-          <img id="perfil-foto" alt="Sua foto de perfil" width="72" height="72" hidden>
-        </div>
-        <div>
-          <label for="perfil-foto-arquivo">Foto do perfil</label>
-          <input id="perfil-foto-arquivo" class="form-control" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="perfil-foto-ajuda">
-          <p id="perfil-foto-ajuda" class="perfil-ajuda">JPEG, PNG ou WebP de até 950 KB. A foto aparece no Perfil e no Ranking para usuários conectados.</p>
-          <button id="perfil-foto-remover" class="btn-secondary" type="button" hidden>Remover foto</button>
-          <p id="perfil-foto-status" class="perfil-ajuda" role="status"></p>
-        </div>
-      </div>
       <form id="perfil-form" class="perfil-form" onsubmit="salvarEdicaoPerfil(event)">
+        <div class="perfil-foto-linha">
+          <button id="perfil-foto-preview" class="perfil-avatar perfil-imagem-preview" type="button" aria-label="Ampliar foto do perfil" disabled>
+            <svg id="perfil-foto-padrao" class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#graduation-cap"></use></svg>
+            <img id="perfil-foto" alt="" width="72" height="72" hidden>
+          </button>
+          <div>
+            <label for="perfil-foto-arquivo">Foto do perfil</label>
+            <input id="perfil-foto-arquivo" class="form-control perfil-imagem-arquivo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="perfil-foto-ajuda">
+            <p id="perfil-foto-ajuda" class="perfil-ajuda">JPEG, PNG ou WebP de até 950 KB.</p>
+            <button id="perfil-foto-remover" class="btn-secondary" type="button" hidden>Remover foto</button>
+            <p id="perfil-foto-status" class="perfil-ajuda" role="status"></p>
+          </div>
+        </div>
         <label for="editar-nome">Nome</label>
         <input id="editar-nome" class="form-control" maxlength="120" required autocomplete="name">
         <label for="editar-serie">Etapa de estudo</label>
@@ -34,6 +34,43 @@
           <label><input type="checkbox" name="editar-vest" value="SIS"> SIS</label>
           <label><input type="checkbox" name="editar-vest" value="MACRO"> MACRO</label>
         </fieldset>
+        <fieldset class="perfil-banner-escolha">
+          <legend>Banner do perfil</legend>
+          <button id="perfil-banner-preview" class="ranking-publico-banner banner-oceano perfil-imagem-preview" type="button" aria-label="Ampliar banner do perfil">
+            <img id="perfil-banner" alt="" hidden>
+          </button>
+          <button id="perfil-banner-alterar" class="btn-secondary" type="button" aria-haspopup="dialog">Alterar banner</button>
+          <p id="perfil-banner-status" class="perfil-ajuda" role="status"></p>
+          <dialog id="perfil-banner-editor" class="conta-dialog liquid-glass" aria-labelledby="perfil-banner-editor-titulo">
+            <h2 id="perfil-banner-editor-titulo">Personalizar banner</h2>
+            <div id="perfil-banner-editor-previa" class="ranking-publico-banner banner-oceano" aria-hidden="true">
+              <img id="perfil-banner-editor-imagem" alt="" hidden>
+            </div>
+            <div class="perfil-banner-modos">
+              <label><input type="radio" name="banner-modo" value="padrao" checked> Banner padrão</label>
+              <label><input type="radio" name="banner-modo" value="personalizado"> Banner personalizado</label>
+            </div>
+            <div id="perfil-banner-personalizado" class="perfil-banner-personalizado">
+              <label for="perfil-banner-arquivo">Imagem do banner</label>
+              <input id="perfil-banner-arquivo" class="form-control perfil-imagem-arquivo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="perfil-banner-ajuda">
+              <div class="perfil-banner-acoes">
+                <button id="perfil-banner-remover" class="btn-secondary" type="button" hidden>Remover imagem</button>
+              </div>
+              <p id="perfil-banner-ajuda" class="perfil-ajuda">JPEG, PNG ou WebP de até 950 KB.</p>
+            </div>
+            <div id="perfil-banner-padrao" class="perfil-banner-opcoes" role="group" aria-label="Estilo do banner padrão">
+              <label><input type="radio" name="editar-banner" value="oceano" checked><span class="banner-oceano" aria-hidden="true"></span>Oceano azul</label>
+              <label><input type="radio" name="editar-banner" value="aurora"><span class="banner-aurora" aria-hidden="true"></span>Aurora</label>
+              <label><input type="radio" name="editar-banner" value="floresta"><span class="banner-floresta" aria-hidden="true"></span>Floresta</label>
+              <label><input type="radio" name="editar-banner" value="noite"><span class="banner-noite" aria-hidden="true"></span>Céu noturno</label>
+            </div>
+            <button id="perfil-banner-desfazer" class="btn-secondary" type="button" hidden>Desfazer alteração</button>
+            <p id="perfil-banner-editor-status" class="perfil-ajuda" role="status"></p>
+            <div class="sc-dialog-actions">
+              <button id="perfil-banner-concluir" class="btn-primary" type="button">Concluir edição</button>
+            </div>
+          </dialog>
+        </fieldset>
         <p id="editar-erro" class="perfil-form-error" role="alert"></p>
         <div id="editar-acoes" hidden><button type="submit" class="btn-primary" id="editar-salvar">Salvar alterações</button></div>
       </form>
@@ -42,6 +79,7 @@
     <section class="perfil-section perfil-conta liquid-glass" aria-labelledby="perfil-conta-titulo">
       <h2 id="perfil-conta-titulo"><svg class="voa-svg-icon" aria-hidden="true"><use href="/assets/icons.svg#shield-check"></use></svg> Acesso à conta</h2>
       <dl class="perfil-email"><dt>E-mail de acesso</dt><dd id="perfil-email">—</dd></dl>
+      <p class="perfil-ajuda">Este e-mail é sua credencial de acesso. O voaAM ainda não fornece caixas de e-mail institucionais.</p>
       <button type="button" class="btn-secondary" onclick="abrirAcaoConta('senha')">Alterar ou definir senha</button>
       <p id="perfil-senha-status" role="status"></p>
       <div class="perfil-google">
@@ -51,7 +89,8 @@
         <button id="perfil-google-desconectar" type="button" class="btn-secondary" onclick="abrirAcaoConta('desvincular')" hidden>Desconectar Conta Google</button>
       </div>
       <div class="perfil-sessao">
-        <button type="button" class="btn-secondary" onclick="authLogout()">Sair da conta</button>
+        <button type="button" class="btn-secondary perfil-atalho-mobile" data-abrir-suporte>Ajuda e suporte</button>
+        <button type="button" class="btn-secondary perfil-atalho-mobile" onclick="authLogout()">Sair da conta</button>
         <button id="perfil-excluir" type="button" class="btn-secondary perfil-excluir" onclick="abrirAcaoConta('excluir')" disabled>Excluir minha conta voaAM</button>
       </div>
     </section>
@@ -76,6 +115,22 @@
     <div class="sc-dialog-actions">
       <button type="button" id="acao-conta-cancelar">Cancelar</button>
       <button type="submit" id="acao-conta-confirmar"></button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="suporte-dialogo" class="conta-dialog liquid-glass" aria-labelledby="suporte-titulo">
+  <form id="suporte-form">
+    <h2 id="suporte-titulo">Falar com o suporte</h2>
+    <p>Descreva o problema. A equipe poderá consultar seu protocolo no banco do voaAM.</p>
+    <label for="suporte-assunto">Assunto</label>
+    <input id="suporte-assunto" class="form-control" minlength="5" maxlength="100" required>
+    <label for="suporte-mensagem">Descreva sua dúvida</label>
+    <textarea id="suporte-mensagem" class="form-control" rows="5" minlength="15" maxlength="2000" required></textarea>
+    <p id="suporte-feedback" role="status"></p>
+    <div class="sc-dialog-actions">
+      <button type="button" id="suporte-fechar" class="btn-secondary">Fechar</button>
+      <button type="submit" class="btn-primary">Enviar solicitação</button>
     </div>
   </form>
 </dialog>

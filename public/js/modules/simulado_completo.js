@@ -9,6 +9,8 @@ const SC = {
   respostas:   {},
   tempoInicio: null,
   timer:       null,
+  tentativa:   null,
+  finalizando: false,
 };
 
 // ─── UTILITÁRIOS ─────────────────────────────────────────────
@@ -292,6 +294,7 @@ function scMostrarConfirmacao(key, grupoId) {
           <div style="font-size:10px;color:var(--text2)">Gabarito</div>
         </div>
       </div>
+      ${temDados ? simCartaoNotas('completo', key) : ''}
       ${temDados ? `
       <button type="button" class="pratica-acao" onclick="scIniciarDireto('${key}')" style="
         width:100%;padding:15px;border-radius:12px;border:none;
@@ -310,6 +313,7 @@ function scMostrarConfirmacao(key, grupoId) {
         ← Voltar
       </button>
     </div>`;
+  simAtualizarNotas();
 }
 
 // ─── INICIAR ─────────────────────────────────────────────────
@@ -330,6 +334,8 @@ function scIniciarDireto(key) {
   SC.respostas   = {};
   scGabaritosEncerramento = {};
   SC.tempoInicio = Date.now();
+  SC.tentativa = novaTentativaSimulado();
+  SC.finalizando = false;
 
   const overlay = _el('sc-overlay');
   if (!overlay) return;
@@ -501,25 +507,40 @@ function scEncerrar() {
 
 // ─── RESULTADO ───────────────────────────────────────────────
 async function scMostrarResultado() {
-  // Corrige no Flask SOMENTE quando o aluno encerra o simulado.
-  const tentativas=SC.questoes.flatMap(q=>{
-    const indice='ABCDE'.indexOf(String(SC.respostas[q.num]||'').toUpperCase());
-    return indice<0?[]:[{id:scIdQuestao(q),alternativa:indice}];
+  if (SC.finalizando) return;
+  SC.finalizando = true;
+  const tentativa = SC.tentativa;
+  const painel = _el('sc-resultado');
+  painel.textContent = 'Corrigindo e salvando a nota…';
+  const tentativas = SC.questoes.flatMap(q => {
+    const letra = SC.respostas[q.num];
+    return /^[A-E]$/.test(letra) ? [{id: scIdQuestao(q), alternativa: 'ABCDE'.indexOf(letra)}] : [];
   });
+  let nota;
   try {
-    if(tentativas.length){
-      const r=await fetch('/api/avaliacao/lote',{method:'POST',credentials:'same-origin',
-        headers:{'Content-Type':'application/json'},body:JSON.stringify({respostas:tentativas})});
-      const d=await r.json();if(!r.ok)throw new Error(d.message||`HTTP ${r.status}`);
-      scGabaritosEncerramento=Object.fromEntries(Object.entries(d.resultados||{}).map(([id,v])=>[id,v.correta]));
-      if(typeof atualizarProgresso==='function')await atualizarProgresso();
-      if(typeof atualizarNivel==='function')atualizarNivel();
-    }
+    nota = await authRequisicao('/api/praticar/simulados/notas', {
+      method: 'POST',
+      body: JSON.stringify({tentativa, modo: 'completo', chave: SC.provaKey, respostas: tentativas}),
+      signal: AbortSignal.timeout(15000),
+    });
   }catch(e){
+    if (SC.tentativa !== tentativa) return;
+    SC.finalizando = false;
     console.error('[voaAM] Falha na correção do simulado:',e);
-    _el('sc-resultado').textContent='Falha ao corrigir no servidor. Suas respostas não foram confirmadas. Verifique a conexão e tente novamente.';
+    painel.textContent = 'Não foi possível corrigir e salvar a nota. ';
+    const tentar = document.createElement('button');
+    tentar.className = 'btn-secondary';
+    tentar.type = 'button';
+    tentar.textContent = 'Tentar novamente';
+    tentar.onclick = scMostrarResultado;
+    painel.append(tentar);
     return;
   }
+  if (SC.tentativa !== tentativa) return;
+  scGabaritosEncerramento = Object.fromEntries(Object.entries(nota.resultados).map(([id, resultado]) => [id, resultado.correta]));
+  atualizarProgresso();
+  atualizarNivel();
+  simAtualizarNotas();
   const p     = SC_PROVAS[SC.provaKey];   // ← bug corrigido: p estava ausente
   const total = SC.questoes.length;
   let ac = 0, er = 0, pu = 0, vz = 0;
@@ -537,7 +558,7 @@ async function scMostrarResultado() {
   });
 
   if (ac > 0 && _el('sc-resultado').getClientRects().length) spawnStars();
-  const pct    = total > 0 ? Math.round((ac / total) * 100) : 0;
+  const pct    = Math.round((nota.acertos / nota.total) * 100);
   const corPct = pct >= 70 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#ef4444';
   const emoji  = pct >= 70 ? '🎉' : pct >= 50 ? '📈' : '💪';
 
@@ -663,6 +684,7 @@ async function scMostrarResultado() {
 // ─── FECHAR ─────────────────────────────────────────────────
 function scFechar() {
   scCancelarSaida();
+  SC.tentativa = null;
   clearInterval(SC.timer);
   const overlay = _el('sc-overlay');
   if (overlay) overlay.style.display = 'none';

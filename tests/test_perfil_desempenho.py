@@ -1,4 +1,5 @@
 """Regressões das novas configurações privadas e métricas do Ranking."""
+from contextlib import closing
 from io import BytesIO
 import unittest
 from uuid import uuid4
@@ -7,6 +8,7 @@ from unittest.mock import patch
 from PIL import Image
 
 from test_v6 import app
+from banco import conectar
 from treino_api import catalogo
 
 
@@ -20,6 +22,7 @@ class PerfilDesempenhoTest(unittest.TestCase):
             'serie': 3, 'vests': ['ENEM'],
         })
         self.assertEqual(cadastro.status_code, 201)
+        self.usuario_id = cadastro.json['usuario']['id']
 
     def test_mudar_senha_exige_identidade_e_revoga_sessao_anterior(self):
         sessao_antiga = app.test_client()
@@ -46,6 +49,7 @@ class PerfilDesempenhoTest(unittest.TestCase):
         self.assertEqual(login.status_code, 200)
         self.assertTrue(login.json['usuario']['google']['conectado'])
 
+    @patch.dict(app.config, {'MODERAR_IMAGENS_PERFIL': True})
     def test_foto_e_privada_e_convertida_para_jpeg(self):
         dados = BytesIO()
         Image.new('RGB', (450, 300), 'blue').save(dados, format='PNG')
@@ -59,8 +63,22 @@ class PerfilDesempenhoTest(unittest.TestCase):
         outro = app.test_client()
         outro.post('/api/cadastro', json={'nome': 'Outro', 'email': 'outro-' + self.email, 'senha': self.senha, 'serie':3, 'vests':['ENEM']})
         self.assertEqual(outro.get('/api/perfil/foto').status_code, 404)
-        fotos = outro.get('/api/ranking').json['alunos']
-        url = next(aluno['foto_url'] for aluno in fotos if 'foto_url' in aluno)
+        url = f'/api/ranking/foto/{self.usuario_id}'
+        self.assertEqual(outro.get(url).status_code, 404)
+        admin = app.test_client()
+        resposta = admin.post('/api/cadastro', json={
+            'nome': 'Admin', 'email': 'admin-' + self.email, 'senha': self.senha,
+            'serie': 3, 'vests': ['ENEM'],
+        })
+        with closing(conectar()) as conexao, conexao:
+            conexao.execute("UPDATE usuarios SET tipo='ADMIN' WHERE id=?", (resposta.json['usuario']['id'],))
+        aprovacao = admin.post(f'/api/moderacao/fotos/{self.usuario_id}', json={'decisao': 'aprovar'})
+        self.assertEqual(aprovacao.status_code, 200)
+        pagina = self.cliente.get('/api/ranking').json['minha_posicao']['pagina']
+        alunos = outro.get(f'/api/ranking?pagina={pagina}').json['alunos']
+        aluno = next(aluno for aluno in alunos if aluno['id'] == self.usuario_id)
+        versao = self.cliente.get('/api/me').json['usuario']['foto_versao']
+        self.assertEqual(aluno['foto_url'], f'{url}?v={versao}')
         self.assertEqual(app.test_client().get(url).status_code, 401)
         with outro.get(url) as avatar:
             self.assertEqual(avatar.status_code, 200)

@@ -4,30 +4,44 @@
   <span class="nav-luz" aria-hidden="true"></span>
   <button class="nav-btn active" id="nav-home" aria-current="page" onclick="goTo('home')" aria-label="Ir para Início">
     <div class="nav-icon" aria-hidden="true">🏠</div>
-    Início
+    <span class="nav-rotulo">Início</span>
   </button>
   <button class="nav-btn" id="nav-materia" onclick="goTo('materia')" aria-label="Ir para Estudar">
     <div class="nav-icon" aria-hidden="true">📚</div>
-    Estudar
+    <span class="nav-rotulo">Estudar</span>
   </button>
   <button class="nav-btn" id="nav-praticar" onclick="goTo('praticar')" aria-label="Ir para Praticar">
     <div class="nav-icon" aria-hidden="true">⚡</div>
-    Praticar
+    <span class="nav-rotulo">Praticar</span>
   </button>
   <button class="nav-btn" id="nav-redacao" onclick="goTo('redacao')" aria-label="Ir para Redação">
     <div class="nav-icon" aria-hidden="true">✍️</div>
-    Redação
+    <span class="nav-rotulo">Redação</span>
   </button>
   <button class="nav-btn" id="nav-banco-de-provas" onclick="goTo('banco-de-provas')" aria-label="Ir para Banco de Provas">
     <div class="nav-icon" aria-hidden="true">📥</div>
-    Provas
+    <span class="nav-rotulo">Provas</span>
   </button>
   <button class="nav-btn" id="nav-ranking" onclick="goTo('ranking')" aria-label="Ir para Ranking">
     <span class="nav-icon" aria-hidden="true"><svg class="voa-svg-icon"><use href="/assets/icons.svg#trophy"></use></svg></span>
-    Ranking
+    <span class="nav-rotulo">Ranking</span>
   </button>
   <button class="nav-btn" id="nav-perfil" onclick="goTo('perfil')" aria-label="Ir para Perfil">
     <div class="nav-icon" aria-hidden="true">👤</div>
-    Perfil
+    <span class="nav-rotulo">Perfil</span>
   </button>
+  <button type="button" id="menu-lateral-toggle" class="nav-btn" aria-expanded="true" aria-controls="slot-navbar">
+    <span class="nav-icon" aria-hidden="true"><svg class="voa-svg-icon"><use href="/assets/icons.svg#panel-left"></use></svg></span>
+    <span id="menu-lateral-rotulo" class="nav-rotulo">Reduzir menu</span>
+  </button>
+  <div class="nav-conta">
+    <button class="nav-btn" type="button" data-abrir-suporte title="Suporte">
+      <span class="nav-icon" aria-hidden="true"><svg class="voa-svg-icon"><use href="/assets/icons.svg#message-circle"></use></svg></span>
+      <span class="nav-rotulo">Suporte</span>
+    </button>
+    <button class="nav-btn" type="button" onclick="authLogout()" title="Sair da conta">
+      <span class="nav-icon" aria-hidden="true"><svg class="voa-svg-icon"><use href="/assets/icons.svg#log-out"></use></svg></span>
+      <span class="nav-rotulo">Sair</span>
+    </button>
+  </div>
 </nav>

@@ -129,7 +129,7 @@ def responder_treino(treino_id):
         c.execute('UPDATE treinos_personalizados SET respostas_json=? WHERE id=?',
                   (json.dumps(respostas), treino_id))
         from progresso_api import pontuar
-        ganho = pontuar(c, uid, qid, alternativa_original, q['correta'], q['vestibular'])
+        ganho, _ = pontuar(c, uid, qid, alternativa_original, q['correta'], q['vestibular'])
         c.commit()
         return jsonify({'ok': True, 'acertou': acertou, 'correta': correta_exibida,
                         'xp_ganho': ganho, 'explicacao': q.get('explicacao', ''),

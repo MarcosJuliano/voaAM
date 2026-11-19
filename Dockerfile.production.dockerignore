@@ -1,0 +1,13 @@
+**
+!requirements.txt
+!*.py
+!public/
+!public/**
+!database/
+!database/**
+**/.env
+**/.env.*
+**/*.db
+**/*.db-*
+**/*.sqlite
+**/*.sqlite3

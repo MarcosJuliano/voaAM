@@ -45,7 +45,10 @@ async function authRequisicao(url, opcoes) {
   const resposta = await fetch(url, {
     credentials: 'same-origin',
     ...opcoes,
-    headers: { 'Content-Type': 'application/json', ...(opcoes && opcoes.headers || {}) },
+    headers: {
+      ...(opcoes?.body instanceof FormData ? {} : {'Content-Type': 'application/json'}),
+      ...opcoes?.headers,
+    },
   });
   let dados = {};
   try { dados = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
@@ -116,6 +119,7 @@ async function authCadastrar() {
   const nome = document.getElementById('cad-nome')?.value.trim() || '';
   const email = document.getElementById('cad-email')?.value.trim() || '';
   const senha = document.getElementById('cad-senha')?.value || '';
+  const confirmar = document.getElementById('cad-confirmar-senha')?.value || '';
   const serie = parseInt(document.getElementById('cad-serie')?.value, 10) || 0;
   authOcultarErro('auth-cad-error');
 
@@ -128,11 +132,15 @@ async function authCadastrar() {
     return;
   }
 
+  if (senha !== confirmar) {
+    authMostrarErro('auth-cad-error', 'As senhas não são iguais. Confira a confirmação.');
+    return;
+  }
   const vests = authVestsSelecionados.length ? [...authVestsSelecionados] : ['SIS'];
   try {
     const dados = await authRequisicao('/api/cadastro', {
       method: 'POST',
-      body: JSON.stringify({ nome, email, senha, serie, vests, dific: 'ambos' }),
+      body: JSON.stringify({ nome, email, senha, confirmar_senha: confirmar, serie, vests, dific: 'ambos' }),
     });
     authFinalizarLogin(dados);
   } catch (erro) {
@@ -218,17 +226,19 @@ function authLimparSessaoLocal() {
   window.google?.accounts?.id?.disableAutoSelect?.();
 }
 
-async function authLogout() {
-  try {
-    await authRequisicao('/api/logout', { method: 'POST', body: '{}' });
-    authDefinirVista(false);
-    authLimparSessaoLocal();
-    location.reload();
-  } catch (erro) {
-    console.warn('[VoaAM] Logout não confirmado no servidor:', erro);
-    if(typeof showXPToast==='function') showXPToast('Não foi possível sair da conta. Tente novamente.');
-    else alert('Não foi possível sair: '+erro.message);
-  }
+function authLogout() {
+  confirmarAcao({
+    titulo: 'Sair da conta?',
+    mensagem: 'Você quer encerrar a sessão no voaAM?',
+    acao: 'Sair',
+    destrutiva: false,
+    executar: async () => {
+      await authRequisicao('/api/logout', {method: 'POST', body: '{}'});
+      authDefinirVista(false);
+      authLimparSessaoLocal();
+      location.reload();
+    },
+  });
 }
 
 function authDefinirVista(autenticado) {
@@ -248,6 +258,10 @@ async function authInit() {
     if (dados.autenticado && dados.perfil) {
       authGuardarPerfil(dados.perfil, dados.usuario);
       authDefinirVista(true);
+      if (dados.boas_vindas_google && typeof showXPToast === 'function') {
+        showXPToast(dados.boas_vindas_google);
+      }
+      if (typeof iniciarPreferencias === 'function') iniciarPreferencias();
       if (typeof registrarVisita === 'function') await registrarVisita();
       if (typeof atualizarProgresso === 'function') await atualizarProgresso();
       if (typeof atualizarNivel === 'function') atualizarNivel();

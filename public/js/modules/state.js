@@ -230,9 +230,6 @@ function aplicarPerfil() {
     }).join('');
   }
 
-  const simSub = document.getElementById('home-sim-sub');
-  if (simSub && perfil.vests?.[0]) simSub.textContent = `Simulado ${perfil.vests[0]} cronometrado`;
-
   const matSub = document.getElementById('home-mat-sub');
   const serieLabel = ['','1ª Série','2ª Série','3ª Série','EM Completo'];
   if (matSub) matSub.textContent = `${serieLabel[perfil.serie]||''} — Continue de onde parou`;

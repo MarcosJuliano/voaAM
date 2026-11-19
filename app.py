@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+from hashlib import sha256
+from contextlib import closing
 import os
 import re
 import sqlite3
@@ -11,13 +13,28 @@ from zoneinfo import ZoneInfo
 from pathlib import Path
 from typing import Any
 
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, make_response, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from banco import conectar, inicializar_banco
 
 BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR / "public"
+
+
+def versao_frontend():
+    arquivos = [PUBLIC_DIR / 'index.html']
+    for pasta in ('css', 'js', 'components', 'pages'):
+        arquivos.extend(p for p in (PUBLIC_DIR / pasta).rglob('*') if p.is_file())
+    digest = sha256()
+    for arquivo in sorted(arquivos):
+        digest.update(arquivo.relative_to(PUBLIC_DIR).as_posix().encode())
+        digest.update(arquivo.read_bytes())
+    return digest.hexdigest()[:16]
+
+
+VERSAO_FRONTEND = versao_frontend()
+
 
 # Fora do Docker, o mesmo .env da raiz pode ser lido pela aplicação.
 # No Docker Compose, variáveis explícitas prevalecem (override=False).
@@ -35,6 +52,7 @@ app.config.update(
     SESSION_COOKIE_SECURE=os.environ.get("SESSION_COOKIE_SECURE", "false").lower() == "true",
     PERMANENT_SESSION_LIFETIME=60 * 60 * 24 * 7,
     MAX_CONTENT_LENGTH=1_000_000,
+    MODERAR_IMAGENS_PERFIL=os.environ.get("MODERAR_IMAGENS_PERFIL", "false").lower() == "true",
 )
 
 # Cria tabelas caso ainda não existam. Não apaga usuários/dados já salvos.
@@ -50,7 +68,7 @@ from progresso_api import bp_progresso
 app.register_blueprint(bp_progresso)
 from google_api import bp_google, iniciar_sessao
 app.register_blueprint(bp_google)
-from perfil_api import bp_perfil
+from perfil_api import TABELAS_IMAGENS, bp_perfil, gravar_imagem_perfil, imagem_publicada, preparar_imagem_perfil
 app.register_blueprint(bp_perfil)
 from redacao_gratis_api import bp_redacao_gratis
 app.register_blueprint(bp_redacao_gratis)
@@ -96,6 +114,8 @@ def _perfil_publico(linha: sqlite3.Row) -> dict[str, Any]:
         vestibulares = ["SIS"]
 
     return {
+        "banner": linha["banner_tema"] or "oceano",
+        "banner_modo": linha["banner_modo"] if linha["estado_banner"] else "padrao",
         "nome": linha["nome"],
         "serie": linha["serie"] if linha["serie"] is not None else 3,
         "vests": vestibulares,
@@ -109,11 +129,14 @@ def _carregar_conta(usuario_id: int) -> dict[str, Any] | None:
         linha = conexao.execute(
             """
             SELECT u.id, u.nome, u.email, u.tipo, u.ativo,
-                   p.serie, p.vestibulares_json, p.dificuldade, g.google_sub, g.email_google,
-                   EXISTS(SELECT 1 FROM fotos_perfil f WHERE f.usuario_id=u.id) AS tem_foto
+                   p.serie, p.vestibulares_json, p.dificuldade, p.banner_tema, p.banner_modo, g.google_sub, g.email_google,
+                   f.moderacao AS estado_foto, f.versao AS foto_versao,
+                   b.moderacao AS estado_banner, b.versao AS banner_versao
               FROM usuarios AS u
               LEFT JOIN perfis AS p ON p.usuario_id = u.id
               LEFT JOIN google_identidades AS g ON g.usuario_id = u.id
+              LEFT JOIN fotos_perfil AS f ON f.usuario_id = u.id
+              LEFT JOIN banners_perfil AS b ON b.usuario_id = u.id
              WHERE u.id = ?
             """,
             (usuario_id,),
@@ -126,7 +149,12 @@ def _carregar_conta(usuario_id: int) -> dict[str, Any] | None:
                 "nome": linha["nome"],
                 "email": linha["email"],
                 "tipo": linha["tipo"],
-                "tem_foto": bool(linha["tem_foto"]),
+                "tem_foto": bool(linha["estado_foto"]),
+                "estado_foto": "aprovada" if imagem_publicada(linha["estado_foto"]) else linha["estado_foto"],
+                "foto_versao": linha["foto_versao"],
+                "tem_banner": bool(linha["estado_banner"]),
+                "estado_banner": "aprovada" if imagem_publicada(linha["estado_banner"]) else linha["estado_banner"],
+                "banner_versao": linha["banner_versao"],
                 "google": {"conectado": bool(linha["google_sub"]), "email": linha["email_google"]},
             },
             "perfil": _perfil_publico(linha),
@@ -136,9 +164,13 @@ def _carregar_conta(usuario_id: int) -> dict[str, Any] | None:
 
 
 @app.get("/")
+@app.get("/index.html")
 def inicio():
-    """Entrega a aplicação de página única existente em public/index.html."""
-    return app.send_static_file("index.html")
+    """O HTML inicial aponta para uma única versão de fragmentos, scripts e estilos."""
+    html = (PUBLIC_DIR / 'index.html').read_text(encoding='utf-8')
+    resposta = make_response(html.replace('__VOAAM_FRONTEND__', VERSAO_FRONTEND))
+    resposta.headers['Cache-Control'] = 'no-store'
+    return resposta
 
 
 @app.get("/api/provas-oficiais")
@@ -202,6 +234,9 @@ def realizar_cadastro():
         return jsonify({"message": "A senha deve ter pelo menos 6 caracteres."}), 400
     if len(senha) > 256:
         return jsonify({"message": "A senha é muito longa."}), 400
+    # Compatível com clientes antigos, valida confirmação quando enviada.
+    if 'confirmar_senha' in dados and dados['confirmar_senha'] != senha:
+        return jsonify({'message': 'As senhas não conferem.'}), 400
 
     try:
         serie = int(dados.get("serie", 0))
@@ -294,7 +329,9 @@ def sessao_atual():
         session.clear()
         return jsonify({"autenticado": False}), 200
 
-    resposta = jsonify({"autenticado": True, **conta})
+    aviso_google = session.pop('boas_vindas_google', None)
+    resposta = jsonify({"autenticado": True, **conta,
+                       "boas_vindas_google": aviso_google})
     resposta.headers["Cache-Control"] = "private, no-store"
     return resposta, 200
 
@@ -438,9 +475,17 @@ def atualizar_perfil():
     uid = session.get('usuario_id')
     if not uid:
         return jsonify({'message': 'Entre na sua conta para editar o perfil.'}), 401
-    dados = _ler_json()
-    if dados is None:
-        return jsonify({'message': 'Envie JSON válido.'}), 400
+    multipart = request.mimetype == 'multipart/form-data'
+    if multipart:
+        request.max_content_length = 2_000_000
+        try:
+            dados = json.loads(request.form.get('dados', ''))
+        except ValueError:
+            dados = None
+    else:
+        dados = _ler_json()
+    if not isinstance(dados, dict):
+        return jsonify({'message': 'Envie dados de perfil válidos.'}), 400
     nome = str(dados.get('nome', '')).strip()
     try:
         serie = int(dados.get('serie', 0))
@@ -458,19 +503,51 @@ def atualizar_perfil():
             return jsonify({'message': 'Vestibular inválido.'}), 400
         if v not in vests:
             vests.append(v)
+    banner = str(dados.get('banner', 'oceano'))
+    if banner not in ('oceano', 'aurora', 'floresta', 'noite'):
+        return jsonify({'message': 'Banner inválido.'}), 400
+    modo = dados.get('banner_modo')
+    if 'banner_modo' in dados and modo not in ('padrao', 'personalizado'):
+        return jsonify({'message': 'Escolha um tipo de banner válido.'}), 400
+    imagens = {}
+    if multipart:
+        for tipo in TABELAS_IMAGENS:
+            arquivo = request.files.get(tipo)
+            if arquivo:
+                try:
+                    imagens[tipo] = preparar_imagem_perfil(arquivo, tipo)
+                except ValueError as erro:
+                    return jsonify({'message': f'{tipo.capitalize()}: {erro}'}), 400
+            elif request.form.get(f'remover_{tipo}') == '1':
+                imagens[tipo] = None
     c = conectar()
     try:
+        c.execute('BEGIN IMMEDIATE')
+        if 'banner' in imagens and imagens['banner'] is None:
+            modo = 'padrao'
+        elif modo is None and 'banner' in imagens:
+            modo = 'personalizado'
+        if modo == 'personalizado' and 'banner' not in imagens and not c.execute(
+            'SELECT 1 FROM banners_perfil WHERE usuario_id=?', (uid,),
+        ).fetchone():
+            return jsonify({'message': 'Escolha uma imagem para o banner personalizado.'}), 400
         c.execute('UPDATE usuarios SET nome = ? WHERE id = ?', (nome, uid))
-        c.execute("""INSERT INTO perfis(usuario_id, serie, vestibulares_json, dificuldade)
-                     VALUES (?, ?, ?, 'ambos')
+        c.execute("""INSERT INTO perfis(usuario_id, serie, vestibulares_json, dificuldade, banner_tema)
+                     VALUES (?, ?, ?, 'ambos', ?)
                      ON CONFLICT(usuario_id) DO UPDATE SET
                        serie=excluded.serie, vestibulares_json=excluded.vestibulares_json,
-                       atualizado_em=CURRENT_TIMESTAMP""",
-                  (uid, serie, json.dumps(vests, ensure_ascii=False)))
+                       banner_tema=excluded.banner_tema, atualizado_em=CURRENT_TIMESTAMP""",
+                  (uid, serie, json.dumps(vests, ensure_ascii=False), banner))
+        if modo is not None:
+            c.execute('UPDATE perfis SET banner_modo=? WHERE usuario_id=?', (modo, uid))
+        imagens_salvas = {
+            tipo: gravar_imagem_perfil(c, uid, tipo, imagem)
+            for tipo, imagem in imagens.items()
+        }
         c.commit()
     finally:
         c.close()
-    return jsonify({'ok': True, **_carregar_conta(int(uid))})
+    return jsonify({'ok': True, 'imagens_salvas': imagens_salvas, **_carregar_conta(int(uid))})
 
 
 @app.post('/api/atividade')
@@ -554,6 +631,67 @@ def vidas_api():
     finally:
         c.close()
 
+
+
+
+@app.route('/api/preferencias', methods=['GET', 'POST'])
+def preferencias_estudo():
+    """Primeiro acesso: escolha de disciplina com dados reais do catálogo."""
+    uid = session.get('usuario_id')
+    if not uid:
+        return jsonify({'message': 'Faça login.'}), 401
+    from treino_api import catalogo
+    from collections import Counter
+    materias = Counter(q.get('disciplina') or 'Outras' for q in catalogo())
+    valores = ['Todas'] + sorted(materias, key=lambda s: s.casefold())
+    with closing(conectar()) as c, c:
+        if request.method == 'POST':
+            dados = _ler_json()
+            materia = dados.get('disciplina') if dados else None
+            if not isinstance(materia, str) or materia not in valores:
+                return jsonify({'message': 'Selecione uma disciplina disponível.'}), 400
+            c.execute("""INSERT INTO preferencias_inicio(usuario_id,disciplina) VALUES(?,?)
+                         ON CONFLICT(usuario_id) DO UPDATE SET disciplina=excluded.disciplina,
+                         configurada_em=CURRENT_TIMESTAMP""", (uid, materia))
+        preferencia = c.execute('SELECT disciplina FROM preferencias_inicio WHERE usuario_id=?', (uid,)).fetchone()
+    recomendacoes = [{'disciplina': nome, 'questoes': total}
+                    for nome, total in sorted(materias.items(), key=lambda item: (-item[1], item[0]))]
+    return jsonify({'configurado': bool(preferencia),
+                    'disciplina': preferencia['disciplina'] if preferencia else 'Todas',
+                    'opcoes': valores, 'recomendacoes': recomendacoes})
+
+
+@app.post('/api/suporte')
+def abrir_chamado_suporte():
+    uid = session.get('usuario_id')
+    if not uid:
+        return jsonify({'message': 'Faça login.'}), 401
+    dados = _ler_json() or {}
+    assunto = str(dados.get('assunto') or '').strip()
+    mensagem = str(dados.get('mensagem') or '').strip()
+    if not 5 <= len(assunto) <= 100 or not 15 <= len(mensagem) <= 2000:
+        return jsonify({'message': 'Assunto de 5–100 caracteres e descrição de 15–2.000.'}), 400
+    with closing(conectar()) as c, c:
+        cursor = c.execute('INSERT INTO pedidos_suporte(usuario_id, assunto, mensagem) VALUES(?,?,?)',
+                           (uid, assunto, mensagem))
+    return jsonify({'ok': True, 'protocolo': cursor.lastrowid,
+                    'message': 'Solicitação registrada. Guarde o número do protocolo.'}), 201
+
+
+
+@app.get('/api/admin/suporte')
+def listar_chamados_admin():
+    uid = session.get('usuario_id')
+    with closing(conectar()) as c:
+        admin = c.execute("SELECT 1 FROM usuarios WHERE id=? AND ativo=1 AND tipo='ADMIN'", (uid,)).fetchone()
+        if not admin:
+            return jsonify({'message': 'Acesso restrito.'}), 403
+        tickets = c.execute("""SELECT s.id, s.assunto, s.mensagem, s.criado_em, u.nome
+                              FROM pedidos_suporte s JOIN usuarios u ON u.id=s.usuario_id
+                              ORDER BY s.id DESC LIMIT 100""").fetchall()
+    resposta = jsonify({'chamados': [dict(t) for t in tickets]})
+    resposta.headers['Cache-Control'] = 'private, no-store'
+    return resposta
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "5000")), debug=os.environ.get("FLASK_DEBUG", "true").lower() == "true")

@@ -47,13 +47,16 @@ class TestV5(unittest.TestCase):
         r=self.client.post(f"/api/treino/{d['treino_id']}/responder",json=payload)
         self.assertEqual(r.status_code,200,r.get_json())
         self.assertIn('xp_ganho',r.get_json())
+        premiada = r.get_json()['acertou']
         self.assertEqual(self.client.post(f"/api/treino/{d['treino_id']}/responder",json=payload).status_code,409)
         novo=self.client.post('/api/treino/iniciar',json={'quantidade':1,'vestibular':questao['vestibular'],'ano':str(questao['ano'] or ''),'assunto':questao['assunto'],'disciplina':questao['disciplina'],'fonte':questao['fonte']})
         self.assertEqual(novo.status_code,201,novo.get_json())
         # Primeira questão do novo sorteio não precisa ser a mesma; testamos idempotência via API direta.
-        r=self.client.post('/api/avaliacao/responder',json=payload)
-        self.assertEqual(r.status_code,200)
-        self.assertEqual(r.get_json()['xp_ganho'],0)
+        correta = next(q['correta'] for q in catalogo() if q['id'] == questao['id'])
+        for xp in (0 if premiada else 20, 0):
+            r = self.client.post('/api/avaliacao/responder', json={**payload, 'alternativa': correta})
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(r.get_json()['xp_ganho'], xp)
 
     def test_quiz_sem_gabarito_publico_e_progresso(self):
         r=self.client.post('/api/avaliacao/responder',json={'questao_id':'quiz:conjuntos:0','alternativa':0})
@@ -61,7 +64,7 @@ class TestV5(unittest.TestCase):
         self.assertIn('correta',r.get_json())
         p=self.client.get('/api/progresso').get_json()
         self.assertEqual(p['questoes_respondidas'],1)
-        self.assertIn(p['xp'],(5,20))
+        self.assertIn(p['xp'],(0,20))
 
     def test_sem_nota_falsa_e_google_desativado(self):
         texto=('Introdução sobre o problema social.\n\nEntretanto, precisamos analisar as causas e consequências. '

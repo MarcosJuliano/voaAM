@@ -16,7 +16,7 @@ function treinoSelecionados(){
  const f={quantidade:Number(treinoEl('treino-quantidade')?.value||10)};
  for(const k of treinoCampos){const v=treinoEl('treino-'+k)?.value;if(v)f[k]=v;}return f;
 }
-async function treinoAtualizarFiltros(indice=0){
+async function treinoAtualizarFiltros(indice=0, selecao=null){
  const versao = ++treinoFiltroVersao;
  const status=treinoEl('treino-status');
  const btn=treinoEl('treino-iniciar');if(btn)btn.disabled=true;
@@ -27,7 +27,7 @@ async function treinoAtualizarFiltros(indice=0){
   for(let i=indice;i<treinoCampos.length;i++){
    const campo=treinoCampos[i],sel=treinoEl('treino-'+campo);
    if(!sel)continue;
-   const antigo=sel.value;
+   const antigo=selecao ? (selecao[campo] || '') : sel.value;
    const params=new URLSearchParams(treinoFiltrosAte(i));
    const d=await treinoApi('/api/treino/catalogo?'+params.toString());
    if (versao !== treinoFiltroVersao) return;
@@ -47,12 +47,12 @@ async function treinoAtualizarFiltros(indice=0){
   if (versao === treinoFiltroVersao) selects.forEach(el => { el.disabled = false; });
  }
 }
-function treinoCarregarFiltros(){
+function treinoCarregarFiltros(selecao){
  for(let i=0;i<treinoCampos.length;i++){
   const sel=treinoEl('treino-'+treinoCampos[i]);
   if(sel && !sel.dataset.listenerV5){sel.addEventListener('change',()=>treinoAtualizarFiltros(i+1));sel.dataset.listenerV5='1';}
  }
- return treinoAtualizarFiltros(0);
+ return treinoAtualizarFiltros(0, selecao);
 }
 async function treinoIniciar(event){
  event?.preventDefault();const btn=treinoEl('treino-iniciar'),status=treinoEl('treino-status');

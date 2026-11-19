@@ -84,6 +84,7 @@ class TestAtualizacao(unittest.TestCase):
         primeiro = self.cadastrar('Daniel Ferreira')
         segundo = self.cadastrar('Eduardo Ferreira')
         self.cadastrar('Felipe Ferreira')
+        self.cadastrar('Gabriela Ferreira')
         c = conectar()
         try:
             c.execute("UPDATE usuarios SET ativo=0 WHERE nome='Felipe Ferreira'")
@@ -92,13 +93,16 @@ class TestAtualizacao(unittest.TestCase):
             c.close()
         self.assertEqual(app.test_client().get('/api/ranking').status_code, 401)
         for aluno in (primeiro, segundo):
-            r = aluno.post('/api/avaliacao/responder', json={'questao_id': 'quiz:conjuntos:0', 'alternativa': 0})
-            self.assertTrue(r.get_json()['xp_ganho'] > 0)
+            for questao in catalogo()[:2]:
+                r = aluno.post('/api/avaliacao/responder', json={
+                    'questao_id': questao['id'], 'alternativa': questao['correta'],
+                })
+                self.assertEqual(r.get_json()['xp_ganho'], 20)
         dados = primeiro.get('/api/ranking').get_json()
         self.assertEqual(dados['minha_posicao']['posicao'], 1)
         lideres = [a for a in dados['alunos'] if a['posicao'] == 1]
         self.assertEqual([a['nome'] for a in lideres], ['Daniel F.', 'Eduardo F.'])
-        self.assertEqual(set(lideres[0]), {'nome', 'voce', 'posicao', 'xp'})
+        self.assertEqual(set(lideres[0]), {'id', 'nome', 'voce', 'posicao', 'xp', 'banner', 'pagina'})
         self.assertTrue(any(a['xp'] == 0 for a in dados['alunos']))
         self.assertFalse(any(a['nome'] == 'Felipe F.' for a in dados['alunos']))
         self.assertNotIn('email', dados['minha_posicao'])

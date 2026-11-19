@@ -447,12 +447,15 @@ function redRenderEstadoEditor() {
     fila: 'Aguardando na fila…',
     processando: envio?.provedor === 'gratis' ? 'Analisando…' : 'IA analisando…',
     concluida: porIA ? 'Correção concluída' : 'Análise concluída',
+    falhou: porIA ? 'Correção falhou · Tentar novamente' : 'Analisar por regras',
   };
   const botao = document.getElementById('red-analisar');
   const ocupado = Boolean(envio && (envio.estado === 'enviando' || redPendente(envio)));
   const texto = envio?.atualizando && ocupado ? 'Reconectando à correção…'
     : rotulos[envio?.estado] || (porIA ? 'Enviar para correção' : 'Analisar por regras');
   botao.disabled = ocupado || envio?.estado === 'concluida';
+  if (porIA && ['concluida', 'falhou'].includes(envio?.estado)) botao.dataset.estadoIa = envio.estado;
+  else delete botao.dataset.estadoIa;
   botao.setAttribute('aria-busy', String(ocupado));
   document.getElementById('red-analisar-texto').textContent = texto;
   document.getElementById('red-ai-spinner').hidden = !ocupado;

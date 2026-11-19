@@ -184,52 +184,106 @@ contaDialogo.addEventListener('close', () => {
 });
 renderContaPerfil();
 
-function renderFotoPerfil() {
-  const imagem = document.getElementById('perfil-foto');
-  const temFoto = Boolean(authConta?.tem_foto);
-  imagem.hidden = !temFoto;
-  if (temFoto && !imagem.hasAttribute('src')) imagem.src = '/api/perfil/foto';
-  if (!temFoto) imagem.removeAttribute('src');
-  document.getElementById('perfil-foto-padrao').toggleAttribute('hidden', temFoto);
-  document.getElementById('perfil-foto-remover').hidden = !temFoto;
+const editorBanner = document.getElementById('perfil-banner-editor');
+const statusEditorBanner = document.getElementById('perfil-banner-editor-status');
+
+function abrirEditorBanner() {
+  if (editorBanner.open) return;
+  statusEditorBanner.textContent = '';
+  editorBanner.showModal();
 }
 
-const perfilFotoArquivo = document.getElementById('perfil-foto-arquivo');
-const perfilFotoRemover = document.getElementById('perfil-foto-remover');
-async function atualizarFotoPerfil(arquivo) {
-  if (!authConta) return;
-  const status = document.getElementById('perfil-foto-status');
-  if (arquivo && arquivo.size > 950_000) {
-    status.textContent = 'Escolha uma imagem de até 950 KB.';
-    perfilFotoArquivo.value = '';
-    return;
-  }
-  const corpo = new FormData();
-  if (arquivo) corpo.append('foto', arquivo);
-  perfilFotoArquivo.disabled = perfilFotoRemover.disabled = true;
-  try {
-    const resposta = await fetch('/api/perfil/foto', {
-      method: arquivo ? 'PUT' : 'DELETE',
-      body: arquivo ? corpo : undefined,
-      credentials: 'same-origin',
-    });
-    if (!resposta.ok) {
-      const dados = await resposta.json().catch(() => ({}));
-      throw new Error(dados.message || 'Não foi possível atualizar sua foto.');
+document.getElementById('perfil-banner-alterar').addEventListener('click', () => abrirEditorBanner());
+document.getElementById('perfil-banner-concluir').addEventListener('click', () => editorBanner.close());
+
+const perfilImagens = ['foto', 'banner'].map(tipo => {
+  const el = sufixo => document.getElementById(`perfil-${tipo}${sufixo}`);
+  const item = {
+    tipo, imagem: el(''), preview: el('-preview'), input: el('-arquivo'),
+    remover: el('-remover'), desfazer: el('-desfazer'), status: el('-status'),
+    pendente: undefined, urlLocal: '',
+  };
+  const statusPrevia = tipo === 'banner' ? statusEditorBanner : item.status;
+  item.input.addEventListener('change', () => {
+    const arquivo = item.input.files[0];
+    if (!arquivo) return;
+    const tipoAceito = arquivo.type ? ['image/jpeg', 'image/png', 'image/webp'].includes(arquivo.type)
+      : /\.(jpe?g|png|webp)$/i.test(arquivo.name);
+    if (arquivo.size > 950_000 || !tipoAceito) {
+      statusPrevia.textContent = 'Escolha um JPEG, PNG ou WebP de até 950 KB.';
+      item.input.value = '';
+      return;
     }
-    authConta.tem_foto = Boolean(arquivo);
-    document.getElementById('perfil-foto').removeAttribute('src');
-    renderFotoPerfil();
-    status.textContent = arquivo ? 'Foto atualizada.' : 'Foto removida.';
-  } catch (erro) {
-    status.textContent = erro.message;
-  } finally {
-    perfilFotoArquivo.value = '';
-    perfilFotoArquivo.disabled = perfilFotoRemover.disabled = false;
+    if (tipo === 'banner') {
+      item.input.value = '';
+      abrirRecorteBanner(arquivo, imagem => {
+        formularioPerfil.elements['banner-modo'].value = 'personalizado';
+        editarImagemPerfil(item, imagem);
+        item.status.textContent = 'Use Salvar alterações para gravar o novo banner.';
+        editorBanner.close();
+      }, erro => { statusPrevia.textContent = erro; });
+      return;
+    }
+    editarImagemPerfil(item, arquivo);
+    item.status.textContent = 'Prévia da nova foto. Use Salvar alterações para gravar.';
+  });
+  item.remover.addEventListener('click', () => {
+    if (tipo === 'banner') formularioPerfil.elements['banner-modo'].value = 'padrao';
+    const temImagem = authConta?.[`tem_${tipo}`];
+    editarImagemPerfil(item, temImagem ? null : undefined);
+    item.status.textContent = temImagem ? 'Remoção pendente. Use Salvar alterações para confirmar.' : '';
+    if (tipo === 'banner') editorBanner.close();
+  });
+  item.desfazer?.addEventListener('click', () => {
+    editarImagemPerfil(item, undefined);
+    item.status.textContent = statusPrevia.textContent = '';
+  });
+  item.preview.addEventListener('click', () => {
+    const titulo = tipo === 'foto' ? 'Foto do perfil' : 'Banner do perfil';
+    const dados = dadosEditadosPerfil();
+    const tema = dados.banner_modo === 'personalizado' ? 'personalizado' : dados.banner;
+    ampliarImagemPerfil(titulo, item.imagem.getAttribute('src'), tema,
+      tipo === 'banner' ? abrirEditorBanner : undefined);
+  });
+  return item;
+});
+
+function editarImagemPerfil(item, arquivo) {
+  if (item.urlLocal) URL.revokeObjectURL(item.urlLocal);
+  item.pendente = arquivo;
+  item.urlLocal = arquivo ? URL.createObjectURL(arquivo) : '';
+  item.input.value = '';
+  atualizarSalvarPerfil();
+}
+
+function renderImagensPerfil(modoBanner, temaBanner) {
+  for (const item of perfilImagens) {
+    const temImagem = authConta?.[`tem_${item.tipo}`];
+    const token = authConta?.[`${item.tipo}_versao`];
+    const versao = token ? `?v=${encodeURIComponent(token)}` : '';
+    let src = item.pendente === undefined ? (temImagem ? `/api/perfil/${item.tipo}${versao}` : '') : item.urlLocal;
+    if (item.tipo === 'banner' && modoBanner === 'padrao') src = '';
+    if (item.tipo === 'banner') {
+      const tema = modoBanner === 'personalizado' ? 'personalizado' : temaBanner;
+      item.preview.className = 'ranking-publico-banner perfil-imagem-preview banner-' + tema;
+      const previaEditor = document.getElementById('perfil-banner-editor-previa');
+      previaEditor.className = 'ranking-publico-banner banner-' + tema;
+      const imagemEditor = document.getElementById('perfil-banner-editor-imagem');
+      renderImagemPerfil(imagemEditor, src);
+    }
+    renderImagemPerfil(item.imagem, src);
+    item.remover.hidden = !temImagem || item.pendente === null ||
+      (item.tipo === 'foto' && Boolean(item.pendente));
+    if (item.desfazer) item.desfazer.hidden = !item.pendente;
+    if (item.tipo === 'foto') {
+      item.preview.disabled = !src;
+      document.getElementById('perfil-foto-padrao').hidden = Boolean(src);
+    }
   }
 }
-perfilFotoArquivo.addEventListener('change', () => {
-  const arquivo = perfilFotoArquivo.files[0];
-  if (arquivo) atualizarFotoPerfil(arquivo);
-});
-perfilFotoRemover.addEventListener('click', () => atualizarFotoPerfil(null));
+
+function renderImagemPerfil(imagem, src) {
+  imagem.hidden = !src;
+  if (src && imagem.getAttribute('src') !== src) imagem.src = src;
+  if (!src) imagem.removeAttribute('src');
+}

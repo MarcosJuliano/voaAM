@@ -1,0 +1,4 @@
+{$VOAAM_DOMINIO} {
+    encode zstd gzip
+    reverse_proxy web:5000
+}
