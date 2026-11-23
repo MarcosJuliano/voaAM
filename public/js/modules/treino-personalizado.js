@@ -2,7 +2,7 @@
 let treinoAtual=null,treinoIndice=0,treinoRespostas={},treinoRespondendo=false;
 let treinoFiltroVersao = 0;
 let treinoEncerrando = false;
-const treinoCampos=['vestibular','ano','disciplina','assunto','fonte'];
+const treinoCampos=['vestibular','etapa','ano','disciplina','assunto','fonte'];
 const treinoEl=id=>document.getElementById(id);
 const treinoEscape=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function treinoApi(url,opcoes={}){
@@ -31,9 +31,12 @@ async function treinoAtualizarFiltros(indice=0, selecao=null){
    const params=new URLSearchParams(treinoFiltrosAte(i));
    const d=await treinoApi('/api/treino/catalogo?'+params.toString());
    if (versao !== treinoFiltroVersao) return;
-   const plural={vestibular:'vestibulares',ano:'anos',disciplina:'disciplinas',assunto:'assuntos',fonte:'fontes'}[campo];
+   const plural={vestibular:'vestibulares',etapa:'etapas',ano:'anos',disciplina:'disciplinas',assunto:'assuntos',fonte:'fontes'}[campo];
    sel.replaceChildren(new Option('Todos / aleatório',''));
-   for(const item of d[plural]||[])sel.add(new Option(`${item.valor} (${item.total})`,item.valor));
+   for(const item of d[plural]||[]) {
+    const nome = campo === 'etapa' ? `${item.valor}ª etapa` : item.valor;
+    sel.add(new Option(`${nome} (${item.total})`, item.valor));
+   }
    sel.value=[...sel.options].some(o=>o.value===antigo)?antigo:'';
   }
   const result=await treinoApi('/api/treino/catalogo?'+new URLSearchParams(treinoFiltrosAte(treinoCampos.length)).toString());
@@ -78,7 +81,7 @@ function treinoRender(){
  treinoEl('treino-scroll').scrollTop=0;
  treinoEl('treino-progresso-fill').style.width = (100 * (treinoIndice+1) / treinoAtual.questoes.length) + '%';
  treinoEl('treino-progresso-overlay').textContent=`Questão ${treinoIndice+1} de ${treinoAtual.questoes.length}`;
- const meta=[q.vestibular,q.ano,q.disciplina,q.assunto].filter(Boolean).join(' · ');
+ const meta=[q.vestibular,q.etapa&&`${q.etapa}ª etapa`,q.ano,q.disciplina,q.assunto,q.fonte].filter(Boolean).join(' · ');
  let img='';
  if(typeof q.imagem==='string' && /^\/?assets\/[a-zA-Z0-9_./-]+\.(png|webp|jpg|jpeg)$/i.test(q.imagem)){
   img=`<figure class="sc-img-box"><img alt="Figura de apoio à questão" src="/${treinoEscape(q.imagem.replace(/^\//,''))}"></figure>`;
@@ -87,7 +90,7 @@ function treinoRender(){
  treinoEl('treino-questao-overlay').innerHTML=`<div class="assessment-meta"><span class="quiz-badge">Treino personalizado</span><span >${treinoEscape(meta)}</span></div>
  <div class="question-card"><p class="question-text">${treinoEscape(q.enunciado)}</p>${img}</div>
  <div class="options-list">${q.alternativas.map((alt,i)=>`<button class="option-btn treino-alternativa" type="button" data-alt="${i}" ${r?'disabled':''}>
- <span class="option-letter">${'ABCDE'[i]||i+1}</span><span>${treinoEscape(alt)}</span></button>`).join('')}</div>`;
+ <span class="option-letter">${'ABCDE'[i]||i+1}</span><span class="ex-alternativa">${treinoEscape(alt)}</span></button>`).join('')}</div>`;
  treinoEl('treino-feedback-overlay').textContent='';
  const proxima=treinoEl('treino-proxima-overlay');proxima.disabled=!r;
  proxima.textContent=treinoIndice===treinoAtual.questoes.length-1?'Ver resultado':'Próxima questão';

@@ -193,12 +193,12 @@ function scGetGabarito(provaKey,num,anoOriginal,numOriginal) {
 // ─── scMostrarAnos: chamado por praticar.js ao clicar no card ─
 // grupoId = 'ENEM' | 'MACRO' | 'PSC1' | 'PSC2' | ... | 'SIS3'
 function scMostrarAnos(grupoId) {
+  const chaves = SC_GRUPOS[grupoId];
   const container = document.getElementById('sim-cards-container');
   const picker    = document.getElementById('sim-vest-picker');
-  if (!container) return;
-  if (picker) picker.style.display = 'none';
+  if (!container || !chaves?.length) return;
+  if (picker) picker.hidden = true;
 
-  const chaves = SC_GRUPOS[grupoId] || [];
   const temSelecao = chaves.length > 1; // ENEM e MACRO têm 3 anos; PSC/SIS têm 1
 
   if (!temSelecao) {
@@ -698,10 +698,6 @@ function scFechar() {
   if (log) log.classList.remove('aberto');
 
   goTo('praticar');
-  const cards  = document.getElementById('sim-cards-container');
-  const picker = document.getElementById('sim-vest-picker');
-  if (cards)  cards.innerHTML      = '';
-  if (picker) picker.style.display = 'none';
   if (typeof simModoAba === 'function') simModoAba('completo');
 }
 

@@ -10,6 +10,10 @@ services:
       - .:/app
     environment: &ambiente_voaam
       PYTHONUNBUFFERED: "1"
+      FLASK_DEBUG: ${FLASK_DEBUG:-false}
+      SUPPORT_EMAIL: ${SUPPORT_EMAIL:-}
+      SUPPORT_FROM_EMAIL: ${SUPPORT_FROM_EMAIL:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
       FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:-dev-only-change-this-key}
       DATABASE_PATH: /app/instance/voaam.db
       SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
@@ -23,6 +27,8 @@ services:
       OLLAMA_MODEL: ${OLLAMA_MODEL:-}
       REDACAO_IA_CONCORRENCIA: ${REDACAO_IA_CONCORRENCIA:-1}
       REDACAO_GEMINI_CONCORRENCIA: ${REDACAO_GEMINI_CONCORRENCIA:-2}
+    env_file:
+      - .env
     command:
       - python
       - -m
@@ -32,7 +38,6 @@ services:
       - run
       - --host=0.0.0.0
       - --port=5000
-      - --debug
 
   corretor:
     image: voaam-web

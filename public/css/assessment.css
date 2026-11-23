@@ -2,9 +2,6 @@
   position: fixed;
   inset: 0;
   z-index: 9000;
-  background: var(--vidro-tela);
-  -webkit-backdrop-filter: blur(var(--vidro-desfoque));
-  backdrop-filter: blur(var(--vidro-desfoque));
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -98,7 +95,6 @@
   flex: 0 0 auto;
   padding: 10px 16px max(10px, env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
-  background: var(--vidro-janela);
 }
 .assessment-actions { display: flex; gap: 8px; }
 .assessment-actions > button { min-width: 0; }
@@ -158,7 +154,7 @@
 #sc-zoom-close {
   position: absolute; top: 16px; right: 16px;
   width: 36px; height: 36px; border-radius: 50%;
-  background: var(--vidro-janela); border: 1px solid var(--vidro-borda);
+  border: 1px solid var(--vidro-borda);
   color: var(--text); font-size: 18px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
 }
@@ -210,7 +206,6 @@
 #sc-log {
   width: 220px; flex-shrink: 0;
   border-left: 1px solid var(--border);
-  background: var(--vidro-janela);
   display: none; flex-direction: column;
   overflow: hidden;
 }
@@ -222,8 +217,6 @@
   display: flex !important;
   position: absolute; inset: 0;
   width: 100%; border-left: none; z-index: 20;
-  -webkit-backdrop-filter: blur(var(--vidro-desfoque));
-  backdrop-filter: blur(var(--vidro-desfoque));
   animation: voa-flutuar-in 170ms ease-out;
 }
 #sc-log-grid {

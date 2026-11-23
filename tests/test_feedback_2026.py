@@ -1,4 +1,5 @@
 """Regressão desta atualização: rode no Docker `python tests/test_feedback_2026.py`."""
+from collections import Counter
 from hashlib import sha256
 import io
 import json
@@ -20,6 +21,7 @@ from app import app  # noqa: E402
 from banco import conectar  # noqa: E402
 from treino_api import catalogo  # noqa: E402
 from fila_redacao import finalizar  # noqa: E402
+from humanas import FONTE_HUMANAS, questoes_autorais  # noqa: E402
 
 
 class TestarFeedback(unittest.TestCase):
@@ -55,6 +57,88 @@ class TestarFeedback(unittest.TestCase):
             'senha': 'senha1234', 'confirmar_senha': 'outra-senha',
             'serie': 3, 'vests': ['ENEM']})
         self.assertEqual(r.status_code, 400)
+
+    def test_humanas_equilibra_o_banco_geral_por_vestibular_e_etapa(self):
+        humanas = [q for q in questoes_autorais() if q['id'].startswith('banco:humanas-')]
+        matematica = [q for q in catalogo() if q['disciplina'] == 'Matemática'
+                      and q['fonte'] == 'Banco de questões']
+        por_prova = lambda qs: Counter((q['vestibular'], q['etapa']) for q in qs)
+        self.assertEqual(len(humanas), 900)
+        self.assertEqual(por_prova(humanas), por_prova(matematica))
+        self.assertEqual(len({q['id'] for q in humanas}), len(humanas))
+        self.assertEqual(len({q['enunciado'] for q in humanas}), len(humanas))
+        self.assertTrue(all(len(set(q['alternativas'])) == 5 and 0 <= q['correta'] < 5 for q in humanas))
+        self.assertTrue(all(q['explicacao'] and q['ano'] is None for q in humanas))
+        assuntos = self.client.get('/api/praticar/humanas/assuntos').get_json()['assuntos']
+        self.assertEqual(len(assuntos), 50)
+        self.assertEqual(sum(a['total'] for a in assuntos), 1250)
+        self.assertEqual({a['disciplina'] for a in assuntos}, {'História', 'Geografia', 'Filosofia', 'Sociologia'})
+
+    def test_acervo_ampliado_aparece_em_exercicios_e_treino(self):
+        novas = [q for q in questoes_autorais() if q['id'].startswith('banco:autoral-')]
+        self.assertEqual(len(novas), 1250)
+        self.assertEqual(len({q['id'] for q in novas}), 1250)
+        self.assertEqual(Counter(q['disciplina'] for q in novas), {
+            'Biologia': 250, 'Português': 250, 'Filosofia': 175, 'Sociologia': 175,
+            'Física': 200, 'Química': 200,
+        })
+        self.assertTrue(all(len(set(q['alternativas'])) == 5 and 0 <= q['correta'] < 5 for q in novas))
+        for disciplina in ('Biologia', 'Português', 'Filosofia', 'Sociologia', 'Física', 'Química'):
+            with self.subTest(disciplina=disciplina):
+                treino = self.client.get('/api/treino/catalogo', query_string={'disciplina': disciplina})
+                esperado = sum(q['disciplina'] == disciplina for q in catalogo())
+                self.assertEqual(treino.json['disponiveis'], esperado)
+        resposta = self.client.get('/api/praticar/exercicios/assuntos')
+        assuntos = resposta.json['assuntos']
+        self.assertEqual(len(assuntos), 86)
+        for assunto in assuntos:
+            self.assertEqual(assunto['niveis'], {'1': 5, '2': 10, '3': 10})
+        for id_assunto in ('bio-enem-ecologia', 'port-psc1-coesao', 'fis-sis2-ondas', 'qui-macro-eletroquimica'):
+            for nivel, quantidade in ((1, 5), (2, 10), (3, 10)):
+                url = f'/api/praticar/exercicios/{id_assunto}/questoes'
+                questoes = self.client.get(url, query_string={'nivel': nivel}).json['questoes']
+                self.assertEqual(len(questoes), quantidade)
+                self.assertTrue(all('correta' not in q and 'explicacao' not in q for q in questoes))
+        self.assertEqual(self.client.get('/database/assuntos_autorais.json').status_code, 404)
+
+    def test_exercicios_humanas_preservam_gabarito_e_registram_notas(self):
+        url = '/api/praticar/humanas/psc2-amazonas/questoes'
+        self.assertEqual(app.test_client().get(url, query_string={'nivel': 2}).status_code, 401)
+        self.assertEqual(self.client.get(url, query_string={'nivel': 9}).status_code, 400)
+        self.assertEqual(self.client.get('/database/humanas.json').status_code, 404)
+        r = self.client.get(url, query_string={'nivel': 2})
+        qs = r.get_json()['questoes']
+        self.assertEqual(len(qs), 10)
+        q = qs[0]
+        self.assertEqual((q['vestibular'], q['etapa'], q['disciplina']), ('PSC', 2, 'História'))
+        self.assertNotIn('correta', q)
+        self.assertNotIn('explicacao', q)
+        original = next(i for i in questoes_autorais() if i['id'] == q['id'])
+        alternativa = q['alternativas'].index(original['alternativas'][original['correta']])
+        resposta = self.client.post('/api/avaliacao/responder', json={'questao_id': q['id'], 'alternativa': alternativa})
+        self.assertEqual(resposta.status_code, 200)
+        self.assertTrue(resposta.get_json()['acertou'])
+        self.assertTrue(resposta.get_json()['explicacao'])
+        notas = self.client.get('/api/praticar/exercicios/notas', query_string={'id': q['id']})
+        self.assertEqual(notas.get_json()['por_questao'][q['id']], 100)
+
+    def test_treino_humanas_sorteia_e_corrige_as_alternativas_embaralhadas(self):
+        filtros = {'vestibular': 'ENEM', 'disciplina': 'Filosofia', 'assunto': 'Ética e critérios de ação',
+                   'fonte': FONTE_HUMANAS}
+        meta = self.client.get('/api/treino/catalogo', query_string=filtros).get_json()
+        self.assertEqual(meta['disponiveis'], 25)
+        r = self.client.post('/api/treino/iniciar', json={**filtros, 'quantidade': 1})
+        self.assertEqual(r.status_code, 201)
+        dados = r.get_json()
+        q = dados['questoes'][0]
+        self.assertEqual(q['assunto'], filtros['assunto'])
+        self.assertNotIn('correta', q)
+        original = next(i for i in questoes_autorais() if i['id'] == q['id'])
+        alternativa = q['alternativas'].index(original['alternativas'][original['correta']])
+        resultado = self.client.post(f"/api/treino/{dados['treino_id']}/responder",
+                                     json={'questao_id': q['id'], 'alternativa': alternativa})
+        self.assertEqual(resultado.status_code, 200)
+        self.assertTrue(resultado.get_json()['acertou'])
 
     def test_notas_exercicios_respeitam_lista_conta_e_ordem(self):
         questoes = [q for q in catalogo() if q['id'].startswith('banco:')][:3]
@@ -171,7 +255,9 @@ class TestarFeedback(unittest.TestCase):
     def test_ranking_com_perfil_publico(self):
         r = self.client.get('/api/ranking')
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(r.get_json()['minha_posicao']['pagina'], 1)
+        pagina = r.get_json()['minha_posicao']['pagina']
+        classificados = self.client.get('/api/ranking', query_string={'pagina': pagina}).json['alunos']
+        self.assertTrue(any(aluno['id'] == self.uid and aluno['voce'] for aluno in classificados))
         r = self.client.get(f'/api/alunos/{self.uid}/perfil-publico')
         self.assertEqual(r.status_code, 200)
         self.assertEqual(set(r.get_json()), {'nome', 'banner', 'serie', 'vests',

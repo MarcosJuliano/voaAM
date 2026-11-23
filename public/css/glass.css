@@ -1,0 +1,230 @@
+/* Fundo e acabamento compartilhados pelas janelas do voaAM. */
+:root {
+  --vidro-ambiente: #10121b;
+  --ambiente-azul: #1e273a;
+  --ambiente-violeta: #242136;
+  --vidro-base: #1c2030;
+  --vidro-pagina: #161925;
+  --vidro-janela: #1b1f2e;
+  --vidro-tela: #151924;
+  --vidro-controle: #222637;
+  --vidro-brilho: rgba(210, 224, 255, .06);
+  --vidro-aura: rgba(151, 128, 216, .045);
+  --vidro-aresta: rgba(221, 231, 255, .20);
+  --vidro-borda: rgba(189, 202, 232, .13);
+  --vidro-sombra: rgba(4, 6, 14, .23);
+  --vidro-luz: rgba(176, 198, 255, .07);
+  --cursor-luz: rgba(205, 218, 255, .06);
+  --contorno-brilho: rgba(155, 177, 227, .28);
+  --vidro-veu: rgba(7, 9, 17, .34);
+  --vidro-desfoque: 8px;
+  --vidro-filtro: blur(var(--vidro-desfoque));
+  --vidro-filtro-veu: blur(2px);
+  --vidro-reflexo:
+    linear-gradient(142deg, var(--vidro-brilho), transparent 42%),
+    radial-gradient(ellipse at 95% 110%, var(--vidro-aura), transparent 65%);
+  --vidro-reflexo-janela:
+    radial-gradient(ellipse at 0 0, var(--vidro-brilho), transparent 54%),
+    linear-gradient(146deg, transparent 57%, var(--vidro-aura));
+}
+
+[data-theme="dark"] { --text2: #b7c2dc; }
+
+[data-theme="light"] {
+  --vidro-ambiente: #f1f3f8;
+  --ambiente-azul: #e0e7f4;
+  --ambiente-violeta: #e9e5f3;
+  --vidro-base: #f6f8fc;
+  --vidro-pagina: #f3f5fa;
+  --vidro-janela: #f8f9fc;
+  --vidro-tela: #f0f2f8;
+  --vidro-controle: #edf0f7;
+  --vidro-brilho: rgba(255, 255, 255, .36);
+  --vidro-aura: rgba(124, 112, 170, .055);
+  --vidro-aresta: rgba(255, 255, 255, .58);
+  --vidro-borda: rgba(67, 83, 126, .16);
+  --vidro-sombra: rgba(44, 55, 82, .09);
+  --vidro-luz: rgba(87, 115, 176, .06);
+  --cursor-luz: rgba(75, 108, 184, .045);
+  --contorno-brilho: rgba(76, 106, 169, .26);
+  --vidro-veu: rgba(57, 67, 94, .17);
+  --accent2: #254ca9;
+  --text2: #465370;
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  @media not (prefers-reduced-transparency: reduce) {
+    :root {
+      --vidro-base: rgba(31, 35, 52, .67);
+      --vidro-pagina: rgba(19, 22, 34, .73);
+      --vidro-janela: rgba(26, 30, 44, .84);
+      --vidro-tela: rgba(20, 23, 35, .86);
+      --vidro-controle: rgba(33, 38, 55, .72);
+    }
+    [data-theme="light"] {
+      --vidro-base: rgba(248, 250, 254, .72);
+      --vidro-pagina: rgba(242, 245, 251, .73);
+      --vidro-janela: rgba(247, 249, 253, .88);
+      --vidro-tela: rgba(239, 242, 249, .88);
+      --vidro-controle: rgba(239, 243, 250, .76);
+    }
+  }
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 12% 0%, var(--ambiente-azul), transparent 65%),
+    radial-gradient(ellipse at 100% 100%, var(--ambiente-violeta), transparent 60%),
+    var(--vidro-ambiente);
+  background-attachment: fixed;
+}
+
+@property --luz-cor {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
+/* O desfoque fica nas superfícies estruturais. Cartões usam tinta e reflexo. */
+:is(.header, .bottom-nav, .liquid-glass, .perfil-metric, .perfil-section,
+    .red-hist-item, .red-tema-card, .red-ai-relatorio, .red-ai-competencia, .red-rascunho-revisao,
+    .progress-card, .topic-card, .action-card, .vest-card, .vest-full-card,
+    .sim-card, .simulado-card, .question-card, .result-card, .bp-ano, .ranking-redacao-grid > :where(div),
+    .ranking-posicao, .pratica-notas, .pratica-opcao, .pratica-cartao, .ex-lista-item,
+    .subject-tab, .serie-btn, .page-tab, .auth-screen, dialog, .sc-dialog,
+    .vidas-popover, .achievement-popup, .xp-toast, .aula-header, .assessment-footer,
+    .xp-faixa-detalhes, .sem-vidas-painel, :where(#sc-log, #sc-zoom-close, #modal-simulado > div, #modal-etapa > div)) {
+  --fundo-cartao: var(--vidro-base);
+  --vidro-reflexo-local: var(--vidro-reflexo);
+  --luz-x: 12%;
+  --luz-y: 0%;
+  --luz-cor: transparent;
+  --transicao-luz: --luz-cor 280ms ease-out;
+  background:
+    radial-gradient(210px circle at var(--luz-x) var(--luz-y), var(--luz-cor), transparent 80%),
+    var(--vidro-reflexo-local), var(--fundo-cartao);
+  border-color: var(--vidro-borda);
+  box-shadow: inset 0 1px 0 var(--vidro-brilho), 0 3px 10px var(--vidro-sombra);
+}
+
+.luz-painel-acesa { --luz-cor: var(--vidro-luz); }
+
+[id^="slot-page-"]:has(.screen.active) {
+  margin: 10px;
+  border: 1px solid var(--vidro-borda);
+  border-top-color: var(--vidro-aresta);
+  border-radius: 20px;
+  background: var(--vidro-reflexo-janela), var(--vidro-pagina);
+  box-shadow: inset 0 1px 0 var(--vidro-brilho), 0 5px 16px var(--vidro-sombra);
+  -webkit-backdrop-filter: var(--vidro-filtro);
+  backdrop-filter: var(--vidro-filtro);
+}
+
+:is(.header, .bottom-nav, .aula-header, .assessment-footer, .xp-faixa-detalhes, :where(#sc-log, #sc-zoom-close)) {
+  --fundo-cartao: var(--vidro-janela);
+}
+.header { border-bottom-color: var(--vidro-aresta); }
+:is(.bottom-nav, .aula-header, .xp-faixa-detalhes, :where(#sc-log.aberto, #sc-zoom-close)) {
+  -webkit-backdrop-filter: var(--vidro-filtro);
+  backdrop-filter: var(--vidro-filtro);
+}
+
+:is(.auth-screen, dialog, .sc-dialog, .vidas-popover, .achievement-popup, .xp-toast,
+    .sem-vidas-painel, :where(#modal-simulado > div, #modal-etapa > div)) {
+  --fundo-cartao: var(--vidro-janela);
+  --vidro-reflexo-local: var(--vidro-reflexo-janela);
+  color: var(--text);
+  border: 1px solid var(--vidro-borda);
+  border-top-color: var(--vidro-aresta);
+  box-shadow: inset 1px 0 0 var(--vidro-brilho), inset 0 -1px 0 var(--vidro-aura),
+    0 12px 30px var(--vidro-sombra);
+  -webkit-backdrop-filter: var(--vidro-filtro);
+  backdrop-filter: var(--vidro-filtro);
+}
+
+dialog { scrollbar-color: var(--vidro-borda) transparent; }
+dialog::backdrop, .sc-dialog-backdrop, #sc-zoom-overlay, #modal-simulado, #modal-etapa {
+  background: var(--vidro-veu);
+  -webkit-backdrop-filter: var(--vidro-filtro-veu);
+  backdrop-filter: var(--vidro-filtro-veu);
+}
+
+.aula-view, .assessment-overlay, .onboarding {
+  background: var(--vidro-reflexo-janela), var(--vidro-tela);
+  -webkit-backdrop-filter: var(--vidro-filtro);
+  backdrop-filter: var(--vidro-filtro);
+}
+
+#sc-zoom-img {
+  border: 1px solid var(--vidro-aresta);
+  border-radius: 16px;
+  box-shadow: 0 10px 28px var(--vidro-sombra);
+}
+
+#bloqueado-view { align-items: center; justify-content: safe center; }
+.sem-vidas-painel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(440px, calc(100% - 32px));
+  padding: clamp(22px, 5vw, 34px);
+  text-align: center;
+  border-radius: 22px;
+}
+#bloqueado-view > .sem-vidas-painel { margin: 16px auto; }
+
+#auth-wrapper:not([hidden]) {
+  display: flex;
+  align-items: safe center;
+  justify-content: center;
+  padding: clamp(12px, 4vw, 36px);
+}
+#auth-wrapper .auth-screen {
+  width: 100%;
+  max-width: 480px;
+  min-height: 0;
+  flex: 0 0 auto;
+  border-radius: 24px;
+}
+
+:is(.form-control, .auth-input, .auth-select, .auth-btn-google, .btn-secondary, .back-btn,
+    .bp-ano-body, .bp-row, .sc-dialog-actions > :where(button:not(.sc-dialog-danger, .sc-dialog-primary))) {
+  background-color: var(--vidro-controle);
+  border-color: var(--vidro-borda);
+}
+.bp-ano-hdr { background: transparent; }
+.bp-ano-hdr:hover { background: var(--vidro-controle); }
+
+.btn-primary, .auth-btn-primary, .sc-btn-prox, .next-q-btn {
+  background-image: linear-gradient(115deg, #3a4faa, #5147af);
+  box-shadow: inset 0 1px 0 rgba(227, 239, 255, .15), 0 3px 9px rgba(46, 49, 111, .17);
+}
+
+@media (max-width: 767px) {
+  [id^="slot-page-"]:has(.screen.active) {
+    margin: 6px 5px;
+    border-radius: 16px;
+  }
+  #auth-wrapper .auth-header { padding-top: 28px; }
+  #auth-wrapper .auth-logo-row { margin-bottom: 24px; }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  :root {
+    --vidro-filtro: none;
+    --vidro-filtro-veu: none;
+    --vidro-desfoque: 0px;
+  }
+  body { background: var(--vidro-ambiente); }
+}
+
+@media (forced-colors: active) {
+  :root, [data-theme="light"] {
+    --vidro-borda: CanvasText;
+    --vidro-aresta: CanvasText;
+  }
+  [id^="slot-page-"]:has(.screen.active), dialog, .sc-dialog, .auth-screen, .vidas-popover {
+    background: Canvas;
+    color: CanvasText;
+  }
+}

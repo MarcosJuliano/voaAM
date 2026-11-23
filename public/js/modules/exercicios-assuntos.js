@@ -55,8 +55,37 @@ let exAssuntoAtual = null;
 let exNivelAtual   = null;
 let exListaAtual = [];
 let exPedidoNotas = 0;
+let exPedidoQuestoes = 0;
+let exPedidoAssuntos = 0;
+const EX_MATERIAS = {
+  exatas: ['Matemática', 'Física', 'Química'],
+  humanas: ['História', 'Geografia', 'Filosofia', 'Sociologia'],
+  natureza: ['Biologia'],
+  linguagens: ['Português'],
+};
+let exAreaAtual = 'exatas';
+let exMateriaSelecionada = 'Matemática';
+let exCatalogoPendente;
 
-async function exAtualizarNotas() {
+function exCarregarCatalogo() {
+  exCatalogoPendente ??= authRequisicao('/api/praticar/exercicios/assuntos')
+    .then(({assuntos}) => assuntos.map(assunto => ({
+      ...assunto,
+      autoral: true,
+      icone: 'book-open',
+      sub: assunto.descricao,
+      origem: [assunto.vestibular, assunto.etapa && `${assunto.etapa}ª etapa`].filter(Boolean).join(' · '),
+      dif: assunto.dificuldade_sugerida,
+      quantidade: assunto.total,
+    })))
+    .catch(erro => {
+      exCatalogoPendente = undefined;
+      throw erro;
+    });
+  return exCatalogoPendente;
+}
+
+async function exAtualizarNotas(novaLista = false) {
   const pedido = ++exPedidoNotas;
   const contaId = authConta?.id;
   const cartao = document.getElementById('ex-notas');
@@ -64,45 +93,89 @@ async function exAtualizarNotas() {
   if (cartao.hidden) return;
 
   const status = document.getElementById('ex-notas-status');
-  const recentes = document.getElementById('ex-notas-recentes');
-  const posicao = new Map(exListaAtual.map((q, indice) => ['banco:' + q.id, indice + 1]));
-  const params = new URLSearchParams([...posicao.keys()].map(id => ['id', id]));
+  const dados = document.getElementById('ex-notas-dados');
+  if (novaLista) {
+    dados.hidden = true;
+    status.textContent = 'Carregando notas…';
+  }
+  const ids = exListaAtual.map(q => 'banco:' + q.id);
+  const params = new URLSearchParams(ids.map(id => ['id', id]));
   try {
-    const {ultimas, por_questao} = await authRequisicao('/api/praticar/exercicios/notas?' + params);
+    const {por_questao} = await authRequisicao('/api/praticar/exercicios/notas?' + params);
     if (pedido !== exPedidoNotas || contaId !== authConta?.id) return;
-    status.textContent = ultimas.length ? '' : 'Responda a uma questão desta lista para ver sua nota.';
-    recentes.replaceChildren(...ultimas.map(({questao_id, nota}) => {
+    const notas = ids.map(id => por_questao[id]);
+    const respondidas = notas.filter(nota => nota !== undefined);
+    const total = respondidas.length;
+    const maior = document.getElementById('ex-notas-maior');
+    const menor = document.getElementById('ex-notas-menor');
+    exPreencherNota(maior, total ? Math.max(...respondidas) : undefined);
+    exPreencherNota(menor, total ? Math.min(...respondidas) : undefined);
+    status.textContent = `${total} de ${ids.length} ${ids.length === 1 ? 'questão respondida' : 'questões respondidas'}`;
+    document.getElementById('ex-notas-grade').replaceChildren(...notas.map((nota, indice) => {
       const item = document.createElement('li');
       item.className = 'ex-nota';
-      item.dataset.resultado = nota === 100 ? 'acerto' : 'erro';
       const numero = document.createElement('span');
-      numero.textContent = 'Questão ' + posicao.get(questao_id);
+      numero.textContent = 'Questão ' + (indice + 1);
       const valor = document.createElement('strong');
-      valor.textContent = nota + '%';
+      exPreencherNota(valor, nota, 'Sem resposta');
       item.append(numero, valor);
       return item;
     }));
+    dados.hidden = false;
     for (const item of document.querySelectorAll('#ex-lista-10 [data-exercicio-nota]')) {
       const nota = por_questao['banco:' + item.dataset.exercicioNota];
       item.hidden = nota === undefined;
-      item.textContent = item.hidden ? '' : `Última tentativa · ${nota}%`;
-      item.dataset.resultado = nota === 100 ? 'acerto' : 'erro';
+      exPreencherNota(item, nota, '', 'Última tentativa · ');
     }
   } catch {
-    if (pedido === exPedidoNotas && contaId === authConta?.id) status.textContent = 'Não foi possível carregar as notas.';
+    if (pedido !== exPedidoNotas || contaId !== authConta?.id) return;
+    dados.hidden = true;
+    status.textContent = 'Não foi possível carregar as notas.';
   }
 }
 
-function exQuestoesDoAssunto(assunto) {
+function exPreencherNota(elemento, nota, vazio = '—', prefixo = '') {
+  elemento.textContent = nota === undefined ? vazio : `${prefixo}${nota}%`;
+  if (nota === undefined) delete elemento.dataset.resultado;
+  else elemento.dataset.resultado = nota === 100 ? 'acerto' : 'erro';
+}
+
+function exVestibularesAtivos(filtro) {
+  if (filtro === 'perfil') return Array.isArray(perfil?.vests) ? perfil.vests : [];
+  return filtro ? [filtro] : [];
+}
+
+function exDefinirFiltroVestibular(filtro) {
+  document.getElementById('ex-vestibular').value = filtro;
+  document.getElementById('ex-etapa').value = '';
+}
+
+function exQuestoesDoAssunto(assunto, vestibulares, etapa) {
   return bancoDB.filter(q => q.opcoes?.length &&
+    (!vestibulares.length || vestibulares.includes(q.vest)) &&
+    (!etapa || String(q.etapa) === etapa) &&
     assunto.keywords.some(k => (q.contexto || '').toLowerCase().includes(k) ||
       (q.enunciado || '').toLowerCase().includes(k)));
 }
 
-function exCartaoAssunto({titulo, sub, icone, quantidade, dif}, abrir) {
+async function exAssuntosDisponiveis(materia, vestibulares, etapa = '') {
+  if (materia === 'Matemática') {
+    return exAssuntos.map(assunto => {
+      const questoes = exQuestoesDoAssunto(assunto, vestibulares, etapa);
+      return {...assunto, quantidade: questoes.length, questoes};
+    }).filter(assunto => assunto.quantidade > 0);
+  }
+  const catalogo = await exCarregarCatalogo();
+  return catalogo.filter(a => a.disciplina === materia
+    && (!vestibulares.length || vestibulares.includes(a.vestibular))
+    && (!etapa || String(a.etapa) === etapa));
+}
+
+function exCartaoAssunto({id, titulo, sub, origem, icone, quantidade, dif}, abrir) {
   const botao = document.createElement('button');
   botao.type = 'button';
   botao.className = 'pratica-opcao ex-cartao-assunto';
+  if (id) botao.dataset.assuntoId = id;
   botao.addEventListener('click', abrir);
   botao.append(voaIcon(icone));
   const nome = document.createElement('strong');
@@ -112,19 +185,23 @@ function exCartaoAssunto({titulo, sub, icone, quantidade, dif}, abrir) {
   descricao.textContent = sub;
   const contagem = document.createElement('span');
   contagem.textContent = `${quantidade} ${quantidade === 1 ? 'questão' : 'questões'}`;
+  if (origem) contagem.append(' · ', origem);
   botao.append(nome, descricao, contagem);
   if (dif) {
     const selo = document.createElement('span');
     selo.className = 'ex-cartao-nivel';
+    selo.title = 'Nível sugerido para o assunto';
     selo.append(voaIcon('circle-dot'), EX_DIF_LABEL[dif]);
     botao.append(selo);
   }
   return botao;
 }
 
-function exRenderAssuntos(alvo, abrirAssunto, limite = Infinity) {
+function exRenderAssuntos(alvo, lista, abrirAssunto, limite = Infinity) {
   alvo.replaceChildren();
   for (let dif = 1; dif <= 3; dif++) {
+    const assuntos = lista.filter(a => a.dif === dif).slice(0, limite);
+    if (!assuntos.length) continue;
     const grupo = document.createElement('div');
     grupo.className = 'ex-assunto-grupo';
     grupo.dataset.dificuldade = dif;
@@ -136,24 +213,75 @@ function exRenderAssuntos(alvo, abrirAssunto, limite = Infinity) {
     titulo.append(voaIcon('circle-dot'), EX_DIF_LABEL[dif]);
     const grade = document.createElement('div');
     grade.className = 'ex-assunto-grade';
-    const assuntos = exAssuntos.filter(a => a.dif === dif).slice(0, limite);
     for (const assunto of assuntos) {
-      const cartao = {...assunto, quantidade: exQuestoesDoAssunto(assunto).length};
-      grade.append(exCartaoAssunto(cartao, () => abrirAssunto(assunto.id)));
+      grade.append(exCartaoAssunto(assunto, () => abrirAssunto(assunto)));
     }
     grupo.append(titulo, grade);
     alvo.append(grupo);
   }
 }
 
-function exMostrarAssuntos() {
-  const grid = document.getElementById('ex-assuntos-grid');
-  if (grid) exRenderAssuntos(grid, exSelecionarAssunto);
+function exTrocarArea(area) {
+  if (exAreaAtual !== area) {
+    exAreaAtual = area;
+    exMateriaSelecionada = EX_MATERIAS[area][0];
+  }
+  return exMostrarAssuntos();
 }
 
-function exSelecionarAssunto(id) {
-  exAssuntoAtual = exAssuntos.find(a => a.id === id);
-  if (!exAssuntoAtual) return;
+function exTrocarMateria(materia) {
+  exMateriaSelecionada = materia;
+  return exMostrarAssuntos();
+}
+
+async function exMostrarAssuntos() {
+  const grid = document.getElementById('ex-assuntos-grid');
+  if (!grid) return;
+  const pedido = ++exPedidoAssuntos;
+  const area = exAreaAtual;
+  const materia = exMateriaSelecionada;
+  for (const chave of Object.keys(EX_MATERIAS)) {
+    const botao = document.getElementById('ex-area-' + chave);
+    botao.classList.toggle('active', area === chave);
+    botao.setAttribute('aria-pressed', String(area === chave));
+  }
+  const seletor = document.getElementById('ex-materia');
+  seletor.replaceChildren(...EX_MATERIAS[area].map(nome => new Option(nome, nome)));
+  seletor.value = materia;
+
+  const status = document.getElementById('ex-assuntos-status');
+  const filtro = document.getElementById('ex-vestibular').value;
+  const vestibulares = exVestibularesAtivos(filtro);
+  const temEtapa = vestibulares.length > 0 && vestibulares.every(v => v === 'PSC' || v === 'SIS');
+  document.getElementById('ex-filtro-etapa').hidden = !temEtapa;
+  grid.replaceChildren();
+  const etapa = temEtapa ? document.getElementById('ex-etapa').value : '';
+  status.textContent = 'Carregando assuntos…';
+  let assuntos;
+  try {
+    assuntos = await exAssuntosDisponiveis(materia, vestibulares, etapa);
+  } catch {
+    if (pedido === exPedidoAssuntos) {
+      status.textContent = 'Não foi possível carregar os assuntos. Selecione a área para tentar novamente.';
+    }
+    return;
+  }
+  if (pedido !== exPedidoAssuntos) return;
+
+  if (!assuntos.length) {
+    status.textContent = 'Nenhum assunto para esta seleção. Experimente outro vestibular ou etapa.';
+    return;
+  }
+  const contagem = materia === 'Matemática' ? ''
+    : `${assuntos.reduce((soma, assunto) => soma + assunto.quantidade, 0)} exercícios autorais`;
+  status.textContent = [filtro === 'perfil' ? vestibulares.join(', ') : '', contagem]
+    .filter(Boolean).join(' · ');
+  exRenderAssuntos(grid, assuntos, exSelecionarAssunto);
+}
+
+function exSelecionarAssunto(assunto) {
+  exAssuntoAtual = assunto;
+  exNivelAtual = null;
   // Mostra painel de nível
   document.getElementById('ex-assuntos-panel').style.display = 'none';
   document.getElementById('ex-questoes-panel').style.display = 'none';
@@ -163,18 +291,31 @@ function exSelecionarAssunto(id) {
   const header = document.getElementById('ex-nivel-header');
   if (header) header.innerHTML = `
     <div>
-      <div style="font-size:14px;font-weight:800;color:${EX_DIF_NUM[exAssuntoAtual.dif]}">${exAssuntoAtual.titulo}</div>
-      <div style="font-size:11px;color:var(--text2);margin-top:2px">${exAssuntoAtual.sub}</div>
+      <div style="font-size:14px;font-weight:800;color:${EX_DIF_NUM[assunto.dif]}">${escapeHTML(assunto.titulo)}</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:2px">${escapeHTML([assunto.sub, assunto.origem].filter(Boolean).join(' · '))}</div>
     </div>`;
-  header?.prepend(voaIcon(exAssuntoAtual.icone));
+  header?.prepend(voaIcon(assunto.icone));
+  for (const botao of nivelPanel.querySelectorAll('[data-ex-nivel]')) {
+    const quantidade = assunto.niveis?.[botao.dataset.exNivel] ?? 0;
+    botao.disabled = assunto.autoral === true && quantidade === 0;
+    const total = botao.querySelector('.ex-nivel-total');
+    total.textContent = assunto.autoral ? `${quantidade} ${quantidade === 1 ? 'questão' : 'questões'}` : '';
+    total.hidden = !assunto.autoral;
+  }
+  document.getElementById('ex-voltar-assuntos').focus();
 }
 
-function exVoltarAssuntos() {
+async function exVoltarAssuntos() {
+  const id = exAssuntoAtual?.id;
   exAssuntoAtual = null;
   exNivelAtual   = null;
   document.getElementById('ex-nivel-panel').style.display   = 'none';
   document.getElementById('ex-questoes-panel').style.display = 'none';
   document.getElementById('ex-assuntos-panel').style.display = 'block';
+  await exMostrarAssuntos();
+  if (!exAssuntoAtual && id) {
+    document.querySelector(`#ex-assuntos-grid [data-assunto-id="${CSS.escape(id)}"]`)?.focus();
+  }
 }
 
 function exSelecionarNivel(nivel) {
@@ -183,44 +324,58 @@ function exSelecionarNivel(nivel) {
   document.getElementById('ex-assuntos-panel').style.display = 'none';
   const questPanel = document.getElementById('ex-questoes-panel');
   questPanel.style.display = 'block';
-  exRenderQuestoesFiltradas();
+  document.getElementById('ex-voltar-niveis').focus();
+  return exRenderQuestoesFiltradas();
 }
 
 function exVoltarNivel() {
+  const nivel = exNivelAtual;
   exNivelAtual = null;
   document.getElementById('ex-questoes-panel').style.display  = 'none';
   document.getElementById('ex-assuntos-panel').style.display  = 'none';
   document.getElementById('ex-nivel-panel').style.display     = 'block';
+  document.querySelector(`#ex-nivel-panel [data-ex-nivel="${nivel}"]`)?.focus();
 }
 
-function exAtualizarQuestoes() {
-  exRenderQuestoesFiltradas();
-  showXPToast('🔄 Lista atualizada!');
+async function exAtualizarQuestoes() {
+  if (await exRenderQuestoesFiltradas()) showXPToast('🔄 Lista atualizada!');
 }
 
-function exRenderQuestoesFiltradas() {
+async function exRenderQuestoesFiltradas() {
   const container = document.getElementById('ex-lista-10');
   const info      = document.getElementById('ex-lista-info');
   if (!container || !exAssuntoAtual) return;
 
   const a = exAssuntoAtual;
-  const pool = exQuestoesDoAssunto(a).map(q => ({ ...q, _dif: getDificuldade(q) }));
-
-  // Mapeia nível escolhido → faixas de _dif (1=fácil, 2=médio, 3=difícil, 4=avançado)
-  let difMin, difMax;
-  if (exNivelAtual === 1)      { difMin = 1; difMax = 1; }  // Fácil
-  else if (exNivelAtual === 2) { difMin = 2; difMax = 2; }  // Médio
-  else                          { difMin = 3; difMax = 4; }  // Difícil/Avançado
-
-  let filtrado = pool.filter(q => q._dif >= difMin && q._dif <= difMax);
-  // Fallback: se pouco, expande faixa
-  if (filtrado.length < 3) filtrado = pool;
-
-  filtrado = embaralhar(filtrado).slice(0, 10);
+  const nivel = exNivelAtual;
+  const pedido = ++exPedidoQuestoes;
+  let filtrado;
+  if (a.autoral) {
+    info.textContent = 'Carregando questões…';
+    container.replaceChildren();
+    exListaAtual = [];
+    exAtualizarNotas();
+    try {
+      const {questoes} = await authRequisicao(`/api/praticar/exercicios/${encodeURIComponent(a.id)}/questoes?nivel=${nivel}`);
+      if (pedido !== exPedidoQuestoes || a !== exAssuntoAtual || nivel !== exNivelAtual) return;
+      filtrado = questoes.map(q => ({
+        id: q.id.slice('banco:'.length), vest: q.vestibular, etapa: q.etapa,
+        materia: q.disciplina, enunciado: q.enunciado, opcoes: q.alternativas, _dif: nivel,
+        ano: q.ano, fonte: q.fonte,
+      }));
+    } catch {
+      if (pedido === exPedidoQuestoes && a === exAssuntoAtual && nivel === exNivelAtual) {
+        info.textContent = 'Não foi possível carregar as questões. Use Atualizar para tentar novamente.';
+      }
+      return;
+    }
+  } else {
+    const pool = a.questoes.map(q => ({ ...q, _dif: getDificuldade(q) }));
+    // A faixa difícil também inclui questões avançadas do banco de Matemática.
+    const doNivel = pool.filter(q => q._dif === nivel || (nivel === 3 && q._dif === 4));
+    filtrado = embaralhar(doNivel.length >= 3 ? doNivel : pool).slice(0, 10);
+  }
   exListaAtual = filtrado;
-  document.getElementById('ex-notas-recentes').replaceChildren();
-  document.getElementById('ex-notas-status').textContent = 'Carregando notas…';
-  exAtualizarNotas();
 
   const nivelLabels = ['','Fácil','Médio','Difícil'];
   const nivelIcons  = ['','🟢','🟡','🔴'];
@@ -236,26 +391,30 @@ function exRenderQuestoesFiltradas() {
       <div style="font-size:40px;margin-bottom:12px">🔍</div>
       <div>Nenhuma questão encontrada para este assunto e nível.<br>Tente outro nível ou assunto!</div>
     </div>`;
+    exAtualizarNotas();
     return;
   }
 
-  container.innerHTML = filtrado.map(q => {
+  container.innerHTML = filtrado.map((q, indice) => {
     const dif  = q._dif || 1;
     const tema = q.contexto ? q.contexto.split('—')[0].replace('Tema:','').trim() : a.titulo;
     return `<button type="button" class="ex-lista-item" onclick="abrirExercicio('${q.id}')">
       <span class="ex-dif-badge" style="background:${difColors[dif]};color:${difTxtColors[dif]}">${difIcons[dif]}</span>
       <span style="flex:1;min-width:0">
         <span style="display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap">
+          <span class="ex-lista-numero">Questão ${indice + 1}</span>
           <span style="font-size:10px;font-weight:700;color:${difTxtColors[dif]}">${difLabels[dif]}</span>
           <span style="font-size:10px;color:var(--text2);background:var(--surface2);padding:2px 6px;border-radius:4px">${q.vest}${q.etapa?' E'+q.etapa:''} ${q.ano||''}</span>
-          <span style="font-size:10px;color:var(--text2)">${tema.slice(0,28)}</span>
+          <span style="font-size:10px;color:var(--text2)">${escapeHTML(a.autoral ? tema : tema.slice(0,28))}</span>
         </span>
-        <span style="font-size:13px;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${q.enunciado}</span>
+        <span style="font-size:13px;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${a.autoral ? escapeHTML(q.enunciado) : q.enunciado}</span>
         <span class="ex-nota-questao" data-exercicio-nota="${q.id}" hidden></span>
       </span>
       <span style="color:var(--text2);font-size:18px;flex-shrink:0">›</span>
     </button>`;
   }).join('');
+  exAtualizarNotas(true);
+  return true;
 }
 
 // Mantém compat com chamada antiga (pratAba chama renderListaEx)

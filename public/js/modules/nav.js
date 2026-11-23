@@ -177,7 +177,12 @@ async function salvarEdicaoPerfil(event) {
     })) {
       throw new Error('O servidor não confirmou todas as alterações. Tente salvar novamente.');
     }
+    const mudouVestibulares = dados.vests.join(',') !== (perfil.vests || []).join(',');
     authGuardarPerfil(data.perfil, data.usuario);
+    if (mudouVestibulares) {
+      exDefinirFiltroVestibular('perfil');
+      expBuscarPreferencias().catch(erro => console.warn('[VoaAM] Recomendações indisponíveis', erro));
+    }
     for (const item of imagens) {
       item.status.textContent = 'Imagem removida.';
       if (item.pendente) {

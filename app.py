@@ -15,6 +15,7 @@ from typing import Any
 
 from flask import Flask, jsonify, make_response, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
+from suporte_email import notificar_chamado
 
 from banco import conectar, inicializar_banco
 
@@ -45,6 +46,11 @@ except ImportError:
     pass
 
 app = Flask(__name__, static_folder=str(PUBLIC_DIR), static_url_path="")
+if os.environ.get('APP_ENV', '').lower() == 'production':
+    chave_producao = os.environ.get('FLASK_SECRET_KEY', '')
+    if len(chave_producao) < 32 or chave_producao == 'dev-only-change-this-key':
+        raise RuntimeError('Produção exige FLASK_SECRET_KEY aleatória com pelo menos 32 caracteres.')
+
 app.config.update(
     SECRET_KEY=os.environ.get("FLASK_SECRET_KEY", "dev-only-change-this-key"),
     SESSION_COOKIE_HTTPONLY=True,
@@ -52,8 +58,17 @@ app.config.update(
     SESSION_COOKIE_SECURE=os.environ.get("SESSION_COOKIE_SECURE", "false").lower() == "true",
     PERMANENT_SESSION_LIFETIME=60 * 60 * 24 * 7,
     MAX_CONTENT_LENGTH=1_000_000,
+    MAX_COOKIE_SIZE=3800,
     MODERAR_IMAGENS_PERFIL=os.environ.get("MODERAR_IMAGENS_PERFIL", "false").lower() == "true",
 )
+
+@app.after_request
+def cabecalhos_de_seguranca(resposta):
+    resposta.headers.setdefault('X-Content-Type-Options', 'nosniff')
+    resposta.headers.setdefault('Referrer-Policy', 'strict-origin-when-cross-origin')
+    resposta.headers.setdefault('X-Frame-Options', 'DENY')
+    resposta.headers.setdefault('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+    return resposta
 
 # Cria tabelas caso ainda não existam. Não apaga usuários/dados já salvos.
 inicializar_banco()
@@ -671,10 +686,28 @@ def abrir_chamado_suporte():
     mensagem = str(dados.get('mensagem') or '').strip()
     if not 5 <= len(assunto) <= 100 or not 15 <= len(mensagem) <= 2000:
         return jsonify({'message': 'Assunto de 5–100 caracteres e descrição de 15–2.000.'}), 400
+    # Evita spam por contas autenticadas sem impedir o uso normal do suporte.
     with closing(conectar()) as c, c:
+        recentes = c.execute('''SELECT COUNT(*) AS quantidade FROM pedidos_suporte
+                                 WHERE usuario_id=? AND criado_em >= datetime('now','-1 hour')''', (uid,)).fetchone()
+        if recentes['quantidade'] >= 5:
+            return jsonify({'message': 'Limite de cinco chamados por hora. Tente novamente depois.'}), 429
+        usuario = c.execute('SELECT nome,email FROM usuarios WHERE id=?', (uid,)).fetchone()
         cursor = c.execute('INSERT INTO pedidos_suporte(usuario_id, assunto, mensagem) VALUES(?,?,?)',
                            (uid, assunto, mensagem))
-    return jsonify({'ok': True, 'protocolo': cursor.lastrowid,
+        protocolo = cursor.lastrowid
+
+    notificacao = 'pendente'
+    if usuario:
+        try:
+            if notificar_chamado(protocolo, usuario['nome'], usuario['email'], assunto, mensagem):
+                with closing(conectar()) as c, c:
+                    c.execute('UPDATE pedidos_suporte SET notificado_em=CURRENT_TIMESTAMP WHERE id=?', (protocolo,))
+                notificacao = 'enviada'
+        except Exception:
+            # A falha de e-mail nunca apaga um chamado salvo. Sem incluir credenciais nos logs.
+            app.logger.warning('E-mail do chamado %s não enviado; permanece pendente.', protocolo)
+    return jsonify({'ok': True, 'protocolo': protocolo, 'notificacao': notificacao,
                     'message': 'Solicitação registrada. Guarde o número do protocolo.'}), 201
 
 
@@ -686,12 +719,38 @@ def listar_chamados_admin():
         admin = c.execute("SELECT 1 FROM usuarios WHERE id=? AND ativo=1 AND tipo='ADMIN'", (uid,)).fetchone()
         if not admin:
             return jsonify({'message': 'Acesso restrito.'}), 403
-        tickets = c.execute("""SELECT s.id, s.assunto, s.mensagem, s.criado_em, u.nome
+        tickets = c.execute("""SELECT s.id, s.assunto, s.mensagem, s.criado_em, s.notificado_em, u.nome, u.email
                               FROM pedidos_suporte s JOIN usuarios u ON u.id=s.usuario_id
                               ORDER BY s.id DESC LIMIT 100""").fetchall()
     resposta = jsonify({'chamados': [dict(t) for t in tickets]})
     resposta.headers['Cache-Control'] = 'private, no-store'
     return resposta
 
+@app.cli.group('suporte')
+def suporte_cli():
+    """Manutenção administrativa de chamados do suporte."""
+
+
+@suporte_cli.command('reenviar')
+def reenviar_notificacoes_suporte():
+    """Reenvia, sob demanda, até 50 chamados sem e-mail confirmado."""
+    with closing(conectar()) as c:
+        pendentes = c.execute("""SELECT s.id, s.assunto, s.mensagem, u.nome, u.email
+            FROM pedidos_suporte s JOIN usuarios u ON u.id=s.usuario_id
+            WHERE s.notificado_em IS NULL ORDER BY s.id ASC LIMIT 50""").fetchall()
+    enviados = 0
+    for chamado in pendentes:
+        try:
+            if not notificar_chamado(chamado['id'], chamado['nome'], chamado['email'],
+                                    chamado['assunto'], chamado['mensagem']):
+                break  # Sem integração configurada; não adianta tentar os demais.
+            with closing(conectar()) as c, c:
+                c.execute('UPDATE pedidos_suporte SET notificado_em=CURRENT_TIMESTAMP WHERE id=?', (chamado['id'],))
+            enviados += 1
+        except Exception:
+            app.logger.warning('Notificação pendente para o chamado %s', chamado['id'])
+    print(f'{enviados} notificação(ões) confirmada(s); {len(pendentes) - enviados} pendente(s) nesta execução.')
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "5000")), debug=os.environ.get("FLASK_DEBUG", "true").lower() == "true")
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "5000")), debug=os.environ.get("FLASK_DEBUG", "false").lower() == "true")

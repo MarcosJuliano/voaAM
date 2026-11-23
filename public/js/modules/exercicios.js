@@ -107,24 +107,29 @@ function renderExercicios() {
   }).join('');
 }
 
+function buscarExercicio(id) {
+  return exListaAtual.find(q => q.id === id) || bancoDB.find(q => q.id === id);
+}
+
 function abrirExercicio(id) {
   const c = getCoracoes();
   if (c.qtd <= 0) { showXPToast('💔 Sem vidas!'); return; }
-  const q = bancoDB.find(x => x.id === id);
+  const q = buscarExercicio(id);
   if (!q) return;
   const letras = ['A','B','C','D','E'];
-  document.getElementById('aula-title').textContent = `${q.vest} ${q.ano} • ${q.serie}ª • Q${q.num}`;
+  const origem = [q.vest, q.etapa && `${q.etapa}ª etapa`, q.fonte].filter(Boolean).join(' · ');
+  document.getElementById('aula-title').textContent = q.fonte ? origem : `${q.vest} ${q.ano} • ${q.serie}ª • Q${q.num}`;
   // escapeHTML definido em utils.js
   let html = `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--text2)">📌 ${escapeHTML(q.contexto||'')}  </div>
+    ${q.contexto ? `<div class="question-card" style="margin-bottom:14px;font-size:12px;color:var(--text2)">📌 ${escapeHTML(q.contexto)}</div>` : ''}
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px">
       <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">${escapeHTML(q.materia)}</div>
-      <div style="font-size:15px;font-weight:500;line-height:1.6;color:var(--text)">${escapeHTML(q.enunciado)}</div>
+      <div class="ex-enunciado" style="font-size:15px;font-weight:500;line-height:1.6;color:var(--text)">${escapeHTML(q.enunciado)}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">`;
   ordenarAlternativas(q.opcoes).forEach((original, i) => {
     html += `<button class="option-btn" onclick="responderExercicio('${q.id}',${original})" id="exopt-${q.id}-${original}">
-      <span class="option-letter">${letras[i]}</span><span>${q.opcoes[original]}</span></button>`;
+      <span class="option-letter">${letras[i]}</span><span class="ex-alternativa">${q.fonte ? escapeHTML(q.opcoes[original]) : q.opcoes[original]}</span></button>`;
   });
   html += `</div><div id="exfb-${q.id}"></div>
     <button onclick="closeAula()" style="margin-top:12px;padding:12px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--text);font-family:var(--font);font-size:14px;cursor:pointer;width:100%">← Voltar</button>`;
@@ -134,7 +139,7 @@ function abrirExercicio(id) {
 }
 
 async function responderExercicio(qId, idx) {
-  const q = bancoDB.find(x => x.id === qId);
+  const q = buscarExercicio(qId);
   if (!q) return;
   const botoes = document.querySelectorAll(`[id^="exopt-${qId}-"]`);
   botoes.forEach(b=>b.disabled=true);

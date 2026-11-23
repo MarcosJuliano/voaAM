@@ -205,7 +205,7 @@ function aplicarPerfil() {
   if (!perfil) return;
   const primeiro = perfil.nome.split(' ')[0];
   const el = document.getElementById('home-greeting');
-  if (el) el.textContent = `Olá, ${primeiro}! 👋`;
+  if (el) el.textContent = `Olá, ${primeiro}.`;
   const rankNome = document.getElementById('rank-nome');
   if (rankNome) rankNome.textContent = primeiro;
 

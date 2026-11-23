@@ -2,6 +2,10 @@ name: voaam-prod
 
 x-ambiente-voaam: &ambiente-voaam
   FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:?Gere uma chave para as sessoes no servidor}
+  APP_ENV: production
+  SUPPORT_EMAIL: ${SUPPORT_EMAIL:-}
+  SUPPORT_FROM_EMAIL: ${SUPPORT_FROM_EMAIL:-}
+  RESEND_API_KEY: ${RESEND_API_KEY:-}
   SESSION_COOKIE_SECURE: "true"
   MODERAR_IMAGENS_PERFIL: ${MODERAR_IMAGENS_PERFIL:-false}
   DATABASE_PATH: /app/instance/voaam.db

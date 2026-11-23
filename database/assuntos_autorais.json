@@ -1,0 +1,2052 @@
+[
+  {
+    "id": "bio-enem-ecologia",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Biologia",
+    "assunto": "Interações ecológicas e teias alimentares",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "mutualismo",
+        "nome": "Mutualismo",
+        "descricao": "As duas espécies se beneficiam da interação, que pode ser obrigatória ou facultativa.",
+        "situacao": "Uma planta fornece néctar a um inseto, que transporta pólen entre flores e aumenta a produção de sementes."
+      },
+      {
+        "id": "parasitismo",
+        "nome": "Parasitismo",
+        "descricao": "Um organismo retira recursos de um hospedeiro, reduzindo sua aptidão sem necessariamente causar sua morte imediata.",
+        "situacao": "Um carrapato se alimenta do sangue de um mamífero e aumenta o custo energético imposto ao animal."
+      },
+      {
+        "id": "competicao-interespecifica",
+        "nome": "Competição interespecífica",
+        "descricao": "Indivíduos de espécies diferentes têm acesso reduzido a um recurso que ambos utilizam e que é limitado.",
+        "situacao": "Duas espécies de aves granívoras produzem menos filhotes quando compartilham o mesmo terreno durante uma escassez de sementes."
+      },
+      {
+        "id": "predacao",
+        "nome": "Predação",
+        "descricao": "Um organismo captura e consome outro indivíduo, normalmente matando-o durante a interação.",
+        "situacao": "Uma coruja captura um roedor e o utiliza como alimento para seus filhotes."
+      },
+      {
+        "id": "comensalismo",
+        "nome": "Comensalismo",
+        "descricao": "Uma espécie obtém benefício, enquanto não se detecta efeito relevante sobre a outra nas condições analisadas.",
+        "situacao": "Uma planta epífita usa o tronco de uma árvore como suporte para alcançar luz, sem retirar sua seiva e sem efeito mensurável sobre ela."
+      }
+    ],
+    "semente": "a3145d8555e36831"
+  },
+  {
+    "id": "bio-enem-evolucao",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Biologia",
+    "assunto": "Mecanismos da evolução",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "selecao-natural",
+        "nome": "Seleção natural",
+        "descricao": "Diferenças hereditárias associadas a sucesso reprodutivo alteram a frequência de características entre gerações.",
+        "situacao": "Em um terreno escuro, indivíduos de uma espécie de inseto com coloração escura deixam mais descendentes porque são detectados com menos frequência por aves."
+      },
+      {
+        "id": "deriva-genetica",
+        "nome": "Deriva genética",
+        "descricao": "Flutuações aleatórias de frequência de alelos são mais marcantes em populações pequenas.",
+        "situacao": "Uma tempestade elimina indivíduos ao acaso numa população pequena de caracóis. Entre os sobreviventes, um alelo que não afetava a sobrevivência se torna raro."
+      },
+      {
+        "id": "fluxo-genico",
+        "nome": "Fluxo gênico",
+        "descricao": "A entrada ou saída de alelos entre populações ocorre por migração seguida de reprodução ou por transferência de gametas.",
+        "situacao": "Pólen trazido de outra área fecunda flores de uma população e introduz nela um alelo antes ausente."
+      },
+      {
+        "id": "mutacao",
+        "nome": "Mutação",
+        "descricao": "Uma alteração na sequência de DNA pode originar uma variante genética transmissível.",
+        "situacao": "Em uma linhagem de plantas, uma substituição de base surge numa célula que dará origem a gametas e aparece em alguns descendentes."
+      },
+      {
+        "id": "acasalamento-nao-aleatorio",
+        "nome": "Acasalamento não aleatório",
+        "descricao": "O pareamento por características ou parentesco altera frequências genotípicas e pode ocorrer sem mudar imediatamente as frequências alélicas.",
+        "situacao": "Indivíduos passam a se reproduzir mais frequentemente com parentes. A proporção de homozigotos aumenta, inicialmente sem perda de alelos."
+      }
+    ],
+    "semente": "07e80c00afceaff9"
+  },
+  {
+    "id": "bio-psc1-citologia",
+    "vestibular": "PSC",
+    "etapa": 1,
+    "disciplina": "Biologia",
+    "assunto": "Célula, organelas e suas funções",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "nucleo",
+        "nome": "Núcleo",
+        "descricao": "Em células eucarióticas, abriga a maior parte do DNA e é onde ocorre a transcrição dos genes nucleares.",
+        "situacao": "Uma sonda detecta moléculas de RNA recém-produzidas junto aos cromossomos em um compartimento delimitado por duas membranas."
+      },
+      {
+        "id": "ribossomos",
+        "nome": "Ribossomos",
+        "descricao": "São as estruturas em que a sequência de um RNA mensageiro orienta a incorporação de aminoácidos numa proteína.",
+        "situacao": "Uma imagem mostra RNA e proteínas reunidos em pequenos complexos que avançam sobre a mensagem enquanto uma cadeia polipeptídica cresce."
+      },
+      {
+        "id": "complexo-golgiense",
+        "nome": "Complexo golgiense",
+        "descricao": "Modifica e direciona proteínas e lipídios que chegam do retículo endoplasmático.",
+        "situacao": "Uma proteína de secreção recebe modificações em pilhas de membranas e sai em vesículas destinadas à superfície da célula."
+      },
+      {
+        "id": "mitocondrias",
+        "nome": "Mitocôndrias",
+        "descricao": "Nas células eucarióticas, concentram etapas da respiração aeróbia e a maior parte da produção de ATP associada a esse processo.",
+        "situacao": "Fibras musculares de atividade duradoura contêm muitas organelas com membrana interna dobrada em cristas."
+      },
+      {
+        "id": "vacuolo-central",
+        "nome": "Vacúolo central",
+        "descricao": "Em células vegetais maduras, armazena solutos e água e participa da manutenção do turgor.",
+        "situacao": "Quando uma célula vegetal absorve água, seu grande compartimento interno aumenta e pressiona o conteúdo celular contra a parede."
+      }
+    ],
+    "semente": "4b0b9aa1c0cde16a"
+  },
+  {
+    "id": "bio-psc2-fisiologia",
+    "vestibular": "PSC",
+    "etapa": 2,
+    "disciplina": "Biologia",
+    "assunto": "Sistemas do corpo humano",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "absorcao-intestinal",
+        "nome": "Absorção intestinal",
+        "descricao": "Grande parte dos nutrientes digeridos atravessa o epitélio do intestino delgado e segue para vasos sanguíneos ou linfáticos.",
+        "situacao": "Após a digestão, monossacarídeos atravessam uma superfície com vilosidades e passam para capilares."
+      },
+      {
+        "id": "ventilacao-pulmonar",
+        "nome": "Ventilação pulmonar",
+        "descricao": "Variações de volume e pressão na cavidade torácica movem o ar para dentro e para fora dos pulmões.",
+        "situacao": "Quando o diafragma se contrai e desce, o volume torácico aumenta e ocorre entrada de ar pelas vias respiratórias."
+      },
+      {
+        "id": "circulacao-pulmonar",
+        "nome": "Circulação pulmonar",
+        "descricao": "Conduz sangue do ventrículo direito aos pulmões e devolve sangue oxigenado ao átrio esquerdo.",
+        "situacao": "Um traçador injetado na artéria que sai do ventrículo direito passa por capilares junto aos alvéolos e chega ao lado esquerdo do coração."
+      },
+      {
+        "id": "filtracao-glomerular",
+        "nome": "Filtração glomerular",
+        "descricao": "A pressão nos capilares renais promove a passagem de parte do plasma para a cápsula do néfron.",
+        "situacao": "Água e pequenas moléculas aparecem no primeiro líquido do néfron, ao passo que células sanguíneas e a maioria das proteínas permanecem no sangue."
+      },
+      {
+        "id": "comunicacao-endocrina",
+        "nome": "Comunicação endócrina",
+        "descricao": "Hormônios são liberados na circulação e agem em tecidos com receptores adequados.",
+        "situacao": "Após uma refeição, células pancreáticas liberam uma molécula que circula e altera o uso de glicose por tecidos distantes."
+      }
+    ],
+    "semente": "395242cdb62d06b9"
+  },
+  {
+    "id": "bio-psc3-heranca",
+    "vestibular": "PSC",
+    "etapa": 3,
+    "disciplina": "Biologia",
+    "assunto": "Padrões de herança",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "dominancia-completa",
+        "nome": "Dominância completa",
+        "descricao": "Na característica considerada, o heterozigoto tem o mesmo fenótipo que um dos homozigotos.",
+        "situacao": "No cruzamento de duas linhagens de ervilha, a primeira geração é toda amarela e a segunda apresenta tanto sementes amarelas quanto verdes."
+      },
+      {
+        "id": "dominancia-incompleta",
+        "nome": "Dominância incompleta",
+        "descricao": "O heterozigoto expressa um fenótipo intermediário entre os dois homozigotos.",
+        "situacao": "Uma linhagem de flores brancas cruzada com outra de flores vermelhas produz descendentes heterozigotos com flores rosas."
+      },
+      {
+        "id": "codominancia",
+        "nome": "Codominância",
+        "descricao": "As duas variantes alélicas se expressam no fenótipo do heterozigoto de forma distinguível.",
+        "situacao": "Uma pessoa herda um alelo que leva ao antígeno A e outro que leva ao antígeno B. Suas hemácias apresentam os dois."
+      },
+      {
+        "id": "pleiotropia",
+        "nome": "Pleiotropia",
+        "descricao": "Uma alteração em um único gene afeta mais de uma característica do organismo.",
+        "situacao": "Uma variante genética afeta, de maneira conjunta, a elasticidade dos tecidos, a estrutura dos vasos e a forma do esqueleto."
+      },
+      {
+        "id": "heranca-poligenica",
+        "nome": "Herança poligênica",
+        "descricao": "Vários loci contribuem para a variação de uma mesma característica.",
+        "situacao": "A altura varia continuamente numa população. Um estudo encontra contribuições de muitos genes e de fatores ambientais."
+      }
+    ],
+    "semente": "ccab1c9b09e93ff3"
+  },
+  {
+    "id": "bio-sis1-membrana",
+    "vestibular": "SIS",
+    "etapa": 1,
+    "disciplina": "Biologia",
+    "assunto": "Transporte através da membrana",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "difusao-simples",
+        "nome": "Difusão simples",
+        "descricao": "Moléculas atravessam a bicamada a favor do gradiente sem utilizar proteínas transportadoras.",
+        "situacao": "O oxigênio se move do lado de maior concentração para o de menor concentração, diretamente entre os lipídios da membrana."
+      },
+      {
+        "id": "difusao-facilitada",
+        "nome": "Difusão facilitada",
+        "descricao": "Proteínas de membrana permitem a passagem de solutos a favor do gradiente, sem gasto direto de ATP.",
+        "situacao": "Um soluto polar só entra na célula pela ação de uma proteína transportadora e seu fluxo diminui conforme as concentrações se aproximam."
+      },
+      {
+        "id": "osmose",
+        "nome": "Osmose",
+        "descricao": "A água atravessa uma membrana seletiva em direção ao meio com menor potencial hídrico.",
+        "situacao": "Um pedaço de tecido vegetal colocado em solução salina concentrada perde massa pela saída de água das células."
+      },
+      {
+        "id": "transporte-ativo-primario",
+        "nome": "Transporte ativo primário",
+        "descricao": "Um transportador usa energia diretamente, por exemplo da hidrólise de ATP, para mover solutos contra gradientes.",
+        "situacao": "Uma proteína consome ATP e mantém concentração de sódio mais alta do lado de fora da célula."
+      },
+      {
+        "id": "endocitose",
+        "nome": "Endocitose",
+        "descricao": "A membrana envolve material externo e forma uma vesícula que se desloca para o interior da célula.",
+        "situacao": "Uma célula de defesa engloba uma partícula grande, cercando-a com uma membrana que se fecha no citoplasma."
+      }
+    ],
+    "semente": "e6214fe00fdd5a77"
+  },
+  {
+    "id": "bio-sis2-plantas",
+    "vestibular": "SIS",
+    "etapa": 2,
+    "disciplina": "Biologia",
+    "assunto": "Fisiologia vegetal",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "xilema",
+        "nome": "Xilema",
+        "descricao": "O tecido vascular transporta principalmente água e solutos minerais das raízes para partes aéreas.",
+        "situacao": "Um corante absorvido pelas raízes aparece em vasos da folha que conduzem a solução de sais minerais para cima."
+      },
+      {
+        "id": "floema",
+        "nome": "Floema",
+        "descricao": "O tecido vascular distribui açúcares e outros compostos orgânicos entre órgãos produtores e consumidores ou armazenadores.",
+        "situacao": "O açúcar recém-fixado nas folhas é detectado dias depois em órgãos de reserva subterrâneos."
+      },
+      {
+        "id": "estomatos",
+        "nome": "Estômatos",
+        "descricao": "Células-guarda controlam a abertura de poros e regulam trocas gasosas e perda de água.",
+        "situacao": "Em situação de seca, poros das folhas se fecham e reduzem tanto a entrada de dióxido de carbono quanto a transpiração."
+      },
+      {
+        "id": "fototropismo",
+        "nome": "Fototropismo",
+        "descricao": "O crescimento orientado pela luz resulta de diferenças de crescimento entre os lados de um órgão.",
+        "situacao": "Uma plântula iluminada de um lado curva seu caule em direção à janela, porque o lado sombreado se alonga mais."
+      },
+      {
+        "id": "gravitropismo",
+        "nome": "Gravitropismo",
+        "descricao": "Raízes e caules ajustam sua direção de crescimento em resposta à gravidade.",
+        "situacao": "Uma plântula colocada na horizontal curva a raiz para baixo e o caule para cima após algum tempo."
+      }
+    ],
+    "semente": "43a05078797a5e9b"
+  },
+  {
+    "id": "bio-sis3-imunidade",
+    "vestibular": "SIS",
+    "etapa": 3,
+    "disciplina": "Biologia",
+    "assunto": "Imunidade e proteção coletiva",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "barreira-epitelial",
+        "nome": "Barreira epitelial",
+        "descricao": "Pele e mucosas reduzem a entrada de organismos e partículas potencialmente nocivas.",
+        "situacao": "A superfície intacta da pele atua como a primeira separação física entre o ambiente e tecidos internos."
+      },
+      {
+        "id": "inflamacao",
+        "nome": "Inflamação",
+        "descricao": "A resposta local a lesão ou infecção envolve alterações vasculares e recrutamento de células de defesa.",
+        "situacao": "Uma região lesionada torna-se avermelhada e quente à medida que aumenta o fluxo local de sangue e chegam células de defesa."
+      },
+      {
+        "id": "memoria-imunologica",
+        "nome": "Memória imunológica",
+        "descricao": "Células específicas persistem após a primeira exposição e favorecem respostas mais rápidas a exposições posteriores.",
+        "situacao": "Meses após o primeiro contato com um antígeno, uma segunda exposição desencadeia uma resposta específica em menos tempo."
+      },
+      {
+        "id": "imunizacao-passiva",
+        "nome": "Imunização passiva",
+        "descricao": "Anticorpos já formados são transferidos e oferecem proteção temporária.",
+        "situacao": "Na gestação, anticorpos maternos atravessam a placenta e contribuem para a proteção do bebê nos primeiros meses."
+      },
+      {
+        "id": "imunizacao-ativa",
+        "nome": "Imunização ativa",
+        "descricao": "O próprio organismo desenvolve resposta imune específica e pode formar memória após exposição a um antígeno.",
+        "situacao": "Uma vacina leva o organismo a produzir células de memória, que respondem a uma nova exposição ao mesmo alvo."
+      }
+    ],
+    "semente": "9e7764c89c2d0140"
+  },
+  {
+    "id": "bio-macro-ecossistemas",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Biologia",
+    "assunto": "Ecossistemas amazônicos",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "pulso-de-inundacao",
+        "nome": "Pulso de inundação",
+        "descricao": "O avanço e recuo da água em ciclos periódicos conecta rios e áreas inundáveis, alterando o acesso a recursos.",
+        "situacao": "Na cheia, peixes entram na floresta alagada e aproveitam frutos e sementes. Na vazante, retornam aos canais."
+      },
+      {
+        "id": "decomposicao",
+        "nome": "Decomposição",
+        "descricao": "Organismos quebram matéria orgânica morta e devolvem nutrientes ao ambiente em formas que outros seres vivos podem usar.",
+        "situacao": "Folhas caídas são processadas por fungos e outros organismos, e parte de seus nutrientes fica disponível no solo."
+      },
+      {
+        "id": "producao-primaria",
+        "nome": "Produção primária",
+        "descricao": "Organismos autotróficos incorporam energia em matéria orgânica, formando a base de muitas cadeias alimentares.",
+        "situacao": "Na superfície iluminada de um lago, organismos com clorofila transformam carbono inorgânico em compostos utilizados por consumidores."
+      },
+      {
+        "id": "sucessao-secundaria",
+        "nome": "Sucessão secundária",
+        "descricao": "Após uma perturbação que preserva o solo, a composição da comunidade se transforma em etapas.",
+        "situacao": "Um terreno abandonado após cultivo já tem solo, sementes e raízes. Com o tempo, muda o conjunto de espécies que o ocupa."
+      },
+      {
+        "id": "corredor-ecologico",
+        "nome": "Corredor ecológico",
+        "descricao": "A conexão entre fragmentos de habitat facilita deslocamento e trocas genéticas de populações.",
+        "situacao": "O plantio de uma faixa de vegetação entre duas manchas florestais permite a passagem de animais que evitam áreas abertas."
+      }
+    ],
+    "semente": "6c70347d5dd20e08"
+  },
+  {
+    "id": "bio-macro-ciclos",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Biologia",
+    "assunto": "Ciclos da matéria e impactos ambientais",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "ciclo-do-carbono",
+        "nome": "Ciclo do carbono",
+        "descricao": "Processos como fotossíntese, respiração e combustão transferem carbono entre atmosfera, seres vivos e outros reservatórios.",
+        "situacao": "A matéria orgânica de uma árvore incorpora carbono atmosférico e libera parte dele novamente quando a madeira é queimada."
+      },
+      {
+        "id": "fixacao-biologica-de-nitrogenio",
+        "nome": "Fixação biológica de nitrogênio",
+        "descricao": "Certos microrganismos convertem nitrogênio gasoso em compostos assimiláveis por organismos.",
+        "situacao": "Em nódulos de uma leguminosa, microrganismos convertem o gás atmosférico em compostos nitrogenados usados no crescimento da planta."
+      },
+      {
+        "id": "eutrofizacao",
+        "nome": "Eutrofização",
+        "descricao": "O excesso de nutrientes favorece alta produção de algas e pode provocar queda de oxigênio na água durante sua decomposição.",
+        "situacao": "Após entrada de esgoto rico em nutrientes, uma lagoa tem proliferação de algas seguida de baixa concentração de oxigênio e morte de peixes."
+      },
+      {
+        "id": "biomagnificacao",
+        "nome": "Biomagnificação",
+        "descricao": "A concentração de um contaminante persistente pode aumentar nos níveis tróficos superiores de uma cadeia.",
+        "situacao": "A análise de tecidos encontra concentração maior de um contaminante em grandes peixes predadores do que nos pequenos peixes que eles consomem."
+      },
+      {
+        "id": "infiltracao-da-agua",
+        "nome": "Infiltração da água",
+        "descricao": "Parte da água na superfície penetra no solo, podendo alimentar reservatórios subterrâneos.",
+        "situacao": "Ao substituir pavimento impermeável por superfície porosa, um parque aumenta a parcela da chuva que penetra no solo."
+      }
+    ],
+    "semente": "ac4ce32799691a5e"
+  },
+  {
+    "id": "port-enem-leitura",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Português",
+    "assunto": "Interpretação, inferência e argumentação",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "pressuposicao",
+        "nome": "Pressuposição",
+        "descricao": "Um conteúdo é tratado como dado por uma escolha linguística e tende a permanecer mesmo sob negação.",
+        "situacao": "O verbo empregado em “O centro voltou a abrir nas segundas” permite concluir que o local já abria nesse dia antes da interrupção."
+      },
+      {
+        "id": "ironia",
+        "nome": "Ironia",
+        "descricao": "O contraste entre o sentido aparente e o contexto orienta uma interpretação geralmente crítica.",
+        "situacao": "Ao descobrir que seu ônibus atrasou mais uma hora, a estudante comenta “Que pontualidade exemplar!”."
+      },
+      {
+        "id": "tese",
+        "nome": "Tese",
+        "descricao": "É a posição principal que um texto argumentativo procura sustentar.",
+        "situacao": "Num artigo, todas as razões apresentadas convergem para a proposta de priorizar o transporte coletivo no orçamento."
+      },
+      {
+        "id": "argumento-por-exemplificacao",
+        "nome": "Argumento por exemplificação",
+        "descricao": "Um caso particular ajuda a esclarecer ou sustentar uma afirmação de alcance mais amplo.",
+        "situacao": "Para defender que calçadas acessíveis beneficiam públicos diversos, o autor descreve o caminho de uma pessoa idosa e o de uma família com carrinho de bebê."
+      },
+      {
+        "id": "contra-argumentacao",
+        "nome": "Contra-argumentação",
+        "descricao": "Uma objeção previsível é apresentada e respondida para sustentar uma posição.",
+        "situacao": "A autora reconhece o custo inicial de ampliar a coleta seletiva e responde comparando-o com a redução de despesas no longo prazo."
+      }
+    ],
+    "semente": "c63f768b22fc36e5"
+  },
+  {
+    "id": "port-enem-generos",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Português",
+    "assunto": "Gêneros textuais e propósitos comunicativos",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "noticia",
+        "nome": "Notícia",
+        "descricao": "Relata um acontecimento de interesse público com informações que situam o fato e seus envolvidos.",
+        "situacao": "Um texto jornalístico informa quando uma ponte foi reaberta, em que trecho e segundo qual órgão responsável."
+      },
+      {
+        "id": "editorial",
+        "nome": "Editorial",
+        "descricao": "Expõe a posição institucional de um veículo de comunicação sobre um tema público.",
+        "situacao": "Um texto sem assinatura individual apresenta a posição do jornal sobre o novo plano de mobilidade."
+      },
+      {
+        "id": "cronica",
+        "nome": "Crônica",
+        "descricao": "Elabora uma situação cotidiana em registro breve, frequentemente com humor ou reflexão.",
+        "situacao": "O narrador descreve o silêncio de quatro pessoas num elevador e transforma o episódio em reflexão sobre convivência."
+      },
+      {
+        "id": "resenha-critica",
+        "nome": "Resenha crítica",
+        "descricao": "Apresenta uma obra e sustenta uma avaliação com critérios e exemplos.",
+        "situacao": "A autora resume a proposta de um filme e analisa como enquadramento e montagem contribuem para seu efeito."
+      },
+      {
+        "id": "carta-aberta",
+        "nome": "Carta aberta",
+        "descricao": "Dirige uma manifestação a destinatário identificável e circula publicamente para mobilizar leitores ou autoridades.",
+        "situacao": "Moradores publicam um texto endereçado à prefeitura e solicitam providências para recuperar a praça do bairro."
+      }
+    ],
+    "semente": "f79d74f1ef8d2053"
+  },
+  {
+    "id": "port-psc1-coesao",
+    "vestibular": "PSC",
+    "etapa": 1,
+    "disciplina": "Português",
+    "assunto": "Coesão referencial e progressão textual",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "anafora",
+        "nome": "Anáfora",
+        "descricao": "Um elemento retoma uma informação que já apareceu no texto.",
+        "situacao": "Em “O barco chegou às seis. Ele trazia as encomendas”, o pronome recupera a embarcação mencionada antes."
+      },
+      {
+        "id": "catafora",
+        "nome": "Catáfora",
+        "descricao": "Um elemento antecipa uma informação explicitada depois no texto.",
+        "situacao": "Em “Só peço isto: avisem quando a estrada reabrir”, o pronome aponta para a solicitação que vem depois dos dois-pontos."
+      },
+      {
+        "id": "elipse",
+        "nome": "Elipse",
+        "descricao": "Um termo recuperável pelo contexto é omitido sem impedir a compreensão.",
+        "situacao": "Em “Lia levou os mapas; Paulo, as bússolas”, o verbo do segundo segmento é entendido embora não esteja escrito."
+      },
+      {
+        "id": "substituicao-lexical-por-hiperonimo",
+        "nome": "Substituição lexical por hiperônimo",
+        "descricao": "Um termo de significado mais geral retoma outro de sentido mais específico.",
+        "situacao": "Em “Vimos dois tucanos. As aves deixaram a copa em seguida”, a segunda expressão engloba a espécie mencionada."
+      },
+      {
+        "id": "repeticao-lexical-intencional",
+        "nome": "Repetição lexical intencional",
+        "descricao": "A retomada da mesma palavra pode manter o tópico ou produzir ênfase.",
+        "situacao": "Num relato breve, a palavra “água” reaparece em parágrafos sucessivos para unir situações de escassez e desperdício."
+      }
+    ],
+    "semente": "ee39ab6e59ab7f6a"
+  },
+  {
+    "id": "port-psc2-sintaxe",
+    "vestibular": "PSC",
+    "etapa": 2,
+    "disciplina": "Português",
+    "assunto": "Funções sintáticas e estrutura da oração",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "objeto-direto",
+        "nome": "Objeto direto",
+        "descricao": "Completa o sentido de um verbo transitivo direto sem preposição obrigatória na construção analisada.",
+        "situacao": "Em “A equipe revisou os relatórios”, o segmento “os relatórios” indica o conteúdo revisado."
+      },
+      {
+        "id": "objeto-indireto",
+        "nome": "Objeto indireto",
+        "descricao": "Completa o sentido de um verbo por meio de uma preposição exigida na construção.",
+        "situacao": "Em “Os moradores precisam de transporte”, o segmento “de transporte” completa a exigência do verbo precisar."
+      },
+      {
+        "id": "predicativo-do-sujeito",
+        "nome": "Predicativo do sujeito",
+        "descricao": "Atribui estado ou característica ao sujeito por meio da predicação.",
+        "situacao": "Em “As ruas ficaram vazias”, o adjetivo indica o estado das ruas após a mudança."
+      },
+      {
+        "id": "adjunto-adverbial",
+        "nome": "Adjunto adverbial",
+        "descricao": "Especifica uma circunstância como tempo, modo ou lugar em relação à oração.",
+        "situacao": "Em “A reunião começou após o almoço”, a expressão final situa quando a reunião começou."
+      },
+      {
+        "id": "aposto-explicativo",
+        "nome": "Aposto explicativo",
+        "descricao": "Acrescenta uma identificação ou explicação sobre um termo nominal.",
+        "situacao": "Em “Manaus, capital do Amazonas, recebe o evento”, a expressão entre vírgulas esclarece a referência do nome próprio."
+      }
+    ],
+    "semente": "34eec45b1fda886a"
+  },
+  {
+    "id": "port-psc3-conectivos",
+    "vestibular": "PSC",
+    "etapa": 3,
+    "disciplina": "Português",
+    "assunto": "Conectivos e relações de sentido",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "causalidade",
+        "nome": "Causalidade",
+        "descricao": "Um segmento apresenta a razão ou o fato que explica outro.",
+        "situacao": "Em “O treino foi adiado porque o ginásio alagou”, a oração introduzida pelo conectivo explica o adiamento."
+      },
+      {
+        "id": "concessao",
+        "nome": "Concessão",
+        "descricao": "Um segmento apresenta um fato que poderia contrariar o desfecho, mas não o impede.",
+        "situacao": "Em “Embora a trilha estivesse molhada, o grupo concluiu o percurso”, a condição adversa não impede a chegada."
+      },
+      {
+        "id": "condicao",
+        "nome": "Condição",
+        "descricao": "Um segmento estabelece a circunstância necessária ou tomada como hipótese para outro acontecer.",
+        "situacao": "Em “Se a conexão voltar, faremos a chamada”, a realização da chamada depende de um acontecimento ainda incerto."
+      },
+      {
+        "id": "finalidade",
+        "nome": "Finalidade",
+        "descricao": "Um segmento indica o propósito pretendido com uma ação.",
+        "situacao": "Em “Ela anotou o endereço para encontrar o local depois”, a ação futura indica o objetivo da anotação."
+      },
+      {
+        "id": "consequencia",
+        "nome": "Consequência",
+        "descricao": "Um segmento indica o efeito resultante de um fato anterior, muitas vezes marcado por intensidade.",
+        "situacao": "Em “Choveu tanto que a rua alagou”, o alagamento é apresentado como resultado da intensidade da chuva."
+      }
+    ],
+    "semente": "7d88d7b84e2527bd"
+  },
+  {
+    "id": "port-sis1-figuras",
+    "vestibular": "SIS",
+    "etapa": 1,
+    "disciplina": "Português",
+    "assunto": "Figuras de linguagem e efeitos expressivos",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "metafora",
+        "nome": "Metáfora",
+        "descricao": "Uma caracterização é transferida por relação de semelhança implícita.",
+        "situacao": "Em “Aquela biblioteca é um refúgio”, o lugar de leitura recebe atributos associados a um abrigo, sem conector comparativo."
+      },
+      {
+        "id": "metonimia",
+        "nome": "Metonímia",
+        "descricao": "Uma expressão substitui outra a partir de uma relação de proximidade, como autor pela obra.",
+        "situacao": "Em “Li Machado de Assis durante as férias”, o nome do escritor designa os textos que a pessoa leu."
+      },
+      {
+        "id": "personificacao",
+        "nome": "Personificação",
+        "descricao": "Características ou ações humanas são atribuídas a animais, objetos ou abstrações.",
+        "situacao": "Em “A janela espiava a rua”, um elemento inanimado é descrito como capaz de observar com intenção."
+      },
+      {
+        "id": "hiperbole",
+        "nome": "Hipérbole",
+        "descricao": "O exagero expressivo intensifica uma ideia ou sentimento.",
+        "situacao": "Depois de uma longa fila, alguém diz “Esperei um século para entrar”, ampliando deliberadamente a duração."
+      },
+      {
+        "id": "antitese",
+        "nome": "Antítese",
+        "descricao": "Termos ou ideias de sentido oposto são aproximados para construir contraste.",
+        "situacao": "Em “No mesmo dia, a cidade celebrou chegadas e lamentou partidas”, os movimentos contrários reforçam o contraste."
+      }
+    ],
+    "semente": "b84c987fb5125285"
+  },
+  {
+    "id": "port-sis2-variacao",
+    "vestibular": "SIS",
+    "etapa": 2,
+    "disciplina": "Português",
+    "assunto": "Variação linguística, registro e preconceito",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "variacao-regional",
+        "nome": "Variação regional",
+        "descricao": "Diferenças de vocabulário, pronúncia ou construções associam-se às regiões onde circulam.",
+        "situacao": "Moradores de regiões diferentes usam “mandioca”, “aipim” e “macaxeira” para se referir à mesma planta."
+      },
+      {
+        "id": "variacao-situacional",
+        "nome": "Variação situacional",
+        "descricao": "O falante ajusta o registro conforme a situação, os objetivos e os interlocutores.",
+        "situacao": "A mesma pessoa escreve uma mensagem informal para um amigo e usa outra forma de tratamento num pedido institucional."
+      },
+      {
+        "id": "variacao-historica",
+        "nome": "Variação histórica",
+        "descricao": "Formas linguísticas mudam com o tempo, tanto no vocabulário quanto na escrita e nos usos.",
+        "situacao": "Um leitor compara cartas antigas e mensagens atuais e percebe que algumas formas de tratamento perderam espaço."
+      },
+      {
+        "id": "variacao-social",
+        "nome": "Variação social",
+        "descricao": "Diferenças linguísticas se relacionam com a participação em grupos e redes sociais.",
+        "situacao": "Membros de um grupo de jogadores usam abreviações que são compreendidas entre eles e pouco usadas por pessoas fora dessa rede."
+      },
+      {
+        "id": "preconceito-linguistico",
+        "nome": "Preconceito linguístico",
+        "descricao": "A desvalorização de uma variedade funciona como julgamento social sobre seus falantes.",
+        "situacao": "Um candidato é tratado como pouco inteligente por causa de seu sotaque, apesar de explicar com clareza o conteúdo solicitado."
+      }
+    ],
+    "semente": "7d2ac2a69fef9188"
+  },
+  {
+    "id": "port-sis3-concordancia",
+    "vestibular": "SIS",
+    "etapa": 3,
+    "disciplina": "Português",
+    "assunto": "Concordância, regência e crase",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "concordancia-verbal",
+        "nome": "Concordância verbal",
+        "descricao": "A forma do verbo geralmente se ajusta ao número e à pessoa do sujeito.",
+        "situacao": "Em “As propostas chegaram cedo”, a terminação do verbo acompanha o plural do grupo nominal que atua como sujeito."
+      },
+      {
+        "id": "concordancia-nominal",
+        "nome": "Concordância nominal",
+        "descricao": "Determinantes e adjetivos se ajustam a gênero e número dos nomes a que se referem.",
+        "situacao": "Em “As duas ruas estreitas”, os determinantes e o adjetivo marcam o feminino plural do substantivo."
+      },
+      {
+        "id": "regencia-verbal",
+        "nome": "Regência verbal",
+        "descricao": "A relação entre um verbo e seu complemento pode determinar a presença de preposição.",
+        "situacao": "No sentido de ver, a variedade padrão usa assistir com a preposição a em “Os alunos assistiram ao jogo”."
+      },
+      {
+        "id": "regencia-nominal",
+        "nome": "Regência nominal",
+        "descricao": "Substantivos, adjetivos ou advérbios podem exigir uma preposição para relacionar-se a seu complemento.",
+        "situacao": "Em “Temos confiança no grupo”, a construção do substantivo confiança estabelece a relação por meio de em."
+      },
+      {
+        "id": "crase",
+        "nome": "Crase",
+        "descricao": "O acento grave marca, entre outros casos, a fusão da preposição a com o artigo feminino a.",
+        "situacao": "Em “Voltamos à escola”, a preposição indicada pela construção com voltar se une ao artigo que introduz escola."
+      }
+    ],
+    "semente": "063fff126b4a3d9a"
+  },
+  {
+    "id": "port-macro-pontuacao",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Português",
+    "assunto": "Pontuação e organização das vozes",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "virgula-de-vocativo",
+        "nome": "Vírgula de vocativo",
+        "descricao": "Isola o termo usado para chamar ou interpelar o destinatário.",
+        "situacao": "Em “Marina, confira a lista”, o primeiro nome identifica a pessoa a quem a fala se dirige."
+      },
+      {
+        "id": "dois-pontos-antes-de-enumeracao",
+        "nome": "Dois-pontos antes de enumeração",
+        "descricao": "Anunciam uma lista que detalha um termo ou uma informação anterior.",
+        "situacao": "Em “Imprimimos três mapas: do bairro, do município e do estado”, o segundo segmento especifica os mapas."
+      },
+      {
+        "id": "ponto-e-virgula-entre-oracoes",
+        "nome": "Ponto e vírgula entre orações",
+        "descricao": "Marca separação entre orações com autonomia relativa e ligação de sentido.",
+        "situacao": "Em “A biblioteca abriu mais cedo; os leitores ocuparam as mesas”, a pausa separa dois fatos diretamente relacionados."
+      },
+      {
+        "id": "parenteses-de-comentario",
+        "nome": "Parênteses de comentário",
+        "descricao": "Destacam uma informação acessória ou uma observação lateral em relação à frase principal.",
+        "situacao": "Em “A reunião (adiada na véspera) começou às dez”, o trecho encaixado informa uma circunstância extra."
+      },
+      {
+        "id": "travessao-de-fala",
+        "nome": "Travessão de fala",
+        "descricao": "Em diálogos narrativos, pode marcar o início da fala direta de uma personagem.",
+        "situacao": "Depois de um parágrafo narrativo sobre a partida, surge em nova linha a intervenção “— Volto antes da chuva”."
+      }
+    ],
+    "semente": "f977dfbea36fa282"
+  },
+  {
+    "id": "port-macro-literatura",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Português",
+    "assunto": "Narrativa literária e construção do ponto de vista",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "narrador-personagem",
+        "nome": "Narrador-personagem",
+        "descricao": "A voz que narra participa do mundo narrado e conta eventos a partir de seu envolvimento.",
+        "situacao": "“Eu escondi o ingresso no bolso. Quando passei pela bilheteria, ainda lembrava daquele erro.”"
+      },
+      {
+        "id": "narrador-observador",
+        "nome": "Narrador observador",
+        "descricao": "A narração acompanha condutas e falas perceptíveis, restringindo o acesso à interioridade das personagens.",
+        "situacao": "“Júlia dobrou o bilhete, guardou-o na bolsa e olhou para os lados. Ninguém respondeu.”"
+      },
+      {
+        "id": "onisciencia-narrativa",
+        "nome": "Onisciência narrativa",
+        "descricao": "A voz narrativa pode revelar pensamentos e sentimentos de diferentes personagens além de suas ações visíveis.",
+        "situacao": "“Júlia temia a resposta. No banco ao lado, Paulo torcia em segredo para que ela fizesse a pergunta.”"
+      },
+      {
+        "id": "analepse",
+        "nome": "Analepse",
+        "descricao": "A narrativa interrompe a sequência em curso para recuperar um acontecimento anterior.",
+        "situacao": "À beira do cais, a personagem lembra a despedida ocorrida anos antes. Só depois o texto volta à cena da chegada."
+      },
+      {
+        "id": "discurso-indireto",
+        "nome": "Discurso indireto",
+        "descricao": "A fala de uma personagem aparece mediada pela voz narrativa, com possíveis ajustes de pronomes, tempos e referências.",
+        "situacao": "Em vez de dar diretamente a palavra à personagem, o relato registra “Júlia disse que retornaria na semana seguinte”."
+      }
+    ],
+    "semente": "1984a9505dcb2a79"
+  },
+  {
+    "id": "fil-enem-antiga",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Filosofia antiga, verdade e vida boa",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "maieutica-socratica",
+        "nome": "Maiêutica socrática",
+        "descricao": "Perguntas orientam o interlocutor a explicitar e examinar as próprias crenças.",
+        "situacao": "Em vez de dar uma definição de coragem, o professor pede exemplos e faz perguntas até os alunos reverem as respostas iniciais."
+      },
+      {
+        "id": "alegoria-da-caverna",
+        "nome": "Alegoria da caverna",
+        "descricao": "A passagem das sombras para a luz simboliza a mudança de uma compreensão baseada em aparências para outra mais refletida.",
+        "situacao": "Pessoas tomam imagens projetadas pela realidade porque desconhecem sua origem. Uma delas sai e depois tenta explicar o que viu."
+      },
+      {
+        "id": "eudaimonia-aristotelica",
+        "nome": "Eudaimonia aristotélica",
+        "descricao": "A vida realizada resulta de uma atividade conforme à virtude ao longo da vida.",
+        "situacao": "Para julgar se alguém viveu bem, o filósofo considera o exercício continuado de capacidades e virtudes e o conjunto da existência."
+      },
+      {
+        "id": "epicurismo",
+        "nome": "Epicurismo",
+        "descricao": "O prazer duradouro relaciona-se à ausência de perturbação, à amizade e à avaliação prudente dos desejos.",
+        "situacao": "Uma pessoa prefere necessidades simples e vínculos estáveis a buscar incessantemente prestígio e consumo."
+      },
+      {
+        "id": "estoicismo",
+        "nome": "Estoicismo",
+        "descricao": "A vida boa exige orientar juízos e ações pelo que depende de nós e aceitar o que escapa a nosso controle.",
+        "situacao": "Uma competidora empenha-se no preparo e no comportamento durante a disputa, sem tomar o resultado externo como medida de seu valor."
+      }
+    ],
+    "semente": "a176189915592448"
+  },
+  {
+    "id": "fil-enem-justica",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Justiça, reconhecimento e igualdade",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "igualdade-formal",
+        "nome": "Igualdade formal",
+        "descricao": "As mesmas regras e os mesmos direitos são reconhecidos a pessoas em condições juridicamente equivalentes.",
+        "situacao": "O regulamento garante a qualquer candidato, independentemente da origem familiar, o mesmo direito de apresentar recurso."
+      },
+      {
+        "id": "justica-distributiva",
+        "nome": "Justiça distributiva",
+        "descricao": "Discute critérios para repartir benefícios, encargos e recursos entre pessoas ou grupos.",
+        "situacao": "O conselho debate se as bolsas devem ser distribuídas segundo necessidade, mérito ou combinação dos dois critérios."
+      },
+      {
+        "id": "justica-corretiva",
+        "nome": "Justiça corretiva",
+        "descricao": "Busca restaurar o equilíbrio rompido por um dano ou transação injusta.",
+        "situacao": "Uma pessoa que teve seu bem destruído em decorrência da conduta de outra recebe reparação proporcional ao prejuízo."
+      },
+      {
+        "id": "reconhecimento-social",
+        "nome": "Reconhecimento social",
+        "descricao": "O respeito à dignidade e à identidade social depende de quem tem voz e de como suas experiências são valorizadas.",
+        "situacao": "Um museu inclui e remunera representantes de grupos antes omitidos para que participem da elaboração da exposição."
+      },
+      {
+        "id": "veu-de-ignorancia",
+        "nome": "Véu de ignorância",
+        "descricao": "A escolha hipotética de regras sem conhecer a própria posição social busca reduzir favorecimentos a si mesmo.",
+        "situacao": "Participantes definem garantias básicas sem saber se pertencerão à maioria, a uma minoria ou ao grupo mais pobre."
+      }
+    ],
+    "semente": "ea2d6af3eaa94067"
+  },
+  {
+    "id": "fil-enem-estetica",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Estética e experiência artística",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "mimesis",
+        "nome": "Mímesis",
+        "descricao": "A obra representa aspectos da ação ou do mundo por meio de seleção e composição.",
+        "situacao": "Uma peça reorganiza conflitos reconhecíveis da cidade em personagens fictícias e num enredo próprio."
+      },
+      {
+        "id": "catarse-tragica",
+        "nome": "Catarse trágica",
+        "descricao": "Na tradição aristotélica, a experiência da tragédia envolve o trabalho de emoções como temor e compaixão.",
+        "situacao": "Ao acompanhar a ruína de uma personagem, espectadores vivenciam emoções que a estrutura do enredo articula do início ao fim."
+      },
+      {
+        "id": "juizo-de-gosto-em-kant",
+        "nome": "Juízo de gosto em Kant",
+        "descricao": "A apreciação do belo envolve satisfação desinteressada e reivindica comunicabilidade sem depender de um conceito determinante.",
+        "situacao": "Uma pessoa admira a forma de um objeto e convida outros a compartilhar sua apreciação sem justificar o valor por utilidade ou preço."
+      },
+      {
+        "id": "sublime-kantiano",
+        "nome": "Sublime kantiano",
+        "descricao": "A experiência de magnitude ou poder que excede a imaginação pode levar à reflexão sobre capacidades da razão.",
+        "situacao": "Observado de um lugar seguro, um cenário de proporções imensas excede a capacidade de apreender seu todo de uma só vez."
+      },
+      {
+        "id": "desfamiliarizacao",
+        "nome": "Desfamiliarização",
+        "descricao": "Um recurso expressivo torna estranho o habitual, levando o público a percebê-lo de outro modo.",
+        "situacao": "Um conto descreve a fila do mercado como se o narrador jamais tivesse visto pessoas esperando, renovando a atenção a seus gestos."
+      }
+    ],
+    "semente": "ba9a5e582bddf812"
+  },
+  {
+    "id": "fil-enem-ambiente",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Ética ambiental e decisões coletivas",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "antropocentrismo-moral",
+        "nome": "Antropocentrismo moral",
+        "descricao": "A avaliação moral das ações ambientais toma interesses ou deveres humanos como referência central.",
+        "situacao": "Um parecer defende a proteção do rio exclusivamente porque ele provê abastecimento, alimento e lazer às pessoas."
+      },
+      {
+        "id": "biocentrismo",
+        "nome": "Biocentrismo",
+        "descricao": "Seres vivos têm valor moral que ultrapassa a utilidade que oferecem a humanos.",
+        "situacao": "Um grupo sustenta que uma espécie vegetal deve ser considerada mesmo quando não tem uso comercial conhecido."
+      },
+      {
+        "id": "ecocentrismo",
+        "nome": "Ecocentrismo",
+        "descricao": "O valor moral é atribuído também a conjuntos ecológicos, suas relações e sua integridade.",
+        "situacao": "Um plano prioriza manter a dinâmica de um ecossistema inteiro, considerando as relações entre água, solo, vegetação e animais."
+      },
+      {
+        "id": "precaucao",
+        "nome": "Precaução",
+        "descricao": "Diante de risco plausível de dano grave, a incerteza científica não basta para adiar medidas proporcionais de proteção.",
+        "situacao": "Antes de autorizar atividade com possível impacto irreversível numa nascente, um conselho decide adotar limites enquanto coleta evidências."
+      },
+      {
+        "id": "justica-intergeracional",
+        "nome": "Justiça intergeracional",
+        "descricao": "Decisões atuais devem levar em conta direitos e condições de vida de pessoas que virão depois.",
+        "situacao": "Um município preserva parte de uma reserva de água para que moradores de décadas futuras possam enfrentar períodos de seca."
+      }
+    ],
+    "semente": "8ae0f343add23c10"
+  },
+  {
+    "id": "fil-macro-modernos",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Autores modernos e a construção do sujeito",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "duvida-metodica",
+        "nome": "Dúvida metódica",
+        "descricao": "Descartes suspende crenças passíveis de dúvida para procurar uma base firme para o conhecimento.",
+        "situacao": "Para investigar certezas, um filósofo considera que sentidos falham e que experiências que parecem reais às vezes são sonhos."
+      },
+      {
+        "id": "ideias-de-sensacao-e-reflexao",
+        "nome": "Ideias de sensação e reflexão",
+        "descricao": "Em Locke, ideias decorrem da experiência externa ou da observação das próprias operações mentais.",
+        "situacao": "Uma estudante diferencia a experiência da cor de uma fruta da percepção interna de que está comparando duas lembranças."
+      },
+      {
+        "id": "habito-em-hume",
+        "nome": "Hábito em Hume",
+        "descricao": "A expectativa causal se forma pela experiência repetida de eventos juntos, em vez da observação de uma ligação necessária.",
+        "situacao": "Depois de observar repetidamente uma sequência, alguém espera que o segundo evento se repita quando o primeiro acontece."
+      },
+      {
+        "id": "autonomia-em-kant",
+        "nome": "Autonomia em Kant",
+        "descricao": "A razão prática permite agir segundo princípios que o agente pode reconhecer como válidos universalmente.",
+        "situacao": "Uma pessoa cumpre uma obrigação que considera válida para todos, mesmo quando uma autoridade promete recompensa para descumpri-la."
+      },
+      {
+        "id": "iluminismo",
+        "nome": "Iluminismo",
+        "descricao": "A crítica pública e o uso da razão afastam a submissão automática a tradições e autoridades.",
+        "situacao": "Autores defendem que cidadãos discutam decisões em público e peçam razões para regras que orientam sua vida."
+      }
+    ],
+    "semente": "1a25e2fdc840c379"
+  },
+  {
+    "id": "fil-macro-logica",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Lógica e avaliação de argumentos",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "validade-dedutiva",
+        "nome": "Validade dedutiva",
+        "descricao": "A estrutura impede conclusão falsa quando as premissas são verdadeiras, independentemente de as premissas efetivamente serem verdadeiras.",
+        "situacao": "Em “Todo B é C. Todo A é B. Portanto, todo A é C”, a relação decorre da forma de inclusão entre os grupos."
+      },
+      {
+        "id": "inducao",
+        "nome": "Indução",
+        "descricao": "Observações particulares apoiam uma generalização provável, sujeita a revisão diante de novos casos.",
+        "situacao": "Após examinar amostras de vários lotes, uma equipe estima que um defeito seja raro na produção inteira."
+      },
+      {
+        "id": "analogia",
+        "nome": "Analogia",
+        "descricao": "Uma semelhança relevante entre casos sustenta uma inferência que depende dos limites dessa comparação.",
+        "situacao": "Duas cidades têm relevo e malha viária semelhantes. Um planejador usa a experiência de uma delas como hipótese inicial para a outra."
+      },
+      {
+        "id": "falso-dilema",
+        "nome": "Falso dilema",
+        "descricao": "O argumento trata duas opções como únicas, embora existam outras alternativas relevantes.",
+        "situacao": "Um debatedor afirma que só é possível abrir a praça todos os dias ou fechá-la para sempre, ignorando horários parciais."
+      },
+      {
+        "id": "peticao-de-principio",
+        "nome": "Petição de princípio",
+        "descricao": "A justificativa assume, explicitamente ou de forma equivalente, aquilo que se pretendia demonstrar.",
+        "situacao": "Alguém afirma que uma regra é justa porque é uma regra que aplica a justiça, sem oferecer critério adicional."
+      }
+    ],
+    "semente": "4f5c3cdf2e64cb8d"
+  },
+  {
+    "id": "fil-macro-liberdade",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Liberdade, identidade e sentido da ação",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "determinismo",
+        "nome": "Determinismo",
+        "descricao": "Os acontecimentos decorrem de condições anteriores e leis, dentro da descrição proposta pela teoria.",
+        "situacao": "Uma posição sustenta que até a escolha feita após longa reflexão resulta de uma sequência anterior de condições suficientes."
+      },
+      {
+        "id": "compatibilismo",
+        "nome": "Compatibilismo",
+        "descricao": "Uma ação pode ser livre quando expressa razões e intenções do agente, mesmo se seus antecedentes têm causas.",
+        "situacao": "Uma filósofa considera livre a decisão tomada segundo os próprios motivos e sem coerção, embora admita causas para esses motivos."
+      },
+      {
+        "id": "ma-fe-em-sartre",
+        "nome": "Má-fé em Sartre",
+        "descricao": "O sujeito tenta fugir da responsabilidade pela própria liberdade, tratando-se como coisa ou papel fixo.",
+        "situacao": "Uma pessoa diz que seria impossível agir de outra forma somente porque ocupa determinado cargo, como se suas escolhas fossem anuladas pelo papel."
+      },
+      {
+        "id": "alienacao-em-marx",
+        "nome": "Alienação em Marx",
+        "descricao": "Condições de trabalho podem tornar atividade e produto externos ao trabalhador, sob o controle de outros.",
+        "situacao": "Um operário não decide o ritmo, o destino ou a finalidade do que fabrica e percebe sua atividade apenas como meio de subsistência."
+      },
+      {
+        "id": "reconstrucao-narrativa-da-identidade",
+        "nome": "Reconstrução narrativa da identidade",
+        "descricao": "O sujeito interpreta continuidades e mudanças da própria vida ao organizar experiências em histórias.",
+        "situacao": "Uma mulher reconsidera episódios antigos à luz de decisões recentes e encontra outra forma de contar sua trajetória."
+      }
+    ],
+    "semente": "4db55c2884bf6dcd"
+  },
+  {
+    "id": "soc-enem-classicos",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Durkheim, Weber e Marx",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "fato-social",
+        "nome": "Fato social",
+        "descricao": "Em Durkheim, maneiras coletivas de agir e pensar existem além do indivíduo e podem exercer coerção.",
+        "situacao": "Uma pessoa aprende convenções de horários e cumprimentos já presentes no grupo antes de seu nascimento."
+      },
+      {
+        "id": "solidariedade-mecanica",
+        "nome": "Solidariedade mecânica",
+        "descricao": "A coesão social se apoia na semelhança entre atividades e crenças compartilhadas.",
+        "situacao": "Numa comunidade com baixa divisão de tarefas, expectativas coletivas semelhantes orientam a maior parte da vida cotidiana."
+      },
+      {
+        "id": "solidariedade-organica",
+        "nome": "Solidariedade orgânica",
+        "descricao": "A coesão se apoia na interdependência entre funções especializadas.",
+        "situacao": "Numa cidade, agricultores, transportadores, técnicos e profissionais de saúde dependem de atividades diferentes para manter o cotidiano."
+      },
+      {
+        "id": "acao-social-em-weber",
+        "nome": "Ação social em Weber",
+        "descricao": "O sentido que o indivíduo atribui à conduta orienta-se pelo comportamento de outras pessoas.",
+        "situacao": "Um comerciante altera seu modo de negociar porque antecipa como clientes e concorrentes responderão."
+      },
+      {
+        "id": "conflito-de-classes-em-marx",
+        "nome": "Conflito de classes em Marx",
+        "descricao": "Grupos em posições diferentes nas relações de produção disputam interesses ligados a trabalho e controle de recursos.",
+        "situacao": "Trabalhadores e proprietários de uma indústria entram em conflito sobre quem controla o processo produtivo e a distribuição de seu resultado."
+      }
+    ],
+    "semente": "514030f197f2e49e"
+  },
+  {
+    "id": "soc-enem-direitos",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Cidadania, direitos e acesso a políticas",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "direitos-civis",
+        "nome": "Direitos civis",
+        "descricao": "Protegem liberdades individuais e garantias como associação, expressão e igualdade jurídica.",
+        "situacao": "Moradores invocam a liberdade de associação para se organizar e defender sua causa publicamente."
+      },
+      {
+        "id": "direitos-politicos",
+        "nome": "Direitos políticos",
+        "descricao": "Permitem participar das decisões e da representação, incluindo votar e candidatar-se de acordo com as regras legais.",
+        "situacao": "Uma mobilização pede que pessoas excluídas do eleitorado possam escolher representantes e disputar cargos."
+      },
+      {
+        "id": "direitos-sociais",
+        "nome": "Direitos sociais",
+        "descricao": "Referem-se a garantias ligadas ao bem-estar e a condições de vida, como educação, saúde e proteção social.",
+        "situacao": "Famílias reivindicam acesso à escola pública e a atendimento de saúde perto de casa."
+      },
+      {
+        "id": "universalizacao-de-servicos",
+        "nome": "Universalização de serviços",
+        "descricao": "A política amplia a cobertura para que todos os titulares de um direito possam ter acesso ao serviço.",
+        "situacao": "Uma rede pública expande o atendimento para áreas que antes permaneciam fora de sua cobertura."
+      },
+      {
+        "id": "equidade-no-atendimento",
+        "nome": "Equidade no atendimento",
+        "descricao": "Reconhece barreiras distintas e ajusta recursos ou estratégias para assegurar acesso efetivo.",
+        "situacao": "Um serviço oferece intérpretes e atendimento itinerante para alcançar grupos que não conseguiam usar o mesmo canal da maioria."
+      }
+    ],
+    "semente": "94e8e39ef1aa0277"
+  },
+  {
+    "id": "soc-enem-educacao",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Escola, juventude e desigualdades",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "curriculo-oculto",
+        "nome": "Currículo oculto",
+        "descricao": "A rotina institucional transmite valores e expectativas que não estão explicitados nos conteúdos oficiais.",
+        "situacao": "A forma de premiar certas condutas ensina maneiras de competir e obedecer mesmo sem existir aula sobre essas normas."
+      },
+      {
+        "id": "reproducao-de-desigualdades",
+        "nome": "Reprodução de desigualdades",
+        "descricao": "Instituições podem conservar diferenças sociais quando convertem vantagens prévias em resultados aparentemente individuais.",
+        "situacao": "Uma escola trata como mérito exclusivamente individual um desempenho que também depende de tempo de estudo, equipamentos e apoio fora da sala."
+      },
+      {
+        "id": "redes-de-apoio-escolar",
+        "nome": "Redes de apoio escolar",
+        "descricao": "Relações com colegas, docentes e familiares oferecem informação, suporte e recursos que favorecem a permanência.",
+        "situacao": "Estudantes organizam grupos de ajuda, e um orientador conecta quem tem dificuldades a bolsas e serviços disponíveis."
+      },
+      {
+        "id": "evasao-escolar",
+        "nome": "Evasão escolar",
+        "descricao": "A interrupção da trajetória pode decorrer de fatores combinados, como trabalho, barreiras de transporte e exclusão.",
+        "situacao": "Uma jovem deixa de frequentar a escola quando os horários de trabalho mudam e o último ônibus sai antes do fim das aulas."
+      },
+      {
+        "id": "geracao-social",
+        "nome": "Geração social",
+        "descricao": "Pessoas de idades próximas podem compartilhar experiências históricas formadoras, embora vivam condições sociais diversas.",
+        "situacao": "Jovens atingidos pelo mesmo período de fechamento das escolas recordam aquele evento de modos diferentes conforme suas condições de acesso ao ensino."
+      }
+    ],
+    "semente": "31f0325228dcf3df"
+  },
+  {
+    "id": "soc-enem-digital",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Tecnologia, mídia e relações sociais",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "mediacao-algoritmica",
+        "nome": "Mediação algorítmica",
+        "descricao": "Sistemas de recomendação influenciam o que ganha visibilidade ao priorizar certos sinais e conteúdos.",
+        "situacao": "Dois usuários recebem listas diferentes de notícias porque uma plataforma considera seus históricos de interação e as metas do serviço."
+      },
+      {
+        "id": "desigualdade-digital",
+        "nome": "Desigualdade digital",
+        "descricao": "As diferenças de conexão, equipamentos e competências produzem distintos graus de participação digital.",
+        "situacao": "Duas pessoas têm internet, mas só uma dispõe de computador e habilidades para preencher formulários de seleção complexos."
+      },
+      {
+        "id": "vigilancia-por-dados",
+        "nome": "Vigilância por dados",
+        "descricao": "Registros de comportamento permitem monitorar e classificar pessoas em escala.",
+        "situacao": "Um serviço consolida horários, locais e interações para estimar rotinas e perfis dos seus usuários."
+      },
+      {
+        "id": "economia-da-atencao",
+        "nome": "Economia da atenção",
+        "descricao": "Serviços competem pelo tempo de permanência e pela atenção das pessoas, que podem ser monetizados.",
+        "situacao": "Uma plataforma destaca notificações e reprodução contínua para aumentar o tempo de uso e as oportunidades de exibir anúncios."
+      },
+      {
+        "id": "participacao-civica-digital",
+        "nome": "Participação cívica digital",
+        "descricao": "Ferramentas digitais podem apoiar organização, deliberação ou fiscalização de decisões coletivas.",
+        "situacao": "Moradores consultam um painel aberto de obras, registram atrasos e coordenam pedidos de informação junto ao município."
+      }
+    ],
+    "semente": "a16023f2678bef8b"
+  },
+  {
+    "id": "soc-macro-trabalho",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Trabalho, organização coletiva e produção",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "fordismo",
+        "nome": "Fordismo",
+        "descricao": "A produção em massa associa linha de montagem, padronização de produtos e divisão repetitiva de tarefas.",
+        "situacao": "Numa fábrica, cada trabalhador repete uma operação curta enquanto unidades quase idênticas avançam numa esteira."
+      },
+      {
+        "id": "producao-flexivel",
+        "nome": "Produção flexível",
+        "descricao": "A produção se adapta a demanda variável com reorganização de fluxos, lotes e tarefas.",
+        "situacao": "Uma empresa muda rapidamente os volumes de modelos, organiza entregas próximas ao momento de uso e treina equipes para funções diversas."
+      },
+      {
+        "id": "trabalho-informal",
+        "nome": "Trabalho informal",
+        "descricao": "O trabalho se realiza fora de parte dos registros ou proteções associados à atividade formal, conforme o caso.",
+        "situacao": "Uma vendedora trabalha por conta própria sem registro da atividade e enfrenta renda variável e acesso limitado a proteções ligadas ao trabalho."
+      },
+      {
+        "id": "cooperativismo",
+        "nome": "Cooperativismo",
+        "descricao": "A propriedade ou gestão compartilhada orienta a organização econômica por decisões coletivas dos associados.",
+        "situacao": "Produtores elegem representantes e decidem em assembleia como a unidade de beneficiamento será administrada."
+      },
+      {
+        "id": "desemprego-estrutural",
+        "nome": "Desemprego estrutural",
+        "descricao": "Mudanças tecnológicas ou na composição da economia alteram a demanda por ocupações de maneira persistente.",
+        "situacao": "Uma região perde postos especializados num processo produtivo substituído, e a mesma ocupação perde demanda mesmo depois da recuperação econômica."
+      }
+    ],
+    "semente": "54ee33aeaae71394"
+  },
+  {
+    "id": "soc-macro-territorios",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Diversidade e organização social na Amazônia",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "territorialidade-ribeirinha",
+        "nome": "Territorialidade ribeirinha",
+        "descricao": "Vínculos sociais e atividades se organizam em relação a rios, ciclos de cheia e formas locais de circulação.",
+        "situacao": "Uma comunidade articula transporte, pesca e calendário de festas a percursos e níveis d’água que variam ao longo do ano."
+      },
+      {
+        "id": "associativismo-comunitario",
+        "nome": "Associativismo comunitário",
+        "descricao": "Moradores formam uma organização estável para representar interesses e realizar ações de interesse comum.",
+        "situacao": "Famílias elegem uma diretoria para negociar abastecimento regular e manter um espaço utilizado por toda a comunidade."
+      },
+      {
+        "id": "trabalho-coletivo-por-mutirao",
+        "nome": "Trabalho coletivo por mutirão",
+        "descricao": "Pessoas compartilham esforço em uma tarefa comum ou se ajudam em rodízio, baseadas em reciprocidade.",
+        "situacao": "Moradores combinam dedicar um sábado à construção de uma ponte comunitária, repartindo as tarefas sem contratação individual."
+      },
+      {
+        "id": "patrimonio-cultural-comunitario",
+        "nome": "Patrimônio cultural comunitário",
+        "descricao": "Saberes, expressões e bens são reconhecidos pelo significado que têm para quem os pratica, preserva ou transmite.",
+        "situacao": "Jovens aprendem técnicas e cantos com mestres locais, e a comunidade decide quais registros podem ser divulgados."
+      },
+      {
+        "id": "conflito-socioambiental",
+        "nome": "Conflito socioambiental",
+        "descricao": "Grupos disputam usos do território, distribuição de impactos e participação em decisões ambientais.",
+        "situacao": "Pescadores discutem com outros agentes a implantação de um empreendimento que alteraria o acesso aos locais de pesca."
+      }
+    ],
+    "semente": "0f0af0c390bf372b"
+  },
+  {
+    "id": "soc-macro-poder",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Poder, legitimidade e esfera pública",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "dominacao-tradicional",
+        "nome": "Dominação tradicional",
+        "descricao": "A autoridade se apoia na crença na legitimidade de costumes e posições herdadas.",
+        "situacao": "Um chefe é obedecido porque sua família ocupa historicamente a posição e os membros reconhecem o costume como válido."
+      },
+      {
+        "id": "dominacao-carismatica",
+        "nome": "Dominação carismática",
+        "descricao": "A obediência se apoia na crença em qualidades extraordinárias atribuídas à pessoa do líder.",
+        "situacao": "Seguidores aceitam decisões principalmente por sua devoção a alguém reconhecido como excepcional em momentos de crise."
+      },
+      {
+        "id": "dominacao-legal-racional",
+        "nome": "Dominação legal-racional",
+        "descricao": "A obediência dirige-se à função e às normas impessoais que autorizam o exercício do poder.",
+        "situacao": "Um agente pode assinar licenças por ocupar cargo com competência prevista em regulamento, e sua substituição não altera essa competência."
+      },
+      {
+        "id": "esfera-publica",
+        "nome": "Esfera pública",
+        "descricao": "Espaços de comunicação permitem discutir questões coletivas e disputar interpretações e prioridades.",
+        "situacao": "Moradores, associações e jornalistas tornam público um debate sobre orçamento, confrontando propostas e justificativas."
+      },
+      {
+        "id": "poder-simbolico",
+        "nome": "Poder simbólico",
+        "descricao": "O reconhecimento social permite que certas classificações e visões do mundo pareçam naturais ou legítimas.",
+        "situacao": "Uma instituição prestigiada define quais formas de expressão contam como legítimas, e suas classificações são aceitas por grande parte do público."
+      }
+    ],
+    "semente": "a6888b05bbd414f8"
+  },
+  {
+    "id": "fis-enem-energia",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Física",
+    "assunto": "Energia, trabalho e potência",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "energia-cinetica",
+        "nome": "Energia cinética",
+        "descricao": "Para massa constante, cresce com o quadrado da velocidade.",
+        "situacao": "Ao dobrar a velocidade, um ciclista quadruplica a energia associada ao seu movimento."
+      },
+      {
+        "id": "energia-potencial-gravitacional",
+        "nome": "Energia potencial gravitacional",
+        "descricao": "Perto da superfície terrestre, varia com a altura em relação ao nível de referência.",
+        "situacao": "Ao levantar uma caixa do chão para uma prateleira, uma pessoa eleva a energia da interação entre a caixa e a Terra."
+      },
+      {
+        "id": "trabalho-de-forca-constante",
+        "nome": "Trabalho de força constante",
+        "descricao": "É o produto entre a componente da força na direção do deslocamento e a distância percorrida.",
+        "situacao": "Uma pessoa empurra uma caixa horizontalmente com 20 N por 3 m e transfere 60 J à caixa por essa força."
+      },
+      {
+        "id": "potencia-media",
+        "nome": "Potência média",
+        "descricao": "Relaciona a energia transferida com o tempo gasto na transferência.",
+        "situacao": "Dois motores levantam cargas iguais até a mesma altura, mas um deles realiza a tarefa na metade do tempo."
+      },
+      {
+        "id": "rendimento",
+        "nome": "Rendimento",
+        "descricao": "É a razão entre energia útil obtida e energia total fornecida, no intervalo analisado.",
+        "situacao": "Um aparelho recebe 200 J de energia elétrica e entrega 150 J em movimento útil, apresentando razão igual a 0,75."
+      }
+    ],
+    "semente": "7517f29d36a2d052"
+  },
+  {
+    "id": "fis-psc1-movimento",
+    "vestibular": "PSC",
+    "etapa": 1,
+    "disciplina": "Física",
+    "assunto": "Movimento e leis de Newton",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "velocidade-media",
+        "nome": "Velocidade média",
+        "descricao": "É o deslocamento dividido pelo intervalo de tempo, conservando direção e sentido.",
+        "situacao": "Uma pessoa caminha até o portão e retorna ao ponto de partida. Para a viagem inteira, a grandeza vetorial procurada é zero."
+      },
+      {
+        "id": "aceleracao-media",
+        "nome": "Aceleração média",
+        "descricao": "É a variação da velocidade vetorial por unidade de tempo.",
+        "situacao": "Um carrinho desloca-se em linha reta e sua velocidade aumenta de 2 para 8 m/s em 3 s, correspondendo a 2 m/s²."
+      },
+      {
+        "id": "inercia",
+        "nome": "Inércia",
+        "descricao": "Um corpo tende a manter seu estado de repouso ou de movimento retilíneo uniforme quando a força resultante é nula.",
+        "situacao": "Quando o barco para bruscamente, passageiros continuam em movimento para a frente em relação ao barco."
+      },
+      {
+        "id": "segunda-lei-de-newton",
+        "nome": "Segunda lei de Newton",
+        "descricao": "Para massa constante, a força resultante é o produto da massa pela aceleração.",
+        "situacao": "Uma força horizontal resultante de 12 N atua em um bloco de 3 kg e causa aceleração de 4 m/s² na direção da força."
+      },
+      {
+        "id": "par-de-acao-e-reacao",
+        "nome": "Par de ação e reação",
+        "descricao": "Duas forças de interação têm módulos iguais e sentidos opostos e atuam em corpos diferentes.",
+        "situacao": "Ao empurrar a água para trás, o remo recebe da água uma força para a frente."
+      }
+    ],
+    "semente": "159cf7a75bc52ccd"
+  },
+  {
+    "id": "fis-psc2-calor",
+    "vestibular": "PSC",
+    "etapa": 2,
+    "disciplina": "Física",
+    "assunto": "Calor, temperatura e mudanças de estado",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "conducao-termica",
+        "nome": "Condução térmica",
+        "descricao": "Energia térmica é transferida por interações microscópicas, sem transporte macroscópico de matéria.",
+        "situacao": "A extremidade de uma barra de metal distante da chama esquenta, sem que partes da barra percorram seu comprimento."
+      },
+      {
+        "id": "conveccao",
+        "nome": "Convecção",
+        "descricao": "O movimento de um fluido transporta energia de uma região para outra.",
+        "situacao": "Na panela, partes aquecidas da água se deslocam para cima enquanto outras descem."
+      },
+      {
+        "id": "irradiacao-termica",
+        "nome": "Irradiação térmica",
+        "descricao": "A energia pode ser transferida por ondas eletromagnéticas, inclusive no vácuo.",
+        "situacao": "Uma superfície na Lua recebe energia do Sol apesar da ausência de ar entre os dois astros."
+      },
+      {
+        "id": "calor-sensivel",
+        "nome": "Calor sensível",
+        "descricao": "A troca de energia térmica altera a temperatura sem mudança de fase nas condições analisadas.",
+        "situacao": "O aquecimento eleva a temperatura de água líquida de 20 °C para 50 °C, sem ebulição."
+      },
+      {
+        "id": "calor-latente",
+        "nome": "Calor latente",
+        "descricao": "A energia trocada durante uma transição de fase pode mudar o estado físico sem alterar a temperatura de uma substância pura à pressão constante.",
+        "situacao": "Uma mistura de gelo e água pura permanece a 0 °C enquanto parte do gelo derrete sob pressão atmosférica normal."
+      }
+    ],
+    "semente": "56dd0dd7908c1fb2"
+  },
+  {
+    "id": "fis-psc3-eletricidade",
+    "vestibular": "PSC",
+    "etapa": 3,
+    "disciplina": "Física",
+    "assunto": "Circuitos e grandezas elétricas",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "corrente-eletrica",
+        "nome": "Corrente elétrica",
+        "descricao": "Corresponde à quantidade de carga que atravessa uma seção por unidade de tempo.",
+        "situacao": "Em 2 s, passam 6 C por uma seção do fio, o que corresponde a 3 A."
+      },
+      {
+        "id": "diferenca-de-potencial",
+        "nome": "Diferença de potencial",
+        "descricao": "Relaciona a variação de energia potencial elétrica à carga de prova.",
+        "situacao": "Entre dois pontos de um circuito, uma carga de 2 C sofre variação de 12 J em energia potencial, em módulo."
+      },
+      {
+        "id": "resistencia-de-condutor-ohmico",
+        "nome": "Resistência de condutor ôhmico",
+        "descricao": "A razão entre a tensão aplicada e a corrente permanece constante se as condições físicas se mantêm.",
+        "situacao": "Aumentar de 4 para 8 V a tensão no resistor, com temperatura constante, eleva sua corrente de 1 para 2 A."
+      },
+      {
+        "id": "associacao-em-serie",
+        "nome": "Associação em série",
+        "descricao": "Componentes formam um único caminho e são percorridos pela mesma corrente em regime estacionário.",
+        "situacao": "Abrir um dos componentes interrompe a corrente em todos os demais por inexistência de outro caminho."
+      },
+      {
+        "id": "associacao-em-paralelo",
+        "nome": "Associação em paralelo",
+        "descricao": "Componentes ligados entre os mesmos dois nós têm a mesma diferença de potencial.",
+        "situacao": "Duas lâmpadas ligadas aos mesmos terminais continuam permitindo que a outra opere quando uma delas é retirada."
+      }
+    ],
+    "semente": "223b10cb8597db81"
+  },
+  {
+    "id": "fis-sis1-estatica",
+    "vestibular": "SIS",
+    "etapa": 1,
+    "disciplina": "Física",
+    "assunto": "Equilíbrio e pressão",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "equilibrio-translacional",
+        "nome": "Equilíbrio translacional",
+        "descricao": "A soma vetorial das forças é nula, de modo que não há aceleração do centro de massa.",
+        "situacao": "Um objeto flutua sem subir nem descer porque seu peso e a força vertical exercida pela água se equilibram."
+      },
+      {
+        "id": "torque",
+        "nome": "Torque",
+        "descricao": "O efeito de uma força sobre a rotação depende de sua intensidade e da distância perpendicular até o eixo.",
+        "situacao": "Uma porta gira mais facilmente quando é empurrada perpendicularmente perto da maçaneta do que junto à dobradiça."
+      },
+      {
+        "id": "pressao-media",
+        "nome": "Pressão média",
+        "descricao": "É a força normal distribuída por unidade de área.",
+        "situacao": "Uma pessoa com raquetes de neve afunda menos do que alguém com botas estreitas de peso total semelhante."
+      },
+      {
+        "id": "pressao-hidrostatica",
+        "nome": "Pressão hidrostática",
+        "descricao": "Para um líquido em repouso e densidade uniforme, a pressão cresce com a profundidade.",
+        "situacao": "O fundo de um tanque sofre pressão maior do que um ponto do mesmo líquido logo abaixo da superfície."
+      },
+      {
+        "id": "empuxo",
+        "nome": "Empuxo",
+        "descricao": "A força vertical exercida por um fluido em repouso equivale ao peso do fluido deslocado.",
+        "situacao": "Um objeto submerso, preso a um dinamômetro, apresenta leitura menor do que quando suspenso apenas no ar."
+      }
+    ],
+    "semente": "f30dbc06894b22b9"
+  },
+  {
+    "id": "fis-sis2-ondas",
+    "vestibular": "SIS",
+    "etapa": 2,
+    "disciplina": "Física",
+    "assunto": "Ondas e acústica",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "comprimento-de-onda",
+        "nome": "Comprimento de onda",
+        "descricao": "É a distância espacial entre dois pontos consecutivos na mesma fase de uma onda periódica.",
+        "situacao": "Uma foto registra 1,2 m entre duas cristas vizinhas de uma onda na água."
+      },
+      {
+        "id": "frequencia",
+        "nome": "Frequência",
+        "descricao": "Corresponde ao número de ciclos por unidade de tempo.",
+        "situacao": "Em determinado ponto de uma corda, observam-se 20 oscilações completas em 5 s, equivalentes a 4 Hz."
+      },
+      {
+        "id": "reflexao",
+        "nome": "Reflexão",
+        "descricao": "Parte ou toda a onda retorna ao meio de origem ao alcançar uma fronteira.",
+        "situacao": "O som de uma palma volta de uma parede distante e é percebido como eco."
+      },
+      {
+        "id": "difracao",
+        "nome": "Difração",
+        "descricao": "A onda se espalha ao contornar obstáculos ou atravessar uma abertura, sobretudo quando as dimensões são próximas de seu comprimento.",
+        "situacao": "Uma pessoa ouve graves de um alto-falante mesmo posicionada atrás do canto de um muro."
+      },
+      {
+        "id": "ressonancia",
+        "nome": "Ressonância",
+        "descricao": "Uma força periódica próxima à frequência natural pode produzir oscilações de grande amplitude.",
+        "situacao": "Pequenos impulsos aplicados a cada ciclo de um balanço fazem sua amplitude crescer."
+      }
+    ],
+    "semente": "596c81ae024660c7"
+  },
+  {
+    "id": "fis-sis3-optica",
+    "vestibular": "SIS",
+    "etapa": 3,
+    "disciplina": "Física",
+    "assunto": "Óptica, imagens e propagação da luz",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "refracao",
+        "nome": "Refração",
+        "descricao": "Mudanças na velocidade da luz entre meios podem causar mudança de direção quando a incidência é oblíqua.",
+        "situacao": "Um lápis parcialmente mergulhado parece deslocado na região abaixo da água."
+      },
+      {
+        "id": "dispersao",
+        "nome": "Dispersão",
+        "descricao": "O índice de refração varia com o comprimento de onda, permitindo separar cores.",
+        "situacao": "Um prisma transforma um feixe de luz branca numa faixa de cores."
+      },
+      {
+        "id": "reflexao-interna-total",
+        "nome": "Reflexão interna total",
+        "descricao": "Ao ir de um meio de maior para outro de menor índice, luz incidente acima do ângulo crítico permanece no meio original.",
+        "situacao": "Um raio que chega obliquamente à interface dentro de uma fibra óptica retorna para seu núcleo sem sair por aquela interface."
+      },
+      {
+        "id": "imagem-no-espelho-plano",
+        "nome": "Imagem no espelho plano",
+        "descricao": "A imagem é virtual, direita e está à mesma distância do espelho que o objeto, no lado oposto.",
+        "situacao": "Uma fotografia está a 40 cm de um espelho e sua imagem parece estar 40 cm atrás da superfície."
+      },
+      {
+        "id": "lente-convergente",
+        "nome": "Lente convergente",
+        "descricao": "Em ar, uma lente com índice maior do que o externo e mais espessa no centro faz raios paraxiais paralelos convergirem.",
+        "situacao": "Raios de uma fonte distante atravessam uma lente e se aproximam de um ponto onde um anteparo pode interceptá-los."
+      }
+    ],
+    "semente": "56fbfefa1e48ef4a"
+  },
+  {
+    "id": "fis-macro-momento",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Física",
+    "assunto": "Quantidade de movimento e colisões",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "quantidade-de-movimento",
+        "nome": "Quantidade de movimento",
+        "descricao": "É a grandeza vetorial dada pelo produto da massa pela velocidade.",
+        "situacao": "Um carrinho de 2 kg que se move a 3 m/s para leste tem grandeza de 6 kg·m/s nessa direção."
+      },
+      {
+        "id": "impulso",
+        "nome": "Impulso",
+        "descricao": "É a integral da força resultante no tempo e corresponde à variação da quantidade de movimento.",
+        "situacao": "Ao estender o tempo de parada com uma almofada, reduz-se a força média necessária para provocar a mesma mudança de movimento."
+      },
+      {
+        "id": "conservacao-do-momento-linear",
+        "nome": "Conservação do momento linear",
+        "descricao": "Em um sistema com impulso externo resultante desprezível, o momento linear total permanece constante.",
+        "situacao": "Dois patinadores inicialmente parados se empurram e passam a se mover com momentos opostos de mesmo módulo."
+      },
+      {
+        "id": "colisao-elastica",
+        "nome": "Colisão elástica",
+        "descricao": "O momento linear e a energia cinética total se conservam numa colisão isolada desse tipo.",
+        "situacao": "Em um modelo ideal, duas esferas se separam após o choque com a mesma soma de energias cinéticas que tinham antes."
+      },
+      {
+        "id": "colisao-perfeitamente-inelastica",
+        "nome": "Colisão perfeitamente inelástica",
+        "descricao": "Em um choque isolado, o momento total se conserva e os corpos passam a ter a mesma velocidade ao ficarem unidos.",
+        "situacao": "Dois carrinhos colidem num trilho, seus engates se prendem e ambos seguem juntos."
+      }
+    ],
+    "semente": "c383cc1515e091fb"
+  },
+  {
+    "id": "qui-enem-misturas",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Química",
+    "assunto": "Separação de misturas",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "filtracao",
+        "nome": "Filtração",
+        "descricao": "Um meio poroso retém partículas sólidas em suspensão e permite a passagem do fluido.",
+        "situacao": "Uma suspensão de areia em água é passada por papel poroso, que retém os grãos."
+      },
+      {
+        "id": "decantacao",
+        "nome": "Decantação",
+        "descricao": "Diferenças de densidade permitem separar componentes após a formação de regiões ou fases distintas.",
+        "situacao": "Deixa-se terra sedimentar no fundo de um recipiente e depois transfere-se a água sobrenadante."
+      },
+      {
+        "id": "destilacao-simples",
+        "nome": "Destilação simples",
+        "descricao": "A vaporização e a condensação recuperam um componente volátil de uma mistura adequada.",
+        "situacao": "Água evapora de uma solução salina e é recolhida como líquido após passar por um condensador."
+      },
+      {
+        "id": "centrifugacao",
+        "nome": "Centrifugação",
+        "descricao": "A rotação acelera a separação de componentes que sedimentam de modo diferente.",
+        "situacao": "Tubos giram rapidamente, concentrando partículas no fundo em tempo menor do que em repouso."
+      },
+      {
+        "id": "cromatografia",
+        "nome": "Cromatografia",
+        "descricao": "Componentes migram a velocidades diferentes por suas interações com fases móvel e estacionária.",
+        "situacao": "Um solvente sobe em papel e espalha os pigmentos de uma tinta em manchas distintas."
+      }
+    ],
+    "semente": "713e07e57b065c9f"
+  },
+  {
+    "id": "qui-psc1-atomos",
+    "vestibular": "PSC",
+    "etapa": 1,
+    "disciplina": "Química",
+    "assunto": "Átomos, íons e ligações",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "isotopos",
+        "nome": "Isótopos",
+        "descricao": "Átomos do mesmo elemento têm igual número de prótons e diferente número de nêutrons.",
+        "situacao": "Duas amostras contêm átomos com seis prótons, uns com seis nêutrons e outros com oito."
+      },
+      {
+        "id": "cation",
+        "nome": "Cátion",
+        "descricao": "Uma espécie com carga líquida positiva pode resultar da perda de elétrons.",
+        "situacao": "Uma espécie com 11 prótons e 10 elétrons apresenta carga líquida igual a mais uma carga elementar."
+      },
+      {
+        "id": "anion",
+        "nome": "Ânion",
+        "descricao": "Uma espécie com carga líquida negativa pode resultar do ganho de elétrons.",
+        "situacao": "Uma espécie com 17 prótons passa a ter 18 elétrons e apresenta carga líquida negativa."
+      },
+      {
+        "id": "ligacao-covalente",
+        "nome": "Ligação covalente",
+        "descricao": "A ligação envolve compartilhamento de densidade eletrônica entre átomos.",
+        "situacao": "Dois átomos de hidrogênio contribuem com elétrons para um par compartilhado numa molécula."
+      },
+      {
+        "id": "ligacao-ionica",
+        "nome": "Ligação iônica",
+        "descricao": "A atração eletrostática entre íons de cargas opostas organiza, por exemplo, redes cristalinas.",
+        "situacao": "Um sólido é constituído por uma rede de cátions e ânions que se atraem, e conduz eletricidade quando fundido."
+      }
+    ],
+    "semente": "510fb1d4814ed0cc"
+  },
+  {
+    "id": "qui-psc2-solucoes",
+    "vestibular": "PSC",
+    "etapa": 2,
+    "disciplina": "Química",
+    "assunto": "Soluções, concentração e diluição",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "concentracao-em-massa",
+        "nome": "Concentração em massa",
+        "descricao": "É a massa do soluto por volume da solução.",
+        "situacao": "Uma solução final de 2 L contém 10 g de um sal. A grandeza pedida é expressa como 5 g/L."
+      },
+      {
+        "id": "concentracao-em-quantidade-de-materia",
+        "nome": "Concentração em quantidade de matéria",
+        "descricao": "É a quantidade de matéria do soluto por volume da solução.",
+        "situacao": "Uma solução final de 2 L contém 0,50 mol de um soluto, o que corresponde a 0,25 mol/L."
+      },
+      {
+        "id": "diluicao",
+        "nome": "Diluição",
+        "descricao": "A adição de solvente reduz a concentração, sem alterar a quantidade de soluto se não houver perdas.",
+        "situacao": "Ao dobrar o volume de uma solução apenas com água, a massa de soluto é mantida e sua concentração em massa cai pela metade."
+      },
+      {
+        "id": "solucao-saturada",
+        "nome": "Solução saturada",
+        "descricao": "Na temperatura e pressão consideradas, atingiu o equilíbrio com a quantidade máxima que se dissolve.",
+        "situacao": "Após agitar e deixar repousar, uma porção de sal continua no fundo e a concentração no líquido deixa de aumentar."
+      },
+      {
+        "id": "solubilidade",
+        "nome": "Solubilidade",
+        "descricao": "É a quantidade de soluto que pode se dissolver no equilíbrio em determinada quantidade de solvente ou solução e sob condições especificadas.",
+        "situacao": "Uma tabela indica quantos gramas de um sal se dissolvem em 100 g de água a diferentes temperaturas."
+      }
+    ],
+    "semente": "e38326caa4d66cfd"
+  },
+  {
+    "id": "qui-psc3-equilibrio",
+    "vestibular": "PSC",
+    "etapa": 3,
+    "disciplina": "Química",
+    "assunto": "Velocidade, energia e equilíbrio",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "catalisador",
+        "nome": "Catalisador",
+        "descricao": "Uma rota de menor energia de ativação acelera a reação sem alterar sua constante de equilíbrio.",
+        "situacao": "O equilíbrio é atingido mais rapidamente com uma substância que permanece disponível para outros ciclos de reação."
+      },
+      {
+        "id": "equilibrio-dinamico",
+        "nome": "Equilíbrio dinâmico",
+        "descricao": "Em sistema fechado, os processos direto e inverso ocorrem a taxas iguais em equilíbrio.",
+        "situacao": "Uma mistura mantém composição constante, embora partículas de reagente continuem formando produtos e vice-versa."
+      },
+      {
+        "id": "reacao-exotermica",
+        "nome": "Reação exotérmica",
+        "descricao": "A transformação libera calor para a vizinhança a pressão constante e tem variação de entalpia negativa.",
+        "situacao": "O calorímetro registra aumento de temperatura ao ocorrer uma transformação cuja entalpia dos produtos é menor que a dos reagentes."
+      },
+      {
+        "id": "reacao-endotermica",
+        "nome": "Reação endotérmica",
+        "descricao": "A transformação absorve calor da vizinhança a pressão constante e tem variação de entalpia positiva.",
+        "situacao": "Uma transformação resfria a vizinhança enquanto o sistema absorve energia; os produtos têm entalpia maior que a dos reagentes."
+      },
+      {
+        "id": "deslocamento-do-equilibrio-por-concentracao",
+        "nome": "Deslocamento do equilíbrio por concentração",
+        "descricao": "A alteração da quantidade disponível de uma espécie pode levar o sistema a responder até atingir nova composição de equilíbrio.",
+        "situacao": "Produtos são removidos de uma mistura em equilíbrio e, em seguida, a reação direta passa temporariamente a predominar."
+      }
+    ],
+    "semente": "4b34f08da3ef3b2a"
+  },
+  {
+    "id": "qui-sis1-materia",
+    "vestibular": "SIS",
+    "etapa": 1,
+    "disciplina": "Química",
+    "assunto": "Matéria e transformações",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "substancia-simples",
+        "nome": "Substância simples",
+        "descricao": "É constituída por átomos de um único elemento químico, embora possam estar agrupados em moléculas.",
+        "situacao": "Um frasco contém exclusivamente moléculas de oxigênio formadas por dois átomos desse elemento."
+      },
+      {
+        "id": "substancia-composta",
+        "nome": "Substância composta",
+        "descricao": "É uma substância pura constituída por mais de um elemento em proporção definida.",
+        "situacao": "Uma amostra pura mantém proporção fixa entre os átomos de hidrogênio e oxigênio de suas moléculas."
+      },
+      {
+        "id": "mistura-homogenea",
+        "nome": "Mistura homogênea",
+        "descricao": "Apresenta uma única fase na escala considerada e pode conter mais de uma substância.",
+        "situacao": "Após dissolução completa, um líquido contém água e sal distribuídos uniformemente."
+      },
+      {
+        "id": "mistura-heterogenea",
+        "nome": "Mistura heterogênea",
+        "descricao": "Apresenta regiões separadas por fronteiras de fase nas condições observadas.",
+        "situacao": "Mesmo após agitação e repouso, água e óleo formam duas camadas visíveis."
+      },
+      {
+        "id": "transformacao-quimica",
+        "nome": "Transformação química",
+        "descricao": "A composição muda pela conversão de espécies químicas em outras.",
+        "situacao": "Uma lâmina de ferro exposta à umidade passa a apresentar produtos sólidos de corrosão."
+      }
+    ],
+    "semente": "84b68df3f2890af7"
+  },
+  {
+    "id": "qui-sis2-acidos",
+    "vestibular": "SIS",
+    "etapa": 2,
+    "disciplina": "Química",
+    "assunto": "Ácidos, bases e pH",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "acido-de-brnsted-e-lowry",
+        "nome": "Ácido de Brønsted e Lowry",
+        "descricao": "É uma espécie capaz de doar próton em uma reação ácido-base.",
+        "situacao": "Na reação com água, o íon amônio transfere um próton e se converte em amônia."
+      },
+      {
+        "id": "base-de-brnsted-e-lowry",
+        "nome": "Base de Brønsted e Lowry",
+        "descricao": "É uma espécie capaz de aceitar próton em uma reação ácido-base.",
+        "situacao": "Ao reagir com o íon amônio, a água recebe um próton e passa a hidroxônio."
+      },
+      {
+        "id": "par-acido-base-conjugado",
+        "nome": "Par ácido-base conjugado",
+        "descricao": "As duas espécies diferem por um próton, transferido durante a reação.",
+        "situacao": "Amônio e amônia são escritos lado a lado para mostrar as formas anterior e posterior à perda de um próton."
+      },
+      {
+        "id": "indicador-acido-base",
+        "nome": "Indicador ácido-base",
+        "descricao": "Uma substância muda de cor em uma faixa de pH devido ao equilíbrio entre formas com cores diferentes.",
+        "situacao": "Gotas de um extrato ficam rosadas em meio ácido e assumem outra cor em solução básica."
+      },
+      {
+        "id": "neutralizacao",
+        "nome": "Neutralização",
+        "descricao": "A transferência de prótons entre ácido e base pode consumir hidroxônio e hidróxido, formando água.",
+        "situacao": "Misturam-se soluções aquosas diluídas de ácido clorídrico e hidróxido de sódio em quantidades estequiométricas."
+      }
+    ],
+    "semente": "5660ee53db348e85"
+  },
+  {
+    "id": "qui-sis3-organica",
+    "vestibular": "SIS",
+    "etapa": 3,
+    "disciplina": "Química",
+    "assunto": "Funções orgânicas e identificação estrutural",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "alcool",
+        "nome": "Álcool",
+        "descricao": "Apresenta hidroxila ligada a carbono saturado em sua estrutura.",
+        "situacao": "A estrutura CH₃CH₂OH tem uma hidroxila no carbono terminal de uma cadeia saturada."
+      },
+      {
+        "id": "aldeido",
+        "nome": "Aldeído",
+        "descricao": "Apresenta carbonila terminal cujo carbono está ligado a um hidrogênio.",
+        "situacao": "Em CH₃CHO, o carbono da carbonila está na extremidade e conserva ligação com H."
+      },
+      {
+        "id": "cetona",
+        "nome": "Cetona",
+        "descricao": "Apresenta carbonila ligada a dois grupos carbônicos.",
+        "situacao": "Em CH₃COCH₃, o carbono da carbonila está entre dois grupos metila."
+      },
+      {
+        "id": "acido-carboxilico",
+        "nome": "Ácido carboxílico",
+        "descricao": "Seu grupo funcional reúne carbonila e hidroxila ligadas ao mesmo carbono.",
+        "situacao": "O grupo COOH na estrutura do ácido presente no vinagre tem uma ligação dupla a oxigênio e uma ligação à hidroxila no mesmo carbono."
+      },
+      {
+        "id": "ester",
+        "nome": "Éster",
+        "descricao": "Apresenta grupo derivado de ácido carboxílico em que o oxigênio ligado ao carbonilo se liga a outro grupo orgânico.",
+        "situacao": "Em CH₃COOCH₂CH₃, o oxigênio entre o carbono carbonílico e a cadeia etila caracteriza a função."
+      }
+    ],
+    "semente": "c0443f2ceb89e3f2"
+  },
+  {
+    "id": "qui-macro-eletroquimica",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Química",
+    "assunto": "Oxirredução e eletroquímica",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "oxidacao",
+        "nome": "Oxidação",
+        "descricao": "Em uma semirreação, a espécie perde elétrons e aumenta seu número de oxidação.",
+        "situacao": "O zinco metálico passa a Zn²⁺ e libera dois elétrons."
+      },
+      {
+        "id": "reducao",
+        "nome": "Redução",
+        "descricao": "Em uma semirreação, a espécie ganha elétrons e diminui seu número de oxidação.",
+        "situacao": "Um íon Cu²⁺ recebe dois elétrons e forma cobre metálico."
+      },
+      {
+        "id": "anodo",
+        "nome": "Ânodo",
+        "descricao": "É o eletrodo em que ocorre oxidação, tanto em pilhas quanto em células de eletrólise.",
+        "situacao": "Em certa célula, um eletrodo perde massa porque seus átomos passam para a solução na forma de íons positivos."
+      },
+      {
+        "id": "catodo",
+        "nome": "Cátodo",
+        "descricao": "É o eletrodo em que ocorre redução, independentemente do sinal elétrico que assume em cada célula.",
+        "situacao": "Um metal é depositado sobre um eletrodo quando seus íons recebem elétrons na superfície."
+      },
+      {
+        "id": "eletrolise",
+        "nome": "Eletrólise",
+        "descricao": "Uma fonte externa fornece energia para promover uma transformação eletroquímica não espontânea nas condições consideradas.",
+        "situacao": "Uma fonte de corrente é ligada a dois eletrodos para revestir uma peça com metal a partir de íons em solução."
+      }
+    ],
+    "semente": "42b66f317a7923b0"
+  }
+]

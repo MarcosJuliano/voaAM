@@ -7,16 +7,23 @@ O gabarito permanece no servidor e não é incluído no JSON dos enunciados.
 import json
 from random import SystemRandom
 from collections import Counter
+from functools import lru_cache
 from pathlib import Path
 from flask import Blueprint, jsonify, request, session
 from banco import conectar
+from humanas import acervo_autoral, acervo_humanas, questoes_autorais
 
 bp_treino = Blueprint('treino', __name__)
 CAMINHO = Path(__file__).resolve().parent / 'database' / 'questoes_treino.json'
 
 
-def catalogo():
+@lru_cache(maxsize=1)
+def questoes_importadas():
     return json.loads(CAMINHO.read_text(encoding='utf-8'))
+
+
+def catalogo():
+    return questoes_importadas() + list(questoes_autorais())
 
 
 def apresentar(q, ordem):
@@ -28,6 +35,39 @@ def apresentar(q, ordem):
 
 def autenticar():
     return session.get('usuario_id')
+
+
+@bp_treino.get('/api/praticar/humanas/assuntos')
+@bp_treino.get('/api/praticar/exercicios/assuntos')
+def assuntos_autorais():
+    acervo = acervo_humanas() if request.path.endswith('/humanas/assuntos') else acervo_autoral()
+    return jsonify({'assuntos': [
+        {'id': chave, 'total': len(grupo['questoes']),
+         'niveis': Counter(q['nivel'] for q in grupo['questoes']),
+         **{campo: grupo[campo] for campo in ('titulo', 'disciplina', 'vestibular', 'etapa',
+                                             'descricao', 'dificuldade_sugerida')}}
+        for chave, grupo in acervo.items()
+    ]})
+
+
+@bp_treino.get('/api/praticar/humanas/<chave>/questoes')
+@bp_treino.get('/api/praticar/exercicios/<chave>/questoes')
+def exercicios_autorais(chave):
+    if not autenticar():
+        return jsonify({'message': 'Faça login para praticar.'}), 401
+    grupo = acervo_autoral().get(chave)
+    if grupo is None:
+        return jsonify({'message': 'Assunto não encontrado.'}), 404
+    nivel = request.args.get('nivel', type=int)
+    if nivel not in (1, 2, 3):
+        return jsonify({'message': 'Escolha um nível de 1 a 3.'}), 400
+    questoes = [q for q in grupo['questoes'] if q['nivel'] == nivel]
+    sorteadas = SystemRandom().sample(questoes, min(10, len(questoes)))
+    resposta = jsonify({'questoes': [
+        apresentar(q, range(len(q['alternativas']))) for q in sorteadas
+    ]})
+    resposta.headers['Cache-Control'] = 'private, no-store'
+    return resposta
 
 
 @bp_treino.get('/api/treino/catalogo')

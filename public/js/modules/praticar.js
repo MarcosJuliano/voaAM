@@ -6,6 +6,7 @@ let pratAbaAtual = 'sim';
 let simVestAtual = 'ENEM';
 let exVestAtual = 'ENEM';
 let simModoAtual = null; // 'simples' or 'completo'
+const pratBotoesAbas = [...document.querySelectorAll('#prat-abas [data-prat-aba]')];
 
 function novaTentativaSimulado() {
   return Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join('');
@@ -93,7 +94,7 @@ function simModoAba(modo) {
   const grid         = document.getElementById('sim-vest-picker-grid');
   const cardsContainer = document.getElementById('sim-cards-container');
   if (!picker || !grid) return;
-  picker.style.display = 'block';
+  picker.hidden = false;
   if (cardsContainer) cardsContainer.innerHTML = '';
 
   // ── MODO COMPLETO: grid igual ao simples, dados do SC_PROVAS ─
@@ -113,7 +114,7 @@ function simModoAba(modo) {
             ? `${nProvas} ano${nProvas > 1 ? 's' : ''} disponível${nProvas > 1 ? 'veis' : ''}`
             : `${scGetQuestoes(chaves[0]).length} questões`;
       }
-      return `<button type="button" class="pratica-opcao" onclick="scMostrarAnos('${key}')" style="
+      return `<button type="button" class="pratica-opcao" data-sim-vestibular="${key}" style="
         padding:14px 12px;border-radius:14px;border:1px solid ${cfg.corBorda};
         --fundo-cartao:${cfg.cor};color:var(--text);font-family:var(--font);
         cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px">
@@ -134,7 +135,7 @@ function simModoAba(modo) {
     const qs      = Math.ceil(cfg.qs / 2);
     const mins    = Math.ceil(cfg.horas * 60 / 2);
     const horasStr = mins >= 60 ? (mins/60).toFixed(1).replace('.0','')+'h' : mins+'min';
-    return `<button type="button" class="pratica-opcao" onclick="simSelecionarVestibular('${key}')" style="
+    return `<button type="button" class="pratica-opcao" data-sim-vestibular="${key}" style="
       padding:14px 12px;border-radius:14px;border:1px solid ${cfg.corBorda};
       --fundo-cartao:${cfg.cor};color:var(--text);font-family:var(--font);
       cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px">
@@ -150,7 +151,7 @@ function scSelecionarVestibularCompleto(vestKey) {
   const v = provasOficiaisCatalogo[vestKey];
   if (!v) return;
   const picker = document.getElementById('sim-vest-picker');
-  if (picker) picker.style.display = 'none';
+  if (picker) picker.hidden = true;
   const container = document.getElementById('sim-cards-container');
   if (!container) return;
 
@@ -234,9 +235,10 @@ function scSelecionarAnoCompleto(vestKey, provaKey) {
 }
 
 function simSelecionarVestibular(vestKey) {
+  if (!simConfig[vestKey]) return;
   simVestAtual = vestKey;
   const picker = document.getElementById('sim-vest-picker');
-  if (picker) picker.style.display = 'none';
+  if (picker) picker.hidden = true;
   renderSimCardsNovo(vestKey, simModoAtual);
 }
 
@@ -385,42 +387,21 @@ function iniciarSimuladoNovo(vestKey, modo) {
 }
 
 function pratAba(aba, filtrosTreino) {
+  if (!pratBotoesAbas.some(botao => botao.dataset.pratAba === aba)) return;
   pratAbaAtual = aba;
-  const btnSim = document.getElementById('pratab-sim');
-  const btnEx = document.getElementById('pratab-ex');
-  const panelSim = document.getElementById('prat-sim-panel');
-  const panelEx = document.getElementById('prat-ex-panel');
-  const panelCustom = document.getElementById('prat-custom-panel');
-  const btnCustom = document.getElementById('pratab-custom');
-  if (!btnSim) return;
-
-  const isSim = aba === 'sim';
-  const isCustom = aba === 'personalizado';
-  if (panelCustom) panelCustom.style.display = isCustom ? 'block' : 'none';
-  [[btnSim, isSim], [btnCustom, isCustom], [btnEx, aba === 'ex']].forEach(([botao, ativo]) => {
-    botao?.classList.toggle('active', ativo);
-    botao?.setAttribute('aria-pressed', String(ativo));
-  });
-  if (panelSim) panelSim.style.display = isSim ? 'block' : 'none';
-  if (panelEx)  panelEx.style.display  = aba === 'ex' ? 'block' : 'none';
-
-  if (isCustom) {
-    return treinoCarregarFiltros(filtrosTreino);
+  for (const botao of pratBotoesAbas) {
+    const ativo = botao.dataset.pratAba === aba;
+    botao.classList.toggle('active', ativo);
+    botao.setAttribute('aria-pressed', String(ativo));
+    const painel = document.getElementById(botao.getAttribute('aria-controls'));
+    if (painel) painel.hidden = !ativo;
   }
-  if (isSim) {
-    simModoAba('simples');
-  } else {
-    // Reset exercise sub-panels — always show Assuntos first
-    exAssuntoAtual = null;
-    exNivelAtual   = null;
-    const assPanel   = document.getElementById('ex-assuntos-panel');
-    const nivelPanel = document.getElementById('ex-nivel-panel');
-    const questPanel = document.getElementById('ex-questoes-panel');
-    if (assPanel)   assPanel.style.display   = 'block';
-    if (nivelPanel) nivelPanel.style.display  = 'none';
-    if (questPanel) questPanel.style.display  = 'none';
-    renderListaEx();
-  }
+
+  if (aba === 'personalizado') return treinoCarregarFiltros(filtrosTreino);
+  if (aba === 'sim') return simModoAba('simples');
+
+  // A aba Exercícios começa na lista de assuntos.
+  return exVoltarAssuntos();
 }
 
 function simVestAba(vest, el) {
@@ -517,3 +498,19 @@ function abrirVestibularDoInicio(vestibular) {
 
 window.iniciarSimuladoNovo = iniciarSimuladoNovo;
 if (typeof abrirVestibularDoInicio === 'function') window.abrirVestibularDoInicio = abrirVestibularDoInicio;
+
+for (const botao of pratBotoesAbas) {
+  botao.addEventListener('click', () => pratAba(botao.dataset.pratAba));
+}
+for (const botao of document.querySelectorAll('#sim-modo-tabs [data-sim-modo]')) {
+  botao.addEventListener('click', () => simModoAba(botao.dataset.simModo));
+}
+document.getElementById('sim-vest-picker-grid')?.addEventListener('click', evento => {
+  const botao = evento.target.closest('[data-sim-vestibular]');
+  if (!botao) return;
+  const chave = botao.dataset.simVestibular;
+  if (simModoAtual === 'completo') scMostrarAnos(chave);
+  else simSelecionarVestibular(chave);
+});
+
+pratAba('sim');

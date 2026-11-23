@@ -1,0 +1,1478 @@
+[
+  {
+    "id": "psc1-antiguidade",
+    "vestibular": "PSC",
+    "etapa": 1,
+    "disciplina": "História",
+    "assunto": "Sociedades da Antiguidade",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "democracia-ateniense",
+        "nome": "Democracia ateniense",
+        "descricao": "Os cidadãos participavam diretamente de deliberações, mas a cidadania excluía mulheres, escravizados e estrangeiros.",
+        "situacao": "Numa pólis, homens livres nascidos de famílias reconhecidas votavam em assembleia, sem representantes eleitos para decidir em seu lugar."
+      },
+      {
+        "id": "republica-romana",
+        "nome": "República romana",
+        "descricao": "Magistraturas e assembleias coexistiam com um Senado influente, em uma ordem política marcada por disputas entre patrícios e plebeus.",
+        "situacao": "Depois da deposição dos reis, dois chefes anuais dividiam o comando, enquanto elites senatoriais mantinham forte influência."
+      },
+      {
+        "id": "imperio-romano",
+        "nome": "Império romano",
+        "descricao": "O poder se concentrou na figura do imperador, mesmo quando instituições republicanas sobreviveram formalmente.",
+        "situacao": "Otávio recebeu o título de Augusto e acumulou competências militares e políticas sem abolir de imediato o Senado."
+      },
+      {
+        "id": "egito-faraonico",
+        "nome": "Egito faraônico",
+        "descricao": "O Estado se organizava no vale do Nilo, com autoridade régia associada à religião e capacidade de mobilizar trabalho e tributos.",
+        "situacao": "Escribas registravam parte da produção agrícola e a corte usava excedentes em obras e celebrações ligadas ao soberano sacralizado."
+      },
+      {
+        "id": "civilizacoes-mesopotamicas",
+        "nome": "Civilizações mesopotâmicas",
+        "descricao": "Sociedades dos vales do Tigre e do Eufrates desenvolveram cidades e formas escritas de administração.",
+        "situacao": "Tabuletas de argila registravam entregas de cereais a templos em cidades cercadas por terras irrigadas."
+      }
+    ],
+    "semente": "c42c36284df07496"
+  },
+  {
+    "id": "psc1-fontes",
+    "vestibular": "PSC",
+    "etapa": 1,
+    "disciplina": "História",
+    "assunto": "Fontes, memória e patrimônio",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "fonte-oral",
+        "nome": "Fonte oral",
+        "descricao": "Um depoimento é produzido pela interação entre narrador e entrevistador e expressa uma memória situada no presente.",
+        "situacao": "Para investigar uma greve, uma pesquisadora grava antigos operários e compara como suas narrativas mudam conforme a trajetória de cada um."
+      },
+      {
+        "id": "fonte-arqueologica",
+        "nome": "Fonte arqueológica",
+        "descricao": "Vestígios materiais e seu contexto de deposição ajudam a investigar modos de vida mesmo sem registros escritos.",
+        "situacao": "A equipe registra a camada e a posição de sementes carbonizadas junto de fragmentos de recipientes ao escavar uma antiga aldeia."
+      },
+      {
+        "id": "patrimonio-imaterial",
+        "nome": "Patrimônio imaterial",
+        "descricao": "O bem cultural é uma prática, um saber ou uma expressão transmitida e recriada por seus praticantes.",
+        "situacao": "Uma comunidade pede o reconhecimento do modo de fazer uma festa anual, com cantos, técnicas e conhecimentos transmitidos pelos mais velhos."
+      },
+      {
+        "id": "patrimonio-material",
+        "nome": "Patrimônio material",
+        "descricao": "O bem é um objeto, conjunto edificado ou lugar reconhecido por seu valor cultural.",
+        "situacao": "Moradores solicitam a proteção de uma antiga estação ferroviária, de sua plataforma de embarque e da casa de máquinas."
+      },
+      {
+        "id": "tempo-historico",
+        "nome": "Tempo histórico",
+        "descricao": "A duração e o ritmo das transformações são analisados de acordo com os processos sociais, além da simples sucessão de datas.",
+        "situacao": "Mesmo após uma mudança de regime em um ano preciso, uma historiadora acompanha a permanência de relações de trabalho por várias décadas."
+      }
+    ],
+    "semente": "37574395ed399c7f"
+  },
+  {
+    "id": "psc1-cartografia",
+    "vestibular": "PSC",
+    "etapa": 1,
+    "disciplina": "Geografia",
+    "assunto": "Cartografia e análise espacial",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "escala-cartografica",
+        "nome": "Escala cartográfica",
+        "descricao": "A razão entre a distância no mapa e a distância real permite interpretar a extensão representada.",
+        "situacao": "Uma linha mede 3 cm num mapa de 1:50.000 e corresponde a 1,5 km no terreno."
+      },
+      {
+        "id": "projecao-equivalente",
+        "nome": "Projeção equivalente",
+        "descricao": "Conserva a proporção das áreas e aceita deformações em outras propriedades.",
+        "situacao": "Um atlas compara corretamente a superfície relativa dos continentes, embora suas formas fiquem alongadas em certas latitudes."
+      },
+      {
+        "id": "curvas-de-nivel",
+        "nome": "Curvas de nível",
+        "descricao": "Linhas unem pontos de mesma altitude e sua proximidade indica maior inclinação quando o intervalo vertical é constante.",
+        "situacao": "Ao planejar uma trilha, o técnico evita a vertente em que as linhas marcadas de 20 em 20 metros aparecem mais juntas."
+      },
+      {
+        "id": "sensoriamento-remoto",
+        "nome": "Sensoriamento remoto",
+        "descricao": "Sensores captam informações sobre a superfície sem contato direto com ela.",
+        "situacao": "Uma equipe identifica cicatrizes de queimadas usando a radiação detectada por um satélite em datas sucessivas."
+      },
+      {
+        "id": "sistema-de-informacao-geografica",
+        "nome": "Sistema de informação geográfica",
+        "descricao": "Camadas de dados localizados podem ser cruzadas para responder a perguntas espaciais.",
+        "situacao": "Para escolher áreas prioritárias, a prefeitura sobrepõe mapas digitais de alagamento, escolas e população."
+      }
+    ],
+    "semente": "75a1a9d47690b2dc"
+  },
+  {
+    "id": "psc1-populacao",
+    "vestibular": "PSC",
+    "etapa": 1,
+    "disciplina": "Geografia",
+    "assunto": "População e migrações",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "densidade-demografica",
+        "nome": "Densidade demográfica",
+        "descricao": "Relaciona o número de habitantes com a área territorial.",
+        "situacao": "Dois municípios têm a mesma população, mas o de menor área apresenta mais habitantes por quilômetro quadrado."
+      },
+      {
+        "id": "crescimento-vegetativo",
+        "nome": "Crescimento vegetativo",
+        "descricao": "É a diferença entre nascimentos e mortes em determinado período.",
+        "situacao": "Antes de contabilizar quem entrou ou saiu da cidade, o analista subtrai os óbitos do número de nascidos vivos."
+      },
+      {
+        "id": "saldo-migratorio",
+        "nome": "Saldo migratório",
+        "descricao": "É a diferença entre as entradas e saídas de pessoas de um território.",
+        "situacao": "Em um ano, um estado recebe 4 mil moradores de fora e perde 6 mil para outros estados, obtendo um resultado de menos 2 mil."
+      },
+      {
+        "id": "migracao-pendular",
+        "nome": "Migração pendular",
+        "descricao": "É um deslocamento frequente entre lugares, sem mudança da residência habitual.",
+        "situacao": "Uma estudante cruza diariamente o limite municipal para ir à universidade e retorna para dormir em casa."
+      },
+      {
+        "id": "envelhecimento-populacional",
+        "nome": "Envelhecimento populacional",
+        "descricao": "A participação relativa dos idosos aumenta quando, entre outros fatores, cai a fecundidade e aumenta a sobrevivência.",
+        "situacao": "Comparadas duas pirâmides etárias, a mais recente tem base mais estreita e proporção maior de pessoas nos grupos do topo."
+      }
+    ],
+    "semente": "f9633d58e9214b5b"
+  },
+  {
+    "id": "psc2-modernidade",
+    "vestibular": "PSC",
+    "etapa": 2,
+    "disciplina": "História",
+    "assunto": "Estado, economia e reformas na Europa moderna",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "absolutismo",
+        "nome": "Absolutismo",
+        "descricao": "A autoridade se centralizou na monarquia, com instrumentos como burocracia, tributação e exército.",
+        "situacao": "A Coroa enviava seus próprios funcionários para arrecadar impostos e reduzia a autonomia militar de senhores locais."
+      },
+      {
+        "id": "mercantilismo",
+        "nome": "Mercantilismo",
+        "descricao": "Governos intervinham no comércio e na produção para fortalecer a economia e a arrecadação do Estado.",
+        "situacao": "A Coroa restringia importações, concedia monopólios e protegia oficinas exportadoras."
+      },
+      {
+        "id": "humanismo-renascentista",
+        "nome": "Humanismo renascentista",
+        "descricao": "A leitura de autores clássicos e o interesse pela ação humana renovaram práticas intelectuais europeias.",
+        "situacao": "Um estudioso compara manuscritos gregos para corrigir traduções e valoriza o argumento apoiado na leitura crítica."
+      },
+      {
+        "id": "reforma-protestante",
+        "nome": "Reforma protestante",
+        "descricao": "Movimentos de ruptura com Roma deram origem a novas comunidades cristãs na Europa.",
+        "situacao": "Em territórios germânicos, críticas às indulgências circularam impressas e alguns príncipes aderiram às novas igrejas."
+      },
+      {
+        "id": "contrarreforma-catolica",
+        "nome": "Contrarreforma católica",
+        "descricao": "A Igreja católica respondeu às rupturas com reafirmação doutrinária e reformas, inclusive na formação clerical.",
+        "situacao": "Após o Concílio de Trento, dioceses organizaram seminários e ordens religiosas ampliaram colégios e missões."
+      }
+    ],
+    "semente": "101db50b7fa80255"
+  },
+  {
+    "id": "psc2-amazonas",
+    "vestibular": "PSC",
+    "etapa": 2,
+    "disciplina": "História",
+    "assunto": "Formação histórica do Amazonas",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "diretorio-dos-indios",
+        "nome": "Diretório dos Índios",
+        "descricao": "A administração pombalina procurou controlar vilas, trabalho e língua indígenas, promovendo o português.",
+        "situacao": "Autoridades civis assumiram antigas aldeias missionárias e passaram a impor o idioma da Coroa em atividades oficiais."
+      },
+      {
+        "id": "cabanagem",
+        "nome": "Cabanagem",
+        "descricao": "Uma revolta popular na província do Grão-Pará mobilizou pobres livres, indígenas, mestiços e outros grupos nos anos 1830.",
+        "situacao": "Insurgentes chegaram ao governo de Belém, e o conflito atingiu áreas correspondentes ao atual Amazonas."
+      },
+      {
+        "id": "provincia-do-amazonas",
+        "nome": "Província do Amazonas",
+        "descricao": "O desmembramento do Pará em 1850 criou uma unidade administrativa própria, instalada em 1852.",
+        "situacao": "Correspondências do Império passam a tratar a antiga comarca do Alto Amazonas como província com governo próprio."
+      },
+      {
+        "id": "ciclo-da-borracha",
+        "nome": "Ciclo da borracha",
+        "descricao": "A demanda industrial pelo látex integrou a região a mercados internacionais e sustentou riqueza concentrada e trabalho precário.",
+        "situacao": "O comércio importador cresceu em Manaus, enquanto seringueiros na floresta se endividavam ao comprar mantimentos a crédito."
+      },
+      {
+        "id": "zona-franca-de-manaus",
+        "nome": "Zona Franca de Manaus",
+        "descricao": "Um regime de incentivos fiscais atraiu empresas e promoveu a industrialização concentrada na capital.",
+        "situacao": "Fabricantes instalaram linhas de montagem de eletrônicos atraídos por incentivos de importação e produção."
+      }
+    ],
+    "semente": "fe55ad9da61346b4"
+  },
+  {
+    "id": "psc2-territorio",
+    "vestibular": "PSC",
+    "etapa": 2,
+    "disciplina": "Geografia",
+    "assunto": "Território, Estado e economia",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "soberania-territorial",
+        "nome": "Soberania territorial",
+        "descricao": "Um Estado exerce autoridade política sobre um território e regula seus limites e acessos.",
+        "situacao": "Um governo decide sob quais condições embarcações estrangeiras podem operar em águas sobre as quais tem jurisdição."
+      },
+      {
+        "id": "uniao-aduaneira",
+        "nome": "União aduaneira",
+        "descricao": "Membros reduzem barreiras internas e adotam, como regra, uma tarifa externa comum.",
+        "situacao": "Países vizinhos eliminam tarifas entre si e adotam o mesmo tributo de entrada para produtos de fora do bloco."
+      },
+      {
+        "id": "divisao-internacional-do-trabalho",
+        "nome": "Divisão internacional do trabalho",
+        "descricao": "As funções de produção e comando são distribuídas de modo desigual entre países ou regiões.",
+        "situacao": "Uma cadeia usa matérias-primas de um país, monta peças em outro e concentra patentes e decisões em um terceiro."
+      },
+      {
+        "id": "corredor-de-exportacao",
+        "nome": "Corredor de exportação",
+        "descricao": "Infraestruturas de transporte se articulam para escoar produção a mercados externos.",
+        "situacao": "A soja segue por estrada até um terminal onde é transferida para barcaças que levam a carga a um porto marítimo."
+      },
+      {
+        "id": "dependencia-logistica",
+        "nome": "Dependência logística",
+        "descricao": "Economias e comunidades ficam vulneráveis quando dependem de poucas rotas ou transportes.",
+        "situacao": "Uma seca reduz o calado, encarece o frete e deixa localidades abastecidas por um único percurso fluvial sem reposição regular."
+      }
+    ],
+    "semente": "a011063f6ed4a96c"
+  },
+  {
+    "id": "psc2-urbanizacao",
+    "vestibular": "PSC",
+    "etapa": 2,
+    "disciplina": "Geografia",
+    "assunto": "Cidade, moradia e desigualdade",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "segregacao-socioespacial",
+        "nome": "Segregação socioespacial",
+        "descricao": "Grupos sociais ocupam a cidade de forma desigual, com acesso distinto a infraestrutura e oportunidades.",
+        "situacao": "A moradia mais barata concentra famílias longe do emprego, enquanto os bairros centrais com serviços completos ficam inacessíveis pela renda."
+      },
+      {
+        "id": "conurbacao",
+        "nome": "Conurbação",
+        "descricao": "Manchas urbanizadas de municípios distintos se unem fisicamente.",
+        "situacao": "Com a expansão de loteamentos vizinhos, desaparece a faixa rural entre duas cidades e suas ruas passam a formar um tecido contínuo."
+      },
+      {
+        "id": "gentrificacao",
+        "nome": "Gentrificação",
+        "descricao": "A valorização de uma área pode substituir moradores e atividades anteriores por grupos com maior renda.",
+        "situacao": "Após a renovação de um bairro histórico, aluguéis sobem e oficinas antigas cedem lugar a lojas de luxo."
+      },
+      {
+        "id": "ilha-de-calor-urbana",
+        "nome": "Ilha de calor urbana",
+        "descricao": "Materiais construídos, pouca vegetação e atividades urbanas favorecem temperaturas mais altas em certas áreas.",
+        "situacao": "À noite, sensores registram mais calor numa avenida asfaltada e adensada do que num parque arborizado próximo."
+      },
+      {
+        "id": "risco-de-inundacao-urbana",
+        "nome": "Risco de inundação urbana",
+        "descricao": "A ocupação de planícies inundáveis e a impermeabilização do solo aumentam a exposição e o volume do escoamento.",
+        "situacao": "Depois da pavimentação extensiva e da construção à margem do igarapé, chuvas semelhantes passam a alagar mais residências."
+      }
+    ],
+    "semente": "d28b9abfbe62e0ea"
+  },
+  {
+    "id": "psc3-conflitos",
+    "vestibular": "PSC",
+    "etapa": 3,
+    "disciplina": "História",
+    "assunto": "Guerras e revoluções do século XX",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "primeira-guerra-mundial",
+        "nome": "Primeira Guerra Mundial",
+        "descricao": "Rivalidades imperialistas, alianças e nacionalismos transformaram uma crise regional em guerra de grande escala.",
+        "situacao": "Depois do atentado de Sarajevo, a mobilização de impérios e seus aliados levou ao combate prolongado de trincheiras."
+      },
+      {
+        "id": "revolucao-russa",
+        "nome": "Revolução Russa",
+        "descricao": "Crises do czarismo, fome e guerra abriram caminho para a tomada do poder pelos bolcheviques em 1917.",
+        "situacao": "Conselhos de operários e soldados participam de disputas políticas enquanto a liderança de Lenin defende a saída da guerra."
+      },
+      {
+        "id": "crise-de-1929",
+        "nome": "Crise de 1929",
+        "descricao": "Quebras de bancos e contração do crédito e da demanda ampliaram o desemprego e transmitiram a depressão a outros países.",
+        "situacao": "A forte queda das ações nos EUA foi seguida por falências e pelo recuo do comércio internacional."
+      },
+      {
+        "id": "segunda-guerra-mundial",
+        "nome": "Segunda Guerra Mundial",
+        "descricao": "A expansão de regimes do Eixo provocou uma guerra global, com violência em massa contra civis.",
+        "situacao": "A invasão da Polônia pela Alemanha levou ao confronto europeu que se articulou à guerra no Pacífico."
+      },
+      {
+        "id": "descolonizacao-afro-asiatica",
+        "nome": "Descolonização afro-asiática",
+        "descricao": "Movimentos de independência enfrentaram impérios enfraquecidos, por negociação ou conflito armado.",
+        "situacao": "Na Argélia, uma guerra contra a França terminou com o reconhecimento da soberania nacional em 1962."
+      }
+    ],
+    "semente": "55f788ef5bd4baa7"
+  },
+  {
+    "id": "psc3-republica",
+    "vestibular": "PSC",
+    "etapa": 3,
+    "disciplina": "História",
+    "assunto": "República, trabalho e democracia no Brasil",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "coronelismo",
+        "nome": "Coronelismo",
+        "descricao": "Chefes locais negociavam favores e controle eleitoral com elites estaduais, apoiados em dependência econômica.",
+        "situacao": "Moradores que dependiam de um proprietário para emprego eram pressionados a votar em candidatos escolhidos por ele."
+      },
+      {
+        "id": "estado-novo",
+        "nome": "Estado Novo",
+        "descricao": "Entre 1937 e 1945, Vargas governou sob uma ditadura que centralizou o poder e controlou a vida política e a imprensa.",
+        "situacao": "O Congresso foi fechado e um órgão de propaganda e censura divulgava a imagem oficial do governo."
+      },
+      {
+        "id": "ditadura-militar-brasileira",
+        "nome": "Ditadura militar brasileira",
+        "descricao": "Governos militares restringiram direitos políticos e reprimiram opositores após o golpe de 1964.",
+        "situacao": "Com o AI-5, ampliaram-se cassações, censura e suspensão do habeas corpus para determinados crimes políticos."
+      },
+      {
+        "id": "diretas-ja",
+        "nome": "Diretas Já",
+        "descricao": "Uma mobilização popular pressionou pela volta da eleição presidencial direta na década de 1980.",
+        "situacao": "Comícios defenderam a emenda Dante de Oliveira, mas o presidente seguinte ainda foi escolhido por um colégio eleitoral."
+      },
+      {
+        "id": "constituicao-de-1988",
+        "nome": "Constituição de 1988",
+        "descricao": "A nova ordem constitucional ampliou direitos civis e sociais e consolidou instituições democráticas.",
+        "situacao": "Uma assembleia eleita reconheceu a saúde como direito de todos e reafirmou as liberdades de expressão e associação."
+      }
+    ],
+    "semente": "88ed651136c7f906"
+  },
+  {
+    "id": "psc3-globalizacao",
+    "vestibular": "PSC",
+    "etapa": 3,
+    "disciplina": "Geografia",
+    "assunto": "Globalização e organização da economia",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "cadeia-global-de-valor",
+        "nome": "Cadeia global de valor",
+        "descricao": "Etapas de fabricação e serviços são distribuídos entre territórios, com remuneração desigual de cada função.",
+        "situacao": "Um telefone reúne design, semicondutores e montagem de diferentes países, mas grande parte da receita fica com quem controla a marca."
+      },
+      {
+        "id": "terceirizacao-produtiva",
+        "nome": "Terceirização produtiva",
+        "descricao": "Uma empresa contrata outra para executar uma atividade antes realizada internamente ou diretamente pelo contratante.",
+        "situacao": "Uma fábrica transfere a manutenção de máquinas a uma prestadora que passa a contratar e gerir os técnicos."
+      },
+      {
+        "id": "conteinerizacao",
+        "nome": "Conteinerização",
+        "descricao": "Unidades padronizadas reduzem o manuseio e facilitam a transferência de cargas entre modais.",
+        "situacao": "A mesma caixa lacrada segue de caminhão para navio e depois para trem, sem descarregar cada produto individualmente."
+      },
+      {
+        "id": "divisao-digital",
+        "nome": "Divisão digital",
+        "descricao": "Diferenças de acesso à conexão, equipamentos e habilidades afetam a participação em serviços digitais.",
+        "situacao": "Alunos com internet instável não conseguem acompanhar a mesma carga de atividades on-line oferecida a colegas conectados."
+      },
+      {
+        "id": "especializacao-exportadora",
+        "nome": "Especialização exportadora",
+        "descricao": "Um território concentra parcela significativa de suas vendas externas em poucos produtos ou ramos.",
+        "situacao": "A queda no preço internacional de um minério reduz drasticamente a receita de um país dependente dessa mercadoria."
+      }
+    ],
+    "semente": "8721a7f70ae15306"
+  },
+  {
+    "id": "psc3-ambiente",
+    "vestibular": "PSC",
+    "etapa": 3,
+    "disciplina": "Geografia",
+    "assunto": "Mudanças ambientais e gestão de riscos",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "desmatamento-em-arco",
+        "nome": "Desmatamento em arco",
+        "descricao": "A retirada de floresta se concentra historicamente em bordas sul e leste da Amazônia, associada à expansão de frentes econômicas.",
+        "situacao": "Imagens mostram abertura de estradas, pastos e lavouras em municípios no limite entre áreas de floresta mais contínua e a fronteira agropecuária."
+      },
+      {
+        "id": "fragmentacao-florestal",
+        "nome": "Fragmentação florestal",
+        "descricao": "A continuidade da vegetação é rompida, isolando populações e ampliando efeitos de borda.",
+        "situacao": "Uma estrada e novos pastos deixam manchas de mata separadas que animais pouco móveis já não conseguem atravessar."
+      },
+      {
+        "id": "erosao-do-solo",
+        "nome": "Erosão do solo",
+        "descricao": "A desagregação e o transporte de partículas são favorecidos por escoamento e ausência de cobertura vegetal.",
+        "situacao": "Após retirada da mata em uma encosta, chuvas concentram água em sulcos e carregam sedimentos para o curso d’água."
+      },
+      {
+        "id": "mitigacao-climatica",
+        "nome": "Mitigação climática",
+        "descricao": "Busca reduzir emissões de gases de efeito estufa ou ampliar sua remoção.",
+        "situacao": "A cidade substitui ônibus a diesel e reduz o consumo de combustíveis fósseis em seu transporte coletivo."
+      },
+      {
+        "id": "adaptacao-climatica",
+        "nome": "Adaptação climática",
+        "descricao": "Reduz danos potenciais de perigos climáticos presentes ou esperados.",
+        "situacao": "Depois de mapear cheias recorrentes, escolas ribeirinhas elevam equipamentos e ajustam calendário e rotas de acesso."
+      }
+    ],
+    "semente": "42aa9a3963be142f"
+  },
+  {
+    "id": "sis1-americas",
+    "vestibular": "SIS",
+    "etapa": 1,
+    "disciplina": "História",
+    "assunto": "Povos originários das Américas",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "sociedades-maias",
+        "nome": "Sociedades maias",
+        "descricao": "Cidades-Estado da Mesoamérica desenvolveram sistemas de escrita, calendários e tradições políticas próprias.",
+        "situacao": "Monumentos de centros rivais registram datas de coroação e narram feitos de linhagens governantes."
+      },
+      {
+        "id": "imperio-mexica",
+        "nome": "Império mexica",
+        "descricao": "Uma aliança centrada em Tenochtitlán exigia tributos de populações submetidas.",
+        "situacao": "Registros enumeram tecidos, cacau e outros bens enviados por cidades conquistadas a uma capital insular."
+      },
+      {
+        "id": "imperio-inca",
+        "nome": "Império inca",
+        "descricao": "O domínio andino integrou territórios por caminhos, administração local e prestação rotativa de trabalho.",
+        "situacao": "Autoridades deslocavam mão de obra para manter estradas de altitude e registravam quantidades com cordões e nós."
+      },
+      {
+        "id": "terra-preta-amazonica",
+        "nome": "Terra preta amazônica",
+        "descricao": "Solos escuros e férteis, associados à ocupação humana antiga, evidenciam intervenções duradouras na paisagem.",
+        "situacao": "Escavações encontram carvão e cerâmica em camadas escuras com propriedades diferentes das do solo ao redor."
+      },
+      {
+        "id": "sambaquis",
+        "nome": "Sambaquis",
+        "descricao": "Montes de conchas acumulados por populações antigas documentam práticas alimentares, funerárias e de ocupação costeira.",
+        "situacao": "No litoral, uma escavação encontra sepultamentos e instrumentos de osso em camadas construídas com restos de moluscos."
+      }
+    ],
+    "semente": "5557eb029a6c223e"
+  },
+  {
+    "id": "sis1-medieval",
+    "vestibular": "SIS",
+    "etapa": 1,
+    "disciplina": "História",
+    "assunto": "Sociedades medievais e redes de troca",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "servidao-feudal",
+        "nome": "Servidão feudal",
+        "descricao": "Camponeses dependentes deviam prestações ao senhor, embora sua condição fosse diferente da escravidão mercantil.",
+        "situacao": "Uma família cultiva sua parcela, mas entrega parte da colheita e trabalha por dias nas terras reservadas ao senhorio."
+      },
+      {
+        "id": "vassalagem",
+        "nome": "Vassalagem",
+        "descricao": "Um vínculo entre nobres envolvia compromissos de fidelidade, apoio e proteção.",
+        "situacao": "Um guerreiro presta homenagem a um senhor e se compromete a apoiá-lo militarmente em troca de proteção e rendas."
+      },
+      {
+        "id": "guildas-urbanas",
+        "nome": "Guildas urbanas",
+        "descricao": "Associações de ofício regulavam formação, padrões e acesso à atividade artesanal em muitas cidades.",
+        "situacao": "Mestres sapateiros definem a duração do aprendizado e as condições para um artesão abrir sua própria oficina."
+      },
+      {
+        "id": "comercio-transaariano",
+        "nome": "Comércio transaariano",
+        "descricao": "Rotas ligavam a África ocidental ao norte do continente e ao Mediterrâneo, movendo mercadorias, pessoas e ideias.",
+        "situacao": "Caravanas atravessam o Saara transportando sal e regressam com ouro de regiões conectadas ao Mali."
+      },
+      {
+        "id": "circulacao-intelectual-no-mundo-islamico",
+        "nome": "Circulação intelectual no mundo islâmico",
+        "descricao": "Traduções e investigação em centros urbanos contribuíram para preservar e desenvolver saberes distintos.",
+        "situacao": "Em Bagdá, estudiosos traduzem tratados gregos e produzem trabalhos próprios em matemática e astronomia."
+      }
+    ],
+    "semente": "e90132a7c9aeaa99"
+  },
+  {
+    "id": "sis1-hidrografia",
+    "vestibular": "SIS",
+    "etapa": 1,
+    "disciplina": "Geografia",
+    "assunto": "Rios, paisagens e águas amazônicas",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "bacia-hidrografica",
+        "nome": "Bacia hidrográfica",
+        "descricao": "É o território cujas águas escoam para um mesmo rio principal e sua rede de afluentes.",
+        "situacao": "Pontos em municípios diferentes drenam para tributários que se encontram antes de atingir o mesmo curso principal."
+      },
+      {
+        "id": "divisor-de-aguas",
+        "nome": "Divisor de águas",
+        "descricao": "Uma linha de relevo separa áreas que drenam para redes hidrográficas distintas.",
+        "situacao": "A chuva que cai de lados opostos de um espigão segue para dois sistemas fluviais diferentes."
+      },
+      {
+        "id": "varzea-amazonica",
+        "nome": "Várzea amazônica",
+        "descricao": "Planícies alagáveis de rios de águas brancas recebem sedimentos durante cheias periódicas.",
+        "situacao": "Quando a água recua, agricultores cultivam solos baixos que foram cobertos por água e sedimentos na cheia anual."
+      },
+      {
+        "id": "terra-firme-amazonica",
+        "nome": "Terra firme amazônica",
+        "descricao": "Áreas acima do alcance habitual das cheias anuais mantêm solos e comunidades vegetais distintos dos ambientes inundáveis.",
+        "situacao": "A vegetação estudada ocupa um terreno elevado que continua seco mesmo quando o rio transborda todo ano."
+      },
+      {
+        "id": "meandro-fluvial",
+        "nome": "Meandro fluvial",
+        "descricao": "Curvas se deslocam lateralmente pela ação combinada de erosão e deposição.",
+        "situacao": "Numa curva do rio, a margem externa recua e a interna acumula sedimentos formando um banco."
+      }
+    ],
+    "semente": "6a070726269792b3"
+  },
+  {
+    "id": "sis1-clima",
+    "vestibular": "SIS",
+    "etapa": 1,
+    "disciplina": "Geografia",
+    "assunto": "Clima, vegetação e relevo",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "tempo-atmosferico",
+        "nome": "Tempo atmosférico",
+        "descricao": "Descreve condições da atmosfera em um lugar e momento ou intervalo curto.",
+        "situacao": "O boletim de amanhã prevê pancadas de chuva e rajadas no fim da tarde em Manaus."
+      },
+      {
+        "id": "clima",
+        "nome": "Clima",
+        "descricao": "Refere-se aos padrões e à variabilidade das condições atmosféricas ao longo de períodos extensos.",
+        "situacao": "Uma pesquisadora compara médias e extremos de temperatura de uma série de trinta anos."
+      },
+      {
+        "id": "chuva-orografica",
+        "nome": "Chuva orográfica",
+        "descricao": "O ar úmido sobe ao encontrar uma barreira de relevo, resfria e pode precipitar.",
+        "situacao": "A face da serra voltada aos ventos úmidos recebe mais chuva do que a vertente protegida do outro lado."
+      },
+      {
+        "id": "amplitude-termica-diaria",
+        "nome": "Amplitude térmica diária",
+        "descricao": "É a diferença entre as temperaturas máxima e mínima registradas no dia.",
+        "situacao": "A estação registrou 20 °C ao amanhecer e 33 °C à tarde, indicando variação de 13 °C."
+      },
+      {
+        "id": "evapotranspiracao",
+        "nome": "Evapotranspiração",
+        "descricao": "Combina a evaporação em superfícies e a liberação de vapor pela vegetação.",
+        "situacao": "Uma área de floresta devolve água à atmosfera por meio do solo úmido e da atividade das folhas."
+      }
+    ],
+    "semente": "193d015ac765a574"
+  },
+  {
+    "id": "sis2-colonia",
+    "vestibular": "SIS",
+    "etapa": 2,
+    "disciplina": "História",
+    "assunto": "Brasil colonial e sistemas de trabalho",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "plantation-acucareira",
+        "nome": "Plantation açucareira",
+        "descricao": "A produção colonial de açúcar articulou grande propriedade, trabalho coercitivo e exportação.",
+        "situacao": "Grandes engenhos litorâneos combinavam canaviais, manufatura e trabalho escravizado para abastecer comerciantes ultramarinos."
+      },
+      {
+        "id": "quilombo",
+        "nome": "Quilombo",
+        "descricao": "Comunidades formadas com forte participação de pessoas que resistiam à escravidão criavam redes próprias de subsistência e defesa.",
+        "situacao": "Fugitivos organizavam aldeias, cultivavam alimentos e negociavam com comunidades vizinhas em áreas de difícil acesso."
+      },
+      {
+        "id": "mineracao-colonial",
+        "nome": "Mineração colonial",
+        "descricao": "A extração de ouro estimulou urbanização interiorana, comércio e fiscalização metropolitana.",
+        "situacao": "Ao redor de arraiais mineiros, desenvolveram-se mercados e casas de fundição ligadas à cobrança de impostos."
+      },
+      {
+        "id": "pecuaria-de-abastecimento",
+        "nome": "Pecuária de abastecimento",
+        "descricao": "A criação de gado em áreas interiores forneceu alimentos, couro e força animal a outros setores coloniais.",
+        "situacao": "Tropas e rebanhos saíam do sertão para abastecer engenhos e centros consumidores em outras capitanias."
+      },
+      {
+        "id": "missoes-religiosas",
+        "nome": "Missões religiosas",
+        "descricao": "Ordens cristãs organizaram aldeamentos para catequese, reordenação territorial e controle do trabalho.",
+        "situacao": "Religiosos reuniram populações indígenas de diferentes origens em povoações com igreja e regras próprias de trabalho."
+      }
+    ],
+    "semente": "2eacd10e0dfeceaf"
+  },
+  {
+    "id": "sis2-revolucoes",
+    "vestibular": "SIS",
+    "etapa": 2,
+    "disciplina": "História",
+    "assunto": "Revoluções atlânticas e industrialização",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "independencia-das-treze-colonias",
+        "nome": "Independência das Treze Colônias",
+        "descricao": "O conflito contra a Coroa britânica resultou em um novo Estado e, posteriormente, em uma constituição federal.",
+        "situacao": "A rejeição a impostos sem representação levou colônias britânicas da América do Norte a romper com a metrópole."
+      },
+      {
+        "id": "revolucao-francesa",
+        "nome": "Revolução Francesa",
+        "descricao": "O fim jurídico de privilégios estamentais e a afirmação de direitos abalaram a ordem do Antigo Regime.",
+        "situacao": "Representantes do Terceiro Estado proclamam uma assembleia nacional e contestam privilégios de clero e nobreza."
+      },
+      {
+        "id": "revolucao-haitiana",
+        "nome": "Revolução Haitiana",
+        "descricao": "Insurgentes escravizados e livres derrotaram o domínio colonial francês e fundaram um Estado independente.",
+        "situacao": "Na antiga Saint-Domingue, a luta contra a escravização culminou na independência proclamada em 1804."
+      },
+      {
+        "id": "primeira-revolucao-industrial",
+        "nome": "Primeira Revolução Industrial",
+        "descricao": "A mecanização e a fábrica concentraram trabalhadores e reordenaram a produção e os ritmos de trabalho.",
+        "situacao": "Máquinas têxteis acionadas por novas fontes de energia passaram a operar em estabelecimentos com jornadas controladas."
+      },
+      {
+        "id": "movimento-operario",
+        "nome": "Movimento operário",
+        "descricao": "Trabalhadores organizaram associações e mobilizações para disputar condições e direitos.",
+        "situacao": "Assalariados formam um sindicato, criam um fundo de greve e negociam a limitação da jornada."
+      }
+    ],
+    "semente": "2b5d908d6b818988"
+  },
+  {
+    "id": "sis2-indicadores",
+    "vestibular": "SIS",
+    "etapa": 2,
+    "disciplina": "Geografia",
+    "assunto": "Indicadores e redes populacionais",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "taxa-de-urbanizacao",
+        "nome": "Taxa de urbanização",
+        "descricao": "É a proporção da população total que vive em áreas urbanas.",
+        "situacao": "O total de moradores da sede e demais áreas classificadas como urbanas é dividido pela população municipal."
+      },
+      {
+        "id": "taxa-de-fecundidade",
+        "nome": "Taxa de fecundidade",
+        "descricao": "Estima o número médio de filhos que as mulheres teriam sob o padrão de fecundidade observado.",
+        "situacao": "Demógrafos usam nascimentos por grupos de idade das mães para sintetizar o comportamento reprodutivo."
+      },
+      {
+        "id": "esperanca-de-vida-ao-nascer",
+        "nome": "Esperança de vida ao nascer",
+        "descricao": "Estima os anos que um recém-nascido viveria sob o padrão de mortalidade por idade observado.",
+        "situacao": "Uma tábua de mortalidade resume as chances de sobreviver a cada idade em um número de anos esperado desde o nascimento."
+      },
+      {
+        "id": "indice-de-desenvolvimento-humano",
+        "nome": "Índice de Desenvolvimento Humano",
+        "descricao": "Combina dimensões de saúde, educação e renda em uma medida sintética.",
+        "situacao": "O relatório reúne longevidade, anos de escolaridade e renda por pessoa para comparar condições de desenvolvimento."
+      },
+      {
+        "id": "coeficiente-de-gini",
+        "nome": "Coeficiente de Gini",
+        "descricao": "Mede o grau de concentração de uma distribuição, como a de renda.",
+        "situacao": "Duas cidades com renda média semelhante diferem quando se observa quanto a renda se concentra nos grupos mais ricos."
+      }
+    ],
+    "semente": "743e2ff6adde9481"
+  },
+  {
+    "id": "sis2-territorio",
+    "vestibular": "SIS",
+    "etapa": 2,
+    "disciplina": "Geografia",
+    "assunto": "Redes de transporte e produção amazônica",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "modal-hidroviario",
+        "nome": "Modal hidroviário",
+        "descricao": "Utiliza rios e canais navegáveis e depende de condições como calado e infraestrutura portuária.",
+        "situacao": "A maior parte da carga para uma comunidade sem ligação rodoviária chega em embarcações cujo uso muda com o nível do rio."
+      },
+      {
+        "id": "transporte-intermodal",
+        "nome": "Transporte intermodal",
+        "descricao": "Uma operação combina tipos de transporte diferentes para completar o percurso de uma carga.",
+        "situacao": "Uma remessa sai de barco de um município ribeirinho e continua por rodovia até o destino final."
+      },
+      {
+        "id": "rede-urbana",
+        "nome": "Rede urbana",
+        "descricao": "Cidades se ligam por fluxos de bens, serviços, informação e pessoas, com funções de diferentes alcances.",
+        "situacao": "Pacientes de municípios menores se deslocam à capital para procedimentos especializados inexistentes em suas sedes."
+      },
+      {
+        "id": "economia-extrativista",
+        "nome": "Economia extrativista",
+        "descricao": "A obtenção econômica de recursos ocorre a partir de sua coleta ou extração na natureza.",
+        "situacao": "Uma associação comercializa sementes e frutos colhidos no interior da floresta mantida em pé."
+      },
+      {
+        "id": "agroindustria",
+        "nome": "Agroindústria",
+        "descricao": "A atividade industrial transforma matérias-primas agropecuárias antes da distribuição.",
+        "situacao": "Uma unidade recebe frutos e aplica processos de seleção e processamento para vender polpa congelada."
+      }
+    ],
+    "semente": "cf370391bf050a1c"
+  },
+  {
+    "id": "sis3-amazonas",
+    "vestibular": "SIS",
+    "etapa": 3,
+    "disciplina": "História",
+    "assunto": "Economia e trabalho na história amazônica",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "drogas-do-sertao",
+        "nome": "Drogas do sertão",
+        "descricao": "Produtos florestais foram coletados para o comércio colonial, frequentemente com trabalho indígena submetido a coerção.",
+        "situacao": "Expedições buscavam cacau, cravo e outros gêneros no interior para abastecer redes comerciais atlânticas."
+      },
+      {
+        "id": "sistema-de-aviamento",
+        "nome": "Sistema de aviamento",
+        "descricao": "Adiantamentos de bens e crédito vinculavam produtores a comerciantes por dívidas e obrigações de entrega.",
+        "situacao": "Um trabalhador recebe ferramentas e comida a crédito e é obrigado a vender sua coleta ao mesmo fornecedor."
+      },
+      {
+        "id": "belle-epoque-manauara",
+        "nome": "Belle Époque manauara",
+        "descricao": "A riqueza da borracha financiou intervenções urbanas e equipamentos culturais frequentados sobretudo pelas elites.",
+        "situacao": "O centro da cidade ganha iluminação, bondes e um teatro monumental enquanto o interior mantém condições de trabalho desiguais."
+      },
+      {
+        "id": "batalha-da-borracha",
+        "nome": "Batalha da Borracha",
+        "descricao": "Durante a Segunda Guerra, o Estado mobilizou trabalhadores para ampliar a extração de látex amazônico.",
+        "situacao": "Recrutados no Nordeste foram enviados a seringais para fornecer matéria-prima após a interrupção de parte do abastecimento asiático."
+      },
+      {
+        "id": "polo-industrial-de-manaus",
+        "nome": "Polo Industrial de Manaus",
+        "descricao": "A concentração de fábricas incentivadas transformou o emprego, a urbanização e a economia da capital.",
+        "situacao": "Unidades produtoras de motocicletas e eletrônicos se agrupam em distritos fabris ligados a políticas federais de incentivo."
+      }
+    ],
+    "semente": "befd657d44ef70a7"
+  },
+  {
+    "id": "sis3-mundo",
+    "vestibular": "SIS",
+    "etapa": 3,
+    "disciplina": "História",
+    "assunto": "Guerra Fria e transformações internacionais",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "politica-de-contencao",
+        "nome": "Política de contenção",
+        "descricao": "Os Estados Unidos procuraram limitar a expansão de governos e movimentos vinculados ao bloco soviético.",
+        "situacao": "Um programa oferece apoio econômico e militar a um governo aliado para evitar que a região passe à influência rival."
+      },
+      {
+        "id": "movimento-dos-nao-alinhados",
+        "nome": "Movimento dos Não Alinhados",
+        "descricao": "Governos buscaram autonomia internacional diante dos blocos liderados pelos Estados Unidos e pela União Soviética.",
+        "situacao": "Líderes da Índia, da Iugoslávia e de outros países articulam uma posição que rejeita vinculação automática a alianças das superpotências."
+      },
+      {
+        "id": "revolucao-cubana",
+        "nome": "Revolução Cubana",
+        "descricao": "A derrubada de Batista em 1959 iniciou mudanças sociais e, posteriormente, aproximação com a União Soviética.",
+        "situacao": "Um movimento guerrilheiro toma Havana e o novo governo promove nacionalizações em meio ao conflito com Washington."
+      },
+      {
+        "id": "corrida-espacial",
+        "nome": "Corrida espacial",
+        "descricao": "A disputa por feitos tecnológicos no espaço se ligou ao prestígio e à capacidade estratégica das superpotências.",
+        "situacao": "O lançamento do Sputnik e o pouso tripulado na Lua tornam-se símbolos de rivalidade política e científica."
+      },
+      {
+        "id": "reunificacao-alema",
+        "nome": "Reunificação alemã",
+        "descricao": "O fim da divisão da Alemanha em 1990 ocorreu no contexto de crise dos regimes do Leste europeu.",
+        "situacao": "Depois da abertura da fronteira de Berlim, a República Democrática Alemã se integra à República Federal."
+      }
+    ],
+    "semente": "af1e7fb7364d5d33"
+  },
+  {
+    "id": "sis3-campo",
+    "vestibular": "SIS",
+    "etapa": 3,
+    "disciplina": "Geografia",
+    "assunto": "Estrutura fundiária e usos do campo",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "concentracao-fundiaria",
+        "nome": "Concentração fundiária",
+        "descricao": "Uma parcela elevada da área rural pertence a um número relativamente pequeno de estabelecimentos ou proprietários.",
+        "situacao": "Poucas grandes propriedades controlam a maioria das terras produtivas, apesar de predominarem numericamente pequenos estabelecimentos."
+      },
+      {
+        "id": "agricultura-familiar",
+        "nome": "Agricultura familiar",
+        "descricao": "O trabalho e a gestão de uma unidade produtiva se apoiam principalmente no núcleo familiar.",
+        "situacao": "Uma família administra a propriedade, participa do plantio e decide como comercializar a produção, mesmo usando máquinas e crédito."
+      },
+      {
+        "id": "monocultura",
+        "nome": "Monocultura",
+        "descricao": "O cultivo predominante de uma única espécie ocupa uma área ou sistema agrícola.",
+        "situacao": "Uma extensa superfície é plantada continuamente com uma única lavoura destinada à indústria."
+      },
+      {
+        "id": "agrofloresta",
+        "nome": "Agrofloresta",
+        "descricao": "O manejo combina árvores com outros cultivos ou criações na mesma área.",
+        "situacao": "Produtores cultivam cacau e banana sob espécies arbóreas, mantendo diferentes estratos de vegetação."
+      },
+      {
+        "id": "reforma-agraria",
+        "nome": "Reforma agrária",
+        "descricao": "Políticas redistribuem ou ampliam o acesso à terra e podem incluir condições de instalação e produção.",
+        "situacao": "Famílias são assentadas em terras destinadas à política pública e precisam de assistência, infraestrutura e crédito para produzir."
+      }
+    ],
+    "semente": "cb426b592ff4ad02"
+  },
+  {
+    "id": "sis3-cidade",
+    "vestibular": "SIS",
+    "etapa": 3,
+    "disciplina": "Geografia",
+    "assunto": "Urbanização, mobilidade e serviços",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "centralidade-urbana",
+        "nome": "Centralidade urbana",
+        "descricao": "Um lugar atrai deslocamentos por concentrar atividades e serviços relevantes.",
+        "situacao": "Diariamente, moradores de bairros diversos convergem para um mesmo distrito com comércio, instituições e conexões de transporte."
+      },
+      {
+        "id": "expansao-periferica",
+        "nome": "Expansão periférica",
+        "descricao": "A malha urbana cresce nas bordas, muitas vezes com infraestrutura implantada depois da ocupação.",
+        "situacao": "Loteamentos distantes do núcleo crescem mais rápido do que a rede de coleta de esgoto e o transporte coletivo."
+      },
+      {
+        "id": "mobilidade-ativa",
+        "nome": "Mobilidade ativa",
+        "descricao": "Os deslocamentos dependem do esforço físico dos usuários, como caminhar e pedalar.",
+        "situacao": "A prefeitura conecta ciclovias e amplia calçadas para facilitar percursos a escolas e terminais."
+      },
+      {
+        "id": "saneamento-basico",
+        "nome": "Saneamento básico",
+        "descricao": "Abrange abastecimento de água, esgotamento, resíduos sólidos e manejo de águas pluviais.",
+        "situacao": "Um projeto coordena o tratamento de esgoto com drenagem de ruas, coleta de resíduos e fornecimento de água tratada."
+      },
+      {
+        "id": "acessibilidade-territorial",
+        "nome": "Acessibilidade territorial",
+        "descricao": "Indica quão fácil é alcançar atividades e serviços a partir de um lugar.",
+        "situacao": "Uma nova linha reduz o tempo e o custo necessários para que moradores cheguem ao hospital regional."
+      }
+    ],
+    "semente": "47178747f7c54f95"
+  },
+  {
+    "id": "enem-memoria-cidadania",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "História",
+    "assunto": "Cidadania, memória e participação",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "abolicionismo",
+        "nome": "Abolicionismo",
+        "descricao": "A mobilização pelo fim da escravidão reuniu redes de fugitivos, ativistas, imprensa e diferentes organizações.",
+        "situacao": "Jornais denunciam a escravização enquanto redes de apoio ajudam pessoas a escapar e organizam campanhas públicas."
+      },
+      {
+        "id": "sufragio-feminino",
+        "nome": "Sufrágio feminino",
+        "descricao": "A conquista do voto ampliou a cidadania política, embora outras barreiras à representação tenham persistido.",
+        "situacao": "Mulheres organizam associações para pressionar pelo reconhecimento do direito de votar e disputar eleições."
+      },
+      {
+        "id": "anistia-politica",
+        "nome": "Anistia política",
+        "descricao": "Uma medida de transição permitiu o retorno de exilados e enfrentou disputas sobre seu alcance.",
+        "situacao": "Famílias e movimentos reivindicam a volta de pessoas perseguidas pelo regime e discutem publicamente quem a medida deveria abranger."
+      },
+      {
+        "id": "memoria-publica",
+        "nome": "Memória pública",
+        "descricao": "Museus, monumentos e comemorações expressam disputas sobre quais experiências serão lembradas coletivamente.",
+        "situacao": "Uma comunidade pede que a antiga instalação repressiva vire centro de memória com testemunhos de vítimas."
+      },
+      {
+        "id": "direito-a-greve",
+        "nome": "Direito à greve",
+        "descricao": "A paralisação coletiva pode servir à negociação entre trabalhadores e empregadores.",
+        "situacao": "Empregados suspendem temporariamente o trabalho para pressionar por negociação e garantias contra represálias."
+      }
+    ],
+    "semente": "e8a6c5f784007d28"
+  },
+  {
+    "id": "enem-geografia-ambiente",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Geografia",
+    "assunto": "Sociedade, ambiente e recursos",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "injustica-ambiental",
+        "nome": "Injustiça ambiental",
+        "descricao": "Riscos ambientais e proteção pública se distribuem de modo desigual entre grupos sociais.",
+        "situacao": "Instalações poluidoras se concentram perto de bairros de baixa renda que têm menos recursos para disputar decisões públicas."
+      },
+      {
+        "id": "seguranca-hidrica",
+        "nome": "Segurança hídrica",
+        "descricao": "Depende da disponibilidade de água em quantidade e qualidade adequadas e da capacidade de gerir riscos.",
+        "situacao": "Um plano combina proteção de mananciais, redução de vazamentos e alternativas de abastecimento para períodos de seca."
+      },
+      {
+        "id": "transicao-energetica",
+        "nome": "Transição energética",
+        "descricao": "A substituição gradual de fontes e tecnologias fósseis envolve infraestrutura, políticas e impactos territoriais.",
+        "situacao": "Uma região reduz a geração a carvão e expande energia renovável, ao mesmo tempo que reorganiza rede e empregos."
+      },
+      {
+        "id": "ilhas-de-frescor",
+        "nome": "Ilhas de frescor",
+        "descricao": "Vegetação e superfícies permeáveis podem resfriar o entorno por sombra e evapotranspiração.",
+        "situacao": "Medições mostram temperaturas menores ao redor de um parque arborizado do que em quadras vizinhas com pouco verde."
+      },
+      {
+        "id": "logistica-reversa",
+        "nome": "Logística reversa",
+        "descricao": "Produtos pós-consumo retornam a cadeias responsáveis por reaproveitamento ou destinação correta.",
+        "situacao": "Comerciantes recebem pilhas usadas em pontos de entrega, e fabricantes organizam coleta e tratamento."
+      }
+    ],
+    "semente": "01efe663c550b869"
+  },
+  {
+    "id": "enem-etica",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Ética e critérios de ação",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "etica-das-virtudes",
+        "nome": "Ética das virtudes",
+        "descricao": "A ação é avaliada em relação à formação do caráter e ao exercício de disposições cultivadas pela prática.",
+        "situacao": "Uma educadora propõe que seus alunos desenvolvam coragem e justiça exercitando decisões concretas e refletindo sobre seus hábitos."
+      },
+      {
+        "id": "deontologia-kantiana",
+        "nome": "Deontologia kantiana",
+        "descricao": "Uma máxima deve poder ser universalizada e respeitar pessoas como fins em si mesmas.",
+        "situacao": "Um agente recusa a mentira útil porque uma regra que a autorizasse sempre destruiria a própria confiança necessária à promessa."
+      },
+      {
+        "id": "utilitarismo",
+        "nome": "Utilitarismo",
+        "descricao": "A ação é avaliada pelas consequências para o bem-estar agregado dos afetados.",
+        "situacao": "Entre duas medidas, o gestor escolhe a que reduz mais sofrimento no conjunto da população, considerando inclusive efeitos indiretos."
+      },
+      {
+        "id": "etica-do-cuidado",
+        "nome": "Ética do cuidado",
+        "descricao": "Relações de dependência e responsabilidades situadas são centrais para o julgamento moral.",
+        "situacao": "Ao decidir como distribuir tarefas, o grupo considera os vínculos existentes e as necessidades de quem depende de atenção cotidiana."
+      },
+      {
+        "id": "etica-da-responsabilidade-ambiental",
+        "nome": "Ética da responsabilidade ambiental",
+        "descricao": "O alcance das decisões tecnológicas impõe levar em conta efeitos duradouros sobre as condições de vida futuras.",
+        "situacao": "Um conselho rejeita uma intervenção lucrativa porque suas consequências irreversíveis recairiam sobre gerações que não podem decidir hoje."
+      }
+    ],
+    "semente": "8d4e4c0cd379ecfd"
+  },
+  {
+    "id": "enem-conhecimento",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Conhecimento, ciência e argumentação",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "empirismo",
+        "nome": "Empirismo",
+        "descricao": "A experiência sensível é central para a origem ou justificação de ideias sobre o mundo.",
+        "situacao": "Uma filósofa pergunta de quais percepções vieram as ideias usadas para descrever um objeto nunca observado diretamente."
+      },
+      {
+        "id": "racionalismo-cartesiano",
+        "nome": "Racionalismo cartesiano",
+        "descricao": "A dúvida metódica busca uma certeza que a razão reconheça independentemente dos enganos dos sentidos.",
+        "situacao": "O pensador suspende a confiança nas percepções e encontra na própria atividade de duvidar uma razão para afirmar que pensa."
+      },
+      {
+        "id": "falseabilidade",
+        "nome": "Falseabilidade",
+        "descricao": "Uma teoria científica deve admitir condições observáveis que poderiam mostrar sua falsidade.",
+        "situacao": "Um pesquisador especifica antes do experimento qual resultado, se observado, o faria abandonar sua hipótese."
+      },
+      {
+        "id": "falacia-ad-hominem",
+        "nome": "Falácia ad hominem",
+        "descricao": "Atacar a pessoa que apresenta a tese não substitui a análise das razões oferecidas.",
+        "situacao": "Em vez de discutir os dados de um relatório, o adversário diz que a opinião deve ser descartada por causa da roupa do pesquisador."
+      },
+      {
+        "id": "raciocinio-dedutivo",
+        "nome": "Raciocínio dedutivo",
+        "descricao": "Em uma inferência válida, a conclusão decorre necessariamente das premissas assumidas.",
+        "situacao": "De que todos os membros de um grupo cumprem certa regra e que Joana pertence ao grupo, segue-se que Joana cumpre a regra."
+      }
+    ],
+    "semente": "44ea2295f6cc8d3a"
+  },
+  {
+    "id": "enem-cultura",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Cultura, identidade e socialização",
+    "dificuldade_sugerida": 1,
+    "conceitos": [
+      {
+        "id": "socializacao",
+        "nome": "Socialização",
+        "descricao": "Indivíduos aprendem normas e papéis por meio de interações com famílias, escolas, pares e outras instituições.",
+        "situacao": "Uma criança aprende formas de cumprimentar e de participar de atividades coletivas em mais de um ambiente."
+      },
+      {
+        "id": "etnocentrismo",
+        "nome": "Etnocentrismo",
+        "descricao": "Uma prática de outro grupo é julgada pela própria cultura tomada como padrão superior.",
+        "situacao": "Um visitante trata um costume alimentar local como atrasado simplesmente por ser diferente do que aprendeu em casa."
+      },
+      {
+        "id": "relativizacao-cultural",
+        "nome": "Relativização cultural",
+        "descricao": "A análise busca compreender práticas segundo seus contextos históricos e significados para os participantes.",
+        "situacao": "Uma pesquisadora investiga a relação entre uma cerimônia e as obrigações entre famílias antes de compará-la a outras maneiras de celebrar."
+      },
+      {
+        "id": "identidade-social",
+        "nome": "Identidade social",
+        "descricao": "Pertencimentos são construídos e reinterpretados nas relações sociais e podem se combinar.",
+        "situacao": "Jovens da mesma cidade se reconhecem por vínculos de bairro, raça e religião que ganham sentidos diferentes em situações distintas."
+      },
+      {
+        "id": "aculturacao",
+        "nome": "Aculturação",
+        "descricao": "O contato prolongado entre grupos pode transformar práticas culturais sob relações de poder variadas.",
+        "situacao": "Após décadas de convivência, duas comunidades incorporam ritmos e palavras uma da outra sem adotar exatamente o mesmo modo de vida."
+      }
+    ],
+    "semente": "dff49cd4c06bffb9"
+  },
+  {
+    "id": "enem-trabalho",
+    "vestibular": "ENEM",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Trabalho, desigualdade e instituições",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "estratificacao-social",
+        "nome": "Estratificação social",
+        "descricao": "Posições sociais se distribuem hierarquicamente e condicionam o acesso a recursos, poder ou prestígio.",
+        "situacao": "Pessoas com ocupações e rendas diferentes têm oportunidades desiguais de acesso a formação e proteção social ao longo da vida."
+      },
+      {
+        "id": "mobilidade-social-intergeracional",
+        "nome": "Mobilidade social intergeracional",
+        "descricao": "Compara posições socioeconômicas de filhos e pais para identificar permanências ou mudanças.",
+        "situacao": "Um estudo compara a ocupação e escolaridade de adultos com as de suas famílias de origem."
+      },
+      {
+        "id": "divisao-sexual-do-trabalho",
+        "nome": "Divisão sexual do trabalho",
+        "descricao": "Atividades produtivas e de cuidado são distribuídas de forma desigual segundo relações de gênero.",
+        "situacao": "Em domicílios com jornadas remuneradas semelhantes, mulheres assumem sistematicamente mais horas de cuidado sem remuneração."
+      },
+      {
+        "id": "precarizacao-do-trabalho",
+        "nome": "Precarização do trabalho",
+        "descricao": "A instabilidade de renda e ocupação pode aumentar enquanto se reduzem proteção e capacidade de negociação.",
+        "situacao": "Entregadores arcam com seus equipamentos e riscos, recebem por tarefa e enfrentam rendas mensais imprevisíveis."
+      },
+      {
+        "id": "burocracia-weberiana",
+        "nome": "Burocracia weberiana",
+        "descricao": "A organização se apoia em competências definidas, regras impessoais e registros formais.",
+        "situacao": "Pedidos passam por servidores com atribuições delimitadas e são decididos segundo procedimentos que devem valer para qualquer requerente."
+      }
+    ],
+    "semente": "16b054b180cc2db3"
+  },
+  {
+    "id": "macro-amazonas",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "História",
+    "assunto": "História política e cultural do Amazonas",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "tratado-de-madri",
+        "nome": "Tratado de Madri",
+        "descricao": "Em 1750, Portugal e Espanha negociaram limites na América, considerando a ocupação efetiva em parte da delimitação.",
+        "situacao": "Diplomatas substituem referências à linha de Tordesilhas por uma negociação que considera povoações existentes e acidentes geográficos."
+      },
+      {
+        "id": "fortificacoes-coloniais-amazonicas",
+        "nome": "Fortificações coloniais amazônicas",
+        "descricao": "Instalações militares ajudaram a controlar rotas fluviais e sustentar pretensões territoriais da Coroa.",
+        "situacao": "Uma guarnição é instalada num ponto estratégico do rio para vigiar a navegação e marcar presença diante de outras potências."
+      },
+      {
+        "id": "elevacao-de-manaus-a-cidade",
+        "nome": "Elevação de Manaus a cidade",
+        "descricao": "A antiga Vila da Barra foi elevada a cidade em 1848 e recebeu o nome de Manaus em 1856.",
+        "situacao": "Uma pesquisa compara registros municipais anteriores à criação da província com os documentos que registram a adoção posterior do nome atual da capital."
+      },
+      {
+        "id": "universidade-livre-de-manaus",
+        "nome": "Escola Universitária Livre de Manáos",
+        "descricao": "A instituição criada em 1909 desenvolveu ensino superior no contexto da economia da borracha e da urbanização.",
+        "situacao": "Registros do início do século XX mostram a organização de cursos superiores na capital durante um período de intensa circulação de riqueza regional."
+      },
+      {
+        "id": "festival-de-parintins",
+        "nome": "Festival de Parintins",
+        "descricao": "As apresentações de bois-bumbás articulam patrimônio, associações comunitárias, criação artística e economia local.",
+        "situacao": "Grupos rivais preparam alegorias, toadas e coreografias em uma ilha amazônica e atraem visitantes durante as apresentações."
+      }
+    ],
+    "semente": "9c011fcbcd1bbf3f"
+  },
+  {
+    "id": "macro-historia-brasil",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "História",
+    "assunto": "Império e transformações republicanas",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "periodo-regencial",
+        "nome": "Período Regencial",
+        "descricao": "Entre a abdicação de Pedro I e a maioridade de Pedro II, regentes governaram em meio a disputas e rebeliões provinciais.",
+        "situacao": "Como o herdeiro do trono ainda era criança, o governo foi exercido por representantes e enfrentou conflitos sobre autonomia local."
+      },
+      {
+        "id": "lei-de-terras-de-1850",
+        "nome": "Lei de Terras de 1850",
+        "descricao": "A compra tornou-se regra para adquirir terras devolutas, e a lei também tratou da regularização de ocupações anteriores.",
+        "situacao": "Um interessado sem posse anterior precisa comprar terra devoluta em vez de obtê-la simplesmente por ocupação."
+      },
+      {
+        "id": "guerra-do-paraguai",
+        "nome": "Guerra do Paraguai",
+        "descricao": "Paraguai enfrentou Brasil, Argentina e Uruguai, reunidos na Tríplice Aliança, em um conflito ligado à Bacia do Prata.",
+        "situacao": "Os três países aliados coordenam operações no sul do continente, com grande impacto sobre a população paraguaia."
+      },
+      {
+        "id": "revolta-da-vacina",
+        "nome": "Revolta da Vacina",
+        "descricao": "Em 1904, a vacinação obrigatória e a maneira autoritária como foi implementada se combinaram a tensões produzidas por reformas urbanas.",
+        "situacao": "Na capital federal, manifestações irromperam após intervenções no espaço urbano e medidas sanitárias que atingiram o cotidiano dos moradores."
+      },
+      {
+        "id": "movimento-de-1930",
+        "nome": "Movimento de 1930",
+        "descricao": "Uma aliança depôs Washington Luís, impediu a posse de Júlio Prestes e levou Vargas ao governo provisório.",
+        "situacao": "As forças vitoriosas rompem a sucessão presidencial e alteram a distribuição de poder que marcava a Primeira República."
+      }
+    ],
+    "semente": "6e3495e3497b5c5b"
+  },
+  {
+    "id": "macro-geografia-amazonas",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Geografia",
+    "assunto": "Territórios e ambientes do Amazonas",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "area-de-varzea-inundavel",
+        "nome": "Área de várzea inundável",
+        "descricao": "A ocupação e o uso do solo se ajustam à alternância de cheias e vazantes em planícies fluviais.",
+        "situacao": "Famílias elevam o piso das casas e mudam o calendário de plantio conforme a subida e a descida anuais do rio."
+      },
+      {
+        "id": "floresta-de-igapo",
+        "nome": "Floresta de igapó",
+        "descricao": "Formações florestais sazonalmente inundadas ocorrem em áreas associadas a rios de águas pretas ou claras.",
+        "situacao": "Árvores adaptadas à submersão sazonal ocupam margens de tributários do Negro com água escura e baixa carga de sedimentos minerais."
+      },
+      {
+        "id": "encontro-das-aguas",
+        "nome": "Encontro das Águas",
+        "descricao": "As águas dos rios Negro e Solimões mantêm contraste visível por um trecho, devido a diferenças de propriedades e dinâmica.",
+        "situacao": "Perto de Manaus, correntes barrentas e escuras seguem lado a lado antes de se misturarem completamente."
+      },
+      {
+        "id": "reserva-extrativista",
+        "nome": "Reserva extrativista",
+        "descricao": "A unidade de conservação protege modos de vida de populações tradicionais e permite uso sustentável conforme regras de gestão.",
+        "situacao": "Comunidades participam das decisões sobre a coleta de produtos florestais em uma área federal protegida com moradia e uso regulamentados."
+      },
+      {
+        "id": "terra-indigena",
+        "nome": "Terra indígena",
+        "descricao": "A demarcação delimita áreas destinadas à proteção dos direitos originários sobre territórios tradicionalmente ocupados.",
+        "situacao": "A cartografia oficial registra um território necessário à reprodução física e cultural de um povo e à proteção de suas atividades tradicionais."
+      }
+    ],
+    "semente": "11cb62400306c28f"
+  },
+  {
+    "id": "macro-geografia-brasil",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Geografia",
+    "assunto": "Organização do território brasileiro",
+    "dificuldade_sugerida": 3,
+    "conceitos": [
+      {
+        "id": "regionalizacao-oficial-do-ibge",
+        "nome": "Regionalização oficial do IBGE",
+        "descricao": "Agrupa unidades da federação em cinco grandes regiões para organizar estatísticas e análise territorial.",
+        "situacao": "Para divulgar dados comparáveis, um relatório reúne Amazonas e Pará no Norte e Goiás e Mato Grosso no Centro-Oeste."
+      },
+      {
+        "id": "complexos-geoeconomicos",
+        "nome": "Complexos geoeconômicos",
+        "descricao": "Uma regionalização baseada em processos econômicos e históricos pode atravessar limites estaduais.",
+        "situacao": "O estudo delimita áreas da Amazônia, do Nordeste e do Centro-Sul sem se limitar às divisas administrativas."
+      },
+      {
+        "id": "fronteira-agropecuaria",
+        "nome": "Fronteira agropecuária",
+        "descricao": "Frentes de expansão convertem áreas para agricultura ou pecuária e reorganizam acessos e conflitos territoriais.",
+        "situacao": "A abertura de estradas leva à expansão de terras cultivadas e pastagens em áreas antes ocupadas por vegetação e outras atividades."
+      },
+      {
+        "id": "desconcentracao-industrial",
+        "nome": "Desconcentração industrial",
+        "descricao": "A produção se redistribui para novos locais, reduzindo relativamente a concentração nos polos anteriores.",
+        "situacao": "Fábricas migram para cidades do interior, embora escritórios e centros decisórios de algumas empresas permaneçam na metrópole."
+      },
+      {
+        "id": "hierarquia-urbana",
+        "nome": "Hierarquia urbana",
+        "descricao": "Centros se distinguem pelo alcance das funções e pela capacidade de influenciar cidades da rede.",
+        "situacao": "Para serviços raros, consumidores de pequenas cidades procuram um centro regional, que por sua vez se conecta a metrópoles."
+      }
+    ],
+    "semente": "18331374051e41ed"
+  },
+  {
+    "id": "macro-filosofia-politica",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Filosofia",
+    "assunto": "Filosofia política e legitimidade",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "contrato-social",
+        "nome": "Contrato social",
+        "descricao": "A autoridade política é explicada por um acordo real ou hipotético que funda as obrigações comuns.",
+        "situacao": "Uma teoria imagina indivíduos fora de um governo e pergunta quais razões os levariam a instituir regras e autoridade."
+      },
+      {
+        "id": "separacao-de-poderes",
+        "nome": "Separação de poderes",
+        "descricao": "Distribuir funções estatais e prever controles recíprocos reduz a concentração de autoridade.",
+        "situacao": "Instituições diferentes elaboram leis, executam políticas e julgam conflitos, com mecanismos para limitar abusos umas das outras."
+      },
+      {
+        "id": "vontade-geral-em-rousseau",
+        "nome": "Vontade geral em Rousseau",
+        "descricao": "O princípio soberano se orienta ao interesse comum, distinguindo-se da soma das preferências privadas.",
+        "situacao": "Cidadãos discutem uma norma pensando nas condições que valerão para o corpo político inteiro, mesmo que percam uma vantagem individual."
+      },
+      {
+        "id": "liberdade-negativa",
+        "nome": "Liberdade negativa",
+        "descricao": "Refere-se à esfera de ação livre de interferências de outras pessoas ou instituições.",
+        "situacao": "Uma pessoa consegue publicar sua opinião porque autoridades e particulares não a proíbem nem a ameaçam por fazê-lo."
+      },
+      {
+        "id": "liberdade-republicana",
+        "nome": "Liberdade republicana",
+        "descricao": "Consiste na ausência de dominação arbitrária, mesmo se a interferência potencial não for exercida.",
+        "situacao": "Uma trabalhadora pode tomar decisões sem depender da permissão revogável de alguém que teria poder irrestrito de vetá-las."
+      }
+    ],
+    "semente": "13b33cd1b123eed5"
+  },
+  {
+    "id": "macro-sociologia-cidade",
+    "vestibular": "MACRO",
+    "etapa": null,
+    "disciplina": "Sociologia",
+    "assunto": "Ação coletiva, Estado e desigualdade",
+    "dificuldade_sugerida": 2,
+    "conceitos": [
+      {
+        "id": "movimento-social",
+        "nome": "Movimento social",
+        "descricao": "A ação coletiva organizada e continuada busca transformar ou preservar aspectos da sociedade.",
+        "situacao": "Comunidades se articulam por anos, promovem assembleias e negociam políticas de moradia com governos."
+      },
+      {
+        "id": "controle-social-informal",
+        "nome": "Controle social informal",
+        "descricao": "Reações do convívio cotidiano induzem conformidade sem depender de sanção formal do Estado.",
+        "situacao": "Um grupo reprova publicamente comportamentos de seus membros e suas expectativas influenciam a conduta dos demais."
+      },
+      {
+        "id": "clientelismo",
+        "nome": "Clientelismo",
+        "descricao": "Benefícios particulares são oferecidos em troca de apoio ou lealdade política.",
+        "situacao": "Um intermediário promete acelerar o acesso a um serviço público se a família demonstrar apoio eleitoral a um candidato."
+      },
+      {
+        "id": "capital-cultural",
+        "nome": "Capital cultural",
+        "descricao": "Conhecimentos e disposições valorizados por instituições podem ser transmitidos desigualmente e convertidos em vantagens.",
+        "situacao": "Estudantes familiarizados desde cedo com práticas de leitura e vocabulário escolar se adaptam mais facilmente a certos critérios de avaliação."
+      },
+      {
+        "id": "cidadania-participativa",
+        "nome": "Cidadania participativa",
+        "descricao": "A presença ativa de moradores na discussão e no controle de políticas complementa a representação eleitoral.",
+        "situacao": "Em um conselho público, representantes da comunidade acompanham decisões orçamentárias e cobram a execução de prioridades."
+      }
+    ],
+    "semente": "a70a3a0f9e3bbf72"
+  }
+]

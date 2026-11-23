@@ -200,8 +200,11 @@ CREATE TABLE IF NOT EXISTS pedidos_suporte (
     usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
     assunto TEXT NOT NULL,
     mensagem TEXT NOT NULL,
-    criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    criado_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    notificado_em TEXT
 );
+CREATE INDEX IF NOT EXISTS idx_pedidos_suporte_usuario_hora
+  ON pedidos_suporte(usuario_id, criado_em);
 
 -- Ledger anti-farming: a mesma redação exata não rende XP de novo após exclusão.
 CREATE TABLE IF NOT EXISTS recompensas_redacoes_assinaturas (

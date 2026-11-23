@@ -1,0 +1,61 @@
+/* voaAM — acabamento visual profissional e discreto. Carregado por último. */
+:root {
+  --r: 14px;
+  --r2: 10px;
+  --transition: .18s ease;
+}
+[data-theme="dark"] {
+  --bg: #10131d;
+  --bg2: #151a27;
+  --surface: #1b2130;
+  --surface2: #252b3b;
+  --card: rgba(27, 33, 48, .93);
+  --card2: rgba(23, 29, 43, .96);
+  --border: rgba(191, 205, 237, .12);
+  --shadow: 0 3px 14px rgba(0, 0, 0, .16);
+  --glow: rgba(90, 120, 235, .06);
+  --vidro-brilho: rgba(255,255,255,.025);
+  --vidro-aura: transparent;
+  --vidro-desfoque: 3px;
+}
+[data-theme="light"] {
+  --bg: #f5f7fb;
+  --bg2: #edf1f7;
+  --surface: #fff;
+  --surface2: #eff2f8;
+  --card: rgba(255, 255, 255, .97);
+  --card2: rgba(249, 251, 254, .98);
+  --border: rgba(45, 57, 81, .14);
+  --shadow: 0 3px 14px rgba(35, 48, 75, .07);
+  --vidro-brilho: rgba(255,255,255,.10);
+  --vidro-aura: transparent;
+  --vidro-desfoque: 3px;
+}
+body { background: var(--bg) !important; background-attachment: initial; }
+:where(h1,h2,h3,.page-title,.section-title,.auth-title,.logo,.auth-logo-text,.result-title,.simulado-name) {
+  font-family: var(--font);
+  font-weight: 700;
+  letter-spacing: -.028em;
+  text-wrap: balance;
+}
+h1, .page-title { line-height: 1.2; }
+:where(.screen, .sim-card, .topic-card, .action-card, .question-card, .perfil-section, .rank-row,
+       .sc-dialog, dialog, .auth-screen, .liquid-glass) {
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+:where(.sim-card,.topic-card,.action-card,.rank-row,.sc-dialog,dialog,.liquid-glass) {
+  background: var(--card);
+  border-color: var(--border);
+}
+:where(.sim-card,.topic-card,.action-card):hover {
+  box-shadow: 0 5px 16px rgba(0,0,0,.14);
+}
+:where(button, input, select, textarea) { font-family: var(--font); }
+button { font-weight: 600; }
+:where(button, a, input, select, textarea):focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+:where(.btn-primary, .btn-secondary, .auth-input, .form-control) { border-radius: 9px; }
+/* Preserve estados de desempenho e sinalizações importantes; diminua apenas os efeitos decorativos. */
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

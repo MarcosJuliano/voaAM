@@ -1,35 +1,70 @@
 // Recomendações e atendimento, com dados obtidos do catálogo do servidor.
 const expModal = document.getElementById('preferencias-inicio');
+let expPedidoRecomendacoes = 0;
 async function expBuscarPreferencias() {
   const dados = await authRequisicao('/api/preferencias');
   const select=document.getElementById('preferencias-inicio-disciplina');
   select.replaceChildren(...dados.opcoes.map(op=>new Option(op,op)));
   select.value=dados.disciplina;
-  expRenderRecomendacoes(dados);
+  await expRenderRecomendacoes(dados);
   return dados;
 }
-function expRenderRecomendacoes(dados) {
+async function expRenderRecomendacoes(dados) {
+  const pedido = ++expPedidoRecomendacoes;
+  const contaId = authConta?.id;
   const lista = document.getElementById('home-recomendacoes-lista');
   const descricao = document.getElementById('home-preferencia-desc');
   const materia = dados.recomendacoes.find(r => r.disciplina === dados.disciplina);
-  if (!materia || materia.disciplina === 'Matemática') {
-    descricao.textContent = 'Escolha um assunto de Matemática para praticar.';
-    exRenderAssuntos(lista, id => {
-      goTo('praticar', 'ex');
-      exSelecionarAssunto(id);
-      document.getElementById('ex-nivel-panel').querySelector('button').focus();
-    }, 2);
+  const disciplina = materia?.disciplina || 'Matemática';
+  const area = Object.keys(EX_MATERIAS).find(chave => EX_MATERIAS[chave].includes(disciplina));
+  lista.replaceChildren();
+  descricao.textContent = `Escolha um assunto de ${disciplina} para praticar.`;
+
+  if (area) {
+    try {
+      const vestibulares = exVestibularesAtivos('perfil');
+      const assuntos = await exAssuntosDisponiveis(disciplina, vestibulares);
+      if (pedido !== expPedidoRecomendacoes || contaId !== authConta?.id) return;
+      const abrirExercicios = (filtro, assunto) => {
+        exAreaAtual = area;
+        exMateriaSelecionada = disciplina;
+        exDefinirFiltroVestibular(filtro);
+        goTo('praticar', 'ex');
+        if (assunto) exSelecionarAssunto(assunto);
+        else document.getElementById('ex-vestibular').focus();
+      };
+      if (assuntos.length) {
+        if (vestibulares.length) descricao.textContent = `${disciplina} · ${vestibulares.join(', ')}`;
+        exRenderAssuntos(lista, assuntos, assunto => abrirExercicios('perfil', assunto), 2);
+      } else {
+        descricao.textContent = `Nenhum assunto de ${disciplina} para os vestibulares do seu perfil.`;
+        const verTodos = document.createElement('button');
+        verTodos.type = 'button';
+        verTodos.className = 'btn-secondary';
+        verTodos.textContent = 'Ver todos os vestibulares';
+        verTodos.addEventListener('click', () => abrirExercicios(''));
+        lista.append(verTodos);
+      }
+    } catch {
+      if (pedido !== expPedidoRecomendacoes || contaId !== authConta?.id) return;
+      descricao.textContent = `Não foi possível carregar os assuntos de ${disciplina}.`;
+      const tentar = document.createElement('button');
+      tentar.type = 'button';
+      tentar.className = 'btn-secondary';
+      tentar.textContent = 'Tentar novamente';
+      tentar.addEventListener('click', () => expRenderRecomendacoes(dados));
+      lista.append(tentar);
+    }
     return;
   }
 
-  descricao.textContent = `Sua preferência de estudo é ${materia.disciplina}.`;
-  const icones = {'Biologia': 'leaf', 'História': 'archive', 'Português': 'book-open'};
+  descricao.textContent = `Sua preferência de estudo é ${disciplina}.`;
   const grade = document.createElement('div');
   grade.className = 'ex-assunto-grade';
   grade.append(exCartaoAssunto({
     titulo: materia.disciplina,
     sub: 'Treino personalizado',
-    icone: icones[materia.disciplina] || 'book-open',
+    icone: 'book-open',
     quantidade: materia.questoes,
   }, () => {
     goTo('praticar', 'personalizado', {disciplina: materia.disciplina});
@@ -56,11 +91,26 @@ async function iniciarPreferencias(){
   if(!dados.configurado && !expModal.open) expModal.showModal();
  }catch(e){console.warn('[voaAM] Preferências indisponíveis',e);}
 }
-const expSuporte=document.getElementById('suporte-dialogo');
-for (const botao of document.querySelectorAll('[data-abrir-suporte]')) {
-  botao.addEventListener('click', () => expSuporte.showModal());
+// O fragmento de Perfil fica oculto nas outras telas. Um <dialog> modal dentro
+// desse slot tornava todo o restante da interface inerte sem mostrar o Suporte.
+// Mantemos o modal no <body>, fora dos slots que alternam display:none.
+const expSuporte = document.getElementById('suporte-dialogo');
+if (expSuporte && expSuporte.parentElement !== document.body) {
+  document.body.appendChild(expSuporte);
 }
-document.getElementById('suporte-fechar').onclick=()=>expSuporte.close();
+for (const botao of document.querySelectorAll('[data-abrir-suporte]')) {
+  botao.addEventListener('click', () => {
+    if (expSuporte && !expSuporte.open) expSuporte.showModal();
+  });
+}
+document.getElementById('suporte-fechar').onclick = () => expSuporte.close();
+// Fecha ao tocar no fundo do modal; a tecla Esc já é tratada pelo navegador.
+expSuporte.addEventListener('click', event => {
+  if (event.target !== expSuporte) return;
+  const area = expSuporte.getBoundingClientRect();
+  if (event.clientX < area.left || event.clientX > area.right ||
+      event.clientY < area.top || event.clientY > area.bottom) expSuporte.close();
+});
 document.getElementById('suporte-form').onsubmit=async e=>{
  e.preventDefault();
  const feedback=document.getElementById('suporte-feedback');feedback.textContent='Enviando…';
@@ -69,7 +119,7 @@ document.getElementById('suporte-form').onsubmit=async e=>{
    assunto:document.getElementById('suporte-assunto').value,
    mensagem:document.getElementById('suporte-mensagem').value
   })});
-  feedback.textContent=`Solicitação recebida. Protocolo nº ${d.protocolo}.`;
+  feedback.textContent=`Solicitação registrada — protocolo nº ${d.protocolo}. ${d.notificacao==='enviada'?'O atendimento foi notificado por e-mail.':'A mensagem está registrada; o aviso por e-mail ainda não foi confirmado.'}`;
   e.target.reset();
  }catch(e){feedback.textContent=e.message;}
 };

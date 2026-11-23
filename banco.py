@@ -39,6 +39,7 @@ def inicializar_banco() -> None:
             ('google_identidades', 'email_google', 'TEXT'),
             ('fotos_perfil', 'versao', 'TEXT'),
             ('banners_perfil', 'versao', 'TEXT'),
+            ('pedidos_suporte', 'notificado_em', 'TEXT'),
         )
         for tabela, coluna, tipo in migracoes:
             campos = {r['name'] for r in conexao.execute(f'PRAGMA table_info({tabela})')}

@@ -4,26 +4,6 @@
 
 /* ── Auth: card centralizado no desktop ── */
 @media (min-width: 768px) {
-  #auth-wrapper:not([hidden]) {
-    display: flex;
-    align-items: safe center;
-    justify-content: center;
-    padding: 40px 20px;
-  }
-  .auth-screen {
-    min-height: unset !important;
-    width: 100%;
-    flex: 0 0 auto;
-    max-width: 480px;
-    background: var(--vidro-janela);
-    -webkit-backdrop-filter: blur(var(--vidro-desfoque));
-    backdrop-filter: blur(var(--vidro-desfoque));
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.25);
-  }
-  .auth-screen.auth-active { display: flex; }
   .auth-header { padding: 40px 36px 0 !important; }
   .auth-logo-row { margin-bottom: 28px !important; }
   .auth-title { font-size: 32px !important; }
