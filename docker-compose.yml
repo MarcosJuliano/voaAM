@@ -16,6 +16,7 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:-dev-only-change-this-key}
       DATABASE_PATH: /app/instance/voaam.db
+      DATABASE_URL: ${DATABASE_URL:-}
       SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
       MODERAR_IMAGENS_PERFIL: ${MODERAR_IMAGENS_PERFIL:-false}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}

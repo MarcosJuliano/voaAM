@@ -3,6 +3,7 @@ import json
 import hashlib
 import os
 import sqlite3
+from postgres_backend import DatabaseError, DatabaseIntegrityError, DatabaseOperationalError
 import time
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import closing
@@ -136,7 +137,7 @@ def reservar(vagas, agora=None):
                 (token, agora + 600, trabalho['id']),
             )
             return {**dict(trabalho), 'reserva': token}
-    except sqlite3.OperationalError as erro:
+    except DatabaseOperationalError as erro:
         if 'locked' not in str(erro):
             raise
         return None

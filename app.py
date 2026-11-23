@@ -7,6 +7,7 @@ from contextlib import closing
 import os
 import re
 import sqlite3
+from postgres_backend import DatabaseError, DatabaseIntegrityError, DatabaseOperationalError
 import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -44,6 +45,10 @@ try:
     load_dotenv(BASE_DIR / '.env', override=False)
 except ImportError:
     pass
+
+# Banco PostgreSQL DATABASE_URL é obrigatório na Vercel/produção.
+if (os.environ.get("VERCEL") == "1" or os.environ.get("APP_ENV", "").lower() == "production") and not os.environ.get("DATABASE_URL"):
+    raise RuntimeError("Produção precisa de DATABASE_URL no Supabase; SQLite não é persistente na Vercel.")
 
 app = Flask(__name__, static_folder=str(PUBLIC_DIR), static_url_path="")
 if os.environ.get('APP_ENV', '').lower() == 'production':
@@ -209,7 +214,7 @@ def provas_oficiais():
                    FROM documentos_provas ORDER BY vestibular, ano DESC"""
             ).fetchall()
         docs = [dict(linha) for linha in linhas]
-    except sqlite3.Error:
+    except DatabaseError:
         app.logger.exception('Falha no índice SQLite de provas; usando catálogo local')
     finally:
         if conexao is not None:
@@ -289,10 +294,10 @@ def realizar_cadastro():
         )
         conexao.execute("INSERT INTO progresso (usuario_id) VALUES (?)", (usuario_id,))
         conexao.commit()
-    except sqlite3.IntegrityError:
+    except DatabaseIntegrityError:
         conexao.rollback()
         return jsonify({"message": "Este e-mail já está cadastrado."}), 409
-    except sqlite3.Error:
+    except DatabaseError:
         conexao.rollback()
         app.logger.exception("Falha ao cadastrar usuário")
         return jsonify({"message": "Não foi possível realizar o cadastro agora."}), 500
@@ -375,7 +380,7 @@ def listar_topicos_concluidos():
             (usuario_id,),
         ).fetchall()
         return jsonify({"topicos": [dict(linha) for linha in linhas]}), 200
-    except sqlite3.Error:
+    except DatabaseError:
         app.logger.exception("Falha ao consultar tópicos concluídos")
         return jsonify({"message": "Não foi possível carregar o progresso."}), 500
     finally:
@@ -473,7 +478,7 @@ def registrar_topico_concluido():
             "questoes_total": total,
             "percentual": percentual,
         }), 200
-    except sqlite3.Error:
+    except DatabaseError:
         conexao.rollback()
         app.logger.exception("Falha ao registrar conclusão do tópico")
         return jsonify({"message": "Não foi possível salvar a conclusão."}), 500

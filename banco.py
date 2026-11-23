@@ -14,6 +14,9 @@ ARQUIVO_SQL = BASE_DIR / "database" / "schema.sql"
 
 def conectar() -> sqlite3.Connection:
     """Abre uma conexão; quem chama deve fechá-la com close()."""
+    if os.environ.get("DATABASE_URL"):
+        from postgres_backend import conectar as conectar_pg
+        return conectar_pg()
     BANCO.parent.mkdir(parents=True, exist_ok=True)
     conexao = sqlite3.connect(BANCO, timeout=10)
     conexao.row_factory = sqlite3.Row
@@ -24,6 +27,10 @@ def conectar() -> sqlite3.Connection:
 
 def inicializar_banco() -> None:
     """Executa o esquema e cadastra referências oficiais sem remover dados."""
+    if os.environ.get("DATABASE_URL"):
+        # Schema PostgreSQL criado via SQL Editor e dados importados separadamente.
+        # Nunca executar schema SQLite nem migrações SQLite no Supabase.
+        return
     if not ARQUIVO_SQL.is_file():
         raise FileNotFoundError(f"Esquema SQL não encontrado: {ARQUIVO_SQL}")
 

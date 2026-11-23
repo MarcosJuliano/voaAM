@@ -9,6 +9,7 @@ import json
 import os
 import re
 import sqlite3
+from postgres_backend import DatabaseError, DatabaseIntegrityError, DatabaseOperationalError
 from threading import Lock
 from typing import Any
 import httpx
@@ -475,7 +476,7 @@ def corrigir_redacao_ia():
         if tema_catalogo:
             try:
                 redacao_id, _ = salvar_redacao(uid, tema_catalogo, texto.strip(), avaliacao)
-            except sqlite3.IntegrityError:
+            except DatabaseIntegrityError:
                 return jsonify({'message': 'A conta foi removida durante a avaliação.'}), 401
             resultado['redacao_id'] = redacao_id
         return jsonify(resultado)
