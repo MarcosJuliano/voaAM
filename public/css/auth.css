@@ -87,3 +87,14 @@
     .auth-hint { font-size:11px; color:var(--text2); margin-top:-6px; opacity:0.6; }
 
     .auth-error { font-size:13px; color:var(--red); background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:10px; padding:10px 14px; display:none; }
+
+/* Recuperação de senha */
+.auth-forgot { align-self: flex-end; padding: 4px 0; margin: -4px 0 2px;
+  border: 0; background: transparent; color: var(--accent2); font: inherit;
+  font-size: 13px; font-weight: 700; cursor: pointer; }
+.auth-link-btn { padding: 0; border: 0; background: transparent; color: var(--accent2);
+  font: inherit; font-weight: 700; cursor: pointer; }
+.auth-feedback { display: none; font-size: 13px; line-height: 1.5; color: var(--text2);
+  background: var(--surface2); padding: 12px; border-radius: 10px; }
+.auth-feedback:not(:empty) { display: block; }
+.auth-feedback.auth-feedback-error { color: var(--rose); }

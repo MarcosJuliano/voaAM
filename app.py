@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import threading
 from hashlib import sha256
 from contextlib import closing
 import os
@@ -16,7 +17,9 @@ from typing import Any
 
 from flask import Flask, jsonify, make_response, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
+from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
 from suporte_email import notificar_chamado
+from recuperacao_email import enviar_recuperacao
 
 from banco import conectar, inicializar_banco
 
@@ -320,6 +323,113 @@ def realizar_cadastro():
     iniciar_sessao(usuario_id, 0)
     conta = _carregar_conta(usuario_id)
     return jsonify({"message": "Cadastro realizado com sucesso!", "autenticado": True, **conta}), 201
+
+
+# Recuperação de senha sem mudança de schema: o token assinado é vinculado ao hash
+# da senha atual. Ao redefinir, o hash muda e invalida todos os links anteriores.
+# Controle local de frequência é complementar: em produção, habilite também
+# rate-limit distribuído no proxy/WAF (Vercel/Cloudflare).
+_RECUPERACAO_TTL = 15 * 60
+_recuperacao_ultimo_envio = {}
+_recuperacao_lock = threading.Lock()
+
+
+def _assinador_recuperacao():
+    return URLSafeTimedSerializer(app.secret_key, salt='voaam-recuperacao-v1')
+
+
+def _fingerprint_senha(usuario):
+    return sha256(str(usuario['senha_hash']).encode('utf-8')).hexdigest()
+
+
+@app.post('/api/recuperar-senha')
+def solicitar_recuperacao_senha():
+    dados = _ler_json()
+    email = str(dados.get('email', '')).strip().lower() if dados else ''
+    if not re.fullmatch(r'[^@\s]+@[^@\s]+\.[^@\s]+', email) or len(email) > 254:
+        return jsonify({'message': 'Informe um e-mail válido.'}), 400
+
+    base_publica = os.environ.get('PUBLIC_BASE_URL', '').strip().rstrip('/')
+    remetente = os.environ.get('RESET_FROM_EMAIL', '').strip() or os.environ.get('SUPPORT_FROM_EMAIL', '').strip()
+    if not (base_publica.startswith('https://') or (os.environ.get('APP_ENV', '').lower() != 'production'
+            and base_publica.startswith('http://localhost'))):
+        app.logger.error('Recuperação indisponível: PUBLIC_BASE_URL ausente ou sem HTTPS')
+        return jsonify({'message': 'Recuperação indisponível no momento.'}), 503
+    if not (os.environ.get('RESEND_API_KEY') and remetente):
+        app.logger.error('Recuperação indisponível: Resend não configurado')
+        return jsonify({'message': 'Recuperação indisponível no momento.'}), 503
+
+    # A mensagem é indistinguível para e-mails cadastrados e não cadastrados.
+    generica = {'message': 'Se este e-mail estiver cadastrado, enviaremos um link de recuperação.'}
+    # Limitação básica por IP + e-mail (defesa adicional; não é distribuída).
+    chave = (request.remote_addr or 'unknown', sha256(email.encode()).hexdigest())
+    agora = time.monotonic()
+    with _recuperacao_lock:
+        for k, instante in list(_recuperacao_ultimo_envio.items()):
+            if agora - instante > 1800:
+                del _recuperacao_ultimo_envio[k]
+        if agora - _recuperacao_ultimo_envio.get(chave, float('-inf')) < 90:
+            return jsonify(generica), 200
+        _recuperacao_ultimo_envio[chave] = agora
+
+    conexao = conectar()
+    try:
+        usuario = conexao.execute('SELECT id, senha_hash, ativo FROM usuarios WHERE email = ?', (email,)).fetchone()
+    finally:
+        conexao.close()
+    if usuario is not None and usuario['ativo'] == 1:
+        token = _assinador_recuperacao().dumps([int(usuario['id']), _fingerprint_senha(usuario)])
+        # Token no fragmento: o servidor que entrega o HTML não recebe o token.
+        link = f'{base_publica}/#redefinir-senha={token}'
+        try:
+            enviar_recuperacao(email, link, remetente)
+        except Exception:
+            app.logger.exception('Não foi possível enviar e-mail de recuperação')
+            # Mantém resposta genérica para evitar enumeração de contas.
+    return jsonify(generica), 200
+
+
+@app.post('/api/redefinir-senha')
+def redefinir_senha():
+    dados = _ler_json()
+    token = dados.get('token', '') if dados else ''
+    senha = dados.get('senha', '') if dados else ''
+    confirmar = dados.get('confirmar_senha', '') if dados else ''
+    if not isinstance(senha, str) or not (8 <= len(senha) <= 256) or senha != confirmar:
+        return jsonify({'message': 'Informe uma senha de 8 a 256 caracteres e confirme corretamente.'}), 400
+    if not isinstance(token, str) or not (0 < len(token) <= 1000):
+        return jsonify({'message': 'Link de recuperação inválido ou expirado.'}), 400
+    try:
+        dados_token = _assinador_recuperacao().loads(token, max_age=_RECUPERACAO_TTL)
+        if not isinstance(dados_token, list) or len(dados_token) != 2:
+            raise BadSignature('Formato inválido')
+        uid = int(dados_token[0])
+    except (BadSignature, SignatureExpired, ValueError, TypeError):
+        return jsonify({'message': 'Link de recuperação inválido ou expirado.'}), 400
+    conexao = conectar()
+    try:
+        usuario = conexao.execute('SELECT id, senha_hash, ativo FROM usuarios WHERE id = ?', (uid,)).fetchone()
+        if (usuario is None or usuario['ativo'] != 1
+                or _fingerprint_senha(usuario) != dados_token[1]):
+            return jsonify({'message': 'Este link já foi utilizado ou não é mais válido.'}), 400
+        # Comparação condicional no UPDATE evita reutilização concorrente do token.
+        atualizado = conexao.execute(
+            'UPDATE usuarios SET senha_hash = ?, sessao_versao = sessao_versao + 1 '
+            'WHERE id = ? AND senha_hash = ? AND ativo = 1',
+            (generate_password_hash(senha), uid, usuario['senha_hash']),
+        )
+        if atualizado.rowcount != 1:
+            conexao.rollback()
+            return jsonify({'message': 'Este link já foi utilizado.'}), 400
+        conexao.commit()
+    except DatabaseError:
+        conexao.rollback()
+        app.logger.exception('Falha na redefinição de senha')
+        return jsonify({'message': 'Não foi possível atualizar a senha agora.'}), 500
+    finally:
+        conexao.close()
+    session.clear()  # Invalida também outras sessões pelo incremento sessao_versao.
+    return jsonify({'message': 'Senha atualizada! Volte ao login para entrar com sua nova senha.'}), 200
 
 
 @app.post("/api/login")

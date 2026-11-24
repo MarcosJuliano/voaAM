@@ -15,6 +15,64 @@ function authMostrarTela(tela) {
   if (wrapper) wrapper.scrollTop = 0;
 }
 
+// Recuperação de senha: o token vem apenas do fragmento #redefinir-senha=...
+function authTokenRecuperacao() {
+  const prefixo = '#redefinir-senha=';
+  return location.hash.startsWith(prefixo) ? location.hash.slice(prefixo.length) : '';
+}
+function authAbrirLinkRecuperacao() {
+  if (!authTokenRecuperacao()) return;
+  authMostrarTela('redefinir');
+  // Retira o token da barra de endereços e preserva apenas na memória JS.
+  window.voaTokenRedefinicao = authTokenRecuperacao();
+  history.replaceState(null, '', location.pathname + location.search);
+}
+function authMensagemRecuperacao(id, mensagem, erro = false) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = mensagem;
+  el.classList.toggle('auth-feedback-error', erro);
+}
+async function authSolicitarRecuperacao(event) {
+  event.preventDefault();
+  const btn = document.getElementById('auth-recuperar-enviar');
+  const email = document.getElementById('recuperar-email').value.trim();
+  btn.disabled = true;
+  authMensagemRecuperacao('auth-recuperar-msg', 'Enviando solicitação...');
+  try {
+    const dados = await authRequisicao('/api/recuperar-senha', {
+      method: 'POST', body: JSON.stringify({ email }),
+    });
+    authMensagemRecuperacao('auth-recuperar-msg', dados.message);
+  } catch (e) {
+    authMensagemRecuperacao('auth-recuperar-msg', e.message, true);
+  } finally { btn.disabled = false; }
+}
+async function authRedefinirSenha(event) {
+  event.preventDefault();
+  const senha = document.getElementById('redefinir-senha').value;
+  const confirmar = document.getElementById('redefinir-confirmar').value;
+  if (senha !== confirmar) {
+    authMensagemRecuperacao('auth-redefinir-msg', 'As senhas não conferem.', true);
+    return;
+  }
+  const btn = document.getElementById('auth-redefinir-enviar');
+  btn.disabled = true;
+  try {
+    const dados = await authRequisicao('/api/redefinir-senha', {
+      method: 'POST', body: JSON.stringify({ token: window.voaTokenRedefinicao, senha, confirmar_senha: confirmar }),
+    });
+    window.voaTokenRedefinicao = null;
+    document.getElementById('redefinir-senha').value = '';
+    document.getElementById('redefinir-confirmar').value = '';
+    authMensagemRecuperacao('auth-redefinir-msg', dados.message);
+    btn.textContent = 'Senha atualizada';
+  } catch (e) {
+    authMensagemRecuperacao('auth-redefinir-msg', e.message, true);
+    btn.disabled = false;
+  }
+}
+
 function authTogglePwd(id, btn) {
   const inp = document.getElementById(id);
   if (!inp) return;
@@ -276,13 +334,16 @@ async function authInit() {
         reiniciarProgressoTopicos().catch(e => console.warn('[VoaAM] Progresso:', e));
       }
       authDefinirVista(false);
+      authAbrirLinkRecuperacao();
     }
   } catch (erro) {
     authDefinirVista(false);
     authMostrarErro('auth-login-error', 'Não foi possível conectar ao servidor. Atualize a página ou verifique o Flask.');
+    authAbrirLinkRecuperacao();
     console.warn('[VoaAM] Falha ao consultar a sessão:', erro);
   } finally {
     // Renderiza após definir visibilidade da tela de autenticação.
+    window.voaEncerrarAbertura?.();
     await authGoogleInit();
   }
 }

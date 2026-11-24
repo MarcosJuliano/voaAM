@@ -14,6 +14,8 @@ services:
       SUPPORT_EMAIL: ${SUPPORT_EMAIL:-}
       SUPPORT_FROM_EMAIL: ${SUPPORT_FROM_EMAIL:-}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
+      RESET_FROM_EMAIL: ${RESET_FROM_EMAIL:-}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:5000}
       FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:-dev-only-change-this-key}
       DATABASE_PATH: /app/instance/voaam.db
       DATABASE_URL: ${DATABASE_URL:-}

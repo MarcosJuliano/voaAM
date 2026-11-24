@@ -51,6 +51,7 @@
 
   <!-- ── CSS Base (tokens, reset, layout móvel) ── -->
   <link rel="stylesheet" href="css/style.css?v=__VOAAM_FRONTEND__">
+  <link rel="stylesheet" href="css/boot-loader.css?v=__VOAAM_FRONTEND__">
 
   <!-- ── CSS Modular ──
        components.css  → sim-card, ex-lista, badges reutilizáveis
@@ -65,6 +66,30 @@
   <link rel="stylesheet" href="css/professional.css?v=__VOAAM_FRONTEND__">
 </head>
 <body>
+<!-- Carregamento inicial: separado das animações de atividades já existentes. -->
+<div id="voa-boot-loader" role="status" aria-live="polite" aria-label="Inicializando voaAM">
+  <div class="voa-boot-logo" aria-hidden="true">V</div>
+  <strong class="voa-boot-name">voa<span>AM</span></strong>
+  <div class="voa-boot-ring" aria-hidden="true"></div>
+  <p id="voa-boot-status">Preparando seus estudos...</p>
+</div>
+<script>
+  window.voaEncerrarAbertura = function (mensagemErro) {
+    var el = document.getElementById('voa-boot-loader');
+    if (!el) return;
+    if (mensagemErro) {
+      document.getElementById('voa-boot-status').textContent = mensagemErro;
+      el.classList.add('voa-boot-error');
+      return;
+    }
+    el.classList.add('voa-boot-sair');
+    setTimeout(function () { el.remove(); }, 450);
+  };
+  // Se o bootstrap travar, não bloquear permanentemente o site.
+  setTimeout(function () {
+    window.voaEncerrarAbertura();
+  }, 10000);
+</script>
 
 <!-- AUTH OVERLAY ─────────────────────────────────────────────
      Edite HTML → pages/auth.html
@@ -276,6 +301,7 @@ const Router = {
     this.scriptsAusentes = [];
     for (const src of this.scripts) await this.loadScript(src);
     if (this.scriptsAusentes.length) {
+      window.voaEncerrarAbertura?.();
       console.error('[VoaAM] Scripts ausentes:', this.scriptsAusentes);
       const msg = document.createElement('div');
       msg.setAttribute('role','alert');

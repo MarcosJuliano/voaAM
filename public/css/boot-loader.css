@@ -1,0 +1,24 @@
+/* Tela de abertura do voaAM (não afeta o carregamento das atividades). */
+#voa-boot-loader {
+  position: fixed; inset: 0; z-index: 100000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; padding: 24px; background: var(--bg, #f8faff);
+  color: var(--text, #0f172a); font-family: var(--font, system-ui, sans-serif);
+  opacity: 1; visibility: visible; transition: opacity .4s ease, visibility .4s ease;
+}
+#voa-boot-loader.voa-boot-sair { opacity: 0; visibility: hidden; pointer-events: none; }
+.voa-boot-logo {
+  width: 70px; height: 70px; border-radius: 20px; display: grid; place-items: center;
+  background: linear-gradient(135deg,#3b82f6,#8b5cf6); color: white;
+  font-size: 36px; font-weight: 800; box-shadow: 0 15px 35px rgba(59,130,246,.22);
+}
+.voa-boot-name { font-size: 28px; letter-spacing: -.8px; font-weight: 850; }
+.voa-boot-name span { color: var(--accent, #3b82f6); }
+.voa-boot-ring { width: 35px; height: 35px; border: 3px solid rgba(59,130,246,.16);
+  border-top-color: var(--accent,#3b82f6); border-radius: 50%; animation: voa-boot-spin .85s linear infinite; }
+#voa-boot-status { font-size: 13px; color: var(--text2,#4b5563); text-align:center; }
+@keyframes voa-boot-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .voa-boot-ring { animation: none; }
+  #voa-boot-loader { transition: none; }
+}

@@ -30,6 +30,7 @@
       </div>
 
 
+      <button class="auth-forgot" type="button" onclick="authMostrarTela('recuperar')">Esqueci minha senha</button>
       <button class="auth-btn-primary" onclick="authEntrar()">Entrar na conta →</button>
 
       <div class="auth-divider">
@@ -45,6 +46,38 @@
       Não tem conta? <span onclick="authMostrarTela('cadastro')">Criar conta grátis</span>
     </div>
   </div>
+
+  <!-- Recuperação de senha: solicitação por e-mail -->
+  <section class="auth-screen" id="auth-recuperar" aria-labelledby="auth-recuperar-titulo">
+    <div class="auth-header"><div class="auth-logo-row"><div class="auth-logo-icon">V</div><div class="auth-logo-text">Voa<span>AM</span></div></div>
+      <h2 class="auth-title" id="auth-recuperar-titulo">Recuperar minha senha</h2>
+      <p class="auth-sub">Enviaremos um link para o e-mail cadastrado, se houver uma conta associada.</p>
+    </div>
+    <form class="auth-form" onsubmit="authSolicitarRecuperacao(event)">
+      <p id="auth-recuperar-msg" class="auth-feedback" role="status" aria-live="polite"></p>
+      <label class="auth-field"><span class="auth-label">E-mail cadastrado</span>
+        <input class="auth-input" id="recuperar-email" type="email" autocomplete="email" required maxlength="254" placeholder="seu@email.com"></label>
+      <button class="auth-btn-primary" id="auth-recuperar-enviar" type="submit">Enviar link de recuperação</button>
+    </form>
+    <div class="auth-bottom-link"><button type="button" class="auth-link-btn" onclick="authMostrarTela('login')">Voltar ao login</button></div>
+  </section>
+
+  <!-- Recuperação de senha: link temporário recebido por e-mail -->
+  <section class="auth-screen" id="auth-redefinir" aria-labelledby="auth-redefinir-titulo">
+    <div class="auth-header"><div class="auth-logo-row"><div class="auth-logo-icon">V</div><div class="auth-logo-text">Voa<span>AM</span></div></div>
+      <h2 class="auth-title" id="auth-redefinir-titulo">Definir uma nova senha</h2>
+      <p class="auth-sub">Seu link de recuperação é válido por 15 minutos.</p>
+    </div>
+    <form class="auth-form" onsubmit="authRedefinirSenha(event)">
+      <p id="auth-redefinir-msg" class="auth-feedback" role="status" aria-live="polite"></p>
+      <label class="auth-field"><span class="auth-label">Nova senha</span>
+        <input class="auth-input" id="redefinir-senha" type="password" autocomplete="new-password" minlength="8" maxlength="256" required></label>
+      <label class="auth-field"><span class="auth-label">Confirmar nova senha</span>
+        <input class="auth-input" id="redefinir-confirmar" type="password" autocomplete="new-password" minlength="8" maxlength="256" required></label>
+      <button class="auth-btn-primary" id="auth-redefinir-enviar" type="submit">Salvar nova senha</button>
+    </form>
+    <div class="auth-bottom-link"><button type="button" class="auth-link-btn" onclick="authMostrarTela('login')">Voltar ao login</button></div>
+  </section>
 
   <!-- ── TELA CADASTRO ── -->
   <div class="auth-screen" id="auth-cadastro">
