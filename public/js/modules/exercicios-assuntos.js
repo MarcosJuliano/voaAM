@@ -257,16 +257,25 @@ async function exMostrarAssuntos() {
   grid.replaceChildren();
   const etapa = temEtapa ? document.getElementById('ex-etapa').value : '';
   status.textContent = 'Carregando assuntos…';
+  status.classList.add('voa-busy-status');
+  grid.setAttribute('aria-busy', 'true');
+  grid.innerHTML = '<div class="voa-loading-placeholder" aria-hidden="true"><div class="voa-loading-card"><span class="voa-loading-line"></span><span class="voa-loading-line"></span></div><div class="voa-loading-card"><span class="voa-loading-line"></span><span class="voa-loading-line"></span></div></div>';
   let assuntos;
   try {
     assuntos = await exAssuntosDisponiveis(materia, vestibulares, etapa);
   } catch {
     if (pedido === exPedidoAssuntos) {
+      status.classList.remove('voa-busy-status');
+      grid.removeAttribute('aria-busy');
+      grid.replaceChildren();
       status.textContent = 'Não foi possível carregar os assuntos. Selecione a área para tentar novamente.';
     }
     return;
   }
   if (pedido !== exPedidoAssuntos) return;
+  status.classList.remove('voa-busy-status');
+  grid.removeAttribute('aria-busy');
+  grid.replaceChildren();
 
   if (!assuntos.length) {
     status.textContent = 'Nenhum assunto para esta seleção. Experimente outro vestibular ou etapa.';
@@ -352,7 +361,9 @@ async function exRenderQuestoesFiltradas() {
   let filtrado;
   if (a.autoral) {
     info.textContent = 'Carregando questões…';
-    container.replaceChildren();
+    info.classList.add('voa-busy-status');
+    container.setAttribute('aria-busy', 'true');
+    container.innerHTML = '<div class="voa-loading-placeholder" aria-hidden="true"><div class="voa-loading-card"><span class="voa-loading-line"></span><span class="voa-loading-line"></span><span class="voa-loading-line"></span></div><div class="voa-loading-card"><span class="voa-loading-line"></span><span class="voa-loading-line"></span></div></div>';
     exListaAtual = [];
     exAtualizarNotas();
     try {
@@ -365,6 +376,9 @@ async function exRenderQuestoesFiltradas() {
       }));
     } catch {
       if (pedido === exPedidoQuestoes && a === exAssuntoAtual && nivel === exNivelAtual) {
+        info.classList.remove('voa-busy-status');
+        container.removeAttribute('aria-busy');
+        container.replaceChildren();
         info.textContent = 'Não foi possível carregar as questões. Use Atualizar para tentar novamente.';
       }
       return;
@@ -375,6 +389,9 @@ async function exRenderQuestoesFiltradas() {
     const doNivel = pool.filter(q => q._dif === nivel || (nivel === 3 && q._dif === 4));
     filtrado = embaralhar(doNivel.length >= 3 ? doNivel : pool).slice(0, 10);
   }
+  if (pedido !== exPedidoQuestoes || a !== exAssuntoAtual || nivel !== exNivelAtual) return;
+  info.classList.remove('voa-busy-status');
+  container.removeAttribute('aria-busy');
   exListaAtual = filtrado;
 
   const nivelLabels = ['','Fácil','Médio','Difícil'];

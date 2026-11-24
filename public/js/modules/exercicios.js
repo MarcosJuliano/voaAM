@@ -144,6 +144,7 @@ async function responderExercicio(qId, idx) {
   const botoes = document.querySelectorAll(`[id^="exopt-${qId}-"]`);
   botoes.forEach(b=>b.disabled=true);
   const fb=document.getElementById(`exfb-${qId}`);
+  if(fb){fb.textContent='Conferindo resposta…';fb.classList.add('voa-busy-status');fb.setAttribute('role','status');}
   try {
     const r=await avaliarRespostaServidor('banco:'+qId,idx);
     if (exListaAtual.some(item => item.id === qId) && document.getElementById('ex-questoes-panel').style.display === 'block') {
@@ -158,6 +159,8 @@ async function responderExercicio(qId, idx) {
   } catch(e) {
     botoes.forEach(b=>b.disabled=false);
     if(fb)fb.textContent='Correção indisponível: '+e.message;
+  } finally {
+    fb?.classList.remove('voa-busy-status');
   }
 }
 
@@ -299,6 +302,7 @@ async function responderEx(idx) {
   const botoes=document.querySelectorAll('[id^="exo-"]');botoes.forEach(b=>b.disabled=true);
   const fb=document.getElementById('ex-feedback');
   const proximo=document.getElementById('ex-proxima-btn');
+  if(fb){fb.textContent='Conferindo resposta…';fb.classList.add('voa-busy-status');fb.setAttribute('role','status');}
   try {
     const r=await avaliarRespostaServidor('banco:'+q.id,idx);
     const certo=document.getElementById('exo-'+r.correta);
@@ -311,6 +315,8 @@ async function responderEx(idx) {
   } catch(e) {
     exRespondida=false;botoes.forEach(b=>b.disabled=false);
     if(fb)fb.textContent='Correção indisponível: '+e.message;
+  } finally {
+    fb?.classList.remove('voa-busy-status');
   }
 }
 
