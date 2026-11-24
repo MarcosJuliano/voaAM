@@ -66,6 +66,7 @@ async function treinoIniciar(event){
  if (!btn || btn.disabled) return;
  const versao = treinoFiltroVersao;
  const textoOriginal = btn.textContent;
+ const fecharAnimacao = voaIniciarCarregamento('Preparando seu treino…');
  btn.disabled=true;
  btn.classList.add('voa-busy-button');
  btn.textContent='Preparando questões…';
@@ -81,6 +82,7 @@ async function treinoIniciar(event){
   treinoEl('treino-overlay').querySelector('.back-btn').focus();
  }catch(e){if(status)status.textContent=e.message;}
  finally{
+  fecharAnimacao();
   btn.classList.remove('voa-busy-button');
   btn.textContent=textoOriginal;
   if(versao === treinoFiltroVersao)btn.disabled=false;
@@ -113,6 +115,7 @@ function treinoRender(){
 async function treinoResponder(indice){
  const q=treinoAtual?.questoes[treinoIndice];if(!q||treinoRespostas[q.id]||treinoRespondendo)return;
  treinoRespondendo=true;
+ const fecharAnimacao = voaIniciarCarregamento('Conferindo sua resposta…');
  const btns=treinoEl('treino-questao-overlay').querySelectorAll('[data-alt]');btns.forEach(b=>b.disabled=true);
  treinoEl('treino-pular-overlay').disabled=true;
  const feedbackPendente=treinoEl('treino-feedback-overlay');
@@ -131,7 +134,7 @@ async function treinoResponder(indice){
   if(typeof atualizarProgresso==='function')await atualizarProgresso();
   if(typeof atualizarNivel==='function')atualizarNivel();
  }catch(e){treinoEl('treino-pular-overlay').disabled=false;btns.forEach(b=>b.disabled=false);feedbackPendente.textContent='Erro: '+e.message;}
- finally{feedbackPendente.classList.remove('voa-busy-status');treinoRespondendo=false;}
+ finally{fecharAnimacao();feedbackPendente.classList.remove('voa-busy-status');treinoRespondendo=false;}
 }
 function treinoExibirFeedback(r){
  const fb=treinoEl('treino-feedback-overlay');
@@ -154,6 +157,7 @@ function treinoProxima() {
 async function treinoFinalizar(sair = false) {
  if (!treinoAtual || treinoRespondendo || treinoEncerrando) return;
  treinoEncerrando = true;
+ const fecharAnimacao = voaIniciarCarregamento('Salvando resultado do treino…');
  const proxima = treinoEl('treino-proxima-overlay');
  const pular = treinoEl('treino-pular-overlay');
  const estado = [proxima.disabled, pular.disabled];
@@ -184,6 +188,7 @@ async function treinoFinalizar(sair = false) {
   treinoEl('treino-feedback-overlay').textContent = 'Não foi possível encerrar: ' + e.message;
   [proxima.disabled, pular.disabled] = estado;
  } finally {
+  fecharAnimacao();
   treinoEl('treino-feedback-overlay').classList.remove('voa-busy-status');
   treinoEncerrando = false;
  }
