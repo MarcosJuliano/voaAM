@@ -26,6 +26,11 @@ def config_publica():
     valor = os.getenv('GOOGLE_CLIENT_ID', '').strip()
     valido = google_client_id_configurado()
     provedores = provedores_disponiveis()
+    # Expõe somente o limite público por aluno, nunca credenciais ou franquias internas.
+    try:
+        limite_cloudflare = max(1, min(10, int(os.getenv('CLOUDFLARE_LIMITE_DIA', '2'))))
+    except ValueError:
+        limite_cloudflare = 2
     return jsonify({
         'google_client_id': valido,
         'google_configurado': bool(valido),
@@ -37,6 +42,7 @@ def config_publica():
         'ia_configurada': 'gemini' in provedores,
         'gemini_redacao_mensagem': gemini_motivo_indisponivel(),
         'provedores_redacao': provedores,
+        'cloudflare_limite_diario_usuario': limite_cloudflare,
     })
 
 

@@ -60,6 +60,14 @@
           <p><strong>Gemini</strong> · Pode oferecer feedback mais detalhado. Envia a redação ao Google e depende da internet, do modelo e da cota do projeto. O plano configurado pode gerar custos para quem administra o site. Os termos da API Gemini restringem seu uso em sites acessados por menores de 18 anos.</p>
           <p id="red-gemini-config" hidden></p>
         </div>
+        <aside id="red-aviso-franquia" class="voa-aviso-aluno voa-aviso-ia" aria-label="Limite de correções da inteligência artificial" hidden>
+          <span class="voa-aviso-icone" aria-hidden="true">✦</span>
+          <div>
+            <strong>Correções por IA têm limite diário</strong>
+            <p><span id="red-limite-usuario">O limite por aluno é definido pelo administrador.</span> O período considera as últimas 24 horas. Correções concluídas ou aguardando ocupam a cota; falhas técnicas têm limite separado. A franquia gratuita da Cloudflare é compartilhada entre todos os alunos.</p>
+            <p>As 3 vidas dos exercícios não são gastas nas redações. Para não ocupar a fila desnecessariamente, revise seu texto antes de enviar. O relatório é uma estimativa pedagógica, não uma nota oficial.</p>
+          </div>
+        </aside>
         <div id="red-detalhe-ollama" hidden>
           <label for="red-detalhe-avaliacao">Detalhe da avaliação</label>
           <select class="form-control" id="red-detalhe-avaliacao" onchange="redLimparAvaliacao()">

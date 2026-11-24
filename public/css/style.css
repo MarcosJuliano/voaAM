@@ -1613,3 +1613,46 @@ body {
   .voa-loading-track::after { animation: none; }
   .voa-loading-track::after { width: 100%; }
 }
+
+/* Avisos educativos de vidas e consumo de IA — visual neutro, responsivo. */
+.voa-aviso-aluno {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  margin: 0 0 18px;
+  background: var(--surface2);
+  border: 1px solid var(--border-accent);
+  border-radius: 14px;
+  color: var(--text);
+}
+.voa-aviso-aluno[hidden] { display: none !important; }
+.voa-aviso-icone {
+  width: 29px;
+  height: 29px;
+  flex: 0 0 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--accent2);
+  font-size: 18px;
+  font-weight: 800;
+}
+.voa-aviso-aluno strong {
+  display: block;
+  font: 700 14px/1.4 var(--font-display);
+  margin-bottom: 4px;
+}
+.voa-aviso-aluno p {
+  margin: 0;
+  color: var(--text2);
+  font-size: 12px;
+  line-height: 1.65;
+}
+.voa-aviso-aluno p + p { margin-top: 7px; }
+.voa-aviso-ia { margin-top: 10px; margin-bottom: 16px; }
+@media (max-width: 560px) {
+  .voa-aviso-aluno { padding: 12px; gap: 9px; }
+  .voa-aviso-aluno p { font-size: 12px; }
+}

@@ -82,6 +82,11 @@ async function redConfigurarAvaliacao() {
     const seletor = document.getElementById('red-modo-avaliacao');
     const rotulos = {cloudflare: 'Cloudflare Workers AI (franquia gratuita)', openai: 'OpenAI (API paga)', gemini: 'Gemini (Google)', ollama: 'Ollama (servidor do voaAM)'};
     const provedores = config.provedores_redacao || [];
+    const limite = Number(config.cloudflare_limite_diario_usuario);
+    const descricaoLimite = document.getElementById('red-limite-usuario');
+    if (descricaoLimite) descricaoLimite.textContent = Number.isInteger(limite) && limite >= 1
+      ? `Cada aluno pode solicitar até ${limite} ${limite === 1 ? 'correção' : 'correções'} com Cloudflare nas últimas 24 horas.`
+      : 'O limite por aluno é definido pelo administrador.';
     for (const opcao of seletor.options) {
       if (opcao.value === 'gratis') continue;
       opcao.disabled = !provedores.includes(opcao.value);
@@ -102,6 +107,8 @@ async function redConfigurarAvaliacao() {
 function redAtualizarProvedor() {
   const modo = document.getElementById('red-modo-avaliacao').value;
   document.getElementById('red-detalhe-ollama').hidden = modo !== 'ollama';
+  const avisoFranquia = document.getElementById('red-aviso-franquia');
+  if (avisoFranquia) avisoFranquia.hidden = modo !== 'cloudflare';
   redLimparAvaliacao();
 }
 
