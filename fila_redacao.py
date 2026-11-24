@@ -33,28 +33,29 @@ def enfileirar_redacao():
     detalhe = dados.get('detalhe', 'resumido' if provedor == 'ollama' else 'detalhado')
     if not tema or not isinstance(texto, str) or not 100 <= len(texto.strip()) <= 10000:
         return jsonify({'message': 'Escolha um tema e escreva entre 100 e 10.000 caracteres.'}), 400
-    if provedor not in ('ollama', 'gemini', 'openai') or detalhe not in ('resumido', 'detalhado'):
+    if provedor not in ('ollama', 'gemini', 'openai', 'cloudflare') or detalhe not in ('resumido', 'detalhado'):
         return jsonify({'message': 'Escolha um provedor e um nível de detalhe válidos.'}), 400
     if provedor not in provedores_disponiveis():
         mensagem = (gemini_motivo_indisponivel() if provedor == 'gemini'
                     else 'O serviço de correção não está habilitado neste servidor.')
         return jsonify({'message': mensagem}), 503
-    if provedor in ('gemini', 'openai'):
+    if provedor in ('gemini', 'openai', 'cloudflare'):
         detalhe = 'detalhado'
 
     with closing(conectar()) as c, c:
         c.execute('BEGIN IMMEDIATE')
-        if provedor == 'openai':
-            # Evita cobranças abusivas; bloqueia antes de salvar a redação.
+        if provedor in ('openai', 'cloudflare'):
+            # Limite por usuário: impede abuso da franquia e bloqueia antes de salvar.
+            variavel = 'CLOUDFLARE_LIMITE_DIA' if provedor == 'cloudflare' else 'OPENAI_LIMITE_DIA'
             try:
-                limite = max(1, min(10, int(os.getenv('OPENAI_LIMITE_DIA', '3'))))
+                limite = max(1, min(10, int(os.getenv(variavel, '2'))))
             except ValueError:
-                limite = 3
+                limite = 2
             usado = c.execute("""SELECT COUNT(*) AS total FROM avaliacoes_redacao a
                                 JOIN redacoes r ON r.id=a.redacao_id
-                                WHERE r.usuario_id=? AND a.provedor='openai'
+                                WHERE r.usuario_id=? AND a.provedor=?
                                 AND a.enviada_em > CURRENT_TIMESTAMP - INTERVAL '24 hours'""",
-                             (uid,)).fetchone()['total']
+                             (uid, provedor)).fetchone()['total']
             if usado >= limite:
                 return jsonify({'message': 'Limite diário de correções por IA atingido.'}), 429
         redacao_id, _ = obter_redacao(c, uid, tema, texto.strip())
@@ -96,6 +97,7 @@ def limites():
         ('ollama', 'REDACAO_IA_CONCORRENCIA', 1),
         ('gemini', 'REDACAO_GEMINI_CONCORRENCIA', 2),
         ('openai', 'REDACAO_OPENAI_CONCORRENCIA', 1),
+        ('cloudflare', 'REDACAO_CLOUDFLARE_CONCORRENCIA', 1),
     ):
         try:
             resultado[provedor] = max(1, min(16, int(os.getenv(variavel, padrao))))
@@ -216,10 +218,11 @@ def processar_redacao_nuvem():
     autenticacao = request.headers.get('Authorization', '')
     if len(segredo) < 32 or not hmac.compare_digest(autenticacao, 'Bearer ' + segredo):
         return jsonify({'message': 'Não autorizado.'}), 401
-    if 'openai' not in provedores_disponiveis():
-        return jsonify({'message': 'Worker de IA online desativado.'}), 503
+    # Worker gratuito separado: nunca chama a API OpenAI com créditos pagos.
+    if 'cloudflare' not in provedores_disponiveis():
+        return jsonify({'message': 'Worker Cloudflare desativado.'}), 503
     try:
-        tarefa = reservar({'openai': 1})
+        tarefa = reservar({'cloudflare': 1})
         if not tarefa:
             return jsonify({'ok': True, 'processado': False})
         try:
