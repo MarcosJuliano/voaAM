@@ -25,12 +25,17 @@ PUBLIC_DIR = BASE_DIR / "public"
 
 
 def versao_frontend():
-    arquivos = [PUBLIC_DIR / 'index.html']
+    indice = PUBLIC_DIR / 'index.html'
+    arquivos = [indice if indice.is_file() else BASE_DIR / 'frontend_index.html']
     for pasta in ('css', 'js', 'components', 'pages'):
         arquivos.extend(p for p in (PUBLIC_DIR / pasta).rglob('*') if p.is_file())
     digest = sha256()
     for arquivo in sorted(arquivos):
-        digest.update(arquivo.relative_to(PUBLIC_DIR).as_posix().encode())
+        if not arquivo.is_file():
+            continue
+        nome = ('index.html' if arquivo == BASE_DIR / 'frontend_index.html'
+                else arquivo.relative_to(PUBLIC_DIR).as_posix())
+        digest.update(nome.encode())
         digest.update(arquivo.read_bytes())
     return digest.hexdigest()[:16]
 
@@ -187,7 +192,10 @@ def _carregar_conta(usuario_id: int) -> dict[str, Any] | None:
 @app.get("/index.html")
 def inicio():
     """O HTML inicial aponta para uma única versão de fragmentos, scripts e estilos."""
-    html = (PUBLIC_DIR / 'index.html').read_text(encoding='utf-8')
+    indice = PUBLIC_DIR / 'index.html'
+    if not indice.is_file():
+        indice = BASE_DIR / 'frontend_index.html'
+    html = indice.read_text(encoding='utf-8')
     resposta = make_response(html.replace('__VOAAM_FRONTEND__', VERSAO_FRONTEND))
     resposta.headers['Cache-Control'] = 'no-store'
     return resposta

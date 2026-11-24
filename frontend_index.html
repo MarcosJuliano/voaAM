@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark" data-versao="__VOAAM_FRONTEND__">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>voaAM | Vestibulares do Amazonas</title>
+  <meta name="description" content="Plataforma gratuita de estudos para PSC (UFAM), SIS (UEA), MACRO (UEA) e ENEM. Simulados, exercícios e banco de questões do Amazonas.">
+  <meta name="theme-color" content="#0f1117">
+  <meta property="og:title" content="voaAM | Vestibulares do Amazonas">
+  <meta property="og:description" content="Simulados, exercícios e banco de questões para PSC, SIS, MACRO e ENEM.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+
+  <!-- ── Fontes ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ── CSS Base (tokens, reset, layout móvel) ── -->
+  <link rel="stylesheet" href="css/style.css?v=__VOAAM_FRONTEND__">
+
+  <!-- ── CSS Modular ──
+       components.css  → sim-card, ex-lista, badges reutilizáveis
+       auth.css        → login e cadastro
+       responsive.css  → sidebar desktop e breakpoints
+  ── -->
+  <link rel="stylesheet" href="css/components.css?v=__VOAAM_FRONTEND__">
+  <link rel="stylesheet" href="css/assessment.css?v=__VOAAM_FRONTEND__">
+  <link rel="stylesheet" href="css/auth.css?v=__VOAAM_FRONTEND__">
+  <link rel="stylesheet" href="css/responsive.css?v=__VOAAM_FRONTEND__">
+  <link rel="stylesheet" href="css/glass.css?v=__VOAAM_FRONTEND__">
+  <link rel="stylesheet" href="css/professional.css?v=__VOAAM_FRONTEND__">
+</head>
+<body>
+
+<!-- AUTH OVERLAY ─────────────────────────────────────────────
+     Edite HTML → pages/auth.html
+     Edite CSS  → css/auth.css
+     Edite JS   → js/modules/auth.js
+     Nota: auth.html já contém o <div id="auth-wrapper"> completo.
+     O Router usa outerHTML para substituir este placeholder.
+──────────────────────────────────────────────────────────── -->
+<div id="auth-wrapper"></div>
+
+<!-- APP ──────────────────────────────────────────────────────
+     Layout principal: header + sidebar/nav + conteúdo
+──────────────────────────────────────────────────────────── -->
+<div id="app-wrapper" hidden inert>
+
+  <!-- components/header.html -->
+  <div id="slot-header"></div>
+
+  <!-- components/toasts.html (XP toast + achievement popup) -->
+  <div id="slot-toasts"></div>
+
+  <!-- ── PÁGINAS ────────────────────────────────────────────
+       Uma por vez (.active).  Navegação: goTo('nome')
+       pages/home.html          → Início
+       pages/materia.html       → Estudar (matéria + tópicos)
+       pages/praticar.html      → Praticar (simulados + exercícios)
+       pages/perfil.html        → Perfil do aluno
+  ──────────────────────────────────────────────────────────── -->
+  <div id="slot-page-home"></div>
+  <div id="slot-page-materia"></div>
+  <div id="slot-page-praticar"></div>
+  <div id="slot-page-redacao"></div>   <!-- pages/redacao.html -->
+  <div id="slot-page-ranking"></div>
+  <div id="slot-page-perfil"></div>
+  <div id="slot-page-banco-de-provas"></div>
+
+  <!-- ── OVERLAYS ───────────────────────────────────────────
+       Ficam sobre tudo quando ativos (position: fixed).
+       components/aula-view.html        → quiz + videoaula
+       components/exercicios-view.html  → exercícios duolingo
+       components/bloqueado-view.html   → sem corações
+  ──────────────────────────────────────────────────────────── -->
+  <div id="slot-aula-view"></div>
+  <div id="slot-exercicios-view"></div>
+  <div id="slot-bloqueado-view"></div>
+
+  <!-- components/navbar.html (bottom-nav móvel / sidebar desktop) -->
+  <div id="slot-navbar"></div>
+
+</div><!-- /app-wrapper -->
+
+<!-- Simulado Completo — fora do app-wrapper para não ser afetado pelo grid -->
+<div id="slot-sc-view"></div>
+<div id="slot-treino-view"></div>
+
+
+<dialog id="banner-recorte" class="conta-dialog liquid-glass" aria-labelledby="banner-recorte-titulo">
+  <form id="banner-recorte-form">
+    <h2 id="banner-recorte-titulo">Ajustar imagem do banner</h2>
+    <p>Arraste a imagem ou use os controles para escolher o que aparece no banner.</p>
+    <canvas id="banner-recorte-previa" width="1280" height="320" aria-label="Prévia do recorte"></canvas>
+    <div class="banner-recorte-controles">
+      <label>Zoom <input id="banner-recorte-zoom" type="range" min="1" max="3" step="0.01" value="1"></label>
+      <label>Posição horizontal <input id="banner-recorte-x" type="range" min="0" max="100" value="50"></label>
+      <label>Posição vertical <input id="banner-recorte-y" type="range" min="0" max="100" value="50"></label>
+    </div>
+    <p id="banner-recorte-erro" class="conta-erro" role="alert"></p>
+    <div class="sc-dialog-actions">
+      <button id="banner-recorte-cancelar" class="btn-secondary" type="button">Cancelar</button>
+      <button id="banner-recorte-aplicar" class="btn-primary" type="submit">Usar este recorte</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="perfil-imagem-dialogo" class="conta-dialog liquid-glass" aria-labelledby="perfil-imagem-titulo">
+  <h2 id="perfil-imagem-titulo"></h2>
+  <div id="perfil-imagem-tema" class="ranking-publico-banner" hidden></div>
+  <img id="perfil-imagem-ampliada" alt="" hidden>
+  <form class="perfil-imagem-acoes" method="dialog">
+    <button id="perfil-imagem-alterar" class="btn-primary" type="button" hidden>Alterar</button>
+    <button class="btn-secondary" type="submit">Fechar</button>
+  </form>
+</dialog>
+
+<dialog id="confirmar-acao" class="conta-dialog" aria-labelledby="confirmar-titulo" aria-describedby="confirmar-mensagem">
+  <form>
+    <h2 id="confirmar-titulo"></h2>
+    <p id="confirmar-mensagem"></p>
+    <p class="conta-erro" role="alert"></p>
+    <div class="sc-dialog-actions">
+      <button type="button" data-cancelar>Cancelar</button>
+      <button type="submit" class="sc-dialog-danger"></button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ROUTER ───────────────────────────────────────────────────
+     Injeta fragmentos e carrega módulos JS em ordem.
+     Adicionar página: 1) crie pages/nova.html
+                       2) adicione entrada em fragments abaixo
+                       3) adicione case em js/modules/nav.js → goTo()
+──────────────────────────────────────────────────────────── -->
+<script>
+const Router = {
+  versao: document.documentElement.dataset.versao,
+
+  urlVersionada(caminho) {
+    return `${caminho}?v=${this.versao}`;
+  },
+
+  fragments: {
+    'auth-wrapper':           'pages/auth.html',
+    'slot-header':            'components/header.html',
+    'slot-toasts':            'components/toasts.html',
+    'slot-navbar':            'components/navbar.html',
+    'slot-aula-view':         'components/aula-view.html',
+    'slot-exercicios-view':   'components/exercicios-view.html',
+    'slot-bloqueado-view':    'components/bloqueado-view.html',
+    'slot-sc-view':           'components/simulado-completo-view.html',
+    'slot-treino-view':       'components/treino-view.html',
+    'slot-page-home':         'pages/home.html',
+    'slot-page-materia':      'pages/materia.html',
+    'slot-page-praticar':     'pages/praticar.html',
+    'slot-page-redacao':      'pages/redacao.html',
+    'slot-page-ranking':       'pages/ranking.html',
+    'slot-page-perfil':       'pages/perfil.html',
+    'slot-page-banco-de-provas': 'pages/banco-de-provas.html',
+  },
+
+  // Ordem estrita de dependência — NÃO reordene sem revisar
+  scripts: [
+    'js/modules/ui-icons.js',     // iconografia consistente (SVG local)
+    'js/modules/state.js',        // estado, perfil, corações
+    'js/data/topics.js',          // mathTopics, redTopics
+    'js/data/quizzes.js',         // quizzes por tópico
+    'js/data/simulados.js',       // simuladoQuestions + catalogoSimulados
+    'js/data/banco.js',           // bancoDB (questões reais)
+    'js/modules/utils.js',        // getDificuldade + pós-proc
+    'js/modules/gamification.js', // XP, streak, achievements
+    'js/modules/materia.js',      // tela Estudar
+    'js/modules/aula.js',         // aula + quiz
+    'js/modules/simulado.js',     // simulado cronometrado
+    'js/modules/praticar.js',     // aba Praticar
+    'js/modules/exercicios-assuntos.js', // assuntos → nível → questões (extraído de script.js)
+    'js/modules/exercicios.js',   // exercícios Duolingo
+    'js/modules/dialogos.js',
+    'js/modules/auth.js',         // login/cadastro
+    'js/data/enem2025_mat.js',    // questões ENEM 2025 matemática
+    'js/data/enem2024_mat.js',    // questões ENEM 2024 matemática
+    'js/data/enem2023_mat.js',    // questões ENEM 2023 matemática
+    'js/data/macro2025_mat.js',   // questões MACRO 2025 matemática
+    'js/data/macro2024_mat.js',   // questões MACRO 2024 matemática
+    'js/data/macro2023_mat.js',   // questões MACRO 2023 matemática
+    'js/data/psc1_mat.js',        // questões PSC 1ª Etapa (2023–2025)
+    'js/data/psc2_mat.js',        // questões PSC 2ª Etapa (2023–2025)
+    'js/data/psc3_mat.js',        // questões PSC 3ª Etapa (2023–2025)
+    'js/data/sis1_mat.js',        // questões SIS 1ª Etapa (2023–2025)
+    'js/data/sis2_mat.js',        // questões SIS 2ª Etapa (2023–2025)
+    'js/data/sis3_mat.js',        // questões SIS 3ª Etapa (2023–2025)
+    'js/modules/banco-provas.js',      // tela Banco de Provas
+    'js/modules/simulado_completo.js', // simulado completo
+    'js/modules/redacao.js',      // página de redação
+    'js/modules/treino-personalizado.js', // seleção no Flask, inspirada no protótipo C#
+    'js/modules/nivel.js',
+    'js/modules/ranking.js',
+    'js/modules/banner-recorte.js',
+    'js/modules/conta.js',
+    'js/modules/nav.js',          // goTo, perfil, tema
+    'js/modules/experiencia.js',  // preferências, recomendações e suporte
+    'js/modules/iluminacao.js',   // luz sob o ponteiro
+    'js/app.js',                  // init final
+  ],
+
+  async loadFragment(id, url) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    try {
+      const r = await fetch(this.urlVersionada(url));
+      if (!r.ok) throw new Error(`${r.status} ${url}`);
+      const html = await r.text();
+      // auth.html já contém o próprio <div id="auth-wrapper">,
+      // então substituímos o elemento inteiro em vez de injetar dentro dele.
+      if (id === 'auth-wrapper') {
+        el.outerHTML = html;
+      } else {
+        el.innerHTML = html;
+      }
+    } catch (e) {
+      console.warn('[VoaAM] fragmento falhou:', e.message);
+    }
+  },
+
+  loadScript(src) {
+    return new Promise(res => {
+      const s = document.createElement('script');
+      s.src = this.urlVersionada(src);
+      s.onload  = res;
+      s.onerror = () => {
+        console.error('[VoaAM] Arquivo JavaScript ausente:', src);
+        this.scriptsAusentes.push(src);
+        res();
+      };
+      document.body.appendChild(s);
+    });
+  },
+
+  async boot() {
+    await Promise.all(Object.entries(this.fragments).map(([id, url]) => this.loadFragment(id, url)));
+    this.scriptsAusentes = [];
+    for (const src of this.scripts) await this.loadScript(src);
+    if (this.scriptsAusentes.length) {
+      console.error('[VoaAM] Scripts ausentes:', this.scriptsAusentes);
+      const msg = document.createElement('div');
+      msg.setAttribute('role','alert');
+      msg.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;z-index:99999;padding:12px;background:#7f1d1d;color:#fff;border-radius:8px;font-size:13px';
+      msg.textContent = 'Alguns arquivos do sistema não carregaram. Consulte o Console (F12): ' + this.scriptsAusentes.join(', ');
+      document.body.appendChild(msg);
+    }
+  }
+};
+
+Router.boot();
+</script>
+
+</body>
+</html>
