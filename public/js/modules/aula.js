@@ -213,6 +213,9 @@ async function selectOption(idx) {
   const nextBtn = document.getElementById('next-btn');
   const opts = document.querySelectorAll('#options-list .option-btn');
   opts.forEach(b=>b.disabled=true);
+  feedback.className='feedback-box show voa-busy-status';
+  feedback.textContent='Conferindo resposta…';
+  feedback.setAttribute('role', 'status');
   const qid = isSimulado ? idQuestaoSimulado(q)
       : `quiz:${currentQuizTopicContext.quizId}:${q.indiceOriginal}`;
   const consulta = avaliarRespostaServidor(qid, q.ordem[idx]);
