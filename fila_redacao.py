@@ -6,6 +6,7 @@ import os
 import sqlite3
 from postgres_backend import DatabaseError, DatabaseIntegrityError, DatabaseOperationalError
 import time
+from datetime import datetime, timedelta, timezone
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import closing
 from uuid import uuid4
@@ -51,13 +52,25 @@ def enfileirar_redacao():
                 limite = max(1, min(10, int(os.getenv(variavel, '2'))))
             except ValueError:
                 limite = 2
-            usado = c.execute("""SELECT COUNT(*) AS total FROM avaliacoes_redacao a
-                                JOIN redacoes r ON r.id=a.redacao_id
-                                WHERE r.usuario_id=? AND a.provedor=?
-                                AND a.enviada_em > CURRENT_TIMESTAMP - INTERVAL '24 hours'""",
-                             (uid, provedor)).fetchone()['total']
-            if usado >= limite:
-                return jsonify({'message': 'Limite diário de correções por IA atingido.'}), 429
+            # Janela móvel UTC de 24 horas, compatível com SQLite e PostgreSQL.
+            # Correções com falha não gastam a cota de sucessos; ainda assim, limitamos
+            # falhas para impedir abusos e preservar a franquia gratuita da Cloudflare.
+            desde = datetime.now(timezone.utc) - timedelta(hours=24)
+            uso = c.execute(
+                """SELECT
+                       COALESCE(SUM(CASE WHEN a.estado IN ('fila', 'processando', 'concluida')
+                                         THEN 1 ELSE 0 END), 0) AS ativos,
+                       COALESCE(SUM(CASE WHEN a.estado='falhou'
+                                         THEN 1 ELSE 0 END), 0) AS falhas
+                   FROM avaliacoes_redacao a
+                   JOIN redacoes r ON r.id=a.redacao_id
+                   WHERE r.usuario_id=? AND a.provedor=? AND a.enviada_em>?""",
+                (uid, provedor, desde),
+            ).fetchone()
+            if uso['ativos'] >= limite:
+                return jsonify({'message': 'Limite diário de correções concluídas ou em andamento atingido.'}), 429
+            if uso['falhas'] >= max(2, limite + 1):
+                return jsonify({'message': 'Muitas tentativas de correção falharam nas últimas 24 horas. Tente mais tarde.'}), 429
         redacao_id, _ = obter_redacao(c, uid, tema, texto.strip())
         existente = c.execute(
             """SELECT id, estado FROM avaliacoes_redacao
