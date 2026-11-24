@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS google_identidades (
 CREATE TABLE IF NOT EXISTS avaliacoes_redacao (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     redacao_id INTEGER NOT NULL REFERENCES redacoes(id) ON DELETE CASCADE,
-    provedor TEXT NOT NULL CHECK (provedor IN ('gemini', 'ollama', 'anterior')),
+    provedor TEXT NOT NULL CHECK (provedor IN ('gemini', 'ollama', 'openai', 'cloudflare', 'anterior')),
     detalhe TEXT NOT NULL CHECK (detalhe IN ('resumido', 'detalhado', 'anterior')),
     estado TEXT NOT NULL DEFAULT 'fila' CHECK (estado IN ('fila', 'processando', 'concluida', 'falhou')),
     nota INTEGER CHECK (nota BETWEEN 0 AND 1000),
