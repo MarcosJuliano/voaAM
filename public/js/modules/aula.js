@@ -218,6 +218,7 @@ async function selectOption(idx) {
   feedback.setAttribute('role', 'status');
   const qid = isSimulado ? idQuestaoSimulado(q)
       : `quiz:${currentQuizTopicContext.quizId}:${q.indiceOriginal}`;
+  const fecharAnimacao = voaIniciarCarregamento('Conferindo sua resposta…');
   const consulta = avaliarRespostaServidor(qid, q.ordem[idx]);
   quiz.respostaPendente = consulta;
   try {
@@ -245,6 +246,7 @@ async function selectOption(idx) {
     feedback.className='feedback-box wrong show';
     feedback.textContent='Não foi possível corrigir no servidor: '+e.message;
   } finally {
+    fecharAnimacao();
     if (quiz.respostaPendente === consulta) quiz.respostaPendente = null;
   }
 }
