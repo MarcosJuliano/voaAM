@@ -259,7 +259,7 @@ async function exMostrarAssuntos() {
   status.textContent = 'Carregando assuntos…';
   status.classList.add('voa-busy-status');
   grid.setAttribute('aria-busy', 'true');
-  grid.innerHTML = '<div class="voa-loading-placeholder" aria-hidden="true"><div class="voa-loading-card"><span class="voa-loading-line"></span><span class="voa-loading-line"></span></div><div class="voa-loading-card"><span class="voa-loading-line"></span><span class="voa-loading-line"></span></div></div>';
+  grid.innerHTML = '<div class="voa-loading-inline">' + voaAnimacaoCarregamento('Buscando assuntos…') + '</div>';
   let assuntos;
   try {
     assuntos = await exAssuntosDisponiveis(materia, vestibulares, etapa);
@@ -363,7 +363,7 @@ async function exRenderQuestoesFiltradas() {
     info.textContent = 'Carregando questões…';
     info.classList.add('voa-busy-status');
     container.setAttribute('aria-busy', 'true');
-    container.innerHTML = '<div class="voa-loading-placeholder" aria-hidden="true"><div class="voa-loading-card"><span class="voa-loading-line"></span><span class="voa-loading-line"></span><span class="voa-loading-line"></span></div><div class="voa-loading-card"><span class="voa-loading-line"></span><span class="voa-loading-line"></span></div></div>';
+    container.innerHTML = '<div class="voa-loading-inline">' + voaAnimacaoCarregamento('Preparando questões…') + '</div>';
     exListaAtual = [];
     exAtualizarNotas();
     try {

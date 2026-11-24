@@ -60,3 +60,65 @@ function embaralhar(itens) {
 function ordenarAlternativas(alternativas) {
   return embaralhar(alternativas.map((_, indice) => indice));
 }
+
+
+// Animação reutilizável nas chamadas ao servidor, sem dependências externas.
+// O conteúdo dos textos é escapado; a função não recebe HTML do usuário.
+function voaAnimacaoCarregamento(mensagem = 'Preparando atividade…') {
+  return '<div class="voa-loading-journey" role="status" aria-live="polite">' +
+    '<div class="voa-flight-visual" aria-hidden="true">' +
+      '<span class="voa-flight-halo"></span><span class="voa-flight-orbit"></span>' +
+      '<svg class="voa-flight-plane" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<path d="M42 6 5 22l15 5 6 15L42 6Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' +
+        '<path d="m20 27 22-21M20 27l6 15" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' +
+      '</svg>' +
+      '<span class="voa-flight-spark voa-flight-spark--one"></span>' +
+      '<span class="voa-flight-spark voa-flight-spark--two"></span>' +
+      '<span class="voa-flight-spark voa-flight-spark--three"></span>' +
+    '</div>' +
+    '<strong class="voa-loading-title">' + escapeHTML(mensagem) + '</strong>' +
+    '<span class="voa-loading-detail">Seu próximo desafio está chegando</span>' +
+    '<span class="voa-loading-track" aria-hidden="true"></span>' +
+  '</div>';
+}
+
+const voaCarregamentos = new Map();
+let voaCarregamentoId = 0;
+let voaCarregamentoTimer = null;
+
+// Em requisições muito rápidas não há overlay, evitando o efeito de piscar.
+// Cada operação recebe sua própria função de fechamento (sem conflitos entre requisições).
+function voaIniciarCarregamento(mensagem = 'Preparando atividade…') {
+  const id = ++voaCarregamentoId;
+  let overlay = document.getElementById('voa-loading-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'voa-loading-overlay';
+    overlay.className = 'voa-loading-overlay';
+    overlay.hidden = true;
+    overlay.innerHTML = voaAnimacaoCarregamento(mensagem);
+    document.body.appendChild(overlay);
+  }
+  voaCarregamentos.set(id, mensagem);
+  overlay.querySelector('.voa-loading-title').textContent = mensagem;
+  if (!voaCarregamentoTimer && overlay.hidden) {
+    voaCarregamentoTimer = setTimeout(() => {
+      voaCarregamentoTimer = null;
+      if (voaCarregamentos.size) overlay.hidden = false;
+    }, 180);
+  }
+  let encerrado = false;
+  return function voaFinalizarCarregamento() {
+    if (encerrado) return;
+    encerrado = true;
+    voaCarregamentos.delete(id);
+    if (!voaCarregamentos.size) {
+      clearTimeout(voaCarregamentoTimer);
+      voaCarregamentoTimer = null;
+      overlay.hidden = true;
+    } else {
+      overlay.querySelector('.voa-loading-title').textContent =
+        Array.from(voaCarregamentos.values()).at(-1);
+    }
+  };
+}

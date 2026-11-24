@@ -509,6 +509,7 @@ function scEncerrar() {
 async function scMostrarResultado() {
   if (SC.finalizando) return;
   SC.finalizando = true;
+  const fecharAnimacao = voaIniciarCarregamento('Salvando resultado do simulado…');
   const tentativa = SC.tentativa;
   const painel = _el('sc-resultado');
   painel.textContent = 'Corrigindo e salvando a nota…';
@@ -525,6 +526,7 @@ async function scMostrarResultado() {
       signal: AbortSignal.timeout(15000),
     });
   }catch(e){
+    fecharAnimacao();
     if (SC.tentativa !== tentativa) return;
     SC.finalizando = false;
     console.error('[voaAM] Falha na correção do simulado:',e);
@@ -538,6 +540,7 @@ async function scMostrarResultado() {
     painel.append(tentar);
     return;
   }
+  fecharAnimacao();
   if (SC.tentativa !== tentativa) return;
   painel.classList.remove('voa-busy-status');
   scGabaritosEncerramento = Object.fromEntries(Object.entries(nota.resultados).map(([id, resultado]) => [id, resultado.correta]));

@@ -144,6 +144,7 @@ async function responderExercicio(qId, idx) {
   const botoes = document.querySelectorAll(`[id^="exopt-${qId}-"]`);
   botoes.forEach(b=>b.disabled=true);
   const fb=document.getElementById(`exfb-${qId}`);
+  const fecharAnimacao = voaIniciarCarregamento('Conferindo sua resposta…');
   if(fb){fb.textContent='Conferindo resposta…';fb.classList.add('voa-busy-status');fb.setAttribute('role','status');}
   try {
     const r=await avaliarRespostaServidor('banco:'+qId,idx);
@@ -160,6 +161,7 @@ async function responderExercicio(qId, idx) {
     botoes.forEach(b=>b.disabled=false);
     if(fb)fb.textContent='Correção indisponível: '+e.message;
   } finally {
+    fecharAnimacao();
     fb?.classList.remove('voa-busy-status');
   }
 }
@@ -302,6 +304,7 @@ async function responderEx(idx) {
   const botoes=document.querySelectorAll('[id^="exo-"]');botoes.forEach(b=>b.disabled=true);
   const fb=document.getElementById('ex-feedback');
   const proximo=document.getElementById('ex-proxima-btn');
+  const fecharAnimacao = voaIniciarCarregamento('Conferindo sua resposta…');
   if(fb){fb.textContent='Conferindo resposta…';fb.classList.add('voa-busy-status');fb.setAttribute('role','status');}
   try {
     const r=await avaliarRespostaServidor('banco:'+q.id,idx);
@@ -316,6 +319,7 @@ async function responderEx(idx) {
     exRespondida=false;botoes.forEach(b=>b.disabled=false);
     if(fb)fb.textContent='Correção indisponível: '+e.message;
   } finally {
+    fecharAnimacao();
     fb?.classList.remove('voa-busy-status');
   }
 }
