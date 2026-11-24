@@ -122,7 +122,9 @@ async function treinoResponder(indice){
   const r=await treinoApi(`/api/treino/${treinoAtual.treino_id}/responder`,{
    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({questao_id:q.id,alternativa:indice})
   });
-  treinoRespostas[q.id]={...r,selecionada:indice};treinoExibirFeedback(treinoRespostas[q.id]);
+  treinoRespostas[q.id]={...r,selecionada:indice};
+  feedbackPendente.classList.remove('voa-busy-status');
+  treinoExibirFeedback(treinoRespostas[q.id]);
   if (r.acertou) spawnStars();
   treinoEl('treino-proxima-overlay').disabled=false;treinoEl('treino-pular-overlay').disabled=true;
   if(r.xp_ganho)if(typeof showXPToast==='function')showXPToast('+'+r.xp_ganho+' XP');
