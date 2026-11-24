@@ -512,6 +512,7 @@ async function scMostrarResultado() {
   const tentativa = SC.tentativa;
   const painel = _el('sc-resultado');
   painel.textContent = 'Corrigindo e salvando a nota…';
+  painel.classList.add('voa-busy-status');
   const tentativas = SC.questoes.flatMap(q => {
     const letra = SC.respostas[q.num];
     return /^[A-E]$/.test(letra) ? [{id: scIdQuestao(q), alternativa: 'ABCDE'.indexOf(letra)}] : [];
@@ -527,6 +528,7 @@ async function scMostrarResultado() {
     if (SC.tentativa !== tentativa) return;
     SC.finalizando = false;
     console.error('[voaAM] Falha na correção do simulado:',e);
+    painel.classList.remove('voa-busy-status');
     painel.textContent = 'Não foi possível corrigir e salvar a nota. ';
     const tentar = document.createElement('button');
     tentar.className = 'btn-secondary';
@@ -537,6 +539,7 @@ async function scMostrarResultado() {
     return;
   }
   if (SC.tentativa !== tentativa) return;
+  painel.classList.remove('voa-busy-status');
   scGabaritosEncerramento = Object.fromEntries(Object.entries(nota.resultados).map(([id, resultado]) => [id, resultado.correta]));
   atualizarProgresso();
   atualizarNivel();
