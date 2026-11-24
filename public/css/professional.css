@@ -59,3 +59,34 @@ button { font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* Redação: o estado real da avaliação controla a cor do botão.
+   Esta folha é carregada após glass.css (que aplica um gradiente aos botões). */
+#red-analisar[data-estado="aguardando"] {
+  background: #92400e;
+  background-image: none;
+  color: #fff;
+  opacity: 1;
+  cursor: progress;
+}
+#red-analisar[data-estado="sucesso"] {
+  background: #15803d;
+  background-image: none;
+  color: #fff;
+  opacity: 1;
+  cursor: default;
+}
+#red-analisar[data-estado="erro"] {
+  background: #b91c1c;
+  background-image: none;
+  color: #fff;
+  opacity: 1;
+}
+#red-analisar[data-estado="erro"]:hover {
+  background: #991b1b;
+  background-image: none;
+}
+#red-analisar[data-estado="aguardando"]:disabled,
+#red-analisar[data-estado="sucesso"]:disabled {
+  opacity: 1;
+}

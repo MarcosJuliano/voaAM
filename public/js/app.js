@@ -34,9 +34,7 @@
   // Renderiza tópicos na tela de matéria
   if (typeof renderTopics === 'function') renderTopics();
 
-  // Aplica tema salvo
-  const savedTheme = localStorage.getItem('voaam_theme');
-  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+  // O tema já foi aplicado no <head>, antes do CSS e do carregamento dos módulos.
 
   // Fecha aula-view com tecla Escape (acessibilidade teclado)
   document.addEventListener('keydown', function(e) {

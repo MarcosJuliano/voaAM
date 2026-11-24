@@ -216,14 +216,16 @@ async function salvarEdicaoPerfil(event) {
 
 // ─── THEME TOGGLE ───
 function toggleTheme() {
-  const html = document.documentElement;
-  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('voaam_theme', next);
+  const proximo = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  if (typeof window.voaamAplicarTema === 'function') {
+    window.voaamAplicarTema(proximo);
+  } else {
+    document.documentElement.setAttribute('data-theme', proximo);
+  }
+  // A escolha manual tem prioridade sobre alterações futuras do sistema.
+  try { localStorage.setItem('voaam_theme', proximo); }
+  catch (_) { /* Modo privado: continua funcional até recarregar. */ }
 }
-(function() {
-  document.documentElement.setAttribute('data-theme', localStorage.getItem('voaam_theme') || 'dark');
-})();
 
 // ─── INIT ───
 if (perfil) {

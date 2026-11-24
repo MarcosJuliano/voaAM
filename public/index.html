@@ -1,11 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark" data-versao="__VOAAM_FRONTEND__">
+<html lang="pt-BR" data-theme="light" data-versao="__VOAAM_FRONTEND__">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>voaAM | Vestibulares do Amazonas</title>
   <meta name="description" content="Plataforma gratuita de estudos para PSC (UFAM), SIS (UEA), MACRO (UEA) e ENEM. Simulados, exercícios e banco de questões do Amazonas.">
-  <meta name="theme-color" content="#0f1117">
+  <meta name="theme-color" content="#f5f7fb">
+  <!-- Resolve o tema antes de carregar o CSS, evitando piscar em modo escuro. -->
+  <script>
+    (function () {
+      const chave = 'voaam_theme';
+      const preferenciaSistema = window.matchMedia?.('(prefers-color-scheme: dark)');
+      function aplicarTema(tema) {
+        const valor = tema === 'dark' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', valor);
+        document.querySelector('meta[name="theme-color"]')?.setAttribute(
+          'content', valor === 'dark' ? '#10131d' : '#f5f7fb'
+        );
+      }
+      function temaManual() {
+        try {
+          const salvo = localStorage.getItem(chave);
+          return salvo === 'light' || salvo === 'dark' ? salvo : null;
+        } catch (_) {
+          return null;
+        }
+      }
+      const temaSistema = () => preferenciaSistema?.matches ? 'dark' : 'light';
+      window.voaamAplicarTema = aplicarTema;
+      aplicarTema(temaManual() || temaSistema());
+      const aoMudarSistema = () => {
+        if (!temaManual()) aplicarTema(temaSistema());
+      };
+      if (preferenciaSistema?.addEventListener) {
+        preferenciaSistema.addEventListener('change', aoMudarSistema);
+      } else if (preferenciaSistema?.addListener) {
+        preferenciaSistema.addListener(aoMudarSistema);
+      }
+    })();
+  </script>
   <meta property="og:title" content="voaAM | Vestibulares do Amazonas">
   <meta property="og:description" content="Simulados, exercícios e banco de questões para PSC, SIS, MACRO e ENEM.">
   <meta property="og:type" content="website">
