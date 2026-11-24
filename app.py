@@ -65,7 +65,9 @@ app.config.update(
     SECRET_KEY=os.environ.get("FLASK_SECRET_KEY", "dev-only-change-this-key"),
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=os.environ.get("SESSION_COOKIE_SECURE", "false").lower() == "true",
+    # Cookies de autenticação jamais trafegam sem Secure na hospedagem Vercel.
+    SESSION_COOKIE_SECURE=(os.environ.get("VERCEL") == "1"
+                           or os.environ.get("SESSION_COOKIE_SECURE", "false").lower() == "true"),
     PERMANENT_SESSION_LIFETIME=60 * 60 * 24 * 7,
     MAX_CONTENT_LENGTH=1_000_000,
     MAX_COOKIE_SIZE=3800,
@@ -78,6 +80,9 @@ def cabecalhos_de_seguranca(resposta):
     resposta.headers.setdefault('Referrer-Policy', 'strict-origin-when-cross-origin')
     resposta.headers.setdefault('X-Frame-Options', 'DENY')
     resposta.headers.setdefault('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+    # Não permitir cache compartilhado de respostas API com dados dos estudantes.
+    if request.path.startswith('/api/'):
+        resposta.headers.setdefault('Cache-Control', 'private, no-store')
     return resposta
 
 # Cria tabelas caso ainda não existam. Não apaga usuários/dados já salvos.
