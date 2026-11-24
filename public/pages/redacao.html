@@ -48,10 +48,12 @@
         <label for="red-modo-avaliacao">Provedor da avaliação</label>
         <select class="form-control" id="red-modo-avaliacao" aria-describedby="red-provedores-info" onchange="redAtualizarProvedor()">
           <option value="gratis">Análise local por regras (sem nota)</option>
+          <option value="openai" disabled>IA online (indisponível)</option>
           <option value="ollama" disabled>Ollama (indisponível)</option>
           <option value="gemini" disabled>Gemini (indisponível)</option>
         </select>
         <div id="red-provedores-info" class="red-provedores-info">
+          <p><strong>IA online</strong> · Correção pedagógica estimada na nuvem. Seu texto será enviado a um provedor de IA remoto. Não use informações pessoais na redação. Pode gerar custos para o projeto.</p>
           <p><strong>Ollama</strong> · Processa no servidor do voaAM quando usa um modelo local, sem tarifa por chamada. A velocidade depende do servidor e modelos pequenos podem dar feedback menos preciso.</p>
           <p><strong>Gemini</strong> · Pode oferecer feedback mais detalhado. Envia a redação ao Google e depende da internet, do modelo e da cota do projeto. O plano configurado pode gerar custos para quem administra o site. Os termos da API Gemini restringem seu uso em sites acessados por menores de 18 anos.</p>
           <p id="red-gemini-config" hidden></p>

@@ -1,6 +1,7 @@
 """Fila persistente compartilhada entre o Flask e os processos de correção."""
 import json
 import hashlib
+import hmac
 import os
 import sqlite3
 from postgres_backend import DatabaseError, DatabaseIntegrityError, DatabaseOperationalError
@@ -9,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor
 from contextlib import closing
 from uuid import uuid4
 
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, current_app, jsonify, request, session
 
 from banco import conectar, inicializar_banco
 from redacoes_api import buscar_tema, obter_redacao
@@ -32,16 +33,30 @@ def enfileirar_redacao():
     detalhe = dados.get('detalhe', 'resumido' if provedor == 'ollama' else 'detalhado')
     if not tema or not isinstance(texto, str) or not 100 <= len(texto.strip()) <= 10000:
         return jsonify({'message': 'Escolha um tema e escreva entre 100 e 10.000 caracteres.'}), 400
-    if provedor not in ('ollama', 'gemini') or detalhe not in ('resumido', 'detalhado'):
+    if provedor not in ('ollama', 'gemini', 'openai') or detalhe not in ('resumido', 'detalhado'):
         return jsonify({'message': 'Escolha um provedor e um nível de detalhe válidos.'}), 400
     if provedor not in provedores_disponiveis():
-        mensagem = gemini_motivo_indisponivel() if provedor == 'gemini' else 'O Ollama está desativado ou sem configuração no servidor.'
+        mensagem = (gemini_motivo_indisponivel() if provedor == 'gemini'
+                    else 'O serviço de correção não está habilitado neste servidor.')
         return jsonify({'message': mensagem}), 503
-    if provedor == 'gemini':
+    if provedor in ('gemini', 'openai'):
         detalhe = 'detalhado'
 
     with closing(conectar()) as c, c:
         c.execute('BEGIN IMMEDIATE')
+        if provedor == 'openai':
+            # Evita cobranças abusivas; bloqueia antes de salvar a redação.
+            try:
+                limite = max(1, min(10, int(os.getenv('OPENAI_LIMITE_DIA', '3'))))
+            except ValueError:
+                limite = 3
+            usado = c.execute("""SELECT COUNT(*) AS total FROM avaliacoes_redacao a
+                                JOIN redacoes r ON r.id=a.redacao_id
+                                WHERE r.usuario_id=? AND a.provedor='openai'
+                                AND a.enviada_em > CURRENT_TIMESTAMP - INTERVAL '24 hours'""",
+                             (uid,)).fetchone()['total']
+            if usado >= limite:
+                return jsonify({'message': 'Limite diário de correções por IA atingido.'}), 429
         redacao_id, _ = obter_redacao(c, uid, tema, texto.strip())
         existente = c.execute(
             """SELECT id, estado FROM avaliacoes_redacao
@@ -80,6 +95,7 @@ def limites():
     for provedor, variavel, padrao in (
         ('ollama', 'REDACAO_IA_CONCORRENCIA', 1),
         ('gemini', 'REDACAO_GEMINI_CONCORRENCIA', 2),
+        ('openai', 'REDACAO_OPENAI_CONCORRENCIA', 1),
     ):
         try:
             resultado[provedor] = max(1, min(16, int(os.getenv(variavel, padrao))))
@@ -191,6 +207,34 @@ def processar(trabalho):
         finalizar(trabalho, erro=str(erro))
     else:
         finalizar(trabalho, resultado)
+
+
+@bp_fila_redacao.post('/api/interno/processar-redacao')
+def processar_redacao_nuvem():
+    """Chamado apenas pelo Supabase Cron com token secreto; processa UMA tarefa."""
+    segredo = os.getenv('WORKER_TOKEN', '')
+    autenticacao = request.headers.get('Authorization', '')
+    if len(segredo) < 32 or not hmac.compare_digest(autenticacao, 'Bearer ' + segredo):
+        return jsonify({'message': 'Não autorizado.'}), 401
+    if 'openai' not in provedores_disponiveis():
+        return jsonify({'message': 'Worker de IA online desativado.'}), 503
+    try:
+        tarefa = reservar({'openai': 1})
+        if not tarefa:
+            return jsonify({'ok': True, 'processado': False})
+        try:
+            processar(tarefa)
+        except Exception:
+            current_app.logger.exception('Erro no worker de correção %s', tarefa['id'])
+            try:
+                finalizar(tarefa, erro='Não foi possível concluir a correção. Tente novamente.')
+            except Exception:
+                current_app.logger.exception('Falha ao registrar erro na avaliação %s', tarefa['id'])
+            return jsonify({'ok': False, 'processado': False}), 500
+        return jsonify({'ok': True, 'processado': True, 'id': tarefa['id']})
+    except Exception:
+        current_app.logger.exception('Falha ao reservar avaliação na nuvem')
+        return jsonify({'ok': False, 'processado': False}), 500
 
 
 def executar():

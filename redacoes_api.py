@@ -107,8 +107,7 @@ def listar_redacoes():
             """WITH envios AS (
                    SELECT a.id, a.redacao_id, r.tema_id, r.tema, a.provedor, a.detalhe, a.estado,
                           a.nota, a.erro, a.enviada_em, a.resultado_ia IS NOT NULL AS tem_relatorio,
-                          CASE WHEN json_valid(a.resultado_ia)
-                               THEN json_extract(a.resultado_ia, '$.detalhe') END AS detalhe_entregue,
+                          a.resultado_ia AS json_detalhe_entregue,
                           ROW_NUMBER() OVER (
                               PARTITION BY a.redacao_id, a.estado IN ('fila', 'processando')
                               ORDER BY a.enviada_em DESC, a.id DESC
@@ -124,13 +123,23 @@ def listar_redacoes():
                    FROM avaliacoes_redacao a JOIN redacoes r ON r.id=a.redacao_id
                    WHERE r.usuario_id=?
                )
-               SELECT id, redacao_id, tema_id, tema, provedor, detalhe, estado, nota, erro, enviada_em, tem_relatorio, detalhe_entregue
+               SELECT id, redacao_id, tema_id, tema, provedor, detalhe, estado, nota, erro, enviada_em, tem_relatorio, json_detalhe_entregue
                FROM envios WHERE ordem <= 10 OR estado IN ('fila', 'processando')
                  OR (estado='concluida' AND nota IS NOT NULL AND (maior_ordem=1 OR menor_ordem=1))
                ORDER BY enviada_em DESC, id DESC""",
             (uid,),
         )
-        resposta = jsonify({'redacoes': redacoes, 'avaliacoes': [dict(item) for item in envios]})
+        avaliacoes = []
+        for item in envios:
+            registro = dict(item)
+            bruto = registro.pop('json_detalhe_entregue', None)
+            try:
+                objeto = json.loads(bruto) if bruto else {}
+                registro['detalhe_entregue'] = objeto.get('detalhe') if isinstance(objeto, dict) else None
+            except (ValueError, TypeError):
+                registro['detalhe_entregue'] = None
+            avaliacoes.append(registro)
+        resposta = jsonify({'redacoes': redacoes, 'avaliacoes': avaliacoes})
         resposta.headers['Cache-Control'] = 'private, no-store'
         return resposta
 

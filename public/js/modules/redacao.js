@@ -80,14 +80,15 @@ async function redConfigurarAvaliacao() {
   try {
     const config = await authRequisicao('/api/config-publica');
     const seletor = document.getElementById('red-modo-avaliacao');
-    const rotulos = {gemini: 'Gemini (Google)', ollama: 'Ollama (servidor do voaAM)'};
+    const rotulos = {openai: 'IA online (correção guiada)', gemini: 'Gemini (Google)', ollama: 'Ollama (servidor do voaAM)'};
     const provedores = config.provedores_redacao || [];
     for (const opcao of seletor.options) {
       if (opcao.value === 'gratis') continue;
       opcao.disabled = !provedores.includes(opcao.value);
       opcao.textContent = rotulos[opcao.value] + (opcao.disabled ? ' · indisponível' : '');
     }
-    if (provedores.includes('ollama')) seletor.value = 'ollama';
+    if (provedores.includes('openai')) seletor.value = 'openai';
+    else if (provedores.includes('ollama')) seletor.value = 'ollama';
     const aviso = document.getElementById('red-gemini-config');
     aviso.textContent = config.gemini_redacao_mensagem || '';
     aviso.hidden = !aviso.textContent;
@@ -526,9 +527,11 @@ function redCorrigir() {
     redEnviarCorrecao(dados);
     return;
   }
-  const mensagem = dados.provedor === 'gemini'
-    ? 'Esta versão será enviada ao Gemini (Google) e a correção ficará salva no Histórico.'
-    : 'O Ollama vai analisar esta versão e a correção ficará salva no Histórico.';
+  const mensagem = dados.provedor === 'openai'
+    ? 'A redação será enviada a um provedor de IA na nuvem. A nota é estimativa pedagógica, não oficial; o relatório ficará salvo no Histórico.'
+    : dados.provedor === 'gemini'
+      ? 'Esta versão será enviada ao Gemini (Google) e a correção ficará salva no Histórico.'
+      : 'O Ollama vai analisar esta versão e a correção ficará salva no Histórico.';
   confirmarAcao({
     titulo: 'Enviar redação para correção?',
     mensagem,
@@ -674,6 +677,7 @@ function redNormalizarTitulo(titulo) {
 }
 
 function redRotuloProvedor(envio) {
+  if (envio.provedor === 'openai') return 'IA online';
   if (envio.provedor === 'gemini') return 'Gemini';
   if (envio.provedor !== 'ollama') return 'Avaliação anterior';
   const detalhe = (envio.detalhe_entregue || envio.detalhe) === 'detalhado' ? 'Detalhada' : 'Resumida';
