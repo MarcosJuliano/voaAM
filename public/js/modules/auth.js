@@ -308,6 +308,14 @@ function authDefinirVista(autenticado) {
 }
 
 async function authInit() {
+  // Links de recuperação têm prioridade sobre uma sessão já autenticada.
+  // Assim, quem está logado também consegue abrir a tela de nova senha.
+  if (authTokenRecuperacao()) {
+    authDefinirVista(false);
+    authAbrirLinkRecuperacao();
+    window.voaEncerrarAbertura?.();
+    return;
+  }
   try {
     const resposta = await fetch('/api/me', { credentials: 'same-origin' });
     if (!resposta.ok) throw new Error('Servidor indisponível.');
