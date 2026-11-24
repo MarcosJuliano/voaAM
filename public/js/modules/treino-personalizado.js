@@ -19,6 +19,7 @@ function treinoSelecionados(){
 async function treinoAtualizarFiltros(indice=0, selecao=null){
  const versao = ++treinoFiltroVersao;
  const status=treinoEl('treino-status');
+ if(status) { status.textContent = 'Carregando opções de treino…'; status.classList.add('voa-busy-status'); }
  const btn=treinoEl('treino-iniciar');if(btn)btn.disabled=true;
  const selects = treinoCampos.map(campo => treinoEl('treino-'+campo));
  selects.forEach((el, i) => { el.disabled = i >= indice; });
@@ -47,7 +48,10 @@ async function treinoAtualizarFiltros(indice=0, selecao=null){
   if(btn)btn.disabled=result.disponiveis===0;
  }catch(e){if(versao === treinoFiltroVersao && status)status.textContent='Não foi possível filtrar: '+e.message;}
  finally {
-  if (versao === treinoFiltroVersao) selects.forEach(el => { el.disabled = false; });
+  if (versao === treinoFiltroVersao) {
+   if(status)status.classList.remove('voa-busy-status');
+   selects.forEach(el => { el.disabled = false; });
+  }
  }
 }
 function treinoCarregarFiltros(selecao){
@@ -61,7 +65,11 @@ async function treinoIniciar(event){
  event?.preventDefault();const btn=treinoEl('treino-iniciar'),status=treinoEl('treino-status');
  if (!btn || btn.disabled) return;
  const versao = treinoFiltroVersao;
+ const textoOriginal = btn.textContent;
  btn.disabled=true;
+ btn.classList.add('voa-busy-button');
+ btn.textContent='Preparando questões…';
+ if(status)status.textContent='Montando seu treino personalizado…';
  try {
   const resposta=await treinoApi('/api/treino/iniciar',{
    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(treinoSelecionados())
@@ -72,7 +80,11 @@ async function treinoIniciar(event){
   treinoRender();
   treinoEl('treino-overlay').querySelector('.back-btn').focus();
  }catch(e){if(status)status.textContent=e.message;}
- finally{if(versao === treinoFiltroVersao)btn.disabled=false;}
+ finally{
+  btn.classList.remove('voa-busy-button');
+  btn.textContent=textoOriginal;
+  if(versao === treinoFiltroVersao)btn.disabled=false;
+ }
 }
 function treinoRender(){
  if(!treinoAtual)return;
@@ -103,6 +115,9 @@ async function treinoResponder(indice){
  treinoRespondendo=true;
  const btns=treinoEl('treino-questao-overlay').querySelectorAll('[data-alt]');btns.forEach(b=>b.disabled=true);
  treinoEl('treino-pular-overlay').disabled=true;
+ const feedbackPendente=treinoEl('treino-feedback-overlay');
+ feedbackPendente.textContent='Conferindo resposta…';
+ feedbackPendente.classList.add('voa-busy-status');
  try {
   const r=await treinoApi(`/api/treino/${treinoAtual.treino_id}/responder`,{
    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({questao_id:q.id,alternativa:indice})
@@ -113,8 +128,8 @@ async function treinoResponder(indice){
   if(r.xp_ganho)if(typeof showXPToast==='function')showXPToast('+'+r.xp_ganho+' XP');
   if(typeof atualizarProgresso==='function')await atualizarProgresso();
   if(typeof atualizarNivel==='function')atualizarNivel();
- }catch(e){treinoEl('treino-pular-overlay').disabled=false;btns.forEach(b=>b.disabled=false);treinoEl('treino-feedback-overlay').textContent='Erro: '+e.message;}
- finally{treinoRespondendo=false;}
+ }catch(e){treinoEl('treino-pular-overlay').disabled=false;btns.forEach(b=>b.disabled=false);feedbackPendente.textContent='Erro: '+e.message;}
+ finally{feedbackPendente.classList.remove('voa-busy-status');treinoRespondendo=false;}
 }
 function treinoExibirFeedback(r){
  const fb=treinoEl('treino-feedback-overlay');
@@ -142,6 +157,7 @@ async function treinoFinalizar(sair = false) {
  const estado = [proxima.disabled, pular.disabled];
  proxima.disabled = pular.disabled = true;
  treinoEl('treino-feedback-overlay').textContent = 'Finalizando treino…';
+ treinoEl('treino-feedback-overlay').classList.add('voa-busy-status');
  try {
   const r = await treinoApi(`/api/treino/${treinoAtual.treino_id}/encerrar`, {method:'POST'});
   treinoAtual = null;
@@ -166,6 +182,7 @@ async function treinoFinalizar(sair = false) {
   treinoEl('treino-feedback-overlay').textContent = 'Não foi possível encerrar: ' + e.message;
   [proxima.disabled, pular.disabled] = estado;
  } finally {
+  treinoEl('treino-feedback-overlay').classList.remove('voa-busy-status');
   treinoEncerrando = false;
  }
 }
