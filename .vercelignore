@@ -1,0 +1,12 @@
+.env
+.env.*
+deploy.env
+deploy.env.*
+instance/
+*.db
+*.db-*
+.venv/
+venv/
+__pycache__/
+tests/
+.postgres-migration-backup/

@@ -28,3 +28,6 @@ Thumbs.db
 deploy.env
 deploy.env
 .postgres-migration-backup/
+.vercel
+.env*
+.vercel/
